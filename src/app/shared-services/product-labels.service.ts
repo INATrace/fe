@@ -29,7 +29,7 @@ export default class ProductLabelsService extends GeneralSifrantService<ApiProdu
 
   makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiProductLabelBase>> {
 
-    return this.productController.getProductLabelsUsingGET(this.productId)
+    return this.productController.getProductLabels(this.productId)
       .pipe(
         map((res: ApiResponseListApiProductLabelBase) => {
           return {

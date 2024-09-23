@@ -5,7 +5,7 @@ import { ApiFacility } from '../../../../../../api/model/apiFacility';
 import { CompanyFacilitiesForStockUnitProductService } from '../../../../../shared-services/company-facilities-for-stock-unit-product.service';
 import { AvailableSellingFacilitiesForCompany } from '../../../../../shared-services/available-selling-facilities-for.company';
 import { ProcessingActionType } from '../../../../../../shared/types';
-import { GetAvailableStockForStockUnitInFacilityUsingGET, StockOrderControllerService } from '../../../../../../api/api/stockOrderController.service';
+import { GetAvailableStockForStockUnitInFacility, StockOrderControllerService } from '../../../../../../api/api/stockOrderController.service';
 import { dateISOString } from '../../../../../../shared/utils';
 import { debounceTime, map, take } from 'rxjs/operators';
 import { ApiStockOrder } from '../../../../../../api/model/apiStockOrder';
@@ -198,7 +198,7 @@ export class ProcessingOrderInputComponent implements OnInit, OnDestroy {
     const to = this.dateToFilterControl.value;
 
     // Prepare initial request params
-    const requestParams: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap = {
+    const requestParams: GetAvailableStockForStockUnitInFacility.PartialParamMap = {
       limit: 500,
       offset: 0,
       facilityId: this.selectedInputFacility.id,
@@ -257,13 +257,13 @@ export class ProcessingOrderInputComponent implements OnInit, OnDestroy {
     );
   }
 
-  private async fetchAvailableStockOrders(params: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap): Promise<ApiStockOrder[]> {
+  private async fetchAvailableStockOrders(params: GetAvailableStockForStockUnitInFacility.PartialParamMap): Promise<ApiStockOrder[]> {
 
     // Final product is defined for 'FINAL_PROCESSING' and Quote or Transfer for a final product
     const finalProduct = this.selectedProcAction.outputFinalProduct;
 
     return this.stockOrderController
-      .getAvailableStockForStockUnitInFacilityUsingGETByMap(params)
+      .getAvailableStockForStockUnitInFacilityByMap(params)
       .pipe(
         take(1),
         map(res => {
@@ -313,7 +313,7 @@ export class ProcessingOrderInputComponent implements OnInit, OnDestroy {
     if (facility) {
       this.selectedInputFacility = facility;
 
-      const requestParams: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap = {
+      const requestParams: GetAvailableStockForStockUnitInFacility.PartialParamMap = {
         limit: 500,
         offset: 0,
         facilityId: facility.id,

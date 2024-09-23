@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -28,29 +28,37 @@ import { ApiStockOrder } from './apiStockOrder';
 
 
 export interface ApiTransaction { 
-    company?: ApiCompany;
-    /**
-     * Currency
-     */
-    currency?: string;
-    finalProduct?: ApiFinalProduct;
     /**
      * Entity id
      */
     id?: number;
+    company?: ApiCompany;
     /**
      * Initiator user ID
      */
     initiationUserId?: number;
+    sourceStockOrder?: ApiStockOrder;
+    targetStockOrder?: ApiStockOrder;
+    semiProduct?: ApiSemiProduct;
+    finalProduct?: ApiFinalProduct;
+    sourceFacility?: ApiFacility;
+    /**
+     * Is order of type processing
+     */
+    isProcessing?: boolean;
+    /**
+     * Transaction status
+     */
+    status?: ApiTransaction.StatusEnum;
+    /**
+     * Shipment ID
+     */
+    shipmentId?: number;
     inputMeasureUnitType?: ApiMeasureUnitType;
     /**
      * Input quantity
      */
     inputQuantity?: number;
-    /**
-     * Is order of type processing
-     */
-    isProcessing?: boolean;
     /**
      * Output quantity
      */
@@ -60,21 +68,13 @@ export interface ApiTransaction {
      */
     pricePerUnit?: number;
     /**
+     * Currency
+     */
+    currency?: string;
+    /**
      * Reject comment
      */
     rejectComment?: string;
-    semiProduct?: ApiSemiProduct;
-    /**
-     * Shipment ID
-     */
-    shipmentId?: number;
-    sourceFacility?: ApiFacility;
-    sourceStockOrder?: ApiStockOrder;
-    /**
-     * Transaction status
-     */
-    status?: ApiTransaction.StatusEnum;
-    targetStockOrder?: ApiStockOrder;
 }
 
 /**
@@ -85,29 +85,37 @@ export namespace ApiTransaction {
      * All properties of ApiTransaction.
      */
     export enum Properties {
-        company = 'company',
-        /**
-         * Currency
-         */
-        currency = 'currency',
-        finalProduct = 'finalProduct',
         /**
          * Entity id
          */
         id = 'id',
+        company = 'company',
         /**
          * Initiator user ID
          */
         initiationUserId = 'initiationUserId',
+        sourceStockOrder = 'sourceStockOrder',
+        targetStockOrder = 'targetStockOrder',
+        semiProduct = 'semiProduct',
+        finalProduct = 'finalProduct',
+        sourceFacility = 'sourceFacility',
+        /**
+         * Is order of type processing
+         */
+        isProcessing = 'isProcessing',
+        /**
+         * Transaction status
+         */
+        status = 'status',
+        /**
+         * Shipment ID
+         */
+        shipmentId = 'shipmentId',
         inputMeasureUnitType = 'inputMeasureUnitType',
         /**
          * Input quantity
          */
         inputQuantity = 'inputQuantity',
-        /**
-         * Is order of type processing
-         */
-        isProcessing = 'isProcessing',
         /**
          * Output quantity
          */
@@ -117,21 +125,13 @@ export namespace ApiTransaction {
          */
         pricePerUnit = 'pricePerUnit',
         /**
+         * Currency
+         */
+        currency = 'currency',
+        /**
          * Reject comment
          */
-        rejectComment = 'rejectComment',
-        semiProduct = 'semiProduct',
-        /**
-         * Shipment ID
-         */
-        shipmentId = 'shipmentId',
-        sourceFacility = 'sourceFacility',
-        sourceStockOrder = 'sourceStockOrder',
-        /**
-         * Transaction status
-         */
-        status = 'status',
-        targetStockOrder = 'targetStockOrder'
+        rejectComment = 'rejectComment'
     }
 
     /**
@@ -150,6 +150,17 @@ export namespace ApiTransaction {
             classname: 'ApiTransaction',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiTransaction',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiCompany.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -165,12 +176,48 @@ export namespace ApiTransaction {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'currency',
+                    name: 'initiationUserId',
                     classname: 'ApiTransaction',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiStockOrder.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'sourceStockOrder',
+                    classname: 'ApiTransaction',
+                    dataType: 'ApiStockOrder',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiStockOrder'
+                },
+                {
+                    metadata: ApiStockOrder.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'targetStockOrder',
+                    classname: 'ApiTransaction',
+                    dataType: 'ApiStockOrder',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiStockOrder'
+                },
+                {
+                    metadata: ApiSemiProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'semiProduct',
+                    classname: 'ApiTransaction',
+                    dataType: 'ApiSemiProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiSemiProduct'
                 },
                 {
                     metadata: ApiFinalProduct.formMetadata,
@@ -185,12 +232,36 @@ export namespace ApiTransaction {
                     complexType: 'ApiFinalProduct'
                 },
                 {
+                    metadata: ApiFacility.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'sourceFacility',
                     classname: 'ApiTransaction',
-                    dataType: 'number',
+                    dataType: 'ApiFacility',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFacility'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'isProcessing',
+                    classname: 'ApiTransaction',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiTransaction.StatusEnum',
+                    required: false,
+                    name: 'status',
+                    classname: 'ApiTransaction',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -199,7 +270,7 @@ export namespace ApiTransaction {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'initiationUserId',
+                    name: 'shipmentId',
                     classname: 'ApiTransaction',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -233,17 +304,6 @@ export namespace ApiTransaction {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'isProcessing',
-                    classname: 'ApiTransaction',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'outputQuantity',
                     classname: 'ApiTransaction',
                     dataType: 'number',
@@ -266,6 +326,17 @@ export namespace ApiTransaction {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'currency',
+                    classname: 'ApiTransaction',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'rejectComment',
                     classname: 'ApiTransaction',
                     dataType: 'string',
@@ -273,112 +344,41 @@ export namespace ApiTransaction {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    metadata: ApiSemiProduct.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'semiProduct',
-                    classname: 'ApiTransaction',
-                    dataType: 'ApiSemiProduct',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiSemiProduct'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'shipmentId',
-                    classname: 'ApiTransaction',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiFacility.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'sourceFacility',
-                    classname: 'ApiTransaction',
-                    dataType: 'ApiFacility',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiFacility'
-                },
-                {
-                    metadata: ApiStockOrder.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'sourceStockOrder',
-                    classname: 'ApiTransaction',
-                    dataType: 'ApiStockOrder',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiStockOrder'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiTransaction.StatusEnum',
-                    required: false,
-                    name: 'status',
-                    classname: 'ApiTransaction',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiStockOrder.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'targetStockOrder',
-                    classname: 'ApiTransaction',
-                    dataType: 'ApiStockOrder',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiStockOrder'
-                },
             ],
             validators: {
+                id: [
+                ],
                 company: [
                 ],
-                currency: [
+                initiationUserId: [
+                ],
+                sourceStockOrder: [
+                ],
+                targetStockOrder: [
+                ],
+                semiProduct: [
                 ],
                 finalProduct: [
                 ],
-                id: [
+                sourceFacility: [
                 ],
-                initiationUserId: [
+                isProcessing: [
+                ],
+                status: [
+                ],
+                shipmentId: [
                 ],
                 inputMeasureUnitType: [
                 ],
                 inputQuantity: [
                 ],
-                isProcessing: [
-                ],
                 outputQuantity: [
                 ],
                 pricePerUnit: [
                 ],
+                currency: [
+                ],
                 rejectComment: [
-                ],
-                semiProduct: [
-                ],
-                shipmentId: [
-                ],
-                sourceFacility: [
-                ],
-                sourceStockOrder: [
-                ],
-                status: [
-                ],
-                targetStockOrder: [
                 ],
             }
         }
@@ -387,19 +387,37 @@ export namespace ApiTransaction {
   // export const ApiTransactionValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               id: {
+  //                   validators: []
+  //               },
   //               company: {
   //                   validators: []
   //               },
-  //               currency: {
+  //               initiationUserId: {
+  //                   validators: []
+  //               },
+  //               sourceStockOrder: {
+  //                   validators: []
+  //               },
+  //               targetStockOrder: {
+  //                   validators: []
+  //               },
+  //               semiProduct: {
   //                   validators: []
   //               },
   //               finalProduct: {
   //                   validators: []
   //               },
-  //               id: {
+  //               sourceFacility: {
   //                   validators: []
   //               },
-  //               initiationUserId: {
+  //               isProcessing: {
+  //                   validators: []
+  //               },
+  //               status: {
+  //                   validators: []
+  //               },
+  //               shipmentId: {
   //                   validators: []
   //               },
   //               inputMeasureUnitType: {
@@ -408,34 +426,16 @@ export namespace ApiTransaction {
   //               inputQuantity: {
   //                   validators: []
   //               },
-  //               isProcessing: {
-  //                   validators: []
-  //               },
   //               outputQuantity: {
   //                   validators: []
   //               },
   //               pricePerUnit: {
   //                   validators: []
   //               },
+  //               currency: {
+  //                   validators: []
+  //               },
   //               rejectComment: {
-  //                   validators: []
-  //               },
-  //               semiProduct: {
-  //                   validators: []
-  //               },
-  //               shipmentId: {
-  //                   validators: []
-  //               },
-  //               sourceFacility: {
-  //                   validators: []
-  //               },
-  //               sourceStockOrder: {
-  //                   validators: []
-  //               },
-  //               status: {
-  //                   validators: []
-  //               },
-  //               targetStockOrder: {
   //                   validators: []
   //               },
   //     }

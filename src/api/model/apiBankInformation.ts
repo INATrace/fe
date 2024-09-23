@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,6 +20,9 @@
 
 
 
+/**
+ * Bank information
+ */
 
 export interface ApiBankInformation { 
     /**
@@ -31,13 +34,13 @@ export interface ApiBankInformation {
      */
     accountNumber?: string;
     /**
-     * Additional information
-     */
-    additionalInformation?: string;
-    /**
      * Bank name
      */
     bankName?: string;
+    /**
+     * Additional information
+     */
+    additionalInformation?: string;
 }
 
 /**
@@ -57,13 +60,13 @@ export namespace ApiBankInformation {
          */
         accountNumber = 'accountNumber',
         /**
-         * Additional information
-         */
-        additionalInformation = 'additionalInformation',
-        /**
          * Bank name
          */
-        bankName = 'bankName'
+        bankName = 'bankName',
+        /**
+         * Additional information
+         */
+        additionalInformation = 'additionalInformation'
     }
 
 
@@ -98,7 +101,7 @@ export namespace ApiBankInformation {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'additionalInformation',
+                    name: 'bankName',
                     classname: 'ApiBankInformation',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -109,7 +112,7 @@ export namespace ApiBankInformation {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'bankName',
+                    name: 'additionalInformation',
                     classname: 'ApiBankInformation',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -122,9 +125,9 @@ export namespace ApiBankInformation {
                 ],
                 accountNumber: [
                 ],
-                additionalInformation: [
-                ],
                 bankName: [
+                ],
+                additionalInformation: [
                 ],
             }
         }
@@ -139,10 +142,10 @@ export namespace ApiBankInformation {
   //               accountNumber: {
   //                   validators: []
   //               },
-  //               additionalInformation: {
+  //               bankName: {
   //                   validators: []
   //               },
-  //               bankName: {
+  //               additionalInformation: {
   //                   validators: []
   //               },
   //     }

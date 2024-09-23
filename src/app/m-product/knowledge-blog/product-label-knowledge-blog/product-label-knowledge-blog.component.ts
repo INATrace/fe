@@ -56,7 +56,7 @@ export class ProductLabelKnowledgeBlogComponent implements OnInit {
 
   async setAllBlogs() {
 
-    let res = await this.productController.getProductKnowledgeBlogUsingGET(this.productId, 'COUNT').pipe(take(1)).toPromise();
+    let res = await this.productController.getProductKnowledgeBlogs(this.productId, null, 'COUNT').pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
       this.allBlogs = res.data.count;
     }
@@ -135,7 +135,7 @@ export class ProductLabelKnowledgeBlogComponent implements OnInit {
     }).pipe(
       tap(val => this.globalEventsManager.showLoading(true)),
       switchMap(params => {
-        return this.productController.getProductKnowledgeBlogUsingGETByMap({ productId: this.productId, ...params })
+        return this.productController.getProductKnowledgeBlogsByMap({ productId: this.productId, ...params });
       }),
       map((resp: ApiPaginatedResponseApiKnowledgeBlogBase) => {
         if (resp) {

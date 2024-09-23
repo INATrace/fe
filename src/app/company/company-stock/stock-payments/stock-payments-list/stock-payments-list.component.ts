@@ -224,7 +224,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
   }
 
   loadPayments(params): Observable<ApiPaginatedResponseApiPayment> {
-    return this.paymentControllerService.listPaymentsByCompanyUsingGETByMap({
+    return this.paymentControllerService.listPaymentsByCompanyByMap({
       ...params,
       id: this.companyId
     });
@@ -247,7 +247,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
       }
     });
     if (result !== 'ok') { return; }
-    const res = await this.paymentControllerService.deletePaymentUsingDELETEByMap(entity).pipe(take(1)).toPromise();
+    const res = await this.paymentControllerService.deletePaymentByMap(entity).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
       this.reloadPage();
     }
@@ -266,7 +266,7 @@ export class StockPaymentsListComponent implements OnInit, OnDestroy {
     delete payment['selected'];
     payment.paymentStatus = ApiPayment.PaymentStatusEnum.CONFIRMED;
 
-    const res = await this.paymentControllerService.createOrUpdatePaymentUsingPUT(payment)
+    const res = await this.paymentControllerService.createOrUpdatePayment(payment)
         .pipe(take(1))
         .toPromise();
 

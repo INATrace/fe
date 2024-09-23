@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -25,7 +25,11 @@ export interface ApiAdminUserUpdate {
     /**
      * Name
      */
-    id?: number;
+    name?: string;
+    /**
+     * Surname
+     */
+    surname?: string;
     /**
      * language
      */
@@ -33,11 +37,7 @@ export interface ApiAdminUserUpdate {
     /**
      * Name
      */
-    name?: string;
-    /**
-     * Surname
-     */
-    surname?: string;
+    id?: number;
 }
 
 /**
@@ -51,7 +51,11 @@ export namespace ApiAdminUserUpdate {
         /**
          * Name
          */
-        id = 'id',
+        name = 'name',
+        /**
+         * Surname
+         */
+        surname = 'surname',
         /**
          * language
          */
@@ -59,11 +63,7 @@ export namespace ApiAdminUserUpdate {
         /**
          * Name
          */
-        name = 'name',
-        /**
-         * Surname
-         */
-        surname = 'surname'
+        id = 'id'
     }
 
     /**
@@ -86,9 +86,20 @@ export namespace ApiAdminUserUpdate {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'name',
                     classname: 'ApiAdminUserUpdate',
-                    dataType: 'number',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'surname',
+                    classname: 'ApiAdminUserUpdate',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -109,33 +120,26 @@ export namespace ApiAdminUserUpdate {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
+                    name: 'id',
                     classname: 'ApiAdminUserUpdate',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'surname',
-                    classname: 'ApiAdminUserUpdate',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                id: [
+                name: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                surname: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 language: [
                 ],
-                name: [
-                ],
-                surname: [
+                id: [
                 ],
             }
         }
@@ -144,16 +148,16 @@ export namespace ApiAdminUserUpdate {
   // export const ApiAdminUserUpdateValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               id: {
+  //               name: {
+  //                   validators: []
+  //               },
+  //               surname: {
   //                   validators: []
   //               },
   //               language: {
   //                   validators: []
   //               },
-  //               name: {
-  //                   validators: []
-  //               },
-  //               surname: {
+  //               id: {
   //                   validators: []
   //               },
   //     }

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,24 +20,27 @@
 
 
 
+/**
+ * Response items.
+ */
 
 export interface ApiKnowledgeBlogBase { 
-    /**
-     * Date
-     */
-    date?: string;
     /**
      * Entity id
      */
     id?: number;
     /**
+     * Type
+     */
+    type?: ApiKnowledgeBlogBase.TypeEnum;
+    /**
      * Name
      */
     title?: string;
     /**
-     * Type
+     * Date
      */
-    type?: ApiKnowledgeBlogBase.TypeEnum;
+    date?: string;
     /**
      * Youtube URL
      */
@@ -53,21 +56,21 @@ export namespace ApiKnowledgeBlogBase {
      */
     export enum Properties {
         /**
-         * Date
-         */
-        date = 'date',
-        /**
          * Entity id
          */
         id = 'id',
+        /**
+         * Type
+         */
+        type = 'type',
         /**
          * Name
          */
         title = 'title',
         /**
-         * Type
+         * Date
          */
-        type = 'type',
+        date = 'date',
         /**
          * Youtube URL
          */
@@ -93,31 +96,9 @@ export namespace ApiKnowledgeBlogBase {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'date',
-                    classname: 'ApiKnowledgeBlogBase',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'id',
                     classname: 'ApiKnowledgeBlogBase',
                     dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'title',
-                    classname: 'ApiKnowledgeBlogBase',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -138,6 +119,28 @@ export namespace ApiKnowledgeBlogBase {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'title',
+                    classname: 'ApiKnowledgeBlogBase',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'date',
+                    classname: 'ApiKnowledgeBlogBase',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'youtubeUrl',
                     classname: 'ApiKnowledgeBlogBase',
                     dataType: 'string',
@@ -147,15 +150,19 @@ export namespace ApiKnowledgeBlogBase {
                 },
             ],
             validators: {
-                date: [
-                ],
                 id: [
-                ],
-                title: [
                 ],
                 type: [
                 ],
+                title: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                date: [
+                ],
                 youtubeUrl: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
             }
         }
@@ -164,16 +171,16 @@ export namespace ApiKnowledgeBlogBase {
   // export const ApiKnowledgeBlogBaseValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               date: {
+  //               id: {
   //                   validators: []
   //               },
-  //               id: {
+  //               type: {
   //                   validators: []
   //               },
   //               title: {
   //                   validators: []
   //               },
-  //               type: {
+  //               date: {
   //                   validators: []
   //               },
   //               youtubeUrl: {

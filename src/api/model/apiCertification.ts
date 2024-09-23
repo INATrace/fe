@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,13 +21,11 @@
 import { ApiDocument } from './apiDocument';
 
 
+/**
+ * company certifications
+ */
 
 export interface ApiCertification { 
-    certificate?: ApiDocument;
-    /**
-     * description of this standard and certification
-     */
-    description?: string;
     /**
      * Entity id
      */
@@ -36,6 +34,11 @@ export interface ApiCertification {
      * certification type
      */
     type?: string;
+    certificate?: ApiDocument;
+    /**
+     * description of this standard and certification
+     */
+    description?: string;
     /**
      * validity
      */
@@ -50,11 +53,6 @@ export namespace ApiCertification {
      * All properties of ApiCertification.
      */
     export enum Properties {
-        certificate = 'certificate',
-        /**
-         * description of this standard and certification
-         */
-        description = 'description',
         /**
          * Entity id
          */
@@ -63,6 +61,11 @@ export namespace ApiCertification {
          * certification type
          */
         type = 'type',
+        certificate = 'certificate',
+        /**
+         * description of this standard and certification
+         */
+        description = 'description',
         /**
          * validity
          */
@@ -75,6 +78,28 @@ export namespace ApiCertification {
             metadata: formMetadata,
             classname: 'ApiCertification',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiCertification',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'type',
+                    classname: 'ApiCertification',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     metadata: ApiDocument.formMetadata,
                     isReadOnly: false,
@@ -102,28 +127,6 @@ export namespace ApiCertification {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
-                    classname: 'ApiCertification',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'type',
-                    classname: 'ApiCertification',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'validity',
                     classname: 'ApiCertification',
                     dataType: 'string',
@@ -133,13 +136,15 @@ export namespace ApiCertification {
                 },
             ],
             validators: {
-                certificate: [
-                ],
-                description: [
-                ],
                 id: [
                 ],
                 type: [
+                ],
+                certificate: [
+                ],
+                description: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
                 ],
                 validity: [
                 ],
@@ -150,16 +155,16 @@ export namespace ApiCertification {
   // export const ApiCertificationValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               certificate: {
-  //                   validators: []
-  //               },
-  //               description: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
   //               type: {
+  //                   validators: []
+  //               },
+  //               certificate: {
+  //                   validators: []
+  //               },
+  //               description: {
   //                   validators: []
   //               },
   //               validity: {

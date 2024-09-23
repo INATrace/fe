@@ -243,7 +243,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         this.title = $localize`:@@collectorDetail.newFarmer.title:New farmer`;
         this.update = false;
         // this code sets the default product type, when only 1 is available
-        const defaultProdTypeCheck = await this.companyService.getCompanyProductTypesUsingGET(this.companyId).pipe(take(1)).toPromise();
+        const defaultProdTypeCheck = await this.companyService.getCompanyProductTypes(this.companyId).pipe(take(1)).toPromise();
         if (defaultProdTypeCheck && defaultProdTypeCheck.status === 'OK') {
           if (defaultProdTypeCheck.data.count === 1) {
             this.productTypes = defaultProdTypeCheck.data.items;
@@ -253,7 +253,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       case 'update':
         this.title = $localize`:@@collectorDetail.editFarmer.title:Edit farmer`;
         this.update = true;
-        const uc = await this.companyService.getUserCustomerUsingGET(this.route.snapshot.params.id).pipe(first()).toPromise();
+        const uc = await this.companyService.getUserCustomer(this.route.snapshot.params.id).pipe(first()).toPromise();
         if (uc && uc.status === 'OK') {
           this.farmer = uc.data;
           this.productTypes = uc.data.productTypes;
@@ -444,7 +444,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
     this.globalEventsManager.showLoading(true);
     try {
-      const res = await this.companyService.exportUserCustomerGeoDataUsingGET(this.farmer.id)
+      const res = await this.companyService.exportUserCustomerGeoData(this.farmer.id)
           .pipe(take(1))
           .toPromise();
       this.fileSaverService.save(res, 'farmer_geo_data.json');
@@ -556,9 +556,9 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       this.globalEventsManager.showLoading(true);
       let res;
       if (!this.update) {
-        res = await this.companyService.addUserCustomerUsingPOST(this.companyId, data).toPromise();
+        res = await this.companyService.addUserCustomer(this.companyId, data).toPromise();
       } else {
-        res = await this.companyService.updateUserCustomerUsingPUT(data).toPromise();
+        res = await this.companyService.updateUserCustomer(data).toPromise();
       }
       if (res && res.status === 'OK') {
         this.dismiss();
@@ -593,7 +593,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   async listOfOrgAssociation() {
 
-    const res = await this.companyService.getAssociationsUsingGET(this.companyId).pipe(take(1)).toPromise();
+    const res = await this.companyService.getAssociations(this.companyId).pipe(take(1)).toPromise();
 
     if (res && res.status === 'OK' && res.data) {
       const companiesObj = {};

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,6 +21,9 @@
 import { ApiAddress } from './apiAddress';
 
 
+/**
+ * Facility location
+ */
 
 export interface ApiFacilityLocation { 
     address?: ApiAddress;
@@ -155,6 +158,8 @@ export namespace ApiFacilityLocation {
                 numberOfFarmers: [
                 ],
                 pinName: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 publiclyVisible: [
                 ],

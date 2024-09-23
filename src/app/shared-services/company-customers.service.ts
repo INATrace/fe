@@ -3,7 +3,7 @@ import { map } from 'rxjs/operators';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiCompanyCustomer } from '../../api/model/apiCompanyCustomer';
-import { CompanyControllerService, GetCompanyCustomersListUsingGET } from '../../api/api/companyController.service';
+import { CompanyControllerService, GetCompanyCustomersList } from '../../api/api/companyController.service';
 import { ApiPaginatedResponseApiCompanyCustomer } from '../../api/model/apiPaginatedResponseApiCompanyCustomer';
 
 export class CompanyCustomersService extends GeneralSifrantService<ApiCompanyCustomer> {
@@ -18,7 +18,7 @@ export class CompanyCustomersService extends GeneralSifrantService<ApiCompanyCus
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetCompanyCustomersListUsingGET.PartialParamMap;
+  } as GetCompanyCustomersList.PartialParamMap;
 
   public identifier(el: ApiCompanyCustomer) {
     return el.id;
@@ -36,7 +36,7 @@ export class CompanyCustomersService extends GeneralSifrantService<ApiCompanyCus
       ...this.requestParams
     };
 
-    return this.companyCustomerController.getCompanyCustomersListUsingGETByMap(reqPars).pipe(
+    return this.companyCustomerController.getCompanyCustomersListByMap(reqPars).pipe(
       map((res: ApiPaginatedResponseApiCompanyCustomer) => {
         return {
           results: res.data.items,

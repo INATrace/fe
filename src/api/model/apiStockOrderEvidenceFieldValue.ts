@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,16 +20,15 @@
 
 
 
+/**
+ * Processing evidence fields stored values for this stock order
+ */
 
 export interface ApiStockOrderEvidenceFieldValue { 
     /**
-     * Value holder of type Boolean
+     * Entity id
      */
-    booleanValue?: boolean;
-    /**
-     * Value holder of type Date
-     */
-    dateValue?: Date;
+    id?: number;
     /**
      * The id of the Processing evidence field from the codebook
      */
@@ -43,17 +42,21 @@ export interface ApiStockOrderEvidenceFieldValue {
      */
     evidenceFieldType?: ApiStockOrderEvidenceFieldValue.EvidenceFieldTypeEnum;
     /**
-     * Entity id
+     * Value holder of type String
      */
-    id?: number;
+    stringValue?: string;
     /**
      * Value holder of type Number
      */
     numericValue?: number;
     /**
-     * Value holder of type String
+     * Value holder of type Boolean
      */
-    stringValue?: string;
+    booleanValue?: boolean;
+    /**
+     * Value holder of type Date
+     */
+    dateValue?: Date;
 }
 
 /**
@@ -65,13 +68,9 @@ export namespace ApiStockOrderEvidenceFieldValue {
      */
     export enum Properties {
         /**
-         * Value holder of type Boolean
+         * Entity id
          */
-        booleanValue = 'booleanValue',
-        /**
-         * Value holder of type Date
-         */
-        dateValue = 'dateValue',
+        id = 'id',
         /**
          * The id of the Processing evidence field from the codebook
          */
@@ -85,17 +84,21 @@ export namespace ApiStockOrderEvidenceFieldValue {
          */
         evidenceFieldType = 'evidenceFieldType',
         /**
-         * Entity id
+         * Value holder of type String
          */
-        id = 'id',
+        stringValue = 'stringValue',
         /**
          * Value holder of type Number
          */
         numericValue = 'numericValue',
         /**
-         * Value holder of type String
+         * Value holder of type Boolean
          */
-        stringValue = 'stringValue'
+        booleanValue = 'booleanValue',
+        /**
+         * Value holder of type Date
+         */
+        dateValue = 'dateValue'
     }
 
     /**
@@ -123,20 +126,9 @@ export namespace ApiStockOrderEvidenceFieldValue {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'booleanValue',
+                    name: 'id',
                     classname: 'ApiStockOrderEvidenceFieldValue',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'dateValue',
-                    classname: 'ApiStockOrderEvidenceFieldValue',
-                    dataType: 'Date',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -179,9 +171,9 @@ export namespace ApiStockOrderEvidenceFieldValue {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'stringValue',
                     classname: 'ApiStockOrderEvidenceFieldValue',
-                    dataType: 'number',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -201,18 +193,27 @@ export namespace ApiStockOrderEvidenceFieldValue {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'stringValue',
+                    name: 'booleanValue',
                     classname: 'ApiStockOrderEvidenceFieldValue',
-                    dataType: 'string',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dateValue',
+                    classname: 'ApiStockOrderEvidenceFieldValue',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                booleanValue: [
-                ],
-                dateValue: [
+                id: [
                 ],
                 evidenceFieldId: [
                 ],
@@ -220,11 +221,13 @@ export namespace ApiStockOrderEvidenceFieldValue {
                 ],
                 evidenceFieldType: [
                 ],
-                id: [
+                stringValue: [
                 ],
                 numericValue: [
                 ],
-                stringValue: [
+                booleanValue: [
+                ],
+                dateValue: [
                 ],
             }
         }
@@ -233,10 +236,7 @@ export namespace ApiStockOrderEvidenceFieldValue {
   // export const ApiStockOrderEvidenceFieldValueValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               booleanValue: {
-  //                   validators: []
-  //               },
-  //               dateValue: {
+  //               id: {
   //                   validators: []
   //               },
   //               evidenceFieldId: {
@@ -248,13 +248,16 @@ export namespace ApiStockOrderEvidenceFieldValue {
   //               evidenceFieldType: {
   //                   validators: []
   //               },
-  //               id: {
+  //               stringValue: {
   //                   validators: []
   //               },
   //               numericValue: {
   //                   validators: []
   //               },
-  //               stringValue: {
+  //               booleanValue: {
+  //                   validators: []
+  //               },
+  //               dateValue: {
   //                   validators: []
   //               },
   //     }

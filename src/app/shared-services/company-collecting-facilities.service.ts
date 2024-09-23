@@ -1,6 +1,6 @@
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiFacility } from '../../api/model/apiFacility';
-import { FacilityControllerService, ListCollectingFacilitiesByCompanyUsingGET } from '../../api/api/facilityController.service';
+import { FacilityControllerService, ListCollectingFacilitiesByCompany } from '../../api/api/facilityController.service';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
 import { map } from 'rxjs/operators';
@@ -11,7 +11,7 @@ export class CompanyCollectingFacilitiesService extends GeneralSifrantService<Ap
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as ListCollectingFacilitiesByCompanyUsingGET.PartialParamMap;
+  } as ListCollectingFacilitiesByCompany.PartialParamMap;
 
   constructor(
     private facilityControllerService: FacilityControllerService,
@@ -40,7 +40,7 @@ export class CompanyCollectingFacilitiesService extends GeneralSifrantService<Ap
       ...this.requestParams
     };
 
-    return this.facilityControllerService.listCollectingFacilitiesByCompanyUsingGETByMap(reqParams)
+    return this.facilityControllerService.listCollectingFacilitiesByCompanyByMap(reqParams)
       .pipe(
         map((res: ApiPaginatedResponseApiFacility) => {
           return {

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -35,11 +35,11 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for getFinalProductsForCompanyUsingGET.
+ * Namespace for getFinalProductsForCompany.
  */
-export namespace GetFinalProductsForCompanyUsingGET {
+export namespace GetFinalProductsForCompany {
     /**
-     * Parameter map for getFinalProductsForCompanyUsingGET.
+     * Parameter map for getFinalProductsForCompany.
      */
     export interface PartialParamMap {
       /**
@@ -69,7 +69,7 @@ export namespace GetFinalProductsForCompanyUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for getFinalProductsForCompanyUsingGET.
+     * Enumeration of all parameters for getFinalProductsForCompany.
      */
     export enum Parameters {
       /**
@@ -99,18 +99,20 @@ export namespace GetFinalProductsForCompanyUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getFinalProductsForCompanyUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getFinalProductsForCompany
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetFinalProductsForCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetFinalProductsForCompany.PartialParamMap]?: [string, ValidatorFn][]} = {
       companyId: [
               ['required', Validators.required],
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -163,23 +165,23 @@ export class FinalProductControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getFinalProductsForCompanyUsingGETByMap(
-    map: GetFinalProductsForCompanyUsingGET.PartialParamMap,
+  public getFinalProductsForCompanyByMap(
+    map: GetFinalProductsForCompany.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiFinalProduct>;
-  public getFinalProductsForCompanyUsingGETByMap(
-    map: GetFinalProductsForCompanyUsingGET.PartialParamMap,
+  public getFinalProductsForCompanyByMap(
+    map: GetFinalProductsForCompany.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiFinalProduct>>;
-  public getFinalProductsForCompanyUsingGETByMap(
-    map: GetFinalProductsForCompanyUsingGET.PartialParamMap,
+  public getFinalProductsForCompanyByMap(
+    map: GetFinalProductsForCompany.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiFinalProduct>>;
-  public getFinalProductsForCompanyUsingGETByMap(
-    map: GetFinalProductsForCompanyUsingGET.PartialParamMap,
+  public getFinalProductsForCompanyByMap(
+    map: GetFinalProductsForCompany.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getFinalProductsForCompanyUsingGET(
+    return this.getFinalProductsForCompany(
       map.companyId,
       map.requestType,
       map.limit,
@@ -204,12 +206,12 @@ export class FinalProductControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getFinalProductsForCompanyUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiFinalProduct>;
-    public getFinalProductsForCompanyUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiFinalProduct>>;
-    public getFinalProductsForCompanyUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiFinalProduct>>;
-    public getFinalProductsForCompanyUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getFinalProductsForCompany(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiFinalProduct>;
+    public getFinalProductsForCompany(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiFinalProduct>>;
+    public getFinalProductsForCompany(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiFinalProduct>>;
+    public getFinalProductsForCompany(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
-            throw new Error('Required parameter companyId was null or undefined when calling getFinalProductsForCompanyUsingGET.');
+            throw new Error('Required parameter companyId was null or undefined when calling getFinalProductsForCompany.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -260,7 +262,7 @@ export class FinalProductControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getFinalProductsForCompanyUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getFinalProductsForCompany')));
         }
         return handle;
     }

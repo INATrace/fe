@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,12 +20,19 @@
 
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiBeycoTokenResponse { 
     /**
      * JWT token for authentication
      */
     accessToken?: string;
+    /**
+     * Type of token
+     */
+    tokenType?: string;
     /**
      * Remaining time of token's life
      */
@@ -38,10 +45,6 @@ export interface ApiBeycoTokenResponse {
      * Scope of the token
      */
     scope?: Array<string>;
-    /**
-     * Type of token
-     */
-    tokenType?: string;
 }
 
 /**
@@ -57,6 +60,10 @@ export namespace ApiBeycoTokenResponse {
          */
         accessToken = 'accessToken',
         /**
+         * Type of token
+         */
+        tokenType = 'tokenType',
+        /**
          * Remaining time of token's life
          */
         expiresIn = 'expiresIn',
@@ -67,11 +74,7 @@ export namespace ApiBeycoTokenResponse {
         /**
          * Scope of the token
          */
-        scope = 'scope',
-        /**
-         * Type of token
-         */
-        tokenType = 'tokenType'
+        scope = 'scope'
     }
 
 
@@ -85,6 +88,17 @@ export namespace ApiBeycoTokenResponse {
                     isEnum: false,
                     required: false,
                     name: 'accessToken',
+                    classname: 'ApiBeycoTokenResponse',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'tokenType',
                     classname: 'ApiBeycoTokenResponse',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -124,28 +138,17 @@ export namespace ApiBeycoTokenResponse {
                     isListContainer: true,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'tokenType',
-                    classname: 'ApiBeycoTokenResponse',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
                 accessToken: [
+                ],
+                tokenType: [
                 ],
                 expiresIn: [
                 ],
                 refreshToken: [
                 ],
                 scope: [
-                ],
-                tokenType: [
                 ],
             }
         }
@@ -157,6 +160,9 @@ export namespace ApiBeycoTokenResponse {
   //               accessToken: {
   //                   validators: []
   //               },
+  //               tokenType: {
+  //                   validators: []
+  //               },
   //               expiresIn: {
   //                   validators: []
   //               },
@@ -164,9 +170,6 @@ export namespace ApiBeycoTokenResponse {
   //                   validators: []
   //               },
   //               scope: {
-  //                   validators: []
-  //               },
-  //               tokenType: {
   //                   validators: []
   //               },
   //     }

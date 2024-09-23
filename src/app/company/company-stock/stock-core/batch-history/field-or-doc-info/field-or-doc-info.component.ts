@@ -44,7 +44,7 @@ export class FieldOrDocInfoComponent implements OnInit {
 
   async onDownload(document: ApiDocument) {
     if (document && document.storageKey) {
-      const res = await this.fileService.getDocumentUsingGET(document.storageKey).pipe(take(1)).toPromise();
+      const res = await this.fileService.getDocument(document.storageKey).pipe(take(1)).toPromise();
       if (res) {
         this.fileSaverService.save(res, document.name);
       }

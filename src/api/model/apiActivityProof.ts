@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,25 +21,28 @@
 import { ApiDocument } from './apiDocument';
 
 
+/**
+ * Activity proofs
+ */
 
 export interface ApiActivityProof { 
-    document?: ApiDocument;
-    /**
-     * The formal creation date of the document
-     */
-    formalCreationDate?: Date;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * The type of the activity proof
+     * The formal creation date of the document
      */
-    type?: string;
+    formalCreationDate?: Date;
     /**
      * Date until the document is valid
      */
     validUntil?: Date;
+    /**
+     * The type of the activity proof
+     */
+    type?: string;
+    document?: ApiDocument;
 }
 
 /**
@@ -50,23 +53,23 @@ export namespace ApiActivityProof {
      * All properties of ApiActivityProof.
      */
     export enum Properties {
-        document = 'document',
-        /**
-         * The formal creation date of the document
-         */
-        formalCreationDate = 'formalCreationDate',
         /**
          * Entity id
          */
         id = 'id',
         /**
-         * The type of the activity proof
+         * The formal creation date of the document
          */
-        type = 'type',
+        formalCreationDate = 'formalCreationDate',
         /**
          * Date until the document is valid
          */
-        validUntil = 'validUntil'
+        validUntil = 'validUntil',
+        /**
+         * The type of the activity proof
+         */
+        type = 'type',
+        document = 'document'
     }
 
 
@@ -76,16 +79,15 @@ export namespace ApiActivityProof {
             classname: 'ApiActivityProof',
             vars: [
                 {
-                    metadata: ApiDocument.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'document',
+                    name: 'id',
                     classname: 'ApiActivityProof',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
+                    dataType: 'number',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiDocument'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -102,9 +104,9 @@ export namespace ApiActivityProof {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'validUntil',
                     classname: 'ApiActivityProof',
-                    dataType: 'number',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -121,27 +123,28 @@ export namespace ApiActivityProof {
                     complexType: ''
                 },
                 {
+                    metadata: ApiDocument.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'validUntil',
+                    name: 'document',
                     classname: 'ApiActivityProof',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ApiDocument'
                 },
             ],
             validators: {
-                document: [
+                id: [
                 ],
                 formalCreationDate: [
                 ],
-                id: [
+                validUntil: [
                 ],
                 type: [
                 ],
-                validUntil: [
+                document: [
                 ],
             }
         }
@@ -150,19 +153,19 @@ export namespace ApiActivityProof {
   // export const ApiActivityProofValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               document: {
+  //               id: {
   //                   validators: []
   //               },
   //               formalCreationDate: {
   //                   validators: []
   //               },
-  //               id: {
+  //               validUntil: {
   //                   validators: []
   //               },
   //               type: {
   //                   validators: []
   //               },
-  //               validUntil: {
+  //               document: {
   //                   validators: []
   //               },
   //     }

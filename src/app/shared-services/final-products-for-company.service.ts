@@ -2,7 +2,7 @@ import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiFinalProduct } from '../../api/model/apiFinalProduct';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
-import { FinalProductControllerService, GetFinalProductsForCompanyUsingGET } from '../../api/api/finalProductController.service';
+import { FinalProductControllerService, GetFinalProductsForCompany } from '../../api/api/finalProductController.service';
 import { map } from 'rxjs/operators';
 import { ApiPaginatedResponseApiFinalProduct } from '../../api/model/apiPaginatedResponseApiFinalProduct';
 
@@ -11,7 +11,7 @@ export class FinalProductsForCompanyService extends GeneralSifrantService<ApiFin
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetFinalProductsForCompanyUsingGET.PartialParamMap;
+  } as GetFinalProductsForCompany.PartialParamMap;
 
   constructor(
     private finalProductController: FinalProductControllerService,
@@ -35,12 +35,12 @@ export class FinalProductsForCompanyService extends GeneralSifrantService<ApiFin
   makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiFinalProduct>> {
 
     const limit = params && params.limit ? params.limit : this.limit();
-    const reqParams: GetFinalProductsForCompanyUsingGET.PartialParamMap = {
+    const reqParams: GetFinalProductsForCompany.PartialParamMap = {
       companyId: this.companyId,
       ...this.requestParams
     };
 
-    return this.finalProductController.getFinalProductsForCompanyUsingGETByMap(reqParams)
+    return this.finalProductController.getFinalProductsForCompanyByMap(reqParams)
       .pipe(
         map((res: ApiPaginatedResponseApiFinalProduct) => {
           return {

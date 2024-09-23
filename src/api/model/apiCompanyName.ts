@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,53 +21,56 @@
 import { ApiAddress } from './apiAddress';
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiCompanyName { 
-    /**
-     * company abbreviation
-     */
-    abbreviation?: string;
-    /**
-     * about the company
-     */
-    about?: string;
-    /**
-     * Display preferred way of payment on purchase order form
-     */
-    displayPrefferedWayOfPayment?: boolean;
-    /**
-     * email
-     */
-    email?: string;
-    headquarters?: ApiAddress;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * name of manager / CEO
-     */
-    manager?: string;
-    /**
-     * social media URL links (Facebook, Instagram, Twitter, YouTube, ...)
-     */
-    mediaLinks?: { [key: string]: string; };
-    /**
      * company name
      */
     name?: string;
     /**
+     * company abbreviation
+     */
+    abbreviation?: string;
+    headquarters?: ApiAddress;
+    /**
+     * about the company
+     */
+    about?: string;
+    /**
+     * name of manager / CEO
+     */
+    manager?: string;
+    /**
      * webpage
      */
-    phone?: string;
+    webPage?: string;
+    /**
+     * Display preferred way of payment on purchase order form
+     */
+    displayPrefferedWayOfPayment?: boolean;
     /**
      * Enable adding multiple farmers for one proof document on purchase order form
      */
     purchaseProofDocumentMultipleFarmers?: boolean;
     /**
+     * email
+     */
+    email?: string;
+    /**
      * webpage
      */
-    webPage?: string;
+    phone?: string;
+    /**
+     * social media URL links (Facebook, Instagram, Twitter, YouTube, ...)
+     */
+    mediaLinks?: { [key: string]: string; };
 }
 
 /**
@@ -79,50 +82,50 @@ export namespace ApiCompanyName {
      */
     export enum Properties {
         /**
-         * company abbreviation
-         */
-        abbreviation = 'abbreviation',
-        /**
-         * about the company
-         */
-        about = 'about',
-        /**
-         * Display preferred way of payment on purchase order form
-         */
-        displayPrefferedWayOfPayment = 'displayPrefferedWayOfPayment',
-        /**
-         * email
-         */
-        email = 'email',
-        headquarters = 'headquarters',
-        /**
          * Entity id
          */
         id = 'id',
-        /**
-         * name of manager / CEO
-         */
-        manager = 'manager',
-        /**
-         * social media URL links (Facebook, Instagram, Twitter, YouTube, ...)
-         */
-        mediaLinks = 'mediaLinks',
         /**
          * company name
          */
         name = 'name',
         /**
+         * company abbreviation
+         */
+        abbreviation = 'abbreviation',
+        headquarters = 'headquarters',
+        /**
+         * about the company
+         */
+        about = 'about',
+        /**
+         * name of manager / CEO
+         */
+        manager = 'manager',
+        /**
          * webpage
          */
-        phone = 'phone',
+        webPage = 'webPage',
+        /**
+         * Display preferred way of payment on purchase order form
+         */
+        displayPrefferedWayOfPayment = 'displayPrefferedWayOfPayment',
         /**
          * Enable adding multiple farmers for one proof document on purchase order form
          */
         purchaseProofDocumentMultipleFarmers = 'purchaseProofDocumentMultipleFarmers',
         /**
+         * email
+         */
+        email = 'email',
+        /**
          * webpage
          */
-        webPage = 'webPage'
+        phone = 'phone',
+        /**
+         * social media URL links (Facebook, Instagram, Twitter, YouTube, ...)
+         */
+        mediaLinks = 'mediaLinks'
     }
 
 
@@ -135,40 +138,29 @@ export namespace ApiCompanyName {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'id',
+                    classname: 'ApiCompanyName',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
+                    classname: 'ApiCompanyName',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'abbreviation',
-                    classname: 'ApiCompanyName',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'about',
-                    classname: 'ApiCompanyName',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'displayPrefferedWayOfPayment',
-                    classname: 'ApiCompanyName',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'email',
                     classname: 'ApiCompanyName',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -191,9 +183,9 @@ export namespace ApiCompanyName {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'about',
                     classname: 'ApiCompanyName',
-                    dataType: 'number',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -213,9 +205,9 @@ export namespace ApiCompanyName {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'mediaLinks',
+                    name: 'webPage',
                     classname: 'ApiCompanyName',
-                    dataType: '{ [key: string]: string; }',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -224,7 +216,29 @@ export namespace ApiCompanyName {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
+                    name: 'displayPrefferedWayOfPayment',
+                    classname: 'ApiCompanyName',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'purchaseProofDocumentMultipleFarmers',
+                    classname: 'ApiCompanyName',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'email',
                     classname: 'ApiCompanyName',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -246,49 +260,48 @@ export namespace ApiCompanyName {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'purchaseProofDocumentMultipleFarmers',
+                    name: 'mediaLinks',
                     classname: 'ApiCompanyName',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'webPage',
-                    classname: 'ApiCompanyName',
-                    dataType: 'string',
+                    dataType: '{ [key: string]: string; }',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                abbreviation: [
-                ],
-                about: [
-                ],
-                displayPrefferedWayOfPayment: [
-                ],
-                email: [
-                ],
-                headquarters: [
-                ],
                 id: [
-                ],
-                manager: [
-                ],
-                mediaLinks: [
                 ],
                 name: [
                 ],
-                phone: [
+                abbreviation: [
+                ],
+                headquarters: [
+                ],
+                about: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
+                ],
+                manager: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                webPage: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                displayPrefferedWayOfPayment: [
                 ],
                 purchaseProofDocumentMultipleFarmers: [
                 ],
-                webPage: [
+                email: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                phone: [
+                        ['minlength', 0],
+                        ['maxlength', 20],
+                ],
+                mediaLinks: [
                 ],
             }
         }
@@ -297,40 +310,40 @@ export namespace ApiCompanyName {
   // export const ApiCompanyNameValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               abbreviation: {
-  //                   validators: []
-  //               },
-  //               about: {
-  //                   validators: []
-  //               },
-  //               displayPrefferedWayOfPayment: {
-  //                   validators: []
-  //               },
-  //               email: {
-  //                   validators: []
-  //               },
-  //               headquarters: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               manager: {
-  //                   validators: []
-  //               },
-  //               mediaLinks: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               phone: {
+  //               abbreviation: {
+  //                   validators: []
+  //               },
+  //               headquarters: {
+  //                   validators: []
+  //               },
+  //               about: {
+  //                   validators: []
+  //               },
+  //               manager: {
+  //                   validators: []
+  //               },
+  //               webPage: {
+  //                   validators: []
+  //               },
+  //               displayPrefferedWayOfPayment: {
   //                   validators: []
   //               },
   //               purchaseProofDocumentMultipleFarmers: {
   //                   validators: []
   //               },
-  //               webPage: {
+  //               email: {
+  //                   validators: []
+  //               },
+  //               phone: {
+  //                   validators: []
+  //               },
+  //               mediaLinks: {
   //                   validators: []
   //               },
   //     }

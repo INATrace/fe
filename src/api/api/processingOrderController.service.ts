@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -38,53 +38,41 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createOrUpdateProcessingOrderUsingPUT.
+ * Namespace for createOrUpdateProcessingOrder.
  */
-export namespace CreateOrUpdateProcessingOrderUsingPUT {
+export namespace CreateOrUpdateProcessingOrder {
     /**
-     * Parameter map for createOrUpdateProcessingOrderUsingPUT.
+     * Parameter map for createOrUpdateProcessingOrder.
      */
     export interface PartialParamMap {
-      /**
-       * apiProcessingOrder
-       */
       ApiProcessingOrder: ApiProcessingOrder;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for createOrUpdateProcessingOrderUsingPUT.
+     * Enumeration of all parameters for createOrUpdateProcessingOrder.
      */
     export enum Parameters {
-      /**
-       * apiProcessingOrder
-       */
       ApiProcessingOrder = 'ApiProcessingOrder',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateProcessingOrderUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateProcessingOrder
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateOrUpdateProcessingOrderUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateOrUpdateProcessingOrder.PartialParamMap]?: [string, ValidatorFn][]} = {
       language: [
       ],
     };
 }
 
 /**
- * Namespace for deleteProcessingOrderUsingDELETE.
+ * Namespace for deleteProcessingOrder.
  */
-export namespace DeleteProcessingOrderUsingDELETE {
+export namespace DeleteProcessingOrder {
     /**
-     * Parameter map for deleteProcessingOrderUsingDELETE.
+     * Parameter map for deleteProcessingOrder.
      */
     export interface PartialParamMap {
       /**
@@ -94,7 +82,7 @@ export namespace DeleteProcessingOrderUsingDELETE {
     }
 
     /**
-     * Enumeration of all parameters for deleteProcessingOrderUsingDELETE.
+     * Enumeration of all parameters for deleteProcessingOrder.
      */
     export enum Parameters {
       /**
@@ -104,10 +92,10 @@ export namespace DeleteProcessingOrderUsingDELETE {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteProcessingOrderUsingDELETE
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteProcessingOrder
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof DeleteProcessingOrderUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof DeleteProcessingOrder.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -115,42 +103,36 @@ export namespace DeleteProcessingOrderUsingDELETE {
 }
 
 /**
- * Namespace for getProcessingOrderUsingGET.
+ * Namespace for getProcessingOrder.
  */
-export namespace GetProcessingOrderUsingGET {
+export namespace GetProcessingOrder {
     /**
-     * Parameter map for getProcessingOrderUsingGET.
+     * Parameter map for getProcessingOrder.
      */
     export interface PartialParamMap {
       /**
        * ProcessingOrder ID
        */
       id: number;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getProcessingOrderUsingGET.
+     * Enumeration of all parameters for getProcessingOrder.
      */
     export enum Parameters {
       /**
        * ProcessingOrder ID
        */
       id = 'id',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingOrderUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingOrder
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetProcessingOrderUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetProcessingOrder.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -203,23 +185,23 @@ export class ProcessingOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createOrUpdateProcessingOrderUsingPUTByMap(
-    map: CreateOrUpdateProcessingOrderUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingOrderByMap(
+    map: CreateOrUpdateProcessingOrder.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public createOrUpdateProcessingOrderUsingPUTByMap(
-    map: CreateOrUpdateProcessingOrderUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingOrderByMap(
+    map: CreateOrUpdateProcessingOrder.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public createOrUpdateProcessingOrderUsingPUTByMap(
-    map: CreateOrUpdateProcessingOrderUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingOrderByMap(
+    map: CreateOrUpdateProcessingOrder.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public createOrUpdateProcessingOrderUsingPUTByMap(
-    map: CreateOrUpdateProcessingOrderUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingOrderByMap(
+    map: CreateOrUpdateProcessingOrder.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createOrUpdateProcessingOrderUsingPUT(
+    return this.createOrUpdateProcessingOrder(
       map.ApiProcessingOrder,
       map.language,
       observe,
@@ -231,17 +213,17 @@ export class ProcessingOrderControllerService {
     /**
      * Create or update processing order. If the ID is provided, then the entity with the provided ID is updated.
      * 
-     * @param ApiProcessingOrder apiProcessingOrder
-     * @param language language
+     * @param ApiProcessingOrder 
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateProcessingOrderUsingPUT(ApiProcessingOrder: ApiProcessingOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public createOrUpdateProcessingOrderUsingPUT(ApiProcessingOrder: ApiProcessingOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public createOrUpdateProcessingOrderUsingPUT(ApiProcessingOrder: ApiProcessingOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public createOrUpdateProcessingOrderUsingPUT(ApiProcessingOrder: ApiProcessingOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createOrUpdateProcessingOrder(ApiProcessingOrder: ApiProcessingOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateProcessingOrder(ApiProcessingOrder: ApiProcessingOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateProcessingOrder(ApiProcessingOrder: ApiProcessingOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createOrUpdateProcessingOrder(ApiProcessingOrder: ApiProcessingOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProcessingOrder === null || ApiProcessingOrder === undefined) {
-            throw new Error('Required parameter ApiProcessingOrder was null or undefined when calling createOrUpdateProcessingOrderUsingPUT.');
+            throw new Error('Required parameter ApiProcessingOrder was null or undefined when calling createOrUpdateProcessingOrder.');
         }
 
         let headers = this.defaultHeaders;
@@ -283,7 +265,7 @@ export class ProcessingOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateProcessingOrderUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateProcessingOrder')));
         }
         return handle;
     }
@@ -296,23 +278,23 @@ export class ProcessingOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public deleteProcessingOrderUsingDELETEByMap(
-    map: DeleteProcessingOrderUsingDELETE.PartialParamMap,
+  public deleteProcessingOrderByMap(
+    map: DeleteProcessingOrder.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public deleteProcessingOrderUsingDELETEByMap(
-    map: DeleteProcessingOrderUsingDELETE.PartialParamMap,
+  public deleteProcessingOrderByMap(
+    map: DeleteProcessingOrder.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public deleteProcessingOrderUsingDELETEByMap(
-    map: DeleteProcessingOrderUsingDELETE.PartialParamMap,
+  public deleteProcessingOrderByMap(
+    map: DeleteProcessingOrder.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public deleteProcessingOrderUsingDELETEByMap(
-    map: DeleteProcessingOrderUsingDELETE.PartialParamMap,
+  public deleteProcessingOrderByMap(
+    map: DeleteProcessingOrder.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.deleteProcessingOrderUsingDELETE(
+    return this.deleteProcessingOrder(
       map.id,
       observe,
       reportProgress
@@ -327,12 +309,12 @@ export class ProcessingOrderControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteProcessingOrderUsingDELETE(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public deleteProcessingOrderUsingDELETE(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public deleteProcessingOrderUsingDELETE(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public deleteProcessingOrderUsingDELETE(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public deleteProcessingOrder(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public deleteProcessingOrder(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public deleteProcessingOrder(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public deleteProcessingOrder(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteProcessingOrderUsingDELETE.');
+            throw new Error('Required parameter id was null or undefined when calling deleteProcessingOrder.');
         }
 
         let headers = this.defaultHeaders;
@@ -365,7 +347,7 @@ export class ProcessingOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteProcessingOrderUsingDELETE')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteProcessingOrder')));
         }
         return handle;
     }
@@ -378,23 +360,23 @@ export class ProcessingOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getProcessingOrderUsingGETByMap(
-    map: GetProcessingOrderUsingGET.PartialParamMap,
+  public getProcessingOrderByMap(
+    map: GetProcessingOrder.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiProcessingOrder>;
-  public getProcessingOrderUsingGETByMap(
-    map: GetProcessingOrderUsingGET.PartialParamMap,
+  public getProcessingOrderByMap(
+    map: GetProcessingOrder.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
-  public getProcessingOrderUsingGETByMap(
-    map: GetProcessingOrderUsingGET.PartialParamMap,
+  public getProcessingOrderByMap(
+    map: GetProcessingOrder.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
-  public getProcessingOrderUsingGETByMap(
-    map: GetProcessingOrderUsingGET.PartialParamMap,
+  public getProcessingOrderByMap(
+    map: GetProcessingOrder.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getProcessingOrderUsingGET(
+    return this.getProcessingOrder(
       map.id,
       map.language,
       observe,
@@ -407,16 +389,16 @@ export class ProcessingOrderControllerService {
      * Get a single processing order with the provided ID.
      * 
      * @param id ProcessingOrder ID
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingOrder>;
-    public getProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
-    public getProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
-    public getProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingOrder>;
+    public getProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
+    public getProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
+    public getProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getProcessingOrderUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling getProcessingOrder.');
         }
 
         let headers = this.defaultHeaders;
@@ -452,7 +434,7 @@ export class ProcessingOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingOrderUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingOrder')));
         }
         return handle;
     }

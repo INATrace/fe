@@ -60,7 +60,7 @@ export class FinalProductDetailModalComponent implements OnInit {
 
     let finalProduct: ApiFinalProduct;
     if (this.isUpdate) {
-      const resp = await this.productControllerService.getFinalProductUsingGET(this.productId, this.finalProductId)
+      const resp = await this.productControllerService.getFinalProduct(this.productId, this.finalProductId)
         .pipe(take(1))
         .toPromise();
       if (resp && resp.status === 'OK' && resp.data) {
@@ -104,7 +104,7 @@ export class FinalProductDetailModalComponent implements OnInit {
     const finalProduct: ApiFinalProduct = this.form.value;
     finalProduct.labels = [...this.productLabels];
 
-    const res = await this.productControllerService.createOrUpdateFinalProductUsingPUT(this.productId, finalProduct)
+    const res = await this.productControllerService.createOrUpdateFinalProduct(this.productId, finalProduct)
         .pipe(take(1))
         .toPromise();
 

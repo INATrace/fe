@@ -71,7 +71,7 @@ export class BeycoOfferListComponent implements OnInit, OnDestroy {
           }
 
           this.globalEventManager.showLoading(true);
-          this.beycoOrderService.getBeycoOrderFieldsForSelectedStockOrdersUsingGET([query['id']], this.companyId)
+          this.beycoOrderService.getBeycoOrderFieldsForSelectedStockOrders([query['id']], this.companyId)
             .subscribe(
               res => {
                 this.generalForm = this.buildGeneralForm(res.data);
@@ -124,7 +124,7 @@ export class BeycoOfferListComponent implements OnInit, OnDestroy {
     }
 
     this.globalEventManager.showLoading(true);
-    this.beycoOrderService.sendBeycoOrderUsingPOST(this.beycoTokenService.beycoToken.accessToken, this.companyId, this.buildApiBeycoOrderFields())
+    this.beycoOrderService.sendBeycoOrder(this.beycoTokenService.beycoToken.accessToken, this.companyId, this.buildApiBeycoOrderFields())
         .subscribe(
             () => {
               this.globalEventManager.push({

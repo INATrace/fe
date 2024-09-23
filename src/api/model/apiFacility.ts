@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -27,10 +27,27 @@ import { ApiSemiProduct } from './apiSemiProduct';
 import { ApiValueChain } from './apiValueChain';
 
 
+/**
+ * Source facility
+ */
 
 export interface ApiFacility { 
-    company?: ApiCompanyBase;
-    deactivated?: boolean;
+    /**
+     * Entity id
+     */
+    id?: number;
+    /**
+     * Facility name
+     */
+    name?: string;
+    /**
+     * Is collection facility
+     */
+    isCollectionFacility?: boolean;
+    /**
+     * Is public facility
+     */
+    isPublic?: boolean;
     /**
      * Enable form control 'May involve collectors'
      */
@@ -44,55 +61,41 @@ export interface ApiFacility {
      */
     displayPriceDeductionDamage?: boolean;
     /**
-     * Enable form control 'Price determined later'
+     * Enable form control 'Weight deduction damage'
      */
-    displayPriceDeterminedLater?: boolean;
+    displayWeightDeductionDamage?: boolean;
     /**
      * Enable form control 'Tare'
      */
     displayTare?: boolean;
     /**
-     * Enable form control 'Weight deduction damage'
-     */
-    displayWeightDeductionDamage?: boolean;
-    /**
      * Enable form control 'Women only'
      */
     displayWomenOnly?: boolean;
     /**
-     * List of final product ID's for this facility
+     * Enable form control 'Price determined later'
      */
-    facilityFinalProducts?: Array<ApiFinalProduct>;
+    displayPriceDeterminedLater?: boolean;
     facilityLocation?: ApiFacilityLocation;
+    company?: ApiCompanyBase;
+    facilityType?: ApiFacilityType;
     /**
      * List of semi product ID's for this facility
      */
     facilitySemiProductList?: Array<ApiSemiProduct>;
-    facilityType?: ApiFacilityType;
+    /**
+     * List of final product ID's for this facility
+     */
+    facilityFinalProducts?: Array<ApiFinalProduct>;
     /**
      * List of value chains for this facility
      */
     facilityValueChains?: Array<ApiValueChain>;
     /**
-     * Entity id
-     */
-    id?: number;
-    /**
-     * Is collection facility
-     */
-    isCollectionFacility?: boolean;
-    /**
-     * Is public facility
-     */
-    isPublic?: boolean;
-    /**
-     * Facility name
-     */
-    name?: string;
-    /**
      * List of facility translations
      */
     translations?: Array<ApiFacilityTranslation>;
+    deactivated?: boolean;
 }
 
 /**
@@ -103,8 +106,22 @@ export namespace ApiFacility {
      * All properties of ApiFacility.
      */
     export enum Properties {
-        company = 'company',
-        deactivated = 'deactivated',
+        /**
+         * Entity id
+         */
+        id = 'id',
+        /**
+         * Facility name
+         */
+        name = 'name',
+        /**
+         * Is collection facility
+         */
+        isCollectionFacility = 'isCollectionFacility',
+        /**
+         * Is public facility
+         */
+        isPublic = 'isPublic',
         /**
          * Enable form control 'May involve collectors'
          */
@@ -118,55 +135,41 @@ export namespace ApiFacility {
          */
         displayPriceDeductionDamage = 'displayPriceDeductionDamage',
         /**
-         * Enable form control 'Price determined later'
+         * Enable form control 'Weight deduction damage'
          */
-        displayPriceDeterminedLater = 'displayPriceDeterminedLater',
+        displayWeightDeductionDamage = 'displayWeightDeductionDamage',
         /**
          * Enable form control 'Tare'
          */
         displayTare = 'displayTare',
         /**
-         * Enable form control 'Weight deduction damage'
-         */
-        displayWeightDeductionDamage = 'displayWeightDeductionDamage',
-        /**
          * Enable form control 'Women only'
          */
         displayWomenOnly = 'displayWomenOnly',
         /**
-         * List of final product ID's for this facility
+         * Enable form control 'Price determined later'
          */
-        facilityFinalProducts = 'facilityFinalProducts',
+        displayPriceDeterminedLater = 'displayPriceDeterminedLater',
         facilityLocation = 'facilityLocation',
+        company = 'company',
+        facilityType = 'facilityType',
         /**
          * List of semi product ID's for this facility
          */
         facilitySemiProductList = 'facilitySemiProductList',
-        facilityType = 'facilityType',
+        /**
+         * List of final product ID's for this facility
+         */
+        facilityFinalProducts = 'facilityFinalProducts',
         /**
          * List of value chains for this facility
          */
         facilityValueChains = 'facilityValueChains',
         /**
-         * Entity id
-         */
-        id = 'id',
-        /**
-         * Is collection facility
-         */
-        isCollectionFacility = 'isCollectionFacility',
-        /**
-         * Is public facility
-         */
-        isPublic = 'isPublic',
-        /**
-         * Facility name
-         */
-        name = 'name',
-        /**
          * List of facility translations
          */
-        translations = 'translations'
+        translations = 'translations',
+        deactivated = 'deactivated'
     }
 
 
@@ -176,22 +179,43 @@ export namespace ApiFacility {
             classname: 'ApiFacility',
             vars: [
                 {
-                    metadata: ApiCompanyBase.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'company',
+                    name: 'id',
                     classname: 'ApiFacility',
-                    dataType: 'ApiCompanyBase',
-                    isPrimitiveType: false,
+                    dataType: 'number',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiCompanyBase'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'deactivated',
+                    name: 'name',
+                    classname: 'ApiFacility',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'isCollectionFacility',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'isPublic',
                     classname: 'ApiFacility',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -235,7 +259,7 @@ export namespace ApiFacility {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'displayPriceDeterminedLater',
+                    name: 'displayWeightDeductionDamage',
                     classname: 'ApiFacility',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -257,17 +281,6 @@ export namespace ApiFacility {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'displayWeightDeductionDamage',
-                    classname: 'ApiFacility',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'displayWomenOnly',
                     classname: 'ApiFacility',
                     dataType: 'boolean',
@@ -276,16 +289,15 @@ export namespace ApiFacility {
                     complexType: ''
                 },
                 {
-                    metadata: ApiFinalProduct.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'facilityFinalProducts',
+                    name: 'displayPriceDeterminedLater',
                     classname: 'ApiFacility',
-                    dataType: 'Array&lt;ApiFinalProduct&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiFinalProduct'
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     metadata: ApiFacilityLocation.formMetadata,
@@ -300,16 +312,16 @@ export namespace ApiFacility {
                     complexType: 'ApiFacilityLocation'
                 },
                 {
-                    metadata: ApiSemiProduct.formMetadata,
+                    metadata: ApiCompanyBase.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'facilitySemiProductList',
+                    name: 'company',
                     classname: 'ApiFacility',
-                    dataType: 'Array&lt;ApiSemiProduct&gt;',
+                    dataType: 'ApiCompanyBase',
                     isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiSemiProduct'
+                    isListContainer: false,
+                    complexType: 'ApiCompanyBase'
                 },
                 {
                     metadata: ApiFacilityType.formMetadata,
@@ -324,6 +336,30 @@ export namespace ApiFacility {
                     complexType: 'ApiFacilityType'
                 },
                 {
+                    metadata: ApiSemiProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'facilitySemiProductList',
+                    classname: 'ApiFacility',
+                    dataType: 'Array&lt;ApiSemiProduct&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiSemiProduct'
+                },
+                {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'facilityFinalProducts',
+                    classname: 'ApiFacility',
+                    dataType: 'Array&lt;ApiFinalProduct&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiFinalProduct'
+                },
+                {
                     metadata: ApiValueChain.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -334,50 +370,6 @@ export namespace ApiFacility {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiValueChain'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiFacility',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'isCollectionFacility',
-                    classname: 'ApiFacility',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'isPublic',
-                    classname: 'ApiFacility',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiFacility',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
                 },
                 {
                     metadata: ApiFacilityTranslation.formMetadata,
@@ -391,11 +383,26 @@ export namespace ApiFacility {
                     isListContainer: true,
                     complexType: 'ApiFacilityTranslation'
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'deactivated',
+                    classname: 'ApiFacility',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                company: [
+                id: [
                 ],
-                deactivated: [
+                name: [
+                ],
+                isCollectionFacility: [
+                ],
+                isPublic: [
                 ],
                 displayMayInvolveCollectors: [
                 ],
@@ -403,33 +410,29 @@ export namespace ApiFacility {
                 ],
                 displayPriceDeductionDamage: [
                 ],
-                displayPriceDeterminedLater: [
+                displayWeightDeductionDamage: [
                 ],
                 displayTare: [
                 ],
-                displayWeightDeductionDamage: [
-                ],
                 displayWomenOnly: [
                 ],
-                facilityFinalProducts: [
+                displayPriceDeterminedLater: [
                 ],
                 facilityLocation: [
                 ],
-                facilitySemiProductList: [
+                company: [
                 ],
                 facilityType: [
                 ],
+                facilitySemiProductList: [
+                ],
+                facilityFinalProducts: [
+                ],
                 facilityValueChains: [
                 ],
-                id: [
-                ],
-                isCollectionFacility: [
-                ],
-                isPublic: [
-                ],
-                name: [
-                ],
                 translations: [
+                ],
+                deactivated: [
                 ],
             }
         }
@@ -438,10 +441,16 @@ export namespace ApiFacility {
   // export const ApiFacilityValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               company: {
+  //               id: {
   //                   validators: []
   //               },
-  //               deactivated: {
+  //               name: {
+  //                   validators: []
+  //               },
+  //               isCollectionFacility: {
+  //                   validators: []
+  //               },
+  //               isPublic: {
   //                   validators: []
   //               },
   //               displayMayInvolveCollectors: {
@@ -453,46 +462,40 @@ export namespace ApiFacility {
   //               displayPriceDeductionDamage: {
   //                   validators: []
   //               },
-  //               displayPriceDeterminedLater: {
+  //               displayWeightDeductionDamage: {
   //                   validators: []
   //               },
   //               displayTare: {
   //                   validators: []
   //               },
-  //               displayWeightDeductionDamage: {
-  //                   validators: []
-  //               },
   //               displayWomenOnly: {
   //                   validators: []
   //               },
-  //               facilityFinalProducts: {
+  //               displayPriceDeterminedLater: {
   //                   validators: []
   //               },
   //               facilityLocation: {
   //                   validators: []
   //               },
-  //               facilitySemiProductList: {
+  //               company: {
   //                   validators: []
   //               },
   //               facilityType: {
   //                   validators: []
   //               },
+  //               facilitySemiProductList: {
+  //                   validators: []
+  //               },
+  //               facilityFinalProducts: {
+  //                   validators: []
+  //               },
   //               facilityValueChains: {
   //                   validators: []
   //               },
-  //               id: {
-  //                   validators: []
-  //               },
-  //               isCollectionFacility: {
-  //                   validators: []
-  //               },
-  //               isPublic: {
-  //                   validators: []
-  //               },
-  //               name: {
-  //                   validators: []
-  //               },
   //               translations: {
+  //                   validators: []
+  //               },
+  //               deactivated: {
   //                   validators: []
   //               },
   //     }

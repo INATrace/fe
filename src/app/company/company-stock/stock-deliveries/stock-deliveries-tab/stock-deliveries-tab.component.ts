@@ -113,7 +113,7 @@ export class StockDeliveriesTabComponent extends StockCoreTabComponent implement
 
     this.globalEventManager.showLoading(true);
     try {
-      const res = await this.stockOrderControllerService.exportDeliveriesByCompanyUsingGET(this.companyId)
+      const res = await this.stockOrderControllerService.exportDeliveriesByCompany(this.companyId)
           .pipe(take(1))
           .toPromise();
 

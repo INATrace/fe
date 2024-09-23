@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
 import { map } from 'rxjs/operators';
 import { ApiPaginatedResponseApiValueChain } from '../../api/model/apiPaginatedResponseApiValueChain';
-import { CompanyControllerService, GetCompanyValueChainsUsingGET } from '../../api/api/companyController.service';
+import { CompanyControllerService, GetCompanyValueChains } from '../../api/api/companyController.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class CompanyValueChainsService extends GeneralSifrantService<any> {
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as  GetCompanyValueChainsUsingGET.PartialParamMap;
+  } as  GetCompanyValueChains.PartialParamMap;
 
   constructor(
     private companyControllerService: CompanyControllerService,
@@ -41,7 +41,7 @@ export class CompanyValueChainsService extends GeneralSifrantService<any> {
       id: this.companyId
     };
 
-    return this.companyControllerService.getCompanyValueChainsUsingGETByMap(reqPars).pipe(
+    return this.companyControllerService.getCompanyValueChainsByMap(reqPars).pipe(
       map((res: ApiPaginatedResponseApiValueChain) => {
         return {
           results: res.data.items,

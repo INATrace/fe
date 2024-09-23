@@ -1,7 +1,7 @@
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
 import {
-  GetSemiProductListByValueChainsUsingGET,
+  GetSemiProductListByValueChains,
   SemiProductControllerService
 } from '../../api/api/semiProductController.service';
 import { CodebookTranslations } from './codebook-translations';
@@ -24,7 +24,7 @@ export class SemiProductsForValueChainsService extends GeneralSifrantService<Api
   requestParams = {
     limit: 1000,
     offset: 0
-  } as GetSemiProductListByValueChainsUsingGET.PartialParamMap;
+  } as GetSemiProductListByValueChains.PartialParamMap;
 
   public identifier(el: ApiSemiProduct) {
     return el.id;
@@ -37,7 +37,7 @@ export class SemiProductsForValueChainsService extends GeneralSifrantService<Api
   makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiSemiProduct>> {
     const limit = params && params.limit ? params.limit : this.limit();
 
-    return this.codebookService.getSemiProductListByValueChainsUsingGETByMap({valueChainIds: this.valueChainIdList, ...this.requestParams}).pipe(
+    return this.codebookService.getSemiProductListByValueChainsByMap({valueChainIds: this.valueChainIdList, ...this.requestParams}).pipe(
       map((res: ApiPaginatedResponseApiSemiProduct) => {
         return {
           results: res.data.items,

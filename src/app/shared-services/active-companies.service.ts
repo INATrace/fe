@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CompanyControllerService, ListCompaniesUsingGET } from 'src/api/api/companyController.service';
+import { CompanyControllerService, ListCompanies } from 'src/api/api/companyController.service';
 import { ApiPaginatedResponseApiCompanyListResponse } from 'src/api/model/apiPaginatedResponseApiCompanyListResponse';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
@@ -18,7 +18,7 @@ export class ActiveCompaniesService extends GeneralSifrantService<ApiCompanyList
         limit: 1000,
         offset: 0,
         status: 'ACTIVE'
-    } as ListCompaniesUsingGET.PartialParamMap;
+    } as ListCompanies.PartialParamMap;
 
     constructor(
         private companyController: CompanyControllerService
@@ -43,7 +43,7 @@ export class ActiveCompaniesService extends GeneralSifrantService<ApiCompanyList
             name: key
         };
 
-        return this.companyController.listCompaniesUsingGETByMap(reqPars).pipe(
+        return this.companyController.listCompaniesByMap(reqPars).pipe(
           map((res: ApiPaginatedResponseApiCompanyListResponse) => {
               return {
                   results: res.data.items,

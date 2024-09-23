@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,10 +23,6 @@
 
 export interface ApiUserUpdate { 
     /**
-     * language
-     */
-    language?: ApiUserUpdate.LanguageEnum;
-    /**
      * Name
      */
     name?: string;
@@ -34,6 +30,10 @@ export interface ApiUserUpdate {
      * Surname
      */
     surname?: string;
+    /**
+     * language
+     */
+    language?: ApiUserUpdate.LanguageEnum;
 }
 
 /**
@@ -45,17 +45,17 @@ export namespace ApiUserUpdate {
      */
     export enum Properties {
         /**
-         * language
-         */
-        language = 'language',
-        /**
          * Name
          */
         name = 'name',
         /**
          * Surname
          */
-        surname = 'surname'
+        surname = 'surname',
+        /**
+         * language
+         */
+        language = 'language'
     }
 
     /**
@@ -74,18 +74,6 @@ export namespace ApiUserUpdate {
             metadata: formMetadata,
             classname: 'ApiUserUpdate',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserUpdate.LanguageEnum',
-                    required: false,
-                    name: 'language',
-                    classname: 'ApiUserUpdate',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -108,13 +96,29 @@ export namespace ApiUserUpdate {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiUserUpdate.LanguageEnum',
+                    required: false,
+                    name: 'language',
+                    classname: 'ApiUserUpdate',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                language: [
-                ],
                 name: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 surname: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                language: [
                 ],
             }
         }
@@ -123,13 +127,13 @@ export namespace ApiUserUpdate {
   // export const ApiUserUpdateValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               language: {
-  //                   validators: []
-  //               },
   //               name: {
   //                   validators: []
   //               },
   //               surname: {
+  //                   validators: []
+  //               },
+  //               language: {
   //                   validators: []
   //               },
   //     }

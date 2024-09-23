@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,18 +21,21 @@
 import { ApiProductTypeTranslation } from './apiProductTypeTranslation';
 
 
+/**
+ * Selected product type
+ */
 
 export interface ApiProductType { 
-    code?: string;
-    creationTimestamp?: Date;
-    description?: string;
     /**
      * Entity id
      */
     id?: number;
-    name?: string;
-    translations?: Array<ApiProductTypeTranslation>;
+    creationTimestamp?: Date;
     updateTimestamp?: Date;
+    name?: string;
+    code?: string;
+    description?: string;
+    translations?: Array<ApiProductTypeTranslation>;
 }
 
 /**
@@ -43,16 +46,16 @@ export namespace ApiProductType {
      * All properties of ApiProductType.
      */
     export enum Properties {
-        code = 'code',
-        creationTimestamp = 'creationTimestamp',
-        description = 'description',
         /**
          * Entity id
          */
         id = 'id',
+        creationTimestamp = 'creationTimestamp',
+        updateTimestamp = 'updateTimestamp',
         name = 'name',
-        translations = 'translations',
-        updateTimestamp = 'updateTimestamp'
+        code = 'code',
+        description = 'description',
+        translations = 'translations'
     }
 
 
@@ -65,9 +68,9 @@ export namespace ApiProductType {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'code',
+                    name: 'id',
                     classname: 'ApiProductType',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -87,7 +90,18 @@ export namespace ApiProductType {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'description',
+                    name: 'updateTimestamp',
+                    classname: 'ApiProductType',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
                     classname: 'ApiProductType',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -98,9 +112,9 @@ export namespace ApiProductType {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'code',
                     classname: 'ApiProductType',
-                    dataType: 'number',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -109,7 +123,7 @@ export namespace ApiProductType {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
+                    name: 'description',
                     classname: 'ApiProductType',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -128,32 +142,21 @@ export namespace ApiProductType {
                     isListContainer: true,
                     complexType: 'ApiProductTypeTranslation'
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'updateTimestamp',
-                    classname: 'ApiProductType',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                code: [
+                id: [
                 ],
                 creationTimestamp: [
                 ],
-                description: [
-                ],
-                id: [
+                updateTimestamp: [
                 ],
                 name: [
                 ],
-                translations: [
+                code: [
                 ],
-                updateTimestamp: [
+                description: [
+                ],
+                translations: [
                 ],
             }
         }
@@ -162,25 +165,25 @@ export namespace ApiProductType {
   // export const ApiProductTypeValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               code: {
+  //               id: {
   //                   validators: []
   //               },
   //               creationTimestamp: {
   //                   validators: []
   //               },
-  //               description: {
-  //                   validators: []
-  //               },
-  //               id: {
+  //               updateTimestamp: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               translations: {
+  //               code: {
   //                   validators: []
   //               },
-  //               updateTimestamp: {
+  //               description: {
+  //                   validators: []
+  //               },
+  //               translations: {
   //                   validators: []
   //               },
   //     }

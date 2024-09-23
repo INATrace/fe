@@ -3,7 +3,7 @@ import { GeneralSifrantService } from './general-sifrant.service';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { map } from 'rxjs/operators';
-import { ActionTypeControllerService, GetActionTypeListUsingGET } from '../../api/api/actionTypeController.service';
+import { ActionTypeControllerService, GetActionTypeList } from '../../api/api/actionTypeController.service';
 import { ApiActionType } from '../../api/model/apiActionType';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class ActionTypesService extends GeneralSifrantService<ApiActionType> {
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetActionTypeListUsingGET.PartialParamMap;
+  } as GetActionTypeList.PartialParamMap;
 
   public identifier(el: ApiActionType) {
     return el.id;
@@ -49,7 +49,7 @@ export class ActionTypesService extends GeneralSifrantService<ApiActionType> {
   }
 
   public initializeCodebook() {
-    this.sifrant$ = this.sifrant$ || this.codebookService.getActionTypeListUsingGETByMap({ ...this.requestParams }).pipe(
+    this.sifrant$ = this.sifrant$ || this.codebookService.getActionTypeListByMap({ ...this.requestParams }).pipe(
       map(x => this.pack(x.data.items))
     );
   }

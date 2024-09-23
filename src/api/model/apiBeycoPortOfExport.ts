@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,16 +20,15 @@
 
 
 
+/**
+ * Location of export
+ */
 
 export interface ApiBeycoPortOfExport { 
     /**
      * Address of facility
      */
     address?: string;
-    /**
-     * Country of facility
-     */
-    country?: string;
     /**
      * Latitude of facility
      */
@@ -38,6 +37,10 @@ export interface ApiBeycoPortOfExport {
      * Longitude of facility
      */
     longitude?: number;
+    /**
+     * Country of facility
+     */
+    country?: string;
 }
 
 /**
@@ -53,17 +56,17 @@ export namespace ApiBeycoPortOfExport {
          */
         address = 'address',
         /**
-         * Country of facility
-         */
-        country = 'country',
-        /**
          * Latitude of facility
          */
         latitude = 'latitude',
         /**
          * Longitude of facility
          */
-        longitude = 'longitude'
+        longitude = 'longitude',
+        /**
+         * Country of facility
+         */
+        country = 'country'
     }
 
 
@@ -77,17 +80,6 @@ export namespace ApiBeycoPortOfExport {
                     isEnum: false,
                     required: false,
                     name: 'address',
-                    classname: 'ApiBeycoPortOfExport',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'country',
                     classname: 'ApiBeycoPortOfExport',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -116,15 +108,26 @@ export namespace ApiBeycoPortOfExport {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'country',
+                    classname: 'ApiBeycoPortOfExport',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
                 address: [
                 ],
-                country: [
-                ],
                 latitude: [
                 ],
                 longitude: [
+                ],
+                country: [
                 ],
             }
         }
@@ -136,13 +139,13 @@ export namespace ApiBeycoPortOfExport {
   //               address: {
   //                   validators: []
   //               },
-  //               country: {
-  //                   validators: []
-  //               },
   //               latitude: {
   //                   validators: []
   //               },
   //               longitude: {
+  //                   validators: []
+  //               },
+  //               country: {
   //                   validators: []
   //               },
   //     }

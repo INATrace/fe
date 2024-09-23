@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -28,6 +28,14 @@ import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 
 export interface ApiResponseListApiProductLabelCompanyDocument { 
     /**
+     * Response status. OK for successful reponses.
+     */
+    status: ApiResponseListApiProductLabelCompanyDocument.StatusEnum;
+    /**
+     * Simple message to explain client developers the reason for error.
+     */
+    errorMessage?: string;
+    /**
      * Response body for successful responses.
      */
     data?: Array<ApiProductLabelCompanyDocument>;
@@ -35,14 +43,6 @@ export interface ApiResponseListApiProductLabelCompanyDocument {
      * Optional details for unexpected error responses.
      */
     errorDetails?: string;
-    /**
-     * Simple message to explain client developers the reason for error.
-     */
-    errorMessage?: string;
-    /**
-     * Response status. OK for successful reponses.
-     */
-    status: ApiResponseListApiProductLabelCompanyDocument.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -55,6 +55,14 @@ export namespace ApiResponseListApiProductLabelCompanyDocument {
      */
     export enum Properties {
         /**
+         * Response status. OK for successful reponses.
+         */
+        status = 'status',
+        /**
+         * Simple message to explain client developers the reason for error.
+         */
+        errorMessage = 'errorMessage',
+        /**
          * Response body for successful responses.
          */
         data = 'data',
@@ -62,14 +70,6 @@ export namespace ApiResponseListApiProductLabelCompanyDocument {
          * Optional details for unexpected error responses.
          */
         errorDetails = 'errorDetails',
-        /**
-         * Simple message to explain client developers the reason for error.
-         */
-        errorMessage = 'errorMessage',
-        /**
-         * Response status. OK for successful reponses.
-         */
-        status = 'status',
         validationErrorDetails = 'validationErrorDetails'
     }
 
@@ -98,6 +98,29 @@ export namespace ApiResponseListApiProductLabelCompanyDocument {
             classname: 'ApiResponseListApiProductLabelCompanyDocument',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiResponseListApiProductLabelCompanyDocument.StatusEnum',
+                    required: true,
+                    name: 'status',
+                    classname: 'ApiResponseListApiProductLabelCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'errorMessage',
+                    classname: 'ApiResponseListApiProductLabelCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiProductLabelCompanyDocument.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -121,29 +144,6 @@ export namespace ApiResponseListApiProductLabelCompanyDocument {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'errorMessage',
-                    classname: 'ApiResponseListApiProductLabelCompanyDocument',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiResponseListApiProductLabelCompanyDocument.StatusEnum',
-                    required: true,
-                    name: 'status',
-                    classname: 'ApiResponseListApiProductLabelCompanyDocument',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiValidationErrorDetails.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -157,14 +157,14 @@ export namespace ApiResponseListApiProductLabelCompanyDocument {
                 },
             ],
             validators: {
-                data: [
-                ],
-                errorDetails: [
+                status: [
+                        ['required'],
                 ],
                 errorMessage: [
                 ],
-                status: [
-                        ['required'],
+                data: [
+                ],
+                errorDetails: [
                 ],
                 validationErrorDetails: [
                 ],
@@ -175,16 +175,16 @@ export namespace ApiResponseListApiProductLabelCompanyDocument {
   // export const ApiResponseListApiProductLabelCompanyDocumentValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               data: {
-  //                   validators: []
-  //               },
-  //               errorDetails: {
+  //               status: {
   //                   validators: []
   //               },
   //               errorMessage: {
   //                   validators: []
   //               },
-  //               status: {
+  //               data: {
+  //                   validators: []
+  //               },
+  //               errorDetails: {
   //                   validators: []
   //               },
   //               validationErrorDetails: {

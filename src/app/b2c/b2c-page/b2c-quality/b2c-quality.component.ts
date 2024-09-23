@@ -78,7 +78,7 @@ export class B2cQualityComponent implements OnInit {
 
   async downloadCert(data) {
 
-    const res = await this.publicController.getPublicDocumentUsingGET(data.storageKey).pipe(take(1)).toPromise();
+    const res = await this.publicController.getPublicDocument(data.storageKey).pipe(take(1)).toPromise();
     if (res) {
       const a = document.createElement('a');
       const blobURL = URL.createObjectURL(res);

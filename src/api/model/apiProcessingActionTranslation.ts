@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,8 +20,15 @@
 
 
 
+/**
+ * Processing action translations
+ */
 
 export interface ApiProcessingActionTranslation { 
+    /**
+     * Processing action name
+     */
+    name?: string;
     /**
      * Processing action description
      */
@@ -30,10 +37,6 @@ export interface ApiProcessingActionTranslation {
      * Processing action language
      */
     language?: ApiProcessingActionTranslation.LanguageEnum;
-    /**
-     * Processing action name
-     */
-    name?: string;
 }
 
 /**
@@ -45,17 +48,17 @@ export namespace ApiProcessingActionTranslation {
      */
     export enum Properties {
         /**
+         * Processing action name
+         */
+        name = 'name',
+        /**
          * Processing action description
          */
         description = 'description',
         /**
          * Processing action language
          */
-        language = 'language',
-        /**
-         * Processing action name
-         */
-        name = 'name'
+        language = 'language'
     }
 
     /**
@@ -74,6 +77,17 @@ export namespace ApiProcessingActionTranslation {
             metadata: formMetadata,
             classname: 'ApiProcessingActionTranslation',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
+                    classname: 'ApiProcessingActionTranslation',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -97,24 +111,13 @@ export namespace ApiProcessingActionTranslation {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiProcessingActionTranslation',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
+                name: [
+                ],
                 description: [
                 ],
                 language: [
-                ],
-                name: [
                 ],
             }
         }
@@ -123,13 +126,13 @@ export namespace ApiProcessingActionTranslation {
   // export const ApiProcessingActionTranslationValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               name: {
+  //                   validators: []
+  //               },
   //               description: {
   //                   validators: []
   //               },
   //               language: {
-  //                   validators: []
-  //               },
-  //               name: {
   //                   validators: []
   //               },
   //     }

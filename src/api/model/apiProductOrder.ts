@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,38 +23,41 @@ import { ApiFacility } from './apiFacility';
 import { ApiStockOrder } from './apiStockOrder';
 
 
+/**
+ * The produrct order that triggered creation of this stock order
+ */
 
 export interface ApiProductOrder { 
-    customer?: ApiCompanyCustomer;
-    /**
-     * The delivery deadline of this order
-     */
-    deliveryDeadline?: string;
-    facility?: ApiFacility;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * The ordered items(final products) of this order
-     */
-    items?: Array<ApiStockOrder>;
-    /**
      * The order ID entered by the user
      */
     orderId?: string;
     /**
-     * Require organic coffee
+     * Timestamp indicates when product order have been updated
      */
-    requiredOrganic?: boolean;
+    updateTimestamp?: Date;
+    facility?: ApiFacility;
+    /**
+     * The delivery deadline of this order
+     */
+    deliveryDeadline?: string;
+    customer?: ApiCompanyCustomer;
     /**
      * Require only women's coffee
      */
     requiredWomensOnly?: boolean;
     /**
-     * Timestamp indicates when product order have been updated
+     * Require organic coffee
      */
-    updateTimestamp?: Date;
+    requiredOrganic?: boolean;
+    /**
+     * The ordered items(final products) of this order
+     */
+    items?: Array<ApiStockOrder>;
 }
 
 /**
@@ -65,36 +68,36 @@ export namespace ApiProductOrder {
      * All properties of ApiProductOrder.
      */
     export enum Properties {
-        customer = 'customer',
-        /**
-         * The delivery deadline of this order
-         */
-        deliveryDeadline = 'deliveryDeadline',
-        facility = 'facility',
         /**
          * Entity id
          */
         id = 'id',
         /**
-         * The ordered items(final products) of this order
-         */
-        items = 'items',
-        /**
          * The order ID entered by the user
          */
         orderId = 'orderId',
         /**
-         * Require organic coffee
+         * Timestamp indicates when product order have been updated
          */
-        requiredOrganic = 'requiredOrganic',
+        updateTimestamp = 'updateTimestamp',
+        facility = 'facility',
+        /**
+         * The delivery deadline of this order
+         */
+        deliveryDeadline = 'deliveryDeadline',
+        customer = 'customer',
         /**
          * Require only women's coffee
          */
         requiredWomensOnly = 'requiredWomensOnly',
         /**
-         * Timestamp indicates when product order have been updated
+         * Require organic coffee
          */
-        updateTimestamp = 'updateTimestamp'
+        requiredOrganic = 'requiredOrganic',
+        /**
+         * The ordered items(final products) of this order
+         */
+        items = 'items'
     }
 
 
@@ -104,24 +107,34 @@ export namespace ApiProductOrder {
             classname: 'ApiProductOrder',
             vars: [
                 {
-                    metadata: ApiCompanyCustomer.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'customer',
+                    name: 'id',
                     classname: 'ApiProductOrder',
-                    dataType: 'ApiCompanyCustomer',
-                    isPrimitiveType: false,
+                    dataType: 'number',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiCompanyCustomer'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'deliveryDeadline',
+                    name: 'orderId',
                     classname: 'ApiProductOrder',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updateTimestamp',
+                    classname: 'ApiProductOrder',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -142,30 +155,7 @@ export namespace ApiProductOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
-                    classname: 'ApiProductOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiStockOrder.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'items',
-                    classname: 'ApiProductOrder',
-                    dataType: 'Array&lt;ApiStockOrder&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiStockOrder'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'orderId',
+                    name: 'deliveryDeadline',
                     classname: 'ApiProductOrder',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -173,15 +163,16 @@ export namespace ApiProductOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiCompanyCustomer.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'requiredOrganic',
+                    name: 'customer',
                     classname: 'ApiProductOrder',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
+                    dataType: 'ApiCompanyCustomer',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ApiCompanyCustomer'
                 },
                 {
                     isReadOnly: false,
@@ -198,32 +189,44 @@ export namespace ApiProductOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'updateTimestamp',
+                    name: 'requiredOrganic',
                     classname: 'ApiProductOrder',
-                    dataType: 'Date',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiStockOrder.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'items',
+                    classname: 'ApiProductOrder',
+                    dataType: 'Array&lt;ApiStockOrder&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiStockOrder'
+                },
             ],
             validators: {
-                customer: [
-                ],
-                deliveryDeadline: [
-                ],
-                facility: [
-                ],
                 id: [
-                ],
-                items: [
                 ],
                 orderId: [
                 ],
-                requiredOrganic: [
+                updateTimestamp: [
+                ],
+                facility: [
+                ],
+                deliveryDeadline: [
+                ],
+                customer: [
                 ],
                 requiredWomensOnly: [
                 ],
-                updateTimestamp: [
+                requiredOrganic: [
+                ],
+                items: [
                 ],
             }
         }
@@ -232,31 +235,31 @@ export namespace ApiProductOrder {
   // export const ApiProductOrderValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               customer: {
-  //                   validators: []
-  //               },
-  //               deliveryDeadline: {
-  //                   validators: []
-  //               },
-  //               facility: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               items: {
   //                   validators: []
   //               },
   //               orderId: {
   //                   validators: []
   //               },
-  //               requiredOrganic: {
+  //               updateTimestamp: {
+  //                   validators: []
+  //               },
+  //               facility: {
+  //                   validators: []
+  //               },
+  //               deliveryDeadline: {
+  //                   validators: []
+  //               },
+  //               customer: {
   //                   validators: []
   //               },
   //               requiredWomensOnly: {
   //                   validators: []
   //               },
-  //               updateTimestamp: {
+  //               requiredOrganic: {
+  //                   validators: []
+  //               },
+  //               items: {
   //                   validators: []
   //               },
   //     }

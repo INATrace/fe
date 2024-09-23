@@ -357,7 +357,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   refreshGeoId(farmerId: number, plot: ApiPlot, buttonId: string) {
 
-    this.companyControllerService.refreshGeoIDForUserCustomerPlotUsingPOST(farmerId, plot.id).subscribe(res => {
+    this.companyControllerService.refreshGeoIDForUserCustomerPlot(farmerId, plot.id).subscribe(res => {
       const data = res.data;
 
       const dataGeoId = data.geoId;

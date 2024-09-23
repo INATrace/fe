@@ -1,7 +1,7 @@
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiProcessingAction } from '../../api/model/apiProcessingAction';
 import {
-  ListProcessingActionsByCompanyUsingGET,
+  ListProcessingActionsByCompany,
   ProcessingActionControllerService
 } from '../../api/api/processingActionController.service';
 import { map } from 'rxjs/operators';
@@ -14,7 +14,7 @@ export class CompanyFinalProductQuoteOrderActionsService extends GeneralSifrantS
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as ListProcessingActionsByCompanyUsingGET.PartialParamMap;
+  } as ListProcessingActionsByCompany.PartialParamMap;
 
   constructor(
     private processingActionController: ProcessingActionControllerService,
@@ -53,7 +53,7 @@ export class CompanyFinalProductQuoteOrderActionsService extends GeneralSifrantS
 
   public initializeCodebook() {
     this.sifrant$ = this.sifrant$ || this.processingActionController
-      .listProcessingActionsByCompanyUsingGETByMap({ ...this.requestParams, id: this.companyId, actionType: 'SHIPMENT', onlyFinalProducts: true })
+      .listProcessingActionsByCompanyByMap({ ...this.requestParams, id: this.companyId, actionType: 'SHIPMENT', onlyFinalProducts: true })
       .pipe(
         map(resp => resp.data.items.filter(procAction => this.facility.facilityFinalProducts.some(ffp => ffp.id === procAction.inputFinalProduct?.id))),
         map(filteredProcActions => this.pack(filteredProcActions))

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,45 +21,48 @@
 import { ApiDocument } from './apiDocument';
 
 
+/**
+ * B2C settings
+ */
 
 export interface ApiBusinessToCustomerSettings { 
-    averageRegionFarmGatePrice?: number;
-    containerSize?: number;
-    creationTimestamp?: Date;
-    fairTrade?: number;
-    graphicFairPrices?: boolean;
-    graphicFarmGatePrice?: ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum;
-    graphicIncreaseOfIncome?: boolean;
-    graphicPriceToProducer?: ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum;
-    graphicQuality?: boolean;
-    headerBackgroundImage?: ApiDocument;
-    headingColor?: string;
     /**
      * Entity id
      */
     id?: number;
-    landingPageBackgroundImage?: ApiDocument;
-    landingPageImage?: ApiDocument;
-    manualFarmGatePrice?: number;
-    manualProducerPrice?: number;
-    orderFairPrices?: number;
-    orderFeedback?: number;
-    orderProducers?: number;
-    orderQuality?: number;
+    creationTimestamp?: Date;
+    updateTimestamp?: Date;
     primaryColor?: string;
-    productFont?: ApiDocument;
-    productTitleColor?: string;
-    quaternaryColor?: string;
     secondaryColor?: string;
+    tertiaryColor?: string;
+    quaternaryColor?: string;
+    productTitleColor?: string;
+    headingColor?: string;
+    textColor?: string;
     tabFairPrices?: boolean;
-    tabFeedback?: boolean;
     tabProducers?: boolean;
     tabQuality?: boolean;
-    tertiaryColor?: string;
-    textColor?: string;
+    tabFeedback?: boolean;
+    orderFairPrices?: number;
+    orderProducers?: number;
+    orderQuality?: number;
+    orderFeedback?: number;
+    productFont?: ApiDocument;
     textFont?: ApiDocument;
-    updateTimestamp?: Date;
+    landingPageImage?: ApiDocument;
+    landingPageBackgroundImage?: ApiDocument;
+    headerBackgroundImage?: ApiDocument;
+    graphicFairPrices?: boolean;
+    graphicIncreaseOfIncome?: boolean;
+    graphicQuality?: boolean;
+    graphicPriceToProducer?: ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum;
+    graphicFarmGatePrice?: ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum;
+    manualFarmGatePrice?: number;
+    manualProducerPrice?: number;
+    containerSize?: number;
     worldMarket?: number;
+    fairTrade?: number;
+    averageRegionFarmGatePrice?: number;
 }
 
 /**
@@ -70,49 +73,49 @@ export namespace ApiBusinessToCustomerSettings {
      * All properties of ApiBusinessToCustomerSettings.
      */
     export enum Properties {
-        averageRegionFarmGatePrice = 'averageRegionFarmGatePrice',
-        containerSize = 'containerSize',
-        creationTimestamp = 'creationTimestamp',
-        fairTrade = 'fairTrade',
-        graphicFairPrices = 'graphicFairPrices',
-        graphicFarmGatePrice = 'graphicFarmGatePrice',
-        graphicIncreaseOfIncome = 'graphicIncreaseOfIncome',
-        graphicPriceToProducer = 'graphicPriceToProducer',
-        graphicQuality = 'graphicQuality',
-        headerBackgroundImage = 'headerBackgroundImage',
-        headingColor = 'headingColor',
         /**
          * Entity id
          */
         id = 'id',
-        landingPageBackgroundImage = 'landingPageBackgroundImage',
-        landingPageImage = 'landingPageImage',
-        manualFarmGatePrice = 'manualFarmGatePrice',
-        manualProducerPrice = 'manualProducerPrice',
-        orderFairPrices = 'orderFairPrices',
-        orderFeedback = 'orderFeedback',
-        orderProducers = 'orderProducers',
-        orderQuality = 'orderQuality',
+        creationTimestamp = 'creationTimestamp',
+        updateTimestamp = 'updateTimestamp',
         primaryColor = 'primaryColor',
-        productFont = 'productFont',
-        productTitleColor = 'productTitleColor',
-        quaternaryColor = 'quaternaryColor',
         secondaryColor = 'secondaryColor',
+        tertiaryColor = 'tertiaryColor',
+        quaternaryColor = 'quaternaryColor',
+        productTitleColor = 'productTitleColor',
+        headingColor = 'headingColor',
+        textColor = 'textColor',
         tabFairPrices = 'tabFairPrices',
-        tabFeedback = 'tabFeedback',
         tabProducers = 'tabProducers',
         tabQuality = 'tabQuality',
-        tertiaryColor = 'tertiaryColor',
-        textColor = 'textColor',
+        tabFeedback = 'tabFeedback',
+        orderFairPrices = 'orderFairPrices',
+        orderProducers = 'orderProducers',
+        orderQuality = 'orderQuality',
+        orderFeedback = 'orderFeedback',
+        productFont = 'productFont',
         textFont = 'textFont',
-        updateTimestamp = 'updateTimestamp',
-        worldMarket = 'worldMarket'
+        landingPageImage = 'landingPageImage',
+        landingPageBackgroundImage = 'landingPageBackgroundImage',
+        headerBackgroundImage = 'headerBackgroundImage',
+        graphicFairPrices = 'graphicFairPrices',
+        graphicIncreaseOfIncome = 'graphicIncreaseOfIncome',
+        graphicQuality = 'graphicQuality',
+        graphicPriceToProducer = 'graphicPriceToProducer',
+        graphicFarmGatePrice = 'graphicFarmGatePrice',
+        manualFarmGatePrice = 'manualFarmGatePrice',
+        manualProducerPrice = 'manualProducerPrice',
+        containerSize = 'containerSize',
+        worldMarket = 'worldMarket',
+        fairTrade = 'fairTrade',
+        averageRegionFarmGatePrice = 'averageRegionFarmGatePrice'
     }
 
     /**
-     * All possible values of graphicFarmGatePrice.
+     * All possible values of graphicPriceToProducer.
      */
-    export enum GraphicFarmGatePriceEnum {
+    export enum GraphicPriceToProducerEnum {
         DISABLED = 'DISABLED',
         PERCONTAINER = 'PER_CONTAINER',
         PERKG = 'PER_KG',
@@ -120,9 +123,9 @@ export namespace ApiBusinessToCustomerSettings {
     }
 
     /**
-     * All possible values of graphicPriceToProducer.
+     * All possible values of graphicFarmGatePrice.
      */
-    export enum GraphicPriceToProducerEnum {
+    export enum GraphicFarmGatePriceEnum {
         DISABLED = 'DISABLED',
         PERCONTAINER = 'PER_CONTAINER',
         PERKG = 'PER_KG',
@@ -139,18 +142,7 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'averageRegionFarmGatePrice',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'containerSize',
+                    name: 'id',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -172,190 +164,9 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'fairTrade',
+                    name: 'updateTimestamp',
                     classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'graphicFairPrices',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum',
-                    required: false,
-                    name: 'graphicFarmGatePrice',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'graphicIncreaseOfIncome',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum',
-                    required: false,
-                    name: 'graphicPriceToProducer',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'graphicQuality',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'headerBackgroundImage',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiDocument'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'headingColor',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'landingPageBackgroundImage',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiDocument'
-                },
-                {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'landingPageImage',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiDocument'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'manualFarmGatePrice',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'manualProducerPrice',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'orderFairPrices',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'orderFeedback',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'orderProducers',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'orderQuality',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'number',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -365,40 +176,6 @@ export namespace ApiBusinessToCustomerSettings {
                     isEnum: false,
                     required: false,
                     name: 'primaryColor',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'productFont',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiDocument'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'productTitleColor',
-                    classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'quaternaryColor',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -420,9 +197,9 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'tabFairPrices',
+                    name: 'tertiaryColor',
                     classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'boolean',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -431,7 +208,51 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'tabFeedback',
+                    name: 'quaternaryColor',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productTitleColor',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'headingColor',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'textColor',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'tabFairPrices',
                     classname: 'ApiBusinessToCustomerSettings',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -464,9 +285,9 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'tertiaryColor',
+                    name: 'tabFeedback',
                     classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'string',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -475,12 +296,57 @@ export namespace ApiBusinessToCustomerSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'textColor',
+                    name: 'orderFairPrices',
                     classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'orderProducers',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'orderQuality',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'orderFeedback',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productFont',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
                 },
                 {
                     metadata: ApiDocument.formMetadata,
@@ -495,12 +361,127 @@ export namespace ApiBusinessToCustomerSettings {
                     complexType: 'ApiDocument'
                 },
                 {
+                    metadata: ApiDocument.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'updateTimestamp',
+                    name: 'landingPageImage',
                     classname: 'ApiBusinessToCustomerSettings',
-                    dataType: 'Date',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'landingPageBackgroundImage',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'headerBackgroundImage',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'graphicFairPrices',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'graphicIncreaseOfIncome',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'graphicQuality',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiBusinessToCustomerSettings.GraphicPriceToProducerEnum',
+                    required: false,
+                    name: 'graphicPriceToProducer',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiBusinessToCustomerSettings.GraphicFarmGatePriceEnum',
+                    required: false,
+                    name: 'graphicFarmGatePrice',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'manualFarmGatePrice',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'manualProducerPrice',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'containerSize',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -516,75 +497,97 @@ export namespace ApiBusinessToCustomerSettings {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'fairTrade',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'averageRegionFarmGatePrice',
+                    classname: 'ApiBusinessToCustomerSettings',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                averageRegionFarmGatePrice: [
-                ],
-                containerSize: [
+                id: [
                 ],
                 creationTimestamp: [
                 ],
-                fairTrade: [
-                ],
-                graphicFairPrices: [
-                ],
-                graphicFarmGatePrice: [
-                ],
-                graphicIncreaseOfIncome: [
-                ],
-                graphicPriceToProducer: [
-                ],
-                graphicQuality: [
-                ],
-                headerBackgroundImage: [
-                ],
-                headingColor: [
-                ],
-                id: [
-                ],
-                landingPageBackgroundImage: [
-                ],
-                landingPageImage: [
-                ],
-                manualFarmGatePrice: [
-                ],
-                manualProducerPrice: [
-                ],
-                orderFairPrices: [
-                ],
-                orderFeedback: [
-                ],
-                orderProducers: [
-                ],
-                orderQuality: [
+                updateTimestamp: [
                 ],
                 primaryColor: [
                 ],
-                productFont: [
+                secondaryColor: [
                 ],
-                productTitleColor: [
+                tertiaryColor: [
                 ],
                 quaternaryColor: [
                 ],
-                secondaryColor: [
+                productTitleColor: [
+                ],
+                headingColor: [
+                ],
+                textColor: [
                 ],
                 tabFairPrices: [
-                ],
-                tabFeedback: [
                 ],
                 tabProducers: [
                 ],
                 tabQuality: [
                 ],
-                tertiaryColor: [
+                tabFeedback: [
                 ],
-                textColor: [
+                orderFairPrices: [
+                ],
+                orderProducers: [
+                ],
+                orderQuality: [
+                ],
+                orderFeedback: [
+                ],
+                productFont: [
                 ],
                 textFont: [
                 ],
-                updateTimestamp: [
+                landingPageImage: [
+                ],
+                landingPageBackgroundImage: [
+                ],
+                headerBackgroundImage: [
+                ],
+                graphicFairPrices: [
+                ],
+                graphicIncreaseOfIncome: [
+                ],
+                graphicQuality: [
+                ],
+                graphicPriceToProducer: [
+                ],
+                graphicFarmGatePrice: [
+                ],
+                manualFarmGatePrice: [
+                ],
+                manualProducerPrice: [
+                ],
+                containerSize: [
                 ],
                 worldMarket: [
+                ],
+                fairTrade: [
+                ],
+                averageRegionFarmGatePrice: [
                 ],
             }
         }
@@ -593,85 +596,37 @@ export namespace ApiBusinessToCustomerSettings {
   // export const ApiBusinessToCustomerSettingsValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               averageRegionFarmGatePrice: {
-  //                   validators: []
-  //               },
-  //               containerSize: {
+  //               id: {
   //                   validators: []
   //               },
   //               creationTimestamp: {
   //                   validators: []
   //               },
-  //               fairTrade: {
-  //                   validators: []
-  //               },
-  //               graphicFairPrices: {
-  //                   validators: []
-  //               },
-  //               graphicFarmGatePrice: {
-  //                   validators: []
-  //               },
-  //               graphicIncreaseOfIncome: {
-  //                   validators: []
-  //               },
-  //               graphicPriceToProducer: {
-  //                   validators: []
-  //               },
-  //               graphicQuality: {
-  //                   validators: []
-  //               },
-  //               headerBackgroundImage: {
-  //                   validators: []
-  //               },
-  //               headingColor: {
-  //                   validators: []
-  //               },
-  //               id: {
-  //                   validators: []
-  //               },
-  //               landingPageBackgroundImage: {
-  //                   validators: []
-  //               },
-  //               landingPageImage: {
-  //                   validators: []
-  //               },
-  //               manualFarmGatePrice: {
-  //                   validators: []
-  //               },
-  //               manualProducerPrice: {
-  //                   validators: []
-  //               },
-  //               orderFairPrices: {
-  //                   validators: []
-  //               },
-  //               orderFeedback: {
-  //                   validators: []
-  //               },
-  //               orderProducers: {
-  //                   validators: []
-  //               },
-  //               orderQuality: {
+  //               updateTimestamp: {
   //                   validators: []
   //               },
   //               primaryColor: {
   //                   validators: []
   //               },
-  //               productFont: {
+  //               secondaryColor: {
   //                   validators: []
   //               },
-  //               productTitleColor: {
+  //               tertiaryColor: {
   //                   validators: []
   //               },
   //               quaternaryColor: {
   //                   validators: []
   //               },
-  //               secondaryColor: {
+  //               productTitleColor: {
+  //                   validators: []
+  //               },
+  //               headingColor: {
+  //                   validators: []
+  //               },
+  //               textColor: {
   //                   validators: []
   //               },
   //               tabFairPrices: {
-  //                   validators: []
-  //               },
-  //               tabFeedback: {
   //                   validators: []
   //               },
   //               tabProducers: {
@@ -680,19 +635,67 @@ export namespace ApiBusinessToCustomerSettings {
   //               tabQuality: {
   //                   validators: []
   //               },
-  //               tertiaryColor: {
+  //               tabFeedback: {
   //                   validators: []
   //               },
-  //               textColor: {
+  //               orderFairPrices: {
+  //                   validators: []
+  //               },
+  //               orderProducers: {
+  //                   validators: []
+  //               },
+  //               orderQuality: {
+  //                   validators: []
+  //               },
+  //               orderFeedback: {
+  //                   validators: []
+  //               },
+  //               productFont: {
   //                   validators: []
   //               },
   //               textFont: {
   //                   validators: []
   //               },
-  //               updateTimestamp: {
+  //               landingPageImage: {
+  //                   validators: []
+  //               },
+  //               landingPageBackgroundImage: {
+  //                   validators: []
+  //               },
+  //               headerBackgroundImage: {
+  //                   validators: []
+  //               },
+  //               graphicFairPrices: {
+  //                   validators: []
+  //               },
+  //               graphicIncreaseOfIncome: {
+  //                   validators: []
+  //               },
+  //               graphicQuality: {
+  //                   validators: []
+  //               },
+  //               graphicPriceToProducer: {
+  //                   validators: []
+  //               },
+  //               graphicFarmGatePrice: {
+  //                   validators: []
+  //               },
+  //               manualFarmGatePrice: {
+  //                   validators: []
+  //               },
+  //               manualProducerPrice: {
+  //                   validators: []
+  //               },
+  //               containerSize: {
   //                   validators: []
   //               },
   //               worldMarket: {
+  //                   validators: []
+  //               },
+  //               fairTrade: {
+  //                   validators: []
+  //               },
+  //               averageRegionFarmGatePrice: {
   //                   validators: []
   //               },
   //     }

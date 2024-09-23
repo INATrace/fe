@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -24,22 +24,13 @@ import { ApiGeoAddress } from './apiGeoAddress';
 
 export interface ApiCompanyCustomer { 
     /**
-     * Company id
-     */
-    companyId?: number;
-    /**
-     * Contact
-     */
-    contact?: string;
-    /**
-     * Email
-     */
-    email?: string;
-    /**
      * Entity id
      */
     id?: number;
-    location?: ApiGeoAddress;
+    /**
+     * Company id
+     */
+    companyId?: number;
     /**
      * Name
      */
@@ -49,13 +40,22 @@ export interface ApiCompanyCustomer {
      */
     officialCompanyName?: string;
     /**
+     * Vat id
+     */
+    vatId?: string;
+    /**
+     * Contact
+     */
+    contact?: string;
+    /**
      * Phone
      */
     phone?: string;
     /**
-     * Vat id
+     * Email
      */
-    vatId?: string;
+    email?: string;
+    location?: ApiGeoAddress;
 }
 
 /**
@@ -67,22 +67,13 @@ export namespace ApiCompanyCustomer {
      */
     export enum Properties {
         /**
-         * Company id
-         */
-        companyId = 'companyId',
-        /**
-         * Contact
-         */
-        contact = 'contact',
-        /**
-         * Email
-         */
-        email = 'email',
-        /**
          * Entity id
          */
         id = 'id',
-        location = 'location',
+        /**
+         * Company id
+         */
+        companyId = 'companyId',
         /**
          * Name
          */
@@ -92,13 +83,22 @@ export namespace ApiCompanyCustomer {
          */
         officialCompanyName = 'officialCompanyName',
         /**
+         * Vat id
+         */
+        vatId = 'vatId',
+        /**
+         * Contact
+         */
+        contact = 'contact',
+        /**
          * Phone
          */
         phone = 'phone',
         /**
-         * Vat id
+         * Email
          */
-        vatId = 'vatId'
+        email = 'email',
+        location = 'location'
     }
 
 
@@ -111,39 +111,6 @@ export namespace ApiCompanyCustomer {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'companyId',
-                    classname: 'ApiCompanyCustomer',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'contact',
-                    classname: 'ApiCompanyCustomer',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'email',
-                    classname: 'ApiCompanyCustomer',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'id',
                     classname: 'ApiCompanyCustomer',
                     dataType: 'number',
@@ -152,16 +119,15 @@ export namespace ApiCompanyCustomer {
                     complexType: ''
                 },
                 {
-                    metadata: ApiGeoAddress.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'location',
+                    name: 'companyId',
                     classname: 'ApiCompanyCustomer',
-                    dataType: 'ApiGeoAddress',
-                    isPrimitiveType: false,
+                    dataType: 'number',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiGeoAddress'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -189,6 +155,28 @@ export namespace ApiCompanyCustomer {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'vatId',
+                    classname: 'ApiCompanyCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'contact',
+                    classname: 'ApiCompanyCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'phone',
                     classname: 'ApiCompanyCustomer',
                     dataType: 'string',
@@ -200,32 +188,56 @@ export namespace ApiCompanyCustomer {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'vatId',
+                    name: 'email',
                     classname: 'ApiCompanyCustomer',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiGeoAddress.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'location',
+                    classname: 'ApiCompanyCustomer',
+                    dataType: 'ApiGeoAddress',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiGeoAddress'
+                },
             ],
             validators: {
-                companyId: [
-                ],
-                contact: [
-                ],
-                email: [
-                ],
                 id: [
                 ],
-                location: [
+                companyId: [
                 ],
                 name: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 officialCompanyName: [
-                ],
-                phone: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 vatId: [
+                        ['minlength', 0],
+                        ['maxlength', 40],
+                ],
+                contact: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                phone: [
+                        ['minlength', 0],
+                        ['maxlength', 20],
+                ],
+                email: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                location: [
                 ],
             }
         }
@@ -234,19 +246,10 @@ export namespace ApiCompanyCustomer {
   // export const ApiCompanyCustomerValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               companyId: {
-  //                   validators: []
-  //               },
-  //               contact: {
-  //                   validators: []
-  //               },
-  //               email: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
-  //               location: {
+  //               companyId: {
   //                   validators: []
   //               },
   //               name: {
@@ -255,10 +258,19 @@ export namespace ApiCompanyCustomer {
   //               officialCompanyName: {
   //                   validators: []
   //               },
+  //               vatId: {
+  //                   validators: []
+  //               },
+  //               contact: {
+  //                   validators: []
+  //               },
   //               phone: {
   //                   validators: []
   //               },
-  //               vatId: {
+  //               email: {
+  //                   validators: []
+  //               },
+  //               location: {
   //                   validators: []
   //               },
   //     }

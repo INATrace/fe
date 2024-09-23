@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -27,19 +27,19 @@ import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
  */
 
 export interface ApiResponseApiStockOrder { 
+    /**
+     * Response status. OK for successful reponses.
+     */
+    status: ApiResponseApiStockOrder.StatusEnum;
+    /**
+     * Simple message to explain client developers the reason for error.
+     */
+    errorMessage?: string;
     data?: ApiStockOrder;
     /**
      * Optional details for unexpected error responses.
      */
     errorDetails?: string;
-    /**
-     * Simple message to explain client developers the reason for error.
-     */
-    errorMessage?: string;
-    /**
-     * Response status. OK for successful reponses.
-     */
-    status: ApiResponseApiStockOrder.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -51,19 +51,19 @@ export namespace ApiResponseApiStockOrder {
      * All properties of ApiResponseApiStockOrder.
      */
     export enum Properties {
+        /**
+         * Response status. OK for successful reponses.
+         */
+        status = 'status',
+        /**
+         * Simple message to explain client developers the reason for error.
+         */
+        errorMessage = 'errorMessage',
         data = 'data',
         /**
          * Optional details for unexpected error responses.
          */
         errorDetails = 'errorDetails',
-        /**
-         * Simple message to explain client developers the reason for error.
-         */
-        errorMessage = 'errorMessage',
-        /**
-         * Response status. OK for successful reponses.
-         */
-        status = 'status',
         validationErrorDetails = 'validationErrorDetails'
     }
 
@@ -92,6 +92,29 @@ export namespace ApiResponseApiStockOrder {
             classname: 'ApiResponseApiStockOrder',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiResponseApiStockOrder.StatusEnum',
+                    required: true,
+                    name: 'status',
+                    classname: 'ApiResponseApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'errorMessage',
+                    classname: 'ApiResponseApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiStockOrder.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -115,29 +138,6 @@ export namespace ApiResponseApiStockOrder {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'errorMessage',
-                    classname: 'ApiResponseApiStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiResponseApiStockOrder.StatusEnum',
-                    required: true,
-                    name: 'status',
-                    classname: 'ApiResponseApiStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiValidationErrorDetails.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -151,14 +151,14 @@ export namespace ApiResponseApiStockOrder {
                 },
             ],
             validators: {
-                data: [
-                ],
-                errorDetails: [
+                status: [
+                        ['required'],
                 ],
                 errorMessage: [
                 ],
-                status: [
-                        ['required'],
+                data: [
+                ],
+                errorDetails: [
                 ],
                 validationErrorDetails: [
                 ],
@@ -169,16 +169,16 @@ export namespace ApiResponseApiStockOrder {
   // export const ApiResponseApiStockOrderValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               data: {
-  //                   validators: []
-  //               },
-  //               errorDetails: {
+  //               status: {
   //                   validators: []
   //               },
   //               errorMessage: {
   //                   validators: []
   //               },
-  //               status: {
+  //               data: {
+  //                   validators: []
+  //               },
+  //               errorDetails: {
   //                   validators: []
   //               },
   //               validationErrorDetails: {

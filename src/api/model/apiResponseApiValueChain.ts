@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -27,19 +27,19 @@ import { ApiValueChain } from './apiValueChain';
  */
 
 export interface ApiResponseApiValueChain { 
+    /**
+     * Response status. OK for successful reponses.
+     */
+    status: ApiResponseApiValueChain.StatusEnum;
+    /**
+     * Simple message to explain client developers the reason for error.
+     */
+    errorMessage?: string;
     data?: ApiValueChain;
     /**
      * Optional details for unexpected error responses.
      */
     errorDetails?: string;
-    /**
-     * Simple message to explain client developers the reason for error.
-     */
-    errorMessage?: string;
-    /**
-     * Response status. OK for successful reponses.
-     */
-    status: ApiResponseApiValueChain.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -51,19 +51,19 @@ export namespace ApiResponseApiValueChain {
      * All properties of ApiResponseApiValueChain.
      */
     export enum Properties {
+        /**
+         * Response status. OK for successful reponses.
+         */
+        status = 'status',
+        /**
+         * Simple message to explain client developers the reason for error.
+         */
+        errorMessage = 'errorMessage',
         data = 'data',
         /**
          * Optional details for unexpected error responses.
          */
         errorDetails = 'errorDetails',
-        /**
-         * Simple message to explain client developers the reason for error.
-         */
-        errorMessage = 'errorMessage',
-        /**
-         * Response status. OK for successful reponses.
-         */
-        status = 'status',
         validationErrorDetails = 'validationErrorDetails'
     }
 
@@ -92,6 +92,29 @@ export namespace ApiResponseApiValueChain {
             classname: 'ApiResponseApiValueChain',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiResponseApiValueChain.StatusEnum',
+                    required: true,
+                    name: 'status',
+                    classname: 'ApiResponseApiValueChain',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'errorMessage',
+                    classname: 'ApiResponseApiValueChain',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiValueChain.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -115,29 +138,6 @@ export namespace ApiResponseApiValueChain {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'errorMessage',
-                    classname: 'ApiResponseApiValueChain',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiResponseApiValueChain.StatusEnum',
-                    required: true,
-                    name: 'status',
-                    classname: 'ApiResponseApiValueChain',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiValidationErrorDetails.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -151,14 +151,14 @@ export namespace ApiResponseApiValueChain {
                 },
             ],
             validators: {
-                data: [
-                ],
-                errorDetails: [
+                status: [
+                        ['required'],
                 ],
                 errorMessage: [
                 ],
-                status: [
-                        ['required'],
+                data: [
+                ],
+                errorDetails: [
                 ],
                 validationErrorDetails: [
                 ],
@@ -169,16 +169,16 @@ export namespace ApiResponseApiValueChain {
   // export const ApiResponseApiValueChainValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               data: {
-  //                   validators: []
-  //               },
-  //               errorDetails: {
+  //               status: {
   //                   validators: []
   //               },
   //               errorMessage: {
   //                   validators: []
   //               },
-  //               status: {
+  //               data: {
+  //                   validators: []
+  //               },
+  //               errorDetails: {
   //                   validators: []
   //               },
   //               validationErrorDetails: {

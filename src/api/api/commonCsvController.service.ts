@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -34,11 +34,11 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for generatePaymentsByCompanyCsvUsingPOST.
+ * Namespace for generatePaymentsByCompanyCsv.
  */
-export namespace GeneratePaymentsByCompanyCsvUsingPOST {
+export namespace GeneratePaymentsByCompanyCsv {
     /**
-     * Parameter map for generatePaymentsByCompanyCsvUsingPOST.
+     * Parameter map for generatePaymentsByCompanyCsv.
      */
     export interface PartialParamMap {
       /**
@@ -88,7 +88,7 @@ export namespace GeneratePaymentsByCompanyCsvUsingPOST {
     }
 
     /**
-     * Enumeration of all parameters for generatePaymentsByCompanyCsvUsingPOST.
+     * Enumeration of all parameters for generatePaymentsByCompanyCsv.
      */
     export enum Parameters {
       /**
@@ -138,18 +138,20 @@ export namespace GeneratePaymentsByCompanyCsvUsingPOST {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of generatePaymentsByCompanyCsvUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of generatePaymentsByCompanyCsv
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GeneratePaymentsByCompanyCsvUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GeneratePaymentsByCompanyCsv.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -169,20 +171,17 @@ export namespace GeneratePaymentsByCompanyCsvUsingPOST {
 }
 
 /**
- * Namespace for generatePurchasesByCompanyCsvUsingPOST.
+ * Namespace for generatePurchasesByCompanyCsv.
  */
-export namespace GeneratePurchasesByCompanyCsvUsingPOST {
+export namespace GeneratePurchasesByCompanyCsv {
     /**
-     * Parameter map for generatePurchasesByCompanyCsvUsingPOST.
+     * Parameter map for generatePurchasesByCompanyCsv.
      */
     export interface PartialParamMap {
       /**
        * Company ID
        */
       id: number;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
       /**
        * Only count, only fetch, or return both values (if null)
@@ -227,16 +226,13 @@ export namespace GeneratePurchasesByCompanyCsvUsingPOST {
     }
 
     /**
-     * Enumeration of all parameters for generatePurchasesByCompanyCsvUsingPOST.
+     * Enumeration of all parameters for generatePurchasesByCompanyCsv.
      */
     export enum Parameters {
       /**
        * Company ID
        */
       id = 'id',
-      /**
-       * language
-       */
       language = 'language',
       /**
        * Only count, only fetch, or return both values (if null)
@@ -281,10 +277,10 @@ export namespace GeneratePurchasesByCompanyCsvUsingPOST {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of generatePurchasesByCompanyCsvUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of generatePurchasesByCompanyCsv
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GeneratePurchasesByCompanyCsvUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GeneratePurchasesByCompanyCsv.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -293,8 +289,10 @@ export namespace GeneratePurchasesByCompanyCsvUsingPOST {
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -357,23 +355,23 @@ export class CommonCsvControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public generatePaymentsByCompanyCsvUsingPOSTByMap(
-    map: GeneratePaymentsByCompanyCsvUsingPOST.PartialParamMap,
+  public generatePaymentsByCompanyCsvByMap(
+    map: GeneratePaymentsByCompanyCsv.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<Blob>;
-  public generatePaymentsByCompanyCsvUsingPOSTByMap(
-    map: GeneratePaymentsByCompanyCsvUsingPOST.PartialParamMap,
+    reportProgress?: boolean): Observable<string>;
+  public generatePaymentsByCompanyCsvByMap(
+    map: GeneratePaymentsByCompanyCsv.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public generatePaymentsByCompanyCsvUsingPOSTByMap(
-    map: GeneratePaymentsByCompanyCsvUsingPOST.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<string>>;
+  public generatePaymentsByCompanyCsvByMap(
+    map: GeneratePaymentsByCompanyCsv.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public generatePaymentsByCompanyCsvUsingPOSTByMap(
-    map: GeneratePaymentsByCompanyCsvUsingPOST.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<string>>;
+  public generatePaymentsByCompanyCsvByMap(
+    map: GeneratePaymentsByCompanyCsv.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.generatePaymentsByCompanyCsvUsingPOST(
+    return this.generatePaymentsByCompanyCsv(
       map.id,
       map.requestType,
       map.limit,
@@ -408,12 +406,12 @@ export class CommonCsvControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public generatePaymentsByCompanyCsvUsingPOST(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public generatePaymentsByCompanyCsvUsingPOST(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public generatePaymentsByCompanyCsvUsingPOST(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public generatePaymentsByCompanyCsvUsingPOST(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: string, productionDateEnd?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public generatePaymentsByCompanyCsv(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
+    public generatePaymentsByCompanyCsv(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
+    public generatePaymentsByCompanyCsv(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public generatePaymentsByCompanyCsv(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', paymentStatus?: 'UNCONFIRMED' | 'CONFIRMED', productionDateStart?: string, productionDateEnd?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling generatePaymentsByCompanyCsvUsingPOST.');
+            throw new Error('Required parameter id was null or undefined when calling generatePaymentsByCompanyCsv.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -469,11 +467,10 @@ export class CommonCsvControllerService {
                 }
             }
 
-        const handle = this.httpClient.post(`${this.configuration.basePath}/api/chain/csv/payments/company/${encodeURIComponent(String(id))}`,
+        const handle = this.httpClient.post<string>(`${this.configuration.basePath}/api/chain/csv/payments/company/${encodeURIComponent(String(id))}`,
             null,
             {
                 params: queryParameters,
-                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -481,7 +478,7 @@ export class CommonCsvControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'generatePaymentsByCompanyCsvUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'generatePaymentsByCompanyCsv')));
         }
         return handle;
     }
@@ -494,23 +491,23 @@ export class CommonCsvControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public generatePurchasesByCompanyCsvUsingPOSTByMap(
-    map: GeneratePurchasesByCompanyCsvUsingPOST.PartialParamMap,
+  public generatePurchasesByCompanyCsvByMap(
+    map: GeneratePurchasesByCompanyCsv.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<Blob>;
-  public generatePurchasesByCompanyCsvUsingPOSTByMap(
-    map: GeneratePurchasesByCompanyCsvUsingPOST.PartialParamMap,
+    reportProgress?: boolean): Observable<string>;
+  public generatePurchasesByCompanyCsvByMap(
+    map: GeneratePurchasesByCompanyCsv.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public generatePurchasesByCompanyCsvUsingPOSTByMap(
-    map: GeneratePurchasesByCompanyCsvUsingPOST.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<string>>;
+  public generatePurchasesByCompanyCsvByMap(
+    map: GeneratePurchasesByCompanyCsv.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public generatePurchasesByCompanyCsvUsingPOSTByMap(
-    map: GeneratePurchasesByCompanyCsvUsingPOST.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<string>>;
+  public generatePurchasesByCompanyCsvByMap(
+    map: GeneratePurchasesByCompanyCsv.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.generatePurchasesByCompanyCsvUsingPOST(
+    return this.generatePurchasesByCompanyCsv(
       map.id,
       map.language,
       map.requestType,
@@ -533,7 +530,7 @@ export class CommonCsvControllerService {
      * Generate a csv file with a list of filtered purchases by companyId.
      * 
      * @param id Company ID
-     * @param language language
+     * @param language 
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
@@ -547,12 +544,12 @@ export class CommonCsvControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public generatePurchasesByCompanyCsvUsingPOST(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', isWomenShare?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public generatePurchasesByCompanyCsvUsingPOST(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', isWomenShare?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public generatePurchasesByCompanyCsvUsingPOST(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', isWomenShare?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public generatePurchasesByCompanyCsvUsingPOST(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', isWomenShare?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public generatePurchasesByCompanyCsv(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', isWomenShare?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
+    public generatePurchasesByCompanyCsv(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', isWomenShare?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
+    public generatePurchasesByCompanyCsv(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', isWomenShare?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public generatePurchasesByCompanyCsv(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', preferredWayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', isWomenShare?: boolean, productionDateStart?: string, productionDateEnd?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling generatePurchasesByCompanyCsvUsingPOST.');
+            throw new Error('Required parameter id was null or undefined when calling generatePurchasesByCompanyCsv.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -611,11 +608,10 @@ export class CommonCsvControllerService {
                 }
             }
 
-        const handle = this.httpClient.post(`${this.configuration.basePath}/api/chain/csv/purchases/company/${encodeURIComponent(String(id))}`,
+        const handle = this.httpClient.post<string>(`${this.configuration.basePath}/api/chain/csv/purchases/company/${encodeURIComponent(String(id))}`,
             null,
             {
                 params: queryParameters,
-                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -623,7 +619,7 @@ export class CommonCsvControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'generatePurchasesByCompanyCsvUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'generatePurchasesByCompanyCsv')));
         }
         return handle;
     }

@@ -33,7 +33,7 @@ export class ResetPasswordRequestComponent implements OnInit {
     this.sent = false;
     if (!this.form.invalid) {
       this.globalEventsManager.showLoading(true);
-      const sub = this.userController.requestResetPasswordUsingPOST({
+      const sub = this.userController.requestResetPassword({
         email: this.form.get('email').value
       }).subscribe(val => {
         sub.unsubscribe();

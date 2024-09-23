@@ -72,7 +72,7 @@ export class CompanyFarmersImportComponent implements OnInit {
       this.importInProgress = true;
       this.globalEventsManager.showLoading(true);
 
-      this.companyControllerService.importFarmersSpreadsheetUsingPOST(this.companyId, this.fileForm.value.id)
+      this.companyControllerService.importFarmersSpreadsheet(this.companyId, this.fileForm.value.id)
           .pipe(
               take(1),
               finalize(() => {
@@ -112,7 +112,7 @@ export class CompanyFarmersImportComponent implements OnInit {
   }
 
   acceptDuplicate(user: ApiUserCustomer, index: number) {
-    this.companyControllerService.addUserCustomerUsingPOST(this.companyId, user)
+    this.companyControllerService.addUserCustomer(this.companyId, user)
         .pipe(take(1))
         .subscribe(() => this.toastService.success($localize`:@@companyDetail.farmers.import.success.single: Farmer successfully imported`),
                 () => {},

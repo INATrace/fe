@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,6 +21,9 @@
 import { ApiCountry } from './apiCountry';
 
 
+/**
+ * Location
+ */
 
 export interface ApiGeoAddress { 
     /**
@@ -28,30 +31,50 @@ export interface ApiGeoAddress {
      */
     address?: string;
     /**
+     * city
+     */
+    city?: string;
+    /**
+     * state / province / region
+     */
+    state?: string;
+    /**
+     * ZIP / postal code / p.p. box
+     */
+    zip?: string;
+    /**
      * Village cell
      */
     cell?: string;
     /**
-     * city
+     * Village sector
      */
-    city?: string;
-    country?: ApiCountry;
+    sector?: string;
     /**
-     * Honduras department name
+     * Village name
      */
-    hondurasDepartment?: string;
+    village?: string;
+    /**
+     * Other/additional address field
+     */
+    otherAddress?: string;
     /**
      * Honduras farm name
      */
     hondurasFarm?: string;
     /**
+     * Honduras village name
+     */
+    hondurasVillage?: string;
+    /**
      * Honduras municipality name
      */
     hondurasMunicipality?: string;
     /**
-     * Honduras village name
+     * Honduras department name
      */
-    hondurasVillage?: string;
+    hondurasDepartment?: string;
+    country?: ApiCountry;
     /**
      * location latitude
      */
@@ -60,26 +83,6 @@ export interface ApiGeoAddress {
      * location longitude
      */
     longitude?: number;
-    /**
-     * Other/additional address field
-     */
-    otherAddress?: string;
-    /**
-     * Village sector
-     */
-    sector?: string;
-    /**
-     * state / province / region
-     */
-    state?: string;
-    /**
-     * Village name
-     */
-    village?: string;
-    /**
-     * ZIP / postal code / p.p. box
-     */
-    zip?: string;
 }
 
 /**
@@ -95,30 +98,50 @@ export namespace ApiGeoAddress {
          */
         address = 'address',
         /**
+         * city
+         */
+        city = 'city',
+        /**
+         * state / province / region
+         */
+        state = 'state',
+        /**
+         * ZIP / postal code / p.p. box
+         */
+        zip = 'zip',
+        /**
          * Village cell
          */
         cell = 'cell',
         /**
-         * city
+         * Village sector
          */
-        city = 'city',
-        country = 'country',
+        sector = 'sector',
         /**
-         * Honduras department name
+         * Village name
          */
-        hondurasDepartment = 'hondurasDepartment',
+        village = 'village',
+        /**
+         * Other/additional address field
+         */
+        otherAddress = 'otherAddress',
         /**
          * Honduras farm name
          */
         hondurasFarm = 'hondurasFarm',
         /**
+         * Honduras village name
+         */
+        hondurasVillage = 'hondurasVillage',
+        /**
          * Honduras municipality name
          */
         hondurasMunicipality = 'hondurasMunicipality',
         /**
-         * Honduras village name
+         * Honduras department name
          */
-        hondurasVillage = 'hondurasVillage',
+        hondurasDepartment = 'hondurasDepartment',
+        country = 'country',
         /**
          * location latitude
          */
@@ -126,27 +149,7 @@ export namespace ApiGeoAddress {
         /**
          * location longitude
          */
-        longitude = 'longitude',
-        /**
-         * Other/additional address field
-         */
-        otherAddress = 'otherAddress',
-        /**
-         * Village sector
-         */
-        sector = 'sector',
-        /**
-         * state / province / region
-         */
-        state = 'state',
-        /**
-         * Village name
-         */
-        village = 'village',
-        /**
-         * ZIP / postal code / p.p. box
-         */
-        zip = 'zip'
+        longitude = 'longitude'
     }
 
 
@@ -170,6 +173,39 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'city',
+                    classname: 'ApiGeoAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'state',
+                    classname: 'ApiGeoAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'zip',
+                    classname: 'ApiGeoAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'cell',
                     classname: 'ApiGeoAddress',
                     dataType: 'string',
@@ -181,7 +217,7 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'city',
+                    name: 'sector',
                     classname: 'ApiGeoAddress',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -189,22 +225,21 @@ export namespace ApiGeoAddress {
                     complexType: ''
                 },
                 {
-                    metadata: ApiCountry.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'country',
+                    name: 'village',
                     classname: 'ApiGeoAddress',
-                    dataType: 'ApiCountry',
-                    isPrimitiveType: false,
+                    dataType: 'string',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiCountry'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'hondurasDepartment',
+                    name: 'otherAddress',
                     classname: 'ApiGeoAddress',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -226,6 +261,17 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'hondurasVillage',
+                    classname: 'ApiGeoAddress',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'hondurasMunicipality',
                     classname: 'ApiGeoAddress',
                     dataType: 'string',
@@ -237,12 +283,24 @@ export namespace ApiGeoAddress {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'hondurasVillage',
+                    name: 'hondurasDepartment',
                     classname: 'ApiGeoAddress',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    metadata: ApiCountry.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'country',
+                    classname: 'ApiGeoAddress',
+                    dataType: 'ApiCountry',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCountry'
                 },
                 {
                     isReadOnly: false,
@@ -266,92 +324,61 @@ export namespace ApiGeoAddress {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'otherAddress',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'sector',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'state',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'village',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'zip',
-                    classname: 'ApiGeoAddress',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
                 address: [
-                ],
-                cell: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 city: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
-                country: [
+                state: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
-                hondurasDepartment: [
+                zip: [
+                        ['minlength', 0],
+                        ['maxlength', 50],
+                ],
+                cell: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                sector: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                village: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                otherAddress: [
+                        ['minlength', 0],
+                        ['maxlength', 1000],
                 ],
                 hondurasFarm: [
-                ],
-                hondurasMunicipality: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 hondurasVillage: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                hondurasMunicipality: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                hondurasDepartment: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                country: [
                 ],
                 latitude: [
                 ],
                 longitude: [
-                ],
-                otherAddress: [
-                ],
-                sector: [
-                ],
-                state: [
-                ],
-                village: [
-                ],
-                zip: [
                 ],
             }
         }
@@ -363,46 +390,46 @@ export namespace ApiGeoAddress {
   //               address: {
   //                   validators: []
   //               },
-  //               cell: {
-  //                   validators: []
-  //               },
   //               city: {
   //                   validators: []
   //               },
-  //               country: {
+  //               state: {
   //                   validators: []
   //               },
-  //               hondurasDepartment: {
+  //               zip: {
+  //                   validators: []
+  //               },
+  //               cell: {
+  //                   validators: []
+  //               },
+  //               sector: {
+  //                   validators: []
+  //               },
+  //               village: {
+  //                   validators: []
+  //               },
+  //               otherAddress: {
   //                   validators: []
   //               },
   //               hondurasFarm: {
   //                   validators: []
   //               },
+  //               hondurasVillage: {
+  //                   validators: []
+  //               },
   //               hondurasMunicipality: {
   //                   validators: []
   //               },
-  //               hondurasVillage: {
+  //               hondurasDepartment: {
+  //                   validators: []
+  //               },
+  //               country: {
   //                   validators: []
   //               },
   //               latitude: {
   //                   validators: []
   //               },
   //               longitude: {
-  //                   validators: []
-  //               },
-  //               otherAddress: {
-  //                   validators: []
-  //               },
-  //               sector: {
-  //                   validators: []
-  //               },
-  //               state: {
-  //                   validators: []
-  //               },
-  //               village: {
-  //                   validators: []
-  //               },
-  //               zip: {
   //                   validators: []
   //               },
   //     }

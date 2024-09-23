@@ -90,7 +90,7 @@ export class CompanyDetailTabManagerComponent extends ComponentCanDeactivate imp
       });
 
     if (this.rootTab !== 0) {
-      this.companyController.getCompanyNameUsingGET(Number(this.cId)).subscribe(resp => {
+      this.companyController.getCompanyName(Number(this.cId)).subscribe(resp => {
         if (resp && resp.status === 'OK') {
           this.companyName = resp.data;
         }

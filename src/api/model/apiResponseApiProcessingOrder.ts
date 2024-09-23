@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -27,19 +27,19 @@ import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
  */
 
 export interface ApiResponseApiProcessingOrder { 
+    /**
+     * Response status. OK for successful reponses.
+     */
+    status: ApiResponseApiProcessingOrder.StatusEnum;
+    /**
+     * Simple message to explain client developers the reason for error.
+     */
+    errorMessage?: string;
     data?: ApiProcessingOrder;
     /**
      * Optional details for unexpected error responses.
      */
     errorDetails?: string;
-    /**
-     * Simple message to explain client developers the reason for error.
-     */
-    errorMessage?: string;
-    /**
-     * Response status. OK for successful reponses.
-     */
-    status: ApiResponseApiProcessingOrder.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -51,19 +51,19 @@ export namespace ApiResponseApiProcessingOrder {
      * All properties of ApiResponseApiProcessingOrder.
      */
     export enum Properties {
+        /**
+         * Response status. OK for successful reponses.
+         */
+        status = 'status',
+        /**
+         * Simple message to explain client developers the reason for error.
+         */
+        errorMessage = 'errorMessage',
         data = 'data',
         /**
          * Optional details for unexpected error responses.
          */
         errorDetails = 'errorDetails',
-        /**
-         * Simple message to explain client developers the reason for error.
-         */
-        errorMessage = 'errorMessage',
-        /**
-         * Response status. OK for successful reponses.
-         */
-        status = 'status',
         validationErrorDetails = 'validationErrorDetails'
     }
 
@@ -92,6 +92,29 @@ export namespace ApiResponseApiProcessingOrder {
             classname: 'ApiResponseApiProcessingOrder',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiResponseApiProcessingOrder.StatusEnum',
+                    required: true,
+                    name: 'status',
+                    classname: 'ApiResponseApiProcessingOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'errorMessage',
+                    classname: 'ApiResponseApiProcessingOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiProcessingOrder.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -115,29 +138,6 @@ export namespace ApiResponseApiProcessingOrder {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'errorMessage',
-                    classname: 'ApiResponseApiProcessingOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiResponseApiProcessingOrder.StatusEnum',
-                    required: true,
-                    name: 'status',
-                    classname: 'ApiResponseApiProcessingOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiValidationErrorDetails.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -151,14 +151,14 @@ export namespace ApiResponseApiProcessingOrder {
                 },
             ],
             validators: {
-                data: [
-                ],
-                errorDetails: [
+                status: [
+                        ['required'],
                 ],
                 errorMessage: [
                 ],
-                status: [
-                        ['required'],
+                data: [
+                ],
+                errorDetails: [
                 ],
                 validationErrorDetails: [
                 ],
@@ -169,16 +169,16 @@ export namespace ApiResponseApiProcessingOrder {
   // export const ApiResponseApiProcessingOrderValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               data: {
-  //                   validators: []
-  //               },
-  //               errorDetails: {
+  //               status: {
   //                   validators: []
   //               },
   //               errorMessage: {
   //                   validators: []
   //               },
-  //               status: {
+  //               data: {
+  //                   validators: []
+  //               },
+  //               errorDetails: {
   //                   validators: []
   //               },
   //               validationErrorDetails: {

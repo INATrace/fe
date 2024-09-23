@@ -78,9 +78,9 @@ export class CompanyUserRoleComponent extends GenericEditableItemComponent<ApiCo
       if (this.contentObject && !this.contentObject.name) {
 
         // Adding new user to the company
-        const resAdd = await this.companyController.executeActionUsingPOST('ADD_USER_TO_COMPANY', {companyId: id, userId: this.form.value.id}).pipe(take(1)).toPromise();
+        const resAdd = await this.companyController.executeCompanyAction('ADD_USER_TO_COMPANY', {companyId: id, userId: this.form.value.id}).pipe(take(1)).toPromise();
         if (resAdd.status === 'OK') {
-          const resSet = await this.companyController.executeActionUsingPOST('SET_USER_COMPANY_ROLE',
+          const resSet = await this.companyController.executeCompanyAction('SET_USER_COMPANY_ROLE',
             {companyId: id, userId: this.form.value.id, companyUserRole: this.form.value.companyRole}).pipe(take(1)).toPromise();
           if (resSet.status === 'OK') {
             this.submitted = false;
@@ -89,7 +89,7 @@ export class CompanyUserRoleComponent extends GenericEditableItemComponent<ApiCo
           }
         }
       } else {
-        const res = await this.companyController.executeActionUsingPOST('SET_USER_COMPANY_ROLE',
+        const res = await this.companyController.executeCompanyAction('SET_USER_COMPANY_ROLE',
           {companyId: id, userId: this.form.value.id, companyUserRole: this.form.value.companyRole}).pipe(take(1)).toPromise();
         if (res.status === 'OK') {
           this.submitted = false;
@@ -109,7 +109,7 @@ export class CompanyUserRoleComponent extends GenericEditableItemComponent<ApiCo
         userId: this.form.value.id
       };
 
-      const res = await this.companyController.executeActionUsingPOST('REMOVE_USER_FROM_COMPANY', removeRequest).pipe(take(1)).toPromise();
+      const res = await this.companyController.executeCompanyAction('REMOVE_USER_FROM_COMPANY', removeRequest).pipe(take(1)).toPromise();
 
       if (res && res.status === 'OK') {
         this.listEditorManager.delete(this.listEditorManagerPosition);

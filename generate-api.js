@@ -2,22 +2,10 @@ var fs = require('fs');
 var converter = require('api-spec-converter');
 var child_process = require('child_process');
 
-var swagger_docs_host = 'http://localhost:8080/v2/api-docs'
-
-
-// var swagger_docs_host = null
-const patchDir = './patches'
-const modelsDir = './src/api/model'
-
-function patch(source, targetDir) {
-    fs.copyFile(patchDir + '/' + source, targetDir + '/' + source, (err) => {
-        if (err) throw err;
-        console.log(source + ' was copied to ' + targetDir);
-    });
-}
+var swagger_docs_host = 'http://localhost:8080/v3/api-docs'
 
 function afterBuild(code) {
-    if (code == 0) {
+    if (code === 0) {
         fs.unlinkSync('src/api/index.ts');
         fs.unlinkSync('src/api/api/api.ts');
         fs.unlinkSync('src/api/model/models.ts');
@@ -27,47 +15,61 @@ function afterBuild(code) {
     }
 }
 
-if (swagger_docs_host === null) {
-    console.log("Generating from: tmp_apisprout.yaml");
-    var proc = child_process.fork("node_modules/openapi-typescript-angular-generator/bin/ng-ts-codegen.js", ['-i', 'tmp_apisprout.yaml', '-o', 'src/api']);
-    proc.on('exit', afterBuild);
-} else {
-    console.log("Generating form: " + swagger_docs_host);
-    converter.convert({
-        from: 'swagger_2',
-        to: 'openapi_3',
-        source: swagger_docs_host,
-    }).then(function (converted) {
-        // [Optional] Fill missing fields with dummy values
-        converted.fillMissing();
-        delete converted.spec.info.license;
+console.log("Generating form: " + swagger_docs_host);
 
-
-        // [Optional] Validate converted spec
-        converted.validate().then(function (result) {
-            //fs.writeFileSync('apidocs-new.json', converted.stringify());
-
-            if (result.errors)
-                return console.error(result.errors);
-            if (result.warnings)
-                console.warn(result.warnings);
-
-            if (!fs.existsSync('src/api')) {
-                fs.mkdirSync('src/api');
-            }
-
-            fs.writeFileSync('src/api/apidocs.json', converted.stringify());
-
-            // preimenovanje funkcij
-            processSwaggerJson(true)
-
-            // generate TS API
-            var proc = child_process.fork("node_modules/openapi-typescript-angular-generator/bin/ng-ts-codegen.js", ['-i', 'src/api/apidocs.json', '-o', 'src/api']);
-            proc.on('exit', afterBuild);
-        });
-    });
+if (!fs.existsSync('src/api')) {
+    fs.mkdirSync('src/api');
 }
 
+fetch(swagger_docs_host).then(function(res) {
+    res.json().then(function(data) {
+
+        // fs.writeFileSync('src/api/apidocs.json', data);
+
+//        processSwaggerJson(true)
+
+        // generate TS API
+        var proc = child_process.fork("node_modules/openapi-typescript-angular-generator/bin/ng-ts-codegen.js", [
+            '-i', swagger_docs_host,
+            '-o', 'src/api'
+        ]);
+        proc.on('exit', afterBuild);
+    })
+})
+
+// converter.convert({
+//     from: 'swagger_2',
+//     to: 'openapi_3',
+//     source: swagger_docs_host,
+// }).then(function (converted) {
+//     // [Optional] Fill missing fields with dummy values
+//     converted.fillMissing();
+//     delete converted.spec.info.license;
+//
+//
+//     // [Optional] Validate converted spec
+//     converted.validate().then(function (result) {
+//         //fs.writeFileSync('apidocs-new.json', converted.stringify());
+//
+//         if (result.errors)
+//             return console.error(result.errors);
+//         if (result.warnings)
+//             console.warn(result.warnings);
+//
+//         if (!fs.existsSync('src/api')) {
+//             fs.mkdirSync('src/api');
+//         }
+//
+//         fs.writeFileSync('src/api/apidocs.json', converted.stringify());
+//
+//         // preimenovanje funkcij
+//         processSwaggerJson(true)
+//
+//         // generate TS API
+//         var proc = child_process.fork("node_modules/openapi-typescript-angular-generator/bin/ng-ts-codegen.js", ['-i', 'src/api/apidocs.json', '-o', 'src/api']);
+//         proc.on('exit', afterBuild);
+//     });
+// });
 
 function processSwaggerJson(verbose = false) {
   let fname = 'src/api/apidocs.json'
@@ -134,7 +136,6 @@ function processSwaggerJson(verbose = false) {
     }
     throw Error("Duplicate operationId")
   }
-
 
   // povozi popravek
   outputJSON = JSON.stringify(data, null, 2);

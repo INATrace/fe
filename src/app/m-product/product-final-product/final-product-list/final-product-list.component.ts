@@ -110,7 +110,7 @@ export class FinalProductListComponent implements OnInit, OnChanges {
   }
 
   loadFinalProducts(params): Observable<ApiPaginatedResponseApiFinalProduct>{
-    return this.productControllerService.getFinalProductListUsingGETByMap({
+    return this.productControllerService.getFinalProductListByMap({
       ...params,
       productId: this.productId
     });
@@ -168,7 +168,7 @@ export class FinalProductListComponent implements OnInit, OnChanges {
     try {
       this.globalEventManager.showLoading(true);
 
-      const res = await this.productControllerService.deleteFinalProductUsingDELETE(this.productId, finalProduct.id)
+      const res = await this.productControllerService.deleteFinalProduct(this.productId, finalProduct.id)
           .pipe(take(1))
           .toPromise();
 

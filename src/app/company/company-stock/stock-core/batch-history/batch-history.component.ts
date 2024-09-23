@@ -41,7 +41,7 @@ export class BatchHistoryComponent implements OnInit {
     .pipe(
       tap(() => this.globalEventsManager.showLoading(true)),
       switchMap(val => {
-        return this.stockOrderService.getStockOrderAggregatedHistoryUsingGET(val[1].stockOrderId);
+        return this.stockOrderService.getStockOrderAggregatedHistory(val[1].stockOrderId);
       }),
       map(val => {
         if (val && val.status === 'OK') {

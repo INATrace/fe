@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GetValueChainListUsingGET, ValueChainControllerService } from '../../../api/api/valueChainController.service';
+import { GetValueChainList, ValueChainControllerService } from '../../../api/api/valueChainController.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { debounceTime, finalize, map, startWith, switchMap, take, tap } from 'rxjs/operators';
@@ -70,7 +70,7 @@ export class ValueChainListComponent implements OnInit {
     this.sortingParams$
   ]).pipe(
     map(([ping, page, search, sorting]) => {
-      const params: GetValueChainListUsingGET.PartialParamMap = {
+      const params: GetValueChainList.PartialParamMap = {
         name: search.name,
         valueChainStatus: search.status,
         sortBy: sorting.sortBy,
@@ -81,7 +81,7 @@ export class ValueChainListComponent implements OnInit {
       return params;
     }),
     tap(() => this.globalEventsManager.showLoading(true)),
-    switchMap(requestParams => this.valueChainService.getValueChainListUsingGETByMap(requestParams)),
+    switchMap(requestParams => this.valueChainService.getValueChainListByMap(requestParams)),
     map((response: ApiPaginatedResponseApiValueChain) => {
       if (response) {
         if (response.data?.count) {
@@ -149,7 +149,7 @@ export class ValueChainListComponent implements OnInit {
   enableValueChain(id): void {
 
     this.globalEventsManager.showLoading(true);
-    this.valueChainService.enableValueChainUsingPOST(id)
+    this.valueChainService.enableValueChain(id)
       .pipe(
         finalize(() => this.globalEventsManager.showLoading(false))
       )
@@ -177,7 +177,7 @@ export class ValueChainListComponent implements OnInit {
   disableValueChain(id): void {
 
     this.globalEventsManager.showLoading(true);
-    this.valueChainService.disableValueChainUsingPOST(id)
+    this.valueChainService.disableValueChain(id)
       .pipe(
         finalize(() => this.globalEventsManager.showLoading(false))
       )
@@ -205,7 +205,7 @@ export class ValueChainListComponent implements OnInit {
   deleteValueChain(id): void {
 
     this.globalEventsManager.showLoading(true);
-    this.valueChainService.deleteValueChainUsingDELETE(id)
+    this.valueChainService.deleteValueChain(id)
       .pipe(
         finalize(() => this.globalEventsManager.showLoading(false))
       )

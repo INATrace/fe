@@ -37,7 +37,7 @@ export class AuthService {
 
     try {
 
-      const resp = await this.userController.getProfileForUserUsingGET().toPromise();
+      const resp = await this.userController.getProfileForUser().toPromise();
 
       if (resp) {
         if (resp.data.language) {
@@ -55,7 +55,7 @@ export class AuthService {
 
   login(username: string, password: string, redirect = null) {
 
-    this.userController.loginUsingPOST(
+    this.userController.login(
       {
         username,
         password
@@ -81,12 +81,12 @@ export class AuthService {
 
   async logout() {
 
-    await this.userController.logoutUsingPOST().pipe(take(1)).toPromise();
+    await this.userController.logout().pipe(take(1)).toPromise();
     this.router.navigate(['login']).then(() => this.userProfileSubject.next(null));
   }
 
   register(email, password, name, surname, redirect = null) {
-    this.userController.createUserUsingPOST(
+    this.userController.createUser(
       {
         email,
         name,

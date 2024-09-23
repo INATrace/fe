@@ -174,7 +174,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
       this.title = $localize`:@@productLabelStockBulkPayments.updateTitle:Update bulk payment`;
 
       const bulkPaymentId = this.route.snapshot.params.bulkPaymentId;
-      const bulkPaymentResp = await this.paymentControllerService.getBulkPaymentUsingGET(bulkPaymentId)
+      const bulkPaymentResp = await this.paymentControllerService.getBulkPayment(bulkPaymentId)
           .pipe(take(1))
           .toPromise();
 
@@ -275,7 +275,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
     if (this.bulkType === BulkType.PO) {
 
       for (const purchaseOrderId of purchaseOrderIds) {
-        const purchaseOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(purchaseOrderId)
+        const purchaseOrderResp = await this.stockOrderControllerService.getStockOrder(purchaseOrderId)
             .pipe(take(1))
             .toPromise();
 
@@ -417,7 +417,7 @@ export class StockPaymentsBulkDetailComponent implements OnInit, OnDestroy {
       }
     }
 
-    const bulkPaymentResp = await this.paymentControllerService.createBulkPaymentUsingPOST(this.bulkPayment)
+    const bulkPaymentResp = await this.paymentControllerService.createBulkPayment(this.bulkPayment)
         .pipe(take(1))
         .toPromise();
 

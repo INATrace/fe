@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -43,75 +43,63 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createOrUpdateStockOrderUsingPUT.
+ * Namespace for createOrUpdateStockOrder.
  */
-export namespace CreateOrUpdateStockOrderUsingPUT {
+export namespace CreateOrUpdateStockOrder {
     /**
-     * Parameter map for createOrUpdateStockOrderUsingPUT.
+     * Parameter map for createOrUpdateStockOrder.
      */
     export interface PartialParamMap {
-      /**
-       * apiStockOrder
-       */
       ApiStockOrder: ApiStockOrder;
     }
 
     /**
-     * Enumeration of all parameters for createOrUpdateStockOrderUsingPUT.
+     * Enumeration of all parameters for createOrUpdateStockOrder.
      */
     export enum Parameters {
-      /**
-       * apiStockOrder
-       */
       ApiStockOrder = 'ApiStockOrder'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateStockOrderUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateStockOrder
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateOrUpdateStockOrderUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateOrUpdateStockOrder.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for createPurchaseOrderBulkUsingPOST.
+ * Namespace for createPurchaseOrderBulk.
  */
-export namespace CreatePurchaseOrderBulkUsingPOST {
+export namespace CreatePurchaseOrderBulk {
     /**
-     * Parameter map for createPurchaseOrderBulkUsingPOST.
+     * Parameter map for createPurchaseOrderBulk.
      */
     export interface PartialParamMap {
-      /**
-       * apiPurchaseOrder
-       */
       ApiPurchaseOrder: ApiPurchaseOrder;
     }
 
     /**
-     * Enumeration of all parameters for createPurchaseOrderBulkUsingPOST.
+     * Enumeration of all parameters for createPurchaseOrderBulk.
      */
     export enum Parameters {
-      /**
-       * apiPurchaseOrder
-       */
       ApiPurchaseOrder = 'ApiPurchaseOrder'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createPurchaseOrderBulkUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createPurchaseOrderBulk
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreatePurchaseOrderBulkUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreatePurchaseOrderBulk.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for deleteStockOrderUsingDELETE.
+ * Namespace for deleteStockOrder.
  */
-export namespace DeleteStockOrderUsingDELETE {
+export namespace DeleteStockOrder {
     /**
-     * Parameter map for deleteStockOrderUsingDELETE.
+     * Parameter map for deleteStockOrder.
      */
     export interface PartialParamMap {
       /**
@@ -121,7 +109,7 @@ export namespace DeleteStockOrderUsingDELETE {
     }
 
     /**
-     * Enumeration of all parameters for deleteStockOrderUsingDELETE.
+     * Enumeration of all parameters for deleteStockOrder.
      */
     export enum Parameters {
       /**
@@ -131,10 +119,10 @@ export namespace DeleteStockOrderUsingDELETE {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteStockOrderUsingDELETE
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteStockOrder
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof DeleteStockOrderUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof DeleteStockOrder.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -142,42 +130,36 @@ export namespace DeleteStockOrderUsingDELETE {
 }
 
 /**
- * Namespace for exportDeliveriesByCompanyUsingGET.
+ * Namespace for exportDeliveriesByCompany.
  */
-export namespace ExportDeliveriesByCompanyUsingGET {
+export namespace ExportDeliveriesByCompany {
     /**
-     * Parameter map for exportDeliveriesByCompanyUsingGET.
+     * Parameter map for exportDeliveriesByCompany.
      */
     export interface PartialParamMap {
       /**
        * Company ID
        */
       companyId: number;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for exportDeliveriesByCompanyUsingGET.
+     * Enumeration of all parameters for exportDeliveriesByCompany.
      */
     export enum Parameters {
       /**
        * Company ID
        */
       companyId = 'companyId',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of exportDeliveriesByCompanyUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of exportDeliveriesByCompany
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ExportDeliveriesByCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ExportDeliveriesByCompany.PartialParamMap]?: [string, ValidatorFn][]} = {
       companyId: [
               ['required', Validators.required],
       ],
@@ -187,42 +169,36 @@ export namespace ExportDeliveriesByCompanyUsingGET {
 }
 
 /**
- * Namespace for exportGeoDataUsingGET.
+ * Namespace for exportGeoData.
  */
-export namespace ExportGeoDataUsingGET {
+export namespace ExportGeoData {
     /**
-     * Parameter map for exportGeoDataUsingGET.
+     * Parameter map for exportGeoData.
      */
     export interface PartialParamMap {
       /**
        * StockOrder ID
        */
       id: number;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for exportGeoDataUsingGET.
+     * Enumeration of all parameters for exportGeoData.
      */
     export enum Parameters {
       /**
        * StockOrder ID
        */
       id = 'id',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of exportGeoDataUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of exportGeoData
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ExportGeoDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ExportGeoData.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -232,11 +208,11 @@ export namespace ExportGeoDataUsingGET {
 }
 
 /**
- * Namespace for getAvailableStockForStockUnitInFacilityUsingGET.
+ * Namespace for getAvailableStockForStockUnitInFacility.
  */
-export namespace GetAvailableStockForStockUnitInFacilityUsingGET {
+export namespace GetAvailableStockForStockUnitInFacility {
     /**
-     * Parameter map for getAvailableStockForStockUnitInFacilityUsingGET.
+     * Parameter map for getAvailableStockForStockUnitInFacility.
      */
     export interface PartialParamMap {
       /**
@@ -291,14 +267,11 @@ export namespace GetAvailableStockForStockUnitInFacilityUsingGET {
        * Production date range end
        */
       productionDateEnd?: string;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getAvailableStockForStockUnitInFacilityUsingGET.
+     * Enumeration of all parameters for getAvailableStockForStockUnitInFacility.
      */
     export enum Parameters {
       /**
@@ -353,25 +326,24 @@ export namespace GetAvailableStockForStockUnitInFacilityUsingGET {
        * Production date range end
        */
       productionDateEnd = 'productionDateEnd',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getAvailableStockForStockUnitInFacilityUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getAvailableStockForStockUnitInFacility
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetAvailableStockForStockUnitInFacility.PartialParamMap]?: [string, ValidatorFn][]} = {
       facilityId: [
               ['required', Validators.required],
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -397,11 +369,11 @@ export namespace GetAvailableStockForStockUnitInFacilityUsingGET {
 }
 
 /**
- * Namespace for getQuoteOrdersInFacilityUsingGET.
+ * Namespace for getQuoteOrdersInFacility.
  */
-export namespace GetQuoteOrdersInFacilityUsingGET {
+export namespace GetQuoteOrdersInFacility {
     /**
-     * Parameter map for getQuoteOrdersInFacilityUsingGET.
+     * Parameter map for getQuoteOrdersInFacility.
      */
     export interface PartialParamMap {
       /**
@@ -440,14 +412,11 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
        * Return only open stock orders
        */
       openOnly?: boolean;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getQuoteOrdersInFacilityUsingGET.
+     * Enumeration of all parameters for getQuoteOrdersInFacility.
      */
     export enum Parameters {
       /**
@@ -486,25 +455,24 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
        * Return only open stock orders
        */
       openOnly = 'openOnly',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getQuoteOrdersInFacilityUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getQuoteOrdersInFacility
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetQuoteOrdersInFacilityUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetQuoteOrdersInFacility.PartialParamMap]?: [string, ValidatorFn][]} = {
       companyId: [
               ['required', Validators.required],
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -522,11 +490,11 @@ export namespace GetQuoteOrdersInFacilityUsingGET {
 }
 
 /**
- * Namespace for getStockOrderAggregatedHistoryUsingGET.
+ * Namespace for getStockOrder.
  */
-export namespace GetStockOrderAggregatedHistoryUsingGET {
+export namespace GetStockOrder {
     /**
-     * Parameter map for getStockOrderAggregatedHistoryUsingGET.
+     * Parameter map for getStockOrder.
      */
     export interface PartialParamMap {
       /**
@@ -534,13 +502,14 @@ export namespace GetStockOrderAggregatedHistoryUsingGET {
        */
       id: number;
       /**
-       * language
+       * Return the processing order base data
        */
+      withProcessingOrder?: boolean;
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getStockOrderAggregatedHistoryUsingGET.
+     * Enumeration of all parameters for getStockOrder.
      */
     export enum Parameters {
       /**
@@ -548,16 +517,58 @@ export namespace GetStockOrderAggregatedHistoryUsingGET {
        */
       id = 'id',
       /**
-       * language
+       * Return the processing order base data
        */
+      withProcessingOrder = 'withProcessingOrder',
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderAggregatedHistoryUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrder
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetStockOrderAggregatedHistoryUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetStockOrder.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      withProcessingOrder: [
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
+ * Namespace for getStockOrderAggregatedHistory.
+ */
+export namespace GetStockOrderAggregatedHistory {
+    /**
+     * Parameter map for getStockOrderAggregatedHistory.
+     */
+    export interface PartialParamMap {
+      /**
+       * StockOrder ID
+       */
+      id: number;
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for getStockOrderAggregatedHistory.
+     */
+    export enum Parameters {
+      /**
+       * StockOrder ID
+       */
+      id = 'id',
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderAggregatedHistory
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetStockOrderAggregatedHistory.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -567,11 +578,11 @@ export namespace GetStockOrderAggregatedHistoryUsingGET {
 }
 
 /**
- * Namespace for getStockOrderListByCompanyIdUsingGET.
+ * Namespace for getStockOrderListByCompanyId.
  */
-export namespace GetStockOrderListByCompanyIdUsingGET {
+export namespace GetStockOrderListByCompanyId {
     /**
-     * Parameter map for getStockOrderListByCompanyIdUsingGET.
+     * Parameter map for getStockOrderListByCompanyId.
      */
     export interface PartialParamMap {
       /**
@@ -646,14 +657,11 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
        * Search by ProducerUserCustomer name
        */
       query?: string;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getStockOrderListByCompanyIdUsingGET.
+     * Enumeration of all parameters for getStockOrderListByCompanyId.
      */
     export enum Parameters {
       /**
@@ -728,25 +736,24 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
        * Search by ProducerUserCustomer name
        */
       query = 'query',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderListByCompanyIdUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderListByCompanyId
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetStockOrderListByCompanyIdUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetStockOrderListByCompanyId.PartialParamMap]?: [string, ValidatorFn][]} = {
       companyId: [
               ['required', Validators.required],
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -782,11 +789,11 @@ export namespace GetStockOrderListByCompanyIdUsingGET {
 }
 
 /**
- * Namespace for getStockOrderListByFacilityIdUsingGET.
+ * Namespace for getStockOrderListByFacilityId.
  */
-export namespace GetStockOrderListByFacilityIdUsingGET {
+export namespace GetStockOrderListByFacilityId {
     /**
-     * Parameter map for getStockOrderListByFacilityIdUsingGET.
+     * Parameter map for getStockOrderListByFacilityId.
      */
     export interface PartialParamMap {
       /**
@@ -849,14 +856,11 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
        * Search by ProducerUserCustomer name
        */
       query?: string;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getStockOrderListByFacilityIdUsingGET.
+     * Enumeration of all parameters for getStockOrderListByFacilityId.
      */
     export enum Parameters {
       /**
@@ -919,25 +923,24 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
        * Search by ProducerUserCustomer name
        */
       query = 'query',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderListByFacilityIdUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderListByFacilityId
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetStockOrderListByFacilityIdUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetStockOrderListByFacilityId.PartialParamMap]?: [string, ValidatorFn][]} = {
       facilityId: [
               ['required', Validators.required],
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -967,42 +970,36 @@ export namespace GetStockOrderListByFacilityIdUsingGET {
 }
 
 /**
- * Namespace for getStockOrderProcessingOrderUsingGET.
+ * Namespace for getStockOrderProcessingOrder.
  */
-export namespace GetStockOrderProcessingOrderUsingGET {
+export namespace GetStockOrderProcessingOrder {
     /**
-     * Parameter map for getStockOrderProcessingOrderUsingGET.
+     * Parameter map for getStockOrderProcessingOrder.
      */
     export interface PartialParamMap {
       /**
        * StockOrder ID
        */
       id: number;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getStockOrderProcessingOrderUsingGET.
+     * Enumeration of all parameters for getStockOrderProcessingOrder.
      */
     export enum Parameters {
       /**
        * StockOrder ID
        */
       id = 'id',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderProcessingOrderUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderProcessingOrder
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetStockOrderProcessingOrderUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetStockOrderProcessingOrder.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -1012,66 +1009,11 @@ export namespace GetStockOrderProcessingOrderUsingGET {
 }
 
 /**
- * Namespace for getStockOrderUsingGET.
+ * Namespace for getStockOrdersInFacilityForCustomer.
  */
-export namespace GetStockOrderUsingGET {
+export namespace GetStockOrdersInFacilityForCustomer {
     /**
-     * Parameter map for getStockOrderUsingGET.
-     */
-    export interface PartialParamMap {
-      /**
-       * StockOrder ID
-       */
-      id: number;
-      /**
-       * Return the processing order base data
-       */
-      withProcessingOrder?: boolean;
-      /**
-       * language
-       */
-      language?: 'EN' | 'DE' | 'RW' | 'ES';
-    }
-
-    /**
-     * Enumeration of all parameters for getStockOrderUsingGET.
-     */
-    export enum Parameters {
-      /**
-       * StockOrder ID
-       */
-      id = 'id',
-      /**
-       * Return the processing order base data
-       */
-      withProcessingOrder = 'withProcessingOrder',
-      /**
-       * language
-       */
-      language = 'language'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrderUsingGET
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof GetStockOrderUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      id: [
-              ['required', Validators.required],
-      ],
-      withProcessingOrder: [
-      ],
-      language: [
-      ],
-    };
-}
-
-/**
- * Namespace for getStockOrdersInFacilityForCustomerUsingGET.
- */
-export namespace GetStockOrdersInFacilityForCustomerUsingGET {
-    /**
-     * Parameter map for getStockOrdersInFacilityForCustomerUsingGET.
+     * Parameter map for getStockOrdersInFacilityForCustomer.
      */
     export interface PartialParamMap {
       /**
@@ -1110,14 +1052,11 @@ export namespace GetStockOrdersInFacilityForCustomerUsingGET {
        * Return only open stock orders
        */
       openOnly?: boolean;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getStockOrdersInFacilityForCustomerUsingGET.
+     * Enumeration of all parameters for getStockOrdersInFacilityForCustomer.
      */
     export enum Parameters {
       /**
@@ -1156,25 +1095,24 @@ export namespace GetStockOrdersInFacilityForCustomerUsingGET {
        * Return only open stock orders
        */
       openOnly = 'openOnly',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrdersInFacilityForCustomerUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getStockOrdersInFacilityForCustomer
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetStockOrdersInFacilityForCustomer.PartialParamMap]?: [string, ValidatorFn][]} = {
       companyId: [
               ['required', Validators.required],
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -1235,23 +1173,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createOrUpdateStockOrderUsingPUTByMap(
-    map: CreateOrUpdateStockOrderUsingPUT.PartialParamMap,
+  public createOrUpdateStockOrderByMap(
+    map: CreateOrUpdateStockOrder.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public createOrUpdateStockOrderUsingPUTByMap(
-    map: CreateOrUpdateStockOrderUsingPUT.PartialParamMap,
+  public createOrUpdateStockOrderByMap(
+    map: CreateOrUpdateStockOrder.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public createOrUpdateStockOrderUsingPUTByMap(
-    map: CreateOrUpdateStockOrderUsingPUT.PartialParamMap,
+  public createOrUpdateStockOrderByMap(
+    map: CreateOrUpdateStockOrder.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public createOrUpdateStockOrderUsingPUTByMap(
-    map: CreateOrUpdateStockOrderUsingPUT.PartialParamMap,
+  public createOrUpdateStockOrderByMap(
+    map: CreateOrUpdateStockOrder.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createOrUpdateStockOrderUsingPUT(
+    return this.createOrUpdateStockOrder(
       map.ApiStockOrder,
       observe,
       reportProgress
@@ -1262,16 +1200,16 @@ export class StockOrderControllerService {
     /**
      * Create or update stock order. If the ID is provided, then the entity with the provided ID is updated.
      * 
-     * @param ApiStockOrder apiStockOrder
+     * @param ApiStockOrder 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateStockOrderUsingPUT(ApiStockOrder: ApiStockOrder, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public createOrUpdateStockOrderUsingPUT(ApiStockOrder: ApiStockOrder, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public createOrUpdateStockOrderUsingPUT(ApiStockOrder: ApiStockOrder, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public createOrUpdateStockOrderUsingPUT(ApiStockOrder: ApiStockOrder, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createOrUpdateStockOrder(ApiStockOrder: ApiStockOrder, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateStockOrder(ApiStockOrder: ApiStockOrder, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateStockOrder(ApiStockOrder: ApiStockOrder, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createOrUpdateStockOrder(ApiStockOrder: ApiStockOrder, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiStockOrder === null || ApiStockOrder === undefined) {
-            throw new Error('Required parameter ApiStockOrder was null or undefined when calling createOrUpdateStockOrderUsingPUT.');
+            throw new Error('Required parameter ApiStockOrder was null or undefined when calling createOrUpdateStockOrder.');
         }
 
         let headers = this.defaultHeaders;
@@ -1310,7 +1248,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateStockOrderUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateStockOrder')));
         }
         return handle;
     }
@@ -1323,23 +1261,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createPurchaseOrderBulkUsingPOSTByMap(
-    map: CreatePurchaseOrderBulkUsingPOST.PartialParamMap,
+  public createPurchaseOrderBulkByMap(
+    map: CreatePurchaseOrderBulk.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiPurchaseOrder>;
-  public createPurchaseOrderBulkUsingPOSTByMap(
-    map: CreatePurchaseOrderBulkUsingPOST.PartialParamMap,
+  public createPurchaseOrderBulkByMap(
+    map: CreatePurchaseOrderBulk.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiPurchaseOrder>>;
-  public createPurchaseOrderBulkUsingPOSTByMap(
-    map: CreatePurchaseOrderBulkUsingPOST.PartialParamMap,
+  public createPurchaseOrderBulkByMap(
+    map: CreatePurchaseOrderBulk.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiPurchaseOrder>>;
-  public createPurchaseOrderBulkUsingPOSTByMap(
-    map: CreatePurchaseOrderBulkUsingPOST.PartialParamMap,
+  public createPurchaseOrderBulkByMap(
+    map: CreatePurchaseOrderBulk.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createPurchaseOrderBulkUsingPOST(
+    return this.createPurchaseOrderBulk(
       map.ApiPurchaseOrder,
       observe,
       reportProgress
@@ -1350,16 +1288,16 @@ export class StockOrderControllerService {
     /**
      * Creates a list of purchase orders.
      * 
-     * @param ApiPurchaseOrder apiPurchaseOrder
+     * @param ApiPurchaseOrder 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createPurchaseOrderBulkUsingPOST(ApiPurchaseOrder: ApiPurchaseOrder, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiPurchaseOrder>;
-    public createPurchaseOrderBulkUsingPOST(ApiPurchaseOrder: ApiPurchaseOrder, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiPurchaseOrder>>;
-    public createPurchaseOrderBulkUsingPOST(ApiPurchaseOrder: ApiPurchaseOrder, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiPurchaseOrder>>;
-    public createPurchaseOrderBulkUsingPOST(ApiPurchaseOrder: ApiPurchaseOrder, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createPurchaseOrderBulk(ApiPurchaseOrder: ApiPurchaseOrder, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiPurchaseOrder>;
+    public createPurchaseOrderBulk(ApiPurchaseOrder: ApiPurchaseOrder, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiPurchaseOrder>>;
+    public createPurchaseOrderBulk(ApiPurchaseOrder: ApiPurchaseOrder, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiPurchaseOrder>>;
+    public createPurchaseOrderBulk(ApiPurchaseOrder: ApiPurchaseOrder, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiPurchaseOrder === null || ApiPurchaseOrder === undefined) {
-            throw new Error('Required parameter ApiPurchaseOrder was null or undefined when calling createPurchaseOrderBulkUsingPOST.');
+            throw new Error('Required parameter ApiPurchaseOrder was null or undefined when calling createPurchaseOrderBulk.');
         }
 
         let headers = this.defaultHeaders;
@@ -1398,7 +1336,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createPurchaseOrderBulkUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createPurchaseOrderBulk')));
         }
         return handle;
     }
@@ -1411,23 +1349,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public deleteStockOrderUsingDELETEByMap(
-    map: DeleteStockOrderUsingDELETE.PartialParamMap,
+  public deleteStockOrderByMap(
+    map: DeleteStockOrder.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public deleteStockOrderUsingDELETEByMap(
-    map: DeleteStockOrderUsingDELETE.PartialParamMap,
+  public deleteStockOrderByMap(
+    map: DeleteStockOrder.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public deleteStockOrderUsingDELETEByMap(
-    map: DeleteStockOrderUsingDELETE.PartialParamMap,
+  public deleteStockOrderByMap(
+    map: DeleteStockOrder.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public deleteStockOrderUsingDELETEByMap(
-    map: DeleteStockOrderUsingDELETE.PartialParamMap,
+  public deleteStockOrderByMap(
+    map: DeleteStockOrder.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.deleteStockOrderUsingDELETE(
+    return this.deleteStockOrder(
       map.id,
       observe,
       reportProgress
@@ -1442,12 +1380,12 @@ export class StockOrderControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteStockOrderUsingDELETE(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public deleteStockOrderUsingDELETE(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public deleteStockOrderUsingDELETE(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public deleteStockOrderUsingDELETE(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public deleteStockOrder(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public deleteStockOrder(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public deleteStockOrder(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public deleteStockOrder(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteStockOrderUsingDELETE.');
+            throw new Error('Required parameter id was null or undefined when calling deleteStockOrder.');
         }
 
         let headers = this.defaultHeaders;
@@ -1480,7 +1418,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteStockOrderUsingDELETE')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteStockOrder')));
         }
         return handle;
     }
@@ -1493,23 +1431,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public exportDeliveriesByCompanyUsingGETByMap(
-    map: ExportDeliveriesByCompanyUsingGET.PartialParamMap,
+  public exportDeliveriesByCompanyByMap(
+    map: ExportDeliveriesByCompany.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<Blob>;
-  public exportDeliveriesByCompanyUsingGETByMap(
-    map: ExportDeliveriesByCompanyUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<string>;
+  public exportDeliveriesByCompanyByMap(
+    map: ExportDeliveriesByCompany.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public exportDeliveriesByCompanyUsingGETByMap(
-    map: ExportDeliveriesByCompanyUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<string>>;
+  public exportDeliveriesByCompanyByMap(
+    map: ExportDeliveriesByCompany.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public exportDeliveriesByCompanyUsingGETByMap(
-    map: ExportDeliveriesByCompanyUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<string>>;
+  public exportDeliveriesByCompanyByMap(
+    map: ExportDeliveriesByCompany.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.exportDeliveriesByCompanyUsingGET(
+    return this.exportDeliveriesByCompany(
       map.companyId,
       map.language,
       observe,
@@ -1522,16 +1460,16 @@ export class StockOrderControllerService {
      * Export deliveries (stock orders of type PURCHASE_ORDER) for the provided company ID
      * 
      * @param companyId Company ID
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportDeliveriesByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public exportDeliveriesByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public exportDeliveriesByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public exportDeliveriesByCompanyUsingGET(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
+    public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
+    public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
-            throw new Error('Required parameter companyId was null or undefined when calling exportDeliveriesByCompanyUsingGET.');
+            throw new Error('Required parameter companyId was null or undefined when calling exportDeliveriesByCompany.');
         }
 
         let headers = this.defaultHeaders;
@@ -1541,7 +1479,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/blob'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1558,9 +1496,8 @@ export class StockOrderControllerService {
                 }
             }
 
-        const handle = this.httpClient.get(`${this.configuration.basePath}/api/chain/stock-order/export/deliveries/company/${encodeURIComponent(String(companyId))}`,
+        const handle = this.httpClient.get<string>(`${this.configuration.basePath}/api/chain/stock-order/export/deliveries/company/${encodeURIComponent(String(companyId))}`,
             {
-                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1568,7 +1505,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportDeliveriesByCompanyUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportDeliveriesByCompany')));
         }
         return handle;
     }
@@ -1581,23 +1518,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public exportGeoDataUsingGETByMap(
-    map: ExportGeoDataUsingGET.PartialParamMap,
+  public exportGeoDataByMap(
+    map: ExportGeoData.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<Blob>;
-  public exportGeoDataUsingGETByMap(
-    map: ExportGeoDataUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<string>;
+  public exportGeoDataByMap(
+    map: ExportGeoData.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public exportGeoDataUsingGETByMap(
-    map: ExportGeoDataUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<string>>;
+  public exportGeoDataByMap(
+    map: ExportGeoData.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public exportGeoDataUsingGETByMap(
-    map: ExportGeoDataUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<string>>;
+  public exportGeoDataByMap(
+    map: ExportGeoData.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.exportGeoDataUsingGET(
+    return this.exportGeoData(
       map.id,
       map.language,
       observe,
@@ -1610,16 +1547,16 @@ export class StockOrderControllerService {
      * Generate a geoJSON file with a list of polygons.
      * 
      * @param id StockOrder ID
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportGeoDataUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public exportGeoDataUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public exportGeoDataUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public exportGeoDataUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
+    public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
+    public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling exportGeoDataUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling exportGeoData.');
         }
 
         let headers = this.defaultHeaders;
@@ -1646,9 +1583,8 @@ export class StockOrderControllerService {
                 }
             }
 
-        const handle = this.httpClient.get(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}/exportGeoData`,
+        const handle = this.httpClient.get<string>(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}/exportGeoData`,
             {
-                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1656,7 +1592,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportGeoDataUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportGeoData')));
         }
         return handle;
     }
@@ -1669,23 +1605,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getAvailableStockForStockUnitInFacilityUsingGETByMap(
-    map: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap,
+  public getAvailableStockForStockUnitInFacilityByMap(
+    map: GetAvailableStockForStockUnitInFacility.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiStockOrder>;
-  public getAvailableStockForStockUnitInFacilityUsingGETByMap(
-    map: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap,
+  public getAvailableStockForStockUnitInFacilityByMap(
+    map: GetAvailableStockForStockUnitInFacility.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-  public getAvailableStockForStockUnitInFacilityUsingGETByMap(
-    map: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap,
+  public getAvailableStockForStockUnitInFacilityByMap(
+    map: GetAvailableStockForStockUnitInFacility.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-  public getAvailableStockForStockUnitInFacilityUsingGETByMap(
-    map: GetAvailableStockForStockUnitInFacilityUsingGET.PartialParamMap,
+  public getAvailableStockForStockUnitInFacilityByMap(
+    map: GetAvailableStockForStockUnitInFacility.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getAvailableStockForStockUnitInFacilityUsingGET(
+    return this.getAvailableStockForStockUnitInFacility(
       map.facilityId,
       map.requestType,
       map.limit,
@@ -1722,16 +1658,16 @@ export class StockOrderControllerService {
      * @param internalLotName Internal LOT name
      * @param productionDateStart Production date range start
      * @param productionDateEnd Production date range end
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, internalLotName?: string, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, internalLotName?: string, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, internalLotName?: string, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getAvailableStockForStockUnitInFacilityUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, internalLotName?: string, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getAvailableStockForStockUnitInFacility(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, internalLotName?: string, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getAvailableStockForStockUnitInFacility(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, internalLotName?: string, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getAvailableStockForStockUnitInFacility(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, internalLotName?: string, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getAvailableStockForStockUnitInFacility(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', semiProductId?: number, finalProductId?: number, isWomenShare?: boolean, organicOnly?: boolean, internalLotName?: string, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
-            throw new Error('Required parameter facilityId was null or undefined when calling getAvailableStockForStockUnitInFacilityUsingGET.');
+            throw new Error('Required parameter facilityId was null or undefined when calling getAvailableStockForStockUnitInFacility.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -1806,36 +1742,36 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getAvailableStockForStockUnitInFacilityUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getAvailableStockForStockUnitInFacility')));
         }
         return handle;
     }
 
 
   /**
-   * getQuoteOrdersInFacility by map.
+   *  by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getQuoteOrdersInFacilityUsingGETByMap(
-    map: GetQuoteOrdersInFacilityUsingGET.PartialParamMap,
+  public getQuoteOrdersInFacilityByMap(
+    map: GetQuoteOrdersInFacility.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiStockOrder>;
-  public getQuoteOrdersInFacilityUsingGETByMap(
-    map: GetQuoteOrdersInFacilityUsingGET.PartialParamMap,
+  public getQuoteOrdersInFacilityByMap(
+    map: GetQuoteOrdersInFacility.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-  public getQuoteOrdersInFacilityUsingGETByMap(
-    map: GetQuoteOrdersInFacilityUsingGET.PartialParamMap,
+  public getQuoteOrdersInFacilityByMap(
+    map: GetQuoteOrdersInFacility.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-  public getQuoteOrdersInFacilityUsingGETByMap(
-    map: GetQuoteOrdersInFacilityUsingGET.PartialParamMap,
+  public getQuoteOrdersInFacilityByMap(
+    map: GetQuoteOrdersInFacility.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getQuoteOrdersInFacilityUsingGET(
+    return this.getQuoteOrdersInFacility(
       map.companyId,
       map.requestType,
       map.limit,
@@ -1853,7 +1789,7 @@ export class StockOrderControllerService {
 
 
     /**
-     * getQuoteOrdersInFacility
+     * 
      * 
      * @param companyId Quote company ID
      * @param requestType Only count, only fetch, or return both values (if null)
@@ -1864,16 +1800,16 @@ export class StockOrderControllerService {
      * @param facilityId Quote facility ID
      * @param semiProductId Semi-product ID
      * @param openOnly Return only open stock orders
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getQuoteOrdersInFacilityUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getQuoteOrdersInFacilityUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getQuoteOrdersInFacilityUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getQuoteOrdersInFacilityUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getQuoteOrdersInFacility(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getQuoteOrdersInFacility(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getQuoteOrdersInFacility(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getQuoteOrdersInFacility(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, semiProductId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
-            throw new Error('Required parameter companyId was null or undefined when calling getQuoteOrdersInFacilityUsingGET.');
+            throw new Error('Required parameter companyId was null or undefined when calling getQuoteOrdersInFacility.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -1936,36 +1872,131 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getQuoteOrdersInFacilityUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getQuoteOrdersInFacility')));
         }
         return handle;
     }
 
 
   /**
-   * getStockOrderAggregatedHistory by map.
+   * Get a single stock order with the provided ID. by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getStockOrderAggregatedHistoryUsingGETByMap(
-    map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
+  public getStockOrderByMap(
+    map: GetStockOrder.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiStockOrderHistory>;
-  public getStockOrderAggregatedHistoryUsingGETByMap(
-    map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<ApiResponseApiStockOrder>;
+  public getStockOrderByMap(
+    map: GetStockOrder.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiStockOrderHistory>>;
-  public getStockOrderAggregatedHistoryUsingGETByMap(
-    map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiStockOrder>>;
+  public getStockOrderByMap(
+    map: GetStockOrder.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiStockOrderHistory>>;
-  public getStockOrderAggregatedHistoryUsingGETByMap(
-    map: GetStockOrderAggregatedHistoryUsingGET.PartialParamMap,
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiStockOrder>>;
+  public getStockOrderByMap(
+    map: GetStockOrder.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getStockOrderAggregatedHistoryUsingGET(
+    return this.getStockOrder(
+      map.id,
+      map.withProcessingOrder,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get a single stock order with the provided ID.
+     * 
+     * @param id StockOrder ID
+     * @param withProcessingOrder Return the processing order base data
+     * @param language 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getStockOrder(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrder>;
+    public getStockOrder(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrder>>;
+    public getStockOrder(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrder>>;
+    public getStockOrder(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getStockOrder.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (withProcessingOrder !== undefined && withProcessingOrder !== null) {
+            queryParameters = queryParameters.set('withProcessingOrder', <any>withProcessingOrder);
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiStockOrder>(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrder')));
+        }
+        return handle;
+    }
+
+
+  /**
+   *  by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getStockOrderAggregatedHistoryByMap(
+    map: GetStockOrderAggregatedHistory.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiStockOrderHistory>;
+  public getStockOrderAggregatedHistoryByMap(
+    map: GetStockOrderAggregatedHistory.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiStockOrderHistory>>;
+  public getStockOrderAggregatedHistoryByMap(
+    map: GetStockOrderAggregatedHistory.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiStockOrderHistory>>;
+  public getStockOrderAggregatedHistoryByMap(
+    map: GetStockOrderAggregatedHistory.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getStockOrderAggregatedHistory(
       map.id,
       map.language,
       observe,
@@ -1975,19 +2006,19 @@ export class StockOrderControllerService {
 
 
     /**
-     * getStockOrderAggregatedHistory
+     * 
      * 
      * @param id StockOrder ID
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrderHistory>;
-    public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrderHistory>>;
-    public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrderHistory>>;
-    public getStockOrderAggregatedHistoryUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderAggregatedHistory(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrderHistory>;
+    public getStockOrderAggregatedHistory(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrderHistory>>;
+    public getStockOrderAggregatedHistory(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrderHistory>>;
+    public getStockOrderAggregatedHistory(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getStockOrderAggregatedHistoryUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling getStockOrderAggregatedHistory.');
         }
 
         let headers = this.defaultHeaders;
@@ -2023,7 +2054,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderAggregatedHistoryUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderAggregatedHistory')));
         }
         return handle;
     }
@@ -2036,23 +2067,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getStockOrderListByCompanyIdUsingGETByMap(
-    map: GetStockOrderListByCompanyIdUsingGET.PartialParamMap,
+  public getStockOrderListByCompanyIdByMap(
+    map: GetStockOrderListByCompanyId.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiStockOrder>;
-  public getStockOrderListByCompanyIdUsingGETByMap(
-    map: GetStockOrderListByCompanyIdUsingGET.PartialParamMap,
+  public getStockOrderListByCompanyIdByMap(
+    map: GetStockOrderListByCompanyId.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-  public getStockOrderListByCompanyIdUsingGETByMap(
-    map: GetStockOrderListByCompanyIdUsingGET.PartialParamMap,
+  public getStockOrderListByCompanyIdByMap(
+    map: GetStockOrderListByCompanyId.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-  public getStockOrderListByCompanyIdUsingGETByMap(
-    map: GetStockOrderListByCompanyIdUsingGET.PartialParamMap,
+  public getStockOrderListByCompanyIdByMap(
+    map: GetStockOrderListByCompanyId.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getStockOrderListByCompanyIdUsingGET(
+    return this.getStockOrderListByCompanyId(
       map.companyId,
       map.requestType,
       map.limit,
@@ -2099,16 +2130,16 @@ export class StockOrderControllerService {
      * @param productionDateStart Production date range start
      * @param productionDateEnd Production date range end
      * @param query Search by ProducerUserCustomer name
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByCompanyIdUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderListByCompanyId(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrderListByCompanyId(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByCompanyId(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByCompanyId(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', farmerId?: number, representativeOfProducerUserCustomerId?: number, isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', orderType?: 'PURCHASE_ORDER' | 'PROCESSING_ORDER' | 'GENERAL_ORDER' | 'TRANSFER_ORDER', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
-            throw new Error('Required parameter companyId was null or undefined when calling getStockOrderListByCompanyIdUsingGET.');
+            throw new Error('Required parameter companyId was null or undefined when calling getStockOrderListByCompanyId.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -2198,7 +2229,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderListByCompanyIdUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderListByCompanyId')));
         }
         return handle;
     }
@@ -2211,23 +2242,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getStockOrderListByFacilityIdUsingGETByMap(
-    map: GetStockOrderListByFacilityIdUsingGET.PartialParamMap,
+  public getStockOrderListByFacilityIdByMap(
+    map: GetStockOrderListByFacilityId.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiStockOrder>;
-  public getStockOrderListByFacilityIdUsingGETByMap(
-    map: GetStockOrderListByFacilityIdUsingGET.PartialParamMap,
+  public getStockOrderListByFacilityIdByMap(
+    map: GetStockOrderListByFacilityId.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-  public getStockOrderListByFacilityIdUsingGETByMap(
-    map: GetStockOrderListByFacilityIdUsingGET.PartialParamMap,
+  public getStockOrderListByFacilityIdByMap(
+    map: GetStockOrderListByFacilityId.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-  public getStockOrderListByFacilityIdUsingGETByMap(
-    map: GetStockOrderListByFacilityIdUsingGET.PartialParamMap,
+  public getStockOrderListByFacilityIdByMap(
+    map: GetStockOrderListByFacilityId.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getStockOrderListByFacilityIdUsingGET(
+    return this.getStockOrderListByFacilityId(
       map.facilityId,
       map.requestType,
       map.limit,
@@ -2268,16 +2299,16 @@ export class StockOrderControllerService {
      * @param productionDateStart Production date range start
      * @param productionDateEnd Production date range end
      * @param query Search by ProducerUserCustomer name
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrderListByFacilityIdUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderListByFacilityId(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrderListByFacilityId(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByFacilityId(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrderListByFacilityId(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', isOpenBalanceOnly?: boolean, isPurchaseOrderOnly?: boolean, availableOnly?: boolean, semiProductId?: number, isWomenShare?: boolean, wayOfPayment?: 'CASH' | 'CASH_VIA_COLLECTOR' | 'BANK_TRANSFER' | 'CHEQUE' | 'OFFSETTING' | 'UNKNOWN', productionDateStart?: string, productionDateEnd?: string, query?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
-            throw new Error('Required parameter facilityId was null or undefined when calling getStockOrderListByFacilityIdUsingGET.');
+            throw new Error('Required parameter facilityId was null or undefined when calling getStockOrderListByFacilityId.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -2358,7 +2389,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderListByFacilityIdUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderListByFacilityId')));
         }
         return handle;
     }
@@ -2371,23 +2402,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getStockOrderProcessingOrderUsingGETByMap(
-    map: GetStockOrderProcessingOrderUsingGET.PartialParamMap,
+  public getStockOrderProcessingOrderByMap(
+    map: GetStockOrderProcessingOrder.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiProcessingOrder>;
-  public getStockOrderProcessingOrderUsingGETByMap(
-    map: GetStockOrderProcessingOrderUsingGET.PartialParamMap,
+  public getStockOrderProcessingOrderByMap(
+    map: GetStockOrderProcessingOrder.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
-  public getStockOrderProcessingOrderUsingGETByMap(
-    map: GetStockOrderProcessingOrderUsingGET.PartialParamMap,
+  public getStockOrderProcessingOrderByMap(
+    map: GetStockOrderProcessingOrder.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
-  public getStockOrderProcessingOrderUsingGETByMap(
-    map: GetStockOrderProcessingOrderUsingGET.PartialParamMap,
+  public getStockOrderProcessingOrderByMap(
+    map: GetStockOrderProcessingOrder.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getStockOrderProcessingOrderUsingGET(
+    return this.getStockOrderProcessingOrder(
       map.id,
       map.language,
       observe,
@@ -2400,16 +2431,16 @@ export class StockOrderControllerService {
      * Get the Processing order that contains the Stock order with the provided ID.
      * 
      * @param id StockOrder ID
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrderProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingOrder>;
-    public getStockOrderProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
-    public getStockOrderProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
-    public getStockOrderProcessingOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrderProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingOrder>;
+    public getStockOrderProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingOrder>>;
+    public getStockOrderProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingOrder>>;
+    public getStockOrderProcessingOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getStockOrderProcessingOrderUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling getStockOrderProcessingOrder.');
         }
 
         let headers = this.defaultHeaders;
@@ -2445,102 +2476,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderProcessingOrderUsingGET')));
-        }
-        return handle;
-    }
-
-
-  /**
-   * Get a single stock order with the provided ID. by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getStockOrderUsingGETByMap(
-    map: GetStockOrderUsingGET.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiStockOrder>;
-  public getStockOrderUsingGETByMap(
-    map: GetStockOrderUsingGET.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiStockOrder>>;
-  public getStockOrderUsingGETByMap(
-    map: GetStockOrderUsingGET.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiStockOrder>>;
-  public getStockOrderUsingGETByMap(
-    map: GetStockOrderUsingGET.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.getStockOrderUsingGET(
-      map.id,
-      map.withProcessingOrder,
-      map.language,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * Get a single stock order with the provided ID.
-     * 
-     * @param id StockOrder ID
-     * @param withProcessingOrder Return the processing order base data
-     * @param language language
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiStockOrder>;
-    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiStockOrder>>;
-    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiStockOrder>>;
-    public getStockOrderUsingGET(id: number, withProcessingOrder?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getStockOrderUsingGET.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (withProcessingOrder !== undefined && withProcessingOrder !== null) {
-            queryParameters = queryParameters.set('withProcessingOrder', <any>withProcessingOrder);
-        }
-
-        let headers = this.defaultHeaders;
-        if (language !== undefined && language !== null) {
-            headers = headers.set('language', String(language));
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponseApiStockOrder>(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrderProcessingOrder')));
         }
         return handle;
     }
@@ -2553,23 +2489,23 @@ export class StockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getStockOrdersInFacilityForCustomerUsingGETByMap(
-    map: GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap,
+  public getStockOrdersInFacilityForCustomerByMap(
+    map: GetStockOrdersInFacilityForCustomer.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiStockOrder>;
-  public getStockOrdersInFacilityForCustomerUsingGETByMap(
-    map: GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap,
+  public getStockOrdersInFacilityForCustomerByMap(
+    map: GetStockOrdersInFacilityForCustomer.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-  public getStockOrdersInFacilityForCustomerUsingGETByMap(
-    map: GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap,
+  public getStockOrdersInFacilityForCustomerByMap(
+    map: GetStockOrdersInFacilityForCustomer.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-  public getStockOrdersInFacilityForCustomerUsingGETByMap(
-    map: GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap,
+  public getStockOrdersInFacilityForCustomerByMap(
+    map: GetStockOrdersInFacilityForCustomer.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getStockOrdersInFacilityForCustomerUsingGET(
+    return this.getStockOrdersInFacilityForCustomer(
       map.companyId,
       map.requestType,
       map.limit,
@@ -2598,16 +2534,16 @@ export class StockOrderControllerService {
      * @param facilityId Facility ID
      * @param companyCustomerId Company customer ID
      * @param openOnly Return only open stock orders
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getStockOrdersInFacilityForCustomerUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
-    public getStockOrdersInFacilityForCustomerUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrdersInFacilityForCustomerUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
-    public getStockOrdersInFacilityForCustomerUsingGET(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getStockOrdersInFacilityForCustomer(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiStockOrder>;
+    public getStockOrdersInFacilityForCustomer(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrdersInFacilityForCustomer(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiStockOrder>>;
+    public getStockOrdersInFacilityForCustomer(companyId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', facilityId?: number, companyCustomerId?: number, openOnly?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
-            throw new Error('Required parameter companyId was null or undefined when calling getStockOrdersInFacilityForCustomerUsingGET.');
+            throw new Error('Required parameter companyId was null or undefined when calling getStockOrdersInFacilityForCustomer.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -2670,7 +2606,7 @@ export class StockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrdersInFacilityForCustomerUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getStockOrdersInFacilityForCustomer')));
         }
         return handle;
     }

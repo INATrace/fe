@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,13 +23,13 @@
 
 export interface ApiResetPasswordRequest { 
     /**
-     * Password.
-     */
-    password: string;
-    /**
      * Reset password token.
      */
     token: string;
+    /**
+     * Password.
+     */
+    password: string;
 }
 
 /**
@@ -41,13 +41,13 @@ export namespace ApiResetPasswordRequest {
      */
     export enum Properties {
         /**
-         * Password.
-         */
-        password = 'password',
-        /**
          * Reset password token.
          */
-        token = 'token'
+        token = 'token',
+        /**
+         * Password.
+         */
+        password = 'password'
     }
 
 
@@ -60,7 +60,7 @@ export namespace ApiResetPasswordRequest {
                     isReadOnly: false,
                     isEnum: false,
                     required: true,
-                    name: 'password',
+                    name: 'token',
                     classname: 'ApiResetPasswordRequest',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -71,7 +71,7 @@ export namespace ApiResetPasswordRequest {
                     isReadOnly: false,
                     isEnum: false,
                     required: true,
-                    name: 'token',
+                    name: 'password',
                     classname: 'ApiResetPasswordRequest',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -80,10 +80,10 @@ export namespace ApiResetPasswordRequest {
                 },
             ],
             validators: {
-                password: [
+                token: [
                         ['required'],
                 ],
-                token: [
+                password: [
                         ['required'],
                 ],
             }
@@ -93,10 +93,10 @@ export namespace ApiResetPasswordRequest {
   // export const ApiResetPasswordRequestValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               password: {
+  //               token: {
   //                   validators: []
   //               },
-  //               token: {
+  //               password: {
   //                   validators: []
   //               },
   //     }

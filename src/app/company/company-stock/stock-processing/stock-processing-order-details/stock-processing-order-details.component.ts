@@ -424,7 +424,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
       this.enrichTargetStockOrders(processingOrder.targetStockOrders);
 
       const res = await this.processingOrderController
-        .createOrUpdateProcessingOrderUsingPUT(processingOrder).pipe(take(1)).toPromise();
+        .createOrUpdateProcessingOrder(processingOrder).pipe(take(1)).toPromise();
 
       if (!res || res.status !== 'OK') {
         throw Error('Error while creating processing order for order type: ' + this.actionType);
@@ -515,7 +515,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
 
   private async loadProcessingAction(procActionId: number) {
 
-    const respProcAction = await this.procActionController.getProcessingActionUsingGET(procActionId)
+    const respProcAction = await this.procActionController.getProcessingAction(procActionId)
       .pipe(take(1)).toPromise();
     if (respProcAction && respProcAction.status === 'OK' && respProcAction.data) {
       this.procOrderGroup.get('processingAction').setValue(respProcAction.data);
@@ -532,7 +532,7 @@ export class StockProcessingOrderDetailsComponent implements OnInit, AfterViewIn
     if (!stockOrderId) { throw Error('No Stock order ID in path!'); }
 
     // Get the Processing order for the Stock order with the provided ID
-    const respProcessingOrder = await this.stockOrderController.getStockOrderProcessingOrderUsingGET(Number(stockOrderId))
+    const respProcessingOrder = await this.stockOrderController.getStockOrderProcessingOrder(Number(stockOrderId))
         .pipe(take(1)).toPromise();
 
     if (!respProcessingOrder || respProcessingOrder.status !== 'OK') {

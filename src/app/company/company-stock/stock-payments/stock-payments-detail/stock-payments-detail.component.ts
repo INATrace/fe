@@ -118,7 +118,7 @@ export class StockPaymentsDetailComponent implements OnInit {
 
       // Fetch StockOrder
       const stockOrderId = this.purchaseOrderId ? this.purchaseOrderId : this.customerOrderId;
-      const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(stockOrderId)
+      const stockOrderResp = await this.stockOrderControllerService.getStockOrder(stockOrderId)
           .pipe(take(1))
           .toPromise();
 
@@ -133,7 +133,7 @@ export class StockPaymentsDetailComponent implements OnInit {
 
       // Fetch Payment
       const paymentId = this.route.snapshot.params.paymentId;
-      const paymentResp = await this.paymentControllerService.getPaymentUsingGET(paymentId)
+      const paymentResp = await this.paymentControllerService.getPayment(paymentId)
           .pipe(take(1))
           .toPromise();
 
@@ -254,7 +254,7 @@ export class StockPaymentsDetailComponent implements OnInit {
 
     try {
 
-      const paymentResp = await this.paymentControllerService.createOrUpdatePaymentUsingPUT(this.paymentForm.getRawValue())
+      const paymentResp = await this.paymentControllerService.createOrUpdatePayment(this.paymentForm.getRawValue())
         .pipe(take(1))
         .toPromise();
 

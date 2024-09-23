@@ -101,7 +101,7 @@ export class BatchDetailPageComponent implements OnInit, OnDestroy {
   getBatch(): void {
     this.globalEventsManager.showLoading(true);
     const id = +this.route.snapshot.paramMap.get('batchId');
-    let sub = this.productController.getProductLabelBatchUsingGET(id)
+    let sub = this.productController.getProductLabelBatch(id)
       .subscribe(batch => {
         this.batch = batch.data;
 
@@ -143,7 +143,7 @@ export class BatchDetailPageComponent implements OnInit, OnDestroy {
 
     this.prepareRequest();
     let params = this.route.snapshot.params;
-    let res = await this.productController.updateProductLabelBatchUsingPUT({ ...params, ...this.batchDetailForm.value }).pipe(take(1)).toPromise()
+    let res = await this.productController.updateProductLabelBatch({ ...params, ...this.batchDetailForm.value }).pipe(take(1)).toPromise()
     if (res && res.status == 'OK' && goBack) {
       this.batchDetailForm.markAsPristine()
       this.goBack()
@@ -163,7 +163,7 @@ export class BatchDetailPageComponent implements OnInit, OnDestroy {
     }
 
     this.prepareRequest();
-    let res = await this.productController.createProductLabelBatchUsingPOST(this.batchDetailForm.value).pipe(take(1)).toPromise()
+    let res = await this.productController.createProductLabelBatch(this.batchDetailForm.value).pipe(take(1)).toPromise()
     if (res && res.status == 'OK' && goBack) {
       this.batchDetailForm.markAsPristine()
       this.goBack();
@@ -332,7 +332,7 @@ export class BatchDetailPageComponent implements OnInit, OnDestroy {
     let confiem = await modalRef.result;
     if (confirm) {
       const productId = +this.route.snapshot.paramMap.get('id');
-      this.productController.getProductUsingGET(productId).pipe(take(1))
+      this.productController.getProduct(productId).pipe(take(1))
         .subscribe(resp => {
           if (resp.status == "OK") {
             this.prefillLocations(resp.data.origin.locations);

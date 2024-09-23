@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,29 +22,32 @@ import { ApiBeycoOrderCoffees } from './apiBeycoOrderCoffees';
 import { ApiBeycoPortOfExport } from './apiBeycoPortOfExport';
 
 
+/**
+ * Beyco offer
+ */
 
 export interface ApiBeycoOrderFields { 
-    /**
-     * When order is available
-     */
-    availableAt?: Date;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * Array of coffee orders
+     * Title of Beyco coffee order
      */
-    offerCoffees?: Array<ApiBeycoOrderCoffees>;
-    portOfExport?: ApiBeycoPortOfExport;
+    title?: string;
     /**
      * Privacy of order
      */
     privacy?: ApiBeycoOrderFields.PrivacyEnum;
     /**
-     * Title of Beyco coffee order
+     * Array of coffee orders
      */
-    title?: string;
+    offerCoffees?: Array<ApiBeycoOrderCoffees>;
+    /**
+     * When order is available
+     */
+    availableAt?: Date;
+    portOfExport?: ApiBeycoPortOfExport;
 }
 
 /**
@@ -56,26 +59,26 @@ export namespace ApiBeycoOrderFields {
      */
     export enum Properties {
         /**
-         * When order is available
-         */
-        availableAt = 'availableAt',
-        /**
          * Entity id
          */
         id = 'id',
         /**
-         * Array of coffee orders
+         * Title of Beyco coffee order
          */
-        offerCoffees = 'offerCoffees',
-        portOfExport = 'portOfExport',
+        title = 'title',
         /**
          * Privacy of order
          */
         privacy = 'privacy',
         /**
-         * Title of Beyco coffee order
+         * Array of coffee orders
          */
-        title = 'title'
+        offerCoffees = 'offerCoffees',
+        /**
+         * When order is available
+         */
+        availableAt = 'availableAt',
+        portOfExport = 'portOfExport'
     }
 
     /**
@@ -100,9 +103,9 @@ export namespace ApiBeycoOrderFields {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'availableAt',
+                    name: 'id',
                     classname: 'ApiBeycoOrderFields',
-                    dataType: 'Date',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -111,9 +114,21 @@ export namespace ApiBeycoOrderFields {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'title',
                     classname: 'ApiBeycoOrderFields',
-                    dataType: 'number',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiBeycoOrderFields.PrivacyEnum',
+                    required: false,
+                    name: 'privacy',
+                    classname: 'ApiBeycoOrderFields',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -131,6 +146,17 @@ export namespace ApiBeycoOrderFields {
                     complexType: 'ApiBeycoOrderCoffees'
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'availableAt',
+                    classname: 'ApiBeycoOrderFields',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiBeycoPortOfExport.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -142,42 +168,21 @@ export namespace ApiBeycoOrderFields {
                     isListContainer: false,
                     complexType: 'ApiBeycoPortOfExport'
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiBeycoOrderFields.PrivacyEnum',
-                    required: false,
-                    name: 'privacy',
-                    classname: 'ApiBeycoOrderFields',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'title',
-                    classname: 'ApiBeycoOrderFields',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                availableAt: [
-                ],
                 id: [
                 ],
-                offerCoffees: [
-                ],
-                portOfExport: [
+                title: [
+                        ['minlength', 1],
+                        ['maxlength', 70],
                 ],
                 privacy: [
                 ],
-                title: [
+                offerCoffees: [
+                ],
+                availableAt: [
+                ],
+                portOfExport: [
                 ],
             }
         }
@@ -186,22 +191,22 @@ export namespace ApiBeycoOrderFields {
   // export const ApiBeycoOrderFieldsValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               availableAt: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
-  //               offerCoffees: {
-  //                   validators: []
-  //               },
-  //               portOfExport: {
+  //               title: {
   //                   validators: []
   //               },
   //               privacy: {
   //                   validators: []
   //               },
-  //               title: {
+  //               offerCoffees: {
+  //                   validators: []
+  //               },
+  //               availableAt: {
+  //                   validators: []
+  //               },
+  //               portOfExport: {
   //                   validators: []
   //               },
   //     }

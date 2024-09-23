@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -37,84 +37,66 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createProductOrderUsingPOST.
+ * Namespace for createProductOrder.
  */
-export namespace CreateProductOrderUsingPOST {
+export namespace CreateProductOrder {
     /**
-     * Parameter map for createProductOrderUsingPOST.
+     * Parameter map for createProductOrder.
      */
     export interface PartialParamMap {
-      /**
-       * apiProductOrder
-       */
       ApiProductOrder: ApiProductOrder;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for createProductOrderUsingPOST.
+     * Enumeration of all parameters for createProductOrder.
      */
     export enum Parameters {
-      /**
-       * apiProductOrder
-       */
       ApiProductOrder = 'ApiProductOrder',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createProductOrderUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createProductOrder
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateProductOrderUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateProductOrder.PartialParamMap]?: [string, ValidatorFn][]} = {
       language: [
       ],
     };
 }
 
 /**
- * Namespace for getProductOrderUsingGET.
+ * Namespace for getProductOrder.
  */
-export namespace GetProductOrderUsingGET {
+export namespace GetProductOrder {
     /**
-     * Parameter map for getProductOrderUsingGET.
+     * Parameter map for getProductOrder.
      */
     export interface PartialParamMap {
       /**
        * Product order ID
        */
       id: number;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getProductOrderUsingGET.
+     * Enumeration of all parameters for getProductOrder.
      */
     export enum Parameters {
       /**
        * Product order ID
        */
       id = 'id',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getProductOrderUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getProductOrder
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetProductOrderUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetProductOrder.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -167,23 +149,23 @@ export class ProductOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createProductOrderUsingPOSTByMap(
-    map: CreateProductOrderUsingPOST.PartialParamMap,
+  public createProductOrderByMap(
+    map: CreateProductOrder.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public createProductOrderUsingPOSTByMap(
-    map: CreateProductOrderUsingPOST.PartialParamMap,
+  public createProductOrderByMap(
+    map: CreateProductOrder.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public createProductOrderUsingPOSTByMap(
-    map: CreateProductOrderUsingPOST.PartialParamMap,
+  public createProductOrderByMap(
+    map: CreateProductOrder.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public createProductOrderUsingPOSTByMap(
-    map: CreateProductOrderUsingPOST.PartialParamMap,
+  public createProductOrderByMap(
+    map: CreateProductOrder.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createProductOrderUsingPOST(
+    return this.createProductOrder(
       map.ApiProductOrder,
       map.language,
       observe,
@@ -195,17 +177,17 @@ export class ProductOrderControllerService {
     /**
      * Create product order.
      * 
-     * @param ApiProductOrder apiProductOrder
-     * @param language language
+     * @param ApiProductOrder 
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createProductOrderUsingPOST(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public createProductOrderUsingPOST(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public createProductOrderUsingPOST(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public createProductOrderUsingPOST(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createProductOrder(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createProductOrder(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createProductOrder(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createProductOrder(ApiProductOrder: ApiProductOrder, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProductOrder === null || ApiProductOrder === undefined) {
-            throw new Error('Required parameter ApiProductOrder was null or undefined when calling createProductOrderUsingPOST.');
+            throw new Error('Required parameter ApiProductOrder was null or undefined when calling createProductOrder.');
         }
 
         let headers = this.defaultHeaders;
@@ -247,7 +229,7 @@ export class ProductOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createProductOrderUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createProductOrder')));
         }
         return handle;
     }
@@ -260,23 +242,23 @@ export class ProductOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getProductOrderUsingGETByMap(
-    map: GetProductOrderUsingGET.PartialParamMap,
+  public getProductOrderByMap(
+    map: GetProductOrder.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiProductOrder>;
-  public getProductOrderUsingGETByMap(
-    map: GetProductOrderUsingGET.PartialParamMap,
+  public getProductOrderByMap(
+    map: GetProductOrder.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProductOrder>>;
-  public getProductOrderUsingGETByMap(
-    map: GetProductOrderUsingGET.PartialParamMap,
+  public getProductOrderByMap(
+    map: GetProductOrder.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProductOrder>>;
-  public getProductOrderUsingGETByMap(
-    map: GetProductOrderUsingGET.PartialParamMap,
+  public getProductOrderByMap(
+    map: GetProductOrder.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getProductOrderUsingGET(
+    return this.getProductOrder(
       map.id,
       map.language,
       observe,
@@ -289,16 +271,16 @@ export class ProductOrderControllerService {
      * Get a single product order with the provided ID.
      * 
      * @param id Product order ID
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProductOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProductOrder>;
-    public getProductOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProductOrder>>;
-    public getProductOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProductOrder>>;
-    public getProductOrderUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProductOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProductOrder>;
+    public getProductOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProductOrder>>;
+    public getProductOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProductOrder>>;
+    public getProductOrder(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getProductOrderUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling getProductOrder.');
         }
 
         let headers = this.defaultHeaders;
@@ -334,7 +316,7 @@ export class ProductOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProductOrderUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProductOrder')));
         }
         return handle;
     }

@@ -97,7 +97,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
   ).pipe(
       filter(val => val != null),
       tap(() => { this.globalEventsManager.showLoading(true); }),
-      switchMap(id => this.productController.getProductUsingGET(id).pipe(
+      switchMap(id => this.productController.getProduct(id).pipe(
           catchError(() => of(null))
       )),
       filter(resp => !!resp),
@@ -208,7 +208,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
     try {
       this.globalEventsManager.showLoading(true);
       this.currentProduct.associatedCompanies.push({ company: { id: cId }, type: cType });
-      const res = await this.productController.updateProductUsingPUT(this.currentProduct).pipe(take(1)).toPromise();
+      const res = await this.productController.updateProduct(this.currentProduct).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.reload();
       }
@@ -370,7 +370,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
     try {
       this.globalEventsManager.showLoading(true);
       this.currentProduct.associatedCompanies = this.currentProduct.associatedCompanies.filter(c => c !== company);
-      const res = await this.productController.updateProductUsingPUT(this.currentProduct).pipe(take(1)).toPromise();
+      const res = await this.productController.updateProduct(this.currentProduct).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.reload();
       }
@@ -419,7 +419,7 @@ export class ProductLabelStakeholdersComponent implements OnInit, AfterViewInit 
     try {
       this.globalEventsManager.showLoading(true);
       const data = this.productForm.value;
-      const res = await this.productController.updateProductUsingPUT(data).pipe(take(1)).toPromise();
+      const res = await this.productController.updateProduct(data).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.productForm.markAsPristine();
         this.reload();

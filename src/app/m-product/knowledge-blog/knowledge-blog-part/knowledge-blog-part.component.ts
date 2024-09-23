@@ -127,7 +127,7 @@ export class KnowledgeBlogPartComponent extends ComponentCanDeactivate implement
         this.globalEventsManager.showLoading(true);
         let data = this.form.value
         data = { type: this.currentType as ApiKnowledgeBlog.TypeEnum, ...data, id: this.knowledgeBlogId };
-        let res = await this.productController.getProductKnowledgeBlogUsingPUT(data).pipe(take(1)).toPromise()
+        let res = await this.productController.updateProductKnowledgeBlog(data).pipe(take(1)).toPromise()
         if (res && res.status === 'OK') {
           this.form.markAsPristine();
           this.goBack();
@@ -143,7 +143,7 @@ export class KnowledgeBlogPartComponent extends ComponentCanDeactivate implement
         this.globalEventsManager.showLoading(true);
         let data = this.form.value
         data = { type: this.currentType as ApiKnowledgeBlog.TypeEnum, ...data };
-        let res = await this.productController.getProductKnowledgeBlogUsingPOST(this.productId, data).pipe(take(1)).toPromise()
+        let res = await this.productController.addProductKnowledgeBlog(this.productId, data).pipe(take(1)).toPromise()
         if (res && res.status === 'OK') {
           this.form.markAsPristine();
           this.goBack();

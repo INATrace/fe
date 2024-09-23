@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,21 +20,24 @@
 
 
 
+/**
+ * Preferred currency of the company
+ */
 
 export interface ApiCurrencyType { 
-    /**
-     * code
-     */
-    code?: string;
-    enabled?: boolean;
     /**
      * Entity id
      */
     id?: number;
     /**
+     * code
+     */
+    code: string;
+    /**
      * label
      */
-    label?: string;
+    label: string;
+    enabled?: boolean;
 }
 
 /**
@@ -46,18 +49,18 @@ export namespace ApiCurrencyType {
      */
     export enum Properties {
         /**
-         * code
-         */
-        code = 'code',
-        enabled = 'enabled',
-        /**
          * Entity id
          */
         id = 'id',
         /**
+         * code
+         */
+        code = 'code',
+        /**
          * label
          */
-        label = 'label'
+        label = 'label',
+        enabled = 'enabled'
     }
 
 
@@ -70,7 +73,29 @@ export namespace ApiCurrencyType {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'id',
+                    classname: 'ApiCurrencyType',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: true,
                     name: 'code',
+                    classname: 'ApiCurrencyType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: true,
+                    name: 'label',
                     classname: 'ApiCurrencyType',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -88,37 +113,17 @@ export namespace ApiCurrencyType {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiCurrencyType',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'label',
-                    classname: 'ApiCurrencyType',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                code: [
-                ],
-                enabled: [
-                ],
                 id: [
                 ],
+                code: [
+                        ['required'],
+                ],
                 label: [
+                        ['required'],
+                ],
+                enabled: [
                 ],
             }
         }
@@ -127,16 +132,16 @@ export namespace ApiCurrencyType {
   // export const ApiCurrencyTypeValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               code: {
-  //                   validators: []
-  //               },
-  //               enabled: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
+  //               code: {
+  //                   validators: []
+  //               },
   //               label: {
+  //                   validators: []
+  //               },
+  //               enabled: {
   //                   validators: []
   //               },
   //     }

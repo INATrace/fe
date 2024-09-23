@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -24,37 +24,37 @@ import { ApiDocument } from './apiDocument';
 
 export interface ApiKnowledgeBlog { 
     /**
-     * Content
-     */
-    content?: string;
-    /**
-     * Date
-     */
-    date?: string;
-    /**
-     * Documents
-     */
-    documents?: Array<ApiDocument>;
-    /**
      * Entity id
      */
     id?: number;
-    /**
-     * Abstract (summary)
-     */
-    summary?: string;
-    /**
-     * Name
-     */
-    title?: string;
     /**
      * Type
      */
     type?: ApiKnowledgeBlog.TypeEnum;
     /**
+     * Name
+     */
+    title?: string;
+    /**
+     * Date
+     */
+    date?: string;
+    /**
      * Youtube URL
      */
     youtubeUrl?: string;
+    /**
+     * Abstract (summary)
+     */
+    summary?: string;
+    /**
+     * Content
+     */
+    content?: string;
+    /**
+     * Documents
+     */
+    documents?: Array<ApiDocument>;
 }
 
 /**
@@ -66,37 +66,37 @@ export namespace ApiKnowledgeBlog {
      */
     export enum Properties {
         /**
-         * Content
-         */
-        content = 'content',
-        /**
-         * Date
-         */
-        date = 'date',
-        /**
-         * Documents
-         */
-        documents = 'documents',
-        /**
          * Entity id
          */
         id = 'id',
-        /**
-         * Abstract (summary)
-         */
-        summary = 'summary',
-        /**
-         * Name
-         */
-        title = 'title',
         /**
          * Type
          */
         type = 'type',
         /**
+         * Name
+         */
+        title = 'title',
+        /**
+         * Date
+         */
+        date = 'date',
+        /**
          * Youtube URL
          */
-        youtubeUrl = 'youtubeUrl'
+        youtubeUrl = 'youtubeUrl',
+        /**
+         * Abstract (summary)
+         */
+        summary = 'summary',
+        /**
+         * Content
+         */
+        content = 'content',
+        /**
+         * Documents
+         */
+        documents = 'documents'
     }
 
     /**
@@ -118,65 +118,9 @@ export namespace ApiKnowledgeBlog {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'content',
-                    classname: 'ApiKnowledgeBlog',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'date',
-                    classname: 'ApiKnowledgeBlog',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'documents',
-                    classname: 'ApiKnowledgeBlog',
-                    dataType: 'Array&lt;ApiDocument&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiDocument'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'id',
                     classname: 'ApiKnowledgeBlog',
                     dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'summary',
-                    classname: 'ApiKnowledgeBlog',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'title',
-                    classname: 'ApiKnowledgeBlog',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -197,6 +141,28 @@ export namespace ApiKnowledgeBlog {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'title',
+                    classname: 'ApiKnowledgeBlog',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'date',
+                    classname: 'ApiKnowledgeBlog',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'youtubeUrl',
                     classname: 'ApiKnowledgeBlog',
                     dataType: 'string',
@@ -204,23 +170,65 @@ export namespace ApiKnowledgeBlog {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'summary',
+                    classname: 'ApiKnowledgeBlog',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'content',
+                    classname: 'ApiKnowledgeBlog',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'documents',
+                    classname: 'ApiKnowledgeBlog',
+                    dataType: 'Array&lt;ApiDocument&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiDocument'
+                },
             ],
             validators: {
-                content: [
-                ],
-                date: [
-                ],
-                documents: [
-                ],
                 id: [
-                ],
-                summary: [
-                ],
-                title: [
                 ],
                 type: [
                 ],
+                title: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                date: [
+                ],
                 youtubeUrl: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                summary: [
+                        ['minlength', 0],
+                        ['maxlength', 3000],
+                ],
+                content: [
+                        ['minlength', 0],
+                        ['maxlength', 5000],
+                ],
+                documents: [
                 ],
             }
         }
@@ -229,28 +237,28 @@ export namespace ApiKnowledgeBlog {
   // export const ApiKnowledgeBlogValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               content: {
-  //                   validators: []
-  //               },
-  //               date: {
-  //                   validators: []
-  //               },
-  //               documents: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               summary: {
-  //                   validators: []
-  //               },
-  //               title: {
   //                   validators: []
   //               },
   //               type: {
   //                   validators: []
   //               },
+  //               title: {
+  //                   validators: []
+  //               },
+  //               date: {
+  //                   validators: []
+  //               },
   //               youtubeUrl: {
+  //                   validators: []
+  //               },
+  //               summary: {
+  //                   validators: []
+  //               },
+  //               content: {
+  //                   validators: []
+  //               },
+  //               documents: {
   //                   validators: []
   //               },
   //     }

@@ -254,7 +254,7 @@ export class GroupStockUnitListComponent implements OnInit, OnDestroy {
         status: StatusEnum.OK
       });
     }
-    return this.groupStockOrderControllerService.getGroupedStockOrderListUsingGETByMap({ ...params, facilityId });
+    return this.groupStockOrderControllerService.getGroupedStockOrderListByMap({ ...params, facilityId });
   }
 
   private setCounts(allCount: number) {
@@ -326,9 +326,9 @@ export class GroupStockUnitListComponent implements OnInit, OnDestroy {
 
       if (order.orderType === 'PROCESSING_ORDER' || order.orderType === 'TRANSFER_ORDER' || order.orderType === 'GENERAL_ORDER') {
 
-        const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(order.groupedIds[0], true).pipe(take(1)).toPromise();
+        const stockOrderResp = await this.stockOrderControllerService.getStockOrder(order.groupedIds[0], true).pipe(take(1)).toPromise();
         if (stockOrderResp && stockOrderResp.status === 'OK' && stockOrderResp.data) {
-          const procOrderResp = await this.processingOrderController.deleteProcessingOrderUsingDELETE(stockOrderResp.data.processingOrder.id).pipe(take(1)).toPromise();
+          const procOrderResp = await this.processingOrderController.deleteProcessingOrder(stockOrderResp.data.processingOrder.id).pipe(take(1)).toPromise();
           if (procOrderResp && procOrderResp.status === 'OK') {
             this.reloadPingList$.next(true);
           }
@@ -338,7 +338,7 @@ export class GroupStockUnitListComponent implements OnInit, OnDestroy {
       }
 
       // Remove purchase order
-      const response = await this.stockOrderControllerService.deleteStockOrderUsingDELETE(order.groupedIds[0]).pipe(take(1)).toPromise();
+      const response = await this.stockOrderControllerService.deleteStockOrder(order.groupedIds[0]).pipe(take(1)).toPromise();
       if (response && response.status === StatusEnum.OK) {
         this.reloadPingList$.next(true);
         this.clearCBs();
@@ -536,7 +536,7 @@ export class GroupStockUnitListComponent implements OnInit, OnDestroy {
     const firstOrderId = order.groupedIds[0];
 
     this.globalEventsManager.showLoading(true);
-    const res = await this.stockOrderControllerService.exportGeoDataUsingGET(firstOrderId)
+    const res = await this.stockOrderControllerService.exportGeoData(firstOrderId)
       .pipe(
         take(1),
         finalize(() => {

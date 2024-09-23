@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,14 +22,17 @@ import { ApiCompany } from './apiCompany';
 import { ApiUserCustomer } from './apiUserCustomer';
 
 
+/**
+ * List of cooperatives
+ */
 
 export interface ApiUserCustomerCooperative { 
-    company?: ApiCompany;
     /**
      * Entity id
      */
     id?: number;
     userCustomer?: ApiUserCustomer;
+    company?: ApiCompany;
     /**
      * User customer type (collector, farmer)
      */
@@ -44,12 +47,12 @@ export namespace ApiUserCustomerCooperative {
      * All properties of ApiUserCustomerCooperative.
      */
     export enum Properties {
-        company = 'company',
         /**
          * Entity id
          */
         id = 'id',
         userCustomer = 'userCustomer',
+        company = 'company',
         /**
          * User customer type (collector, farmer)
          */
@@ -70,18 +73,6 @@ export namespace ApiUserCustomerCooperative {
             metadata: formMetadata,
             classname: 'ApiUserCustomerCooperative',
             vars: [
-                {
-                    metadata: ApiCompany.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'company',
-                    classname: 'ApiUserCustomerCooperative',
-                    dataType: 'ApiCompany',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiCompany'
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -106,6 +97,18 @@ export namespace ApiUserCustomerCooperative {
                     complexType: 'ApiUserCustomer'
                 },
                 {
+                    metadata: ApiCompany.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'company',
+                    classname: 'ApiUserCustomerCooperative',
+                    dataType: 'ApiCompany',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCompany'
+                },
+                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiUserCustomerCooperative.UserCustomerTypeEnum',
@@ -119,11 +122,11 @@ export namespace ApiUserCustomerCooperative {
                 },
             ],
             validators: {
-                company: [
-                ],
                 id: [
                 ],
                 userCustomer: [
+                ],
+                company: [
                 ],
                 userCustomerType: [
                 ],
@@ -134,13 +137,13 @@ export namespace ApiUserCustomerCooperative {
   // export const ApiUserCustomerCooperativeValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               company: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
   //               userCustomer: {
+  //                   validators: []
+  //               },
+  //               company: {
   //                   validators: []
   //               },
   //               userCustomerType: {

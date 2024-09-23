@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,24 +22,21 @@ import { ApiPaginatedListApiCompanyCustomer } from './apiPaginatedListApiCompany
 import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 
 
-/**
- * Generic API response. See documentation for data type for specific type details.
- */
 
 export interface ApiPaginatedResponseApiCompanyCustomer { 
+    /**
+     * Response status. OK for successful reponses.
+     */
+    status: ApiPaginatedResponseApiCompanyCustomer.StatusEnum;
+    /**
+     * Simple message to explain client developers the reason for error.
+     */
+    errorMessage?: string;
     data?: ApiPaginatedListApiCompanyCustomer;
     /**
      * Optional details for unexpected error responses.
      */
     errorDetails?: string;
-    /**
-     * Simple message to explain client developers the reason for error.
-     */
-    errorMessage?: string;
-    /**
-     * Response status. OK for successful reponses.
-     */
-    status: ApiPaginatedResponseApiCompanyCustomer.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -51,19 +48,19 @@ export namespace ApiPaginatedResponseApiCompanyCustomer {
      * All properties of ApiPaginatedResponseApiCompanyCustomer.
      */
     export enum Properties {
+        /**
+         * Response status. OK for successful reponses.
+         */
+        status = 'status',
+        /**
+         * Simple message to explain client developers the reason for error.
+         */
+        errorMessage = 'errorMessage',
         data = 'data',
         /**
          * Optional details for unexpected error responses.
          */
         errorDetails = 'errorDetails',
-        /**
-         * Simple message to explain client developers the reason for error.
-         */
-        errorMessage = 'errorMessage',
-        /**
-         * Response status. OK for successful reponses.
-         */
-        status = 'status',
         validationErrorDetails = 'validationErrorDetails'
     }
 
@@ -92,6 +89,29 @@ export namespace ApiPaginatedResponseApiCompanyCustomer {
             classname: 'ApiPaginatedResponseApiCompanyCustomer',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiPaginatedResponseApiCompanyCustomer.StatusEnum',
+                    required: true,
+                    name: 'status',
+                    classname: 'ApiPaginatedResponseApiCompanyCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'errorMessage',
+                    classname: 'ApiPaginatedResponseApiCompanyCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiPaginatedListApiCompanyCustomer.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -115,29 +135,6 @@ export namespace ApiPaginatedResponseApiCompanyCustomer {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'errorMessage',
-                    classname: 'ApiPaginatedResponseApiCompanyCustomer',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiPaginatedResponseApiCompanyCustomer.StatusEnum',
-                    required: true,
-                    name: 'status',
-                    classname: 'ApiPaginatedResponseApiCompanyCustomer',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiValidationErrorDetails.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -151,14 +148,14 @@ export namespace ApiPaginatedResponseApiCompanyCustomer {
                 },
             ],
             validators: {
-                data: [
-                ],
-                errorDetails: [
+                status: [
+                        ['required'],
                 ],
                 errorMessage: [
                 ],
-                status: [
-                        ['required'],
+                data: [
+                ],
+                errorDetails: [
                 ],
                 validationErrorDetails: [
                 ],
@@ -169,16 +166,16 @@ export namespace ApiPaginatedResponseApiCompanyCustomer {
   // export const ApiPaginatedResponseApiCompanyCustomerValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               data: {
-  //                   validators: []
-  //               },
-  //               errorDetails: {
+  //               status: {
   //                   validators: []
   //               },
   //               errorMessage: {
   //                   validators: []
   //               },
-  //               status: {
+  //               data: {
+  //                   validators: []
+  //               },
+  //               errorDetails: {
   //                   validators: []
   //               },
   //               validationErrorDetails: {

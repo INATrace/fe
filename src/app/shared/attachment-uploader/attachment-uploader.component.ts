@@ -465,7 +465,7 @@ export class AttachmentUploaderComponent implements OnInit {
             })
         } else {
             if (this.mode === 'simpleAsTextField' && this.fileInfo) {
-                let res = await this.fileService.getDocumentUsingGET(this.fileInfo.storageKey).pipe(take(1)).toPromise();
+                let res = await this.fileService.getDocument(this.fileInfo.storageKey).pipe(take(1)).toPromise();
                 if (res) {
                     this.fileSaverService.save(res, this.fileInfo.name);
                 }
@@ -493,12 +493,12 @@ export class AttachmentUploaderComponent implements OnInit {
     onDownload() {
         if (!this.fileInfo) return
         if (this.rootImageUrl) {
-          let subImg = this.fileService.getImageUsingGET(this.fileInfo.storageKey).subscribe(res => {
+          let subImg = this.fileService.getImage(this.fileInfo.storageKey).subscribe(res => {
             this.fileSaverService.save(res, this.fileInfo.name);
             subImg.unsubscribe();
           })
         } else{
-          let sub = this.fileService.getDocumentUsingGET(this.fileInfo.storageKey).subscribe(res => {
+          let sub = this.fileService.getDocument(this.fileInfo.storageKey).subscribe(res => {
             this.fileSaverService.save(res, this.fileInfo.name);
             sub.unsubscribe()
           })

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -34,58 +34,73 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for convertAtDateUsingGET.
+ * Namespace for convert.
  */
-export namespace ConvertAtDateUsingGET {
+export namespace Convert {
     /**
-     * Parameter map for convertAtDateUsingGET.
+     * Parameter map for convert.
      */
     export interface PartialParamMap {
-      /**
-       * value
-       */
-      value: number;
-      /**
-       * from
-       */
       from: string;
-      /**
-       * to
-       */
       to: string;
-      /**
-       * date
-       */
+      value: number;
+    }
+
+    /**
+     * Enumeration of all parameters for convert.
+     */
+    export enum Parameters {
+      from = 'from',
+      to = 'to',
+      value = 'value'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of convert
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof Convert.PartialParamMap]?: [string, ValidatorFn][]} = {
+      from: [
+              ['required', Validators.required],
+      ],
+      to: [
+              ['required', Validators.required],
+      ],
+      value: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for convertAtDate.
+ */
+export namespace ConvertAtDate {
+    /**
+     * Parameter map for convertAtDate.
+     */
+    export interface PartialParamMap {
+      value: number;
+      from: string;
+      to: string;
       date: Date;
     }
 
     /**
-     * Enumeration of all parameters for convertAtDateUsingGET.
+     * Enumeration of all parameters for convertAtDate.
      */
     export enum Parameters {
-      /**
-       * value
-       */
       value = 'value',
-      /**
-       * from
-       */
       from = 'from',
-      /**
-       * to
-       */
       to = 'to',
-      /**
-       * date
-       */
       date = 'date'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of convertAtDateUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of convertAtDate
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ConvertAtDateUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ConvertAtDate.PartialParamMap]?: [string, ValidatorFn][]} = {
       value: [
               ['required', Validators.required],
       ],
@@ -96,63 +111,6 @@ export namespace ConvertAtDateUsingGET {
               ['required', Validators.required],
       ],
       date: [
-              ['required', Validators.required],
-      ],
-    };
-}
-
-/**
- * Namespace for convertUsingGET.
- */
-export namespace ConvertUsingGET {
-    /**
-     * Parameter map for convertUsingGET.
-     */
-    export interface PartialParamMap {
-      /**
-       * from
-       */
-      from: string;
-      /**
-       * to
-       */
-      to: string;
-      /**
-       * value
-       */
-      value: number;
-    }
-
-    /**
-     * Enumeration of all parameters for convertUsingGET.
-     */
-    export enum Parameters {
-      /**
-       * from
-       */
-      from = 'from',
-      /**
-       * to
-       */
-      to = 'to',
-      /**
-       * value
-       */
-      value = 'value'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of convertUsingGET
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof ConvertUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      from: [
-              ['required', Validators.required],
-      ],
-      to: [
-              ['required', Validators.required],
-      ],
-      value: [
               ['required', Validators.required],
       ],
     };
@@ -196,126 +154,29 @@ export class CurrencyControllerService {
 
 
   /**
-   * Convert a value between supported currencies at the specified date by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public convertAtDateUsingGETByMap(
-    map: ConvertAtDateUsingGET.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<number>;
-  public convertAtDateUsingGETByMap(
-    map: ConvertAtDateUsingGET.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<number>>;
-  public convertAtDateUsingGETByMap(
-    map: ConvertAtDateUsingGET.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<number>>;
-  public convertAtDateUsingGETByMap(
-    map: ConvertAtDateUsingGET.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.convertAtDateUsingGET(
-      map.value,
-      map.from,
-      map.to,
-      map.date,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * Convert a value between supported currencies at the specified date
-     * 
-     * @param value value
-     * @param from from
-     * @param to to
-     * @param date date
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public convertAtDateUsingGET(value: number, from: string, to: string, date: Date, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<number>;
-    public convertAtDateUsingGET(value: number, from: string, to: string, date: Date, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<number>>;
-    public convertAtDateUsingGET(value: number, from: string, to: string, date: Date, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<number>>;
-    public convertAtDateUsingGET(value: number, from: string, to: string, date: Date, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (value === null || value === undefined) {
-            throw new Error('Required parameter value was null or undefined when calling convertAtDateUsingGET.');
-        }
-        if (from === null || from === undefined) {
-            throw new Error('Required parameter from was null or undefined when calling convertAtDateUsingGET.');
-        }
-        if (to === null || to === undefined) {
-            throw new Error('Required parameter to was null or undefined when calling convertAtDateUsingGET.');
-        }
-        if (date === null || date === undefined) {
-            throw new Error('Required parameter date was null or undefined when calling convertAtDateUsingGET.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<number>(`${this.configuration.basePath}/api/chain/currency/convert/${encodeURIComponent(String(value))}/${encodeURIComponent(String(from))}/to/${encodeURIComponent(String(to))}/on/${encodeURIComponent(String(date.toISOString()))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'convertAtDateUsingGET')));
-        }
-        return handle;
-    }
-
-
-  /**
    * Convert a value between supported currencies by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public convertUsingGETByMap(
-    map: ConvertUsingGET.PartialParamMap,
+  public convertByMap(
+    map: Convert.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<number>;
-  public convertUsingGETByMap(
-    map: ConvertUsingGET.PartialParamMap,
+  public convertByMap(
+    map: Convert.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<number>>;
-  public convertUsingGETByMap(
-    map: ConvertUsingGET.PartialParamMap,
+  public convertByMap(
+    map: Convert.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<number>>;
-  public convertUsingGETByMap(
-    map: ConvertUsingGET.PartialParamMap,
+  public convertByMap(
+    map: Convert.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.convertUsingGET(
+    return this.convert(
       map.from,
       map.to,
       map.value,
@@ -328,24 +189,24 @@ export class CurrencyControllerService {
     /**
      * Convert a value between supported currencies
      * 
-     * @param from from
-     * @param to to
-     * @param value value
+     * @param from 
+     * @param to 
+     * @param value 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public convertUsingGET(from: string, to: string, value: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<number>;
-    public convertUsingGET(from: string, to: string, value: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<number>>;
-    public convertUsingGET(from: string, to: string, value: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<number>>;
-    public convertUsingGET(from: string, to: string, value: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public convert(from: string, to: string, value: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<number>;
+    public convert(from: string, to: string, value: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<number>>;
+    public convert(from: string, to: string, value: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<number>>;
+    public convert(from: string, to: string, value: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (from === null || from === undefined) {
-            throw new Error('Required parameter from was null or undefined when calling convertUsingGET.');
+            throw new Error('Required parameter from was null or undefined when calling convert.');
         }
         if (to === null || to === undefined) {
-            throw new Error('Required parameter to was null or undefined when calling convertUsingGET.');
+            throw new Error('Required parameter to was null or undefined when calling convert.');
         }
         if (value === null || value === undefined) {
-            throw new Error('Required parameter value was null or undefined when calling convertUsingGET.');
+            throw new Error('Required parameter value was null or undefined when calling convert.');
         }
 
         let headers = this.defaultHeaders;
@@ -378,7 +239,104 @@ export class CurrencyControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'convertUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'convert')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Convert a value between supported currencies at the specified date by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public convertAtDateByMap(
+    map: ConvertAtDate.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<number>;
+  public convertAtDateByMap(
+    map: ConvertAtDate.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<number>>;
+  public convertAtDateByMap(
+    map: ConvertAtDate.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<number>>;
+  public convertAtDateByMap(
+    map: ConvertAtDate.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.convertAtDate(
+      map.value,
+      map.from,
+      map.to,
+      map.date,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Convert a value between supported currencies at the specified date
+     * 
+     * @param value 
+     * @param from 
+     * @param to 
+     * @param date 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public convertAtDate(value: number, from: string, to: string, date: Date, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<number>;
+    public convertAtDate(value: number, from: string, to: string, date: Date, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<number>>;
+    public convertAtDate(value: number, from: string, to: string, date: Date, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<number>>;
+    public convertAtDate(value: number, from: string, to: string, date: Date, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (value === null || value === undefined) {
+            throw new Error('Required parameter value was null or undefined when calling convertAtDate.');
+        }
+        if (from === null || from === undefined) {
+            throw new Error('Required parameter from was null or undefined when calling convertAtDate.');
+        }
+        if (to === null || to === undefined) {
+            throw new Error('Required parameter to was null or undefined when calling convertAtDate.');
+        }
+        if (date === null || date === undefined) {
+            throw new Error('Required parameter date was null or undefined when calling convertAtDate.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<number>(`${this.configuration.basePath}/api/chain/currency/convert/${encodeURIComponent(String(value))}/${encodeURIComponent(String(from))}/to/${encodeURIComponent(String(to))}/on/${encodeURIComponent(String(date.toISOString()))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'convertAtDate')));
         }
         return handle;
     }

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,28 +20,31 @@
 
 
 
+/**
+ * batch photo
+ */
 
 export interface ApiDocument { 
-    /**
-     * content type
-     */
-    contentType?: string;
     /**
      * Entity id
      */
     id?: number;
     /**
+     * storage key (file on system, s3, ...).
+     */
+    storageKey: string;
+    /**
      * document (file) name
      */
-    name?: string;
+    name: string;
+    /**
+     * content type
+     */
+    contentType?: string;
     /**
      * size
      */
     size?: number;
-    /**
-     * storage key (file on system, s3, ...).
-     */
-    storageKey?: string;
 }
 
 /**
@@ -53,25 +56,25 @@ export namespace ApiDocument {
      */
     export enum Properties {
         /**
-         * content type
-         */
-        contentType = 'contentType',
-        /**
          * Entity id
          */
         id = 'id',
+        /**
+         * storage key (file on system, s3, ...).
+         */
+        storageKey = 'storageKey',
         /**
          * document (file) name
          */
         name = 'name',
         /**
+         * content type
+         */
+        contentType = 'contentType',
+        /**
          * size
          */
-        size = 'size',
-        /**
-         * storage key (file on system, s3, ...).
-         */
-        storageKey = 'storageKey'
+        size = 'size'
     }
 
 
@@ -80,17 +83,6 @@ export namespace ApiDocument {
             metadata: formMetadata,
             classname: 'ApiDocument',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'contentType',
-                    classname: 'ApiDocument',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -105,8 +97,30 @@ export namespace ApiDocument {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: false,
+                    required: true,
+                    name: 'storageKey',
+                    classname: 'ApiDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: true,
                     name: 'name',
+                    classname: 'ApiDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'contentType',
                     classname: 'ApiDocument',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -124,28 +138,19 @@ export namespace ApiDocument {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'storageKey',
-                    classname: 'ApiDocument',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                contentType: [
-                ],
                 id: [
                 ],
+                storageKey: [
+                        ['required'],
+                ],
                 name: [
+                        ['required'],
+                ],
+                contentType: [
                 ],
                 size: [
-                ],
-                storageKey: [
                 ],
             }
         }
@@ -154,19 +159,19 @@ export namespace ApiDocument {
   // export const ApiDocumentValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               contentType: {
+  //               id: {
   //                   validators: []
   //               },
-  //               id: {
+  //               storageKey: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               size: {
+  //               contentType: {
   //                   validators: []
   //               },
-  //               storageKey: {
+  //               size: {
   //                   validators: []
   //               },
   //     }

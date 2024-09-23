@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,6 +20,9 @@
 
 
 
+/**
+ * Fields
+ */
 
 export interface ApiProductLabelField { 
     /**
@@ -27,13 +30,13 @@ export interface ApiProductLabelField {
      */
     name?: string;
     /**
-     * Section on FE
-     */
-    section?: string;
-    /**
      * Visible on FE
      */
     visible?: boolean;
+    /**
+     * Section on FE
+     */
+    section?: string;
 }
 
 /**
@@ -49,13 +52,13 @@ export namespace ApiProductLabelField {
          */
         name = 'name',
         /**
-         * Section on FE
-         */
-        section = 'section',
-        /**
          * Visible on FE
          */
-        visible = 'visible'
+        visible = 'visible',
+        /**
+         * Section on FE
+         */
+        section = 'section'
     }
 
 
@@ -79,9 +82,9 @@ export namespace ApiProductLabelField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'section',
+                    name: 'visible',
                     classname: 'ApiProductLabelField',
-                    dataType: 'string',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -90,9 +93,9 @@ export namespace ApiProductLabelField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'visible',
+                    name: 'section',
                     classname: 'ApiProductLabelField',
-                    dataType: 'boolean',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -100,10 +103,14 @@ export namespace ApiProductLabelField {
             ],
             validators: {
                 name: [
-                ],
-                section: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 visible: [
+                ],
+                section: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
             }
         }
@@ -115,10 +122,10 @@ export namespace ApiProductLabelField {
   //               name: {
   //                   validators: []
   //               },
-  //               section: {
+  //               visible: {
   //                   validators: []
   //               },
-  //               visible: {
+  //               section: {
   //                   validators: []
   //               },
   //     }

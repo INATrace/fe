@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -24,9 +24,9 @@ import { ApiProcessingEvidenceField } from './apiProcessingEvidenceField';
 
 export interface ApiProcessingPerformanceRequestEvidenceField { 
     evidenceField?: ApiProcessingEvidenceField;
+    stringValue?: string;
     instantValue?: Date;
     numericValue?: number;
-    stringValue?: string;
 }
 
 /**
@@ -38,9 +38,9 @@ export namespace ApiProcessingPerformanceRequestEvidenceField {
      */
     export enum Properties {
         evidenceField = 'evidenceField',
+        stringValue = 'stringValue',
         instantValue = 'instantValue',
-        numericValue = 'numericValue',
-        stringValue = 'stringValue'
+        numericValue = 'numericValue'
     }
 
 
@@ -65,6 +65,17 @@ export namespace ApiProcessingPerformanceRequestEvidenceField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'stringValue',
+                    classname: 'ApiProcessingPerformanceRequestEvidenceField',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'instantValue',
                     classname: 'ApiProcessingPerformanceRequestEvidenceField',
                     dataType: 'Date',
@@ -83,26 +94,15 @@ export namespace ApiProcessingPerformanceRequestEvidenceField {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'stringValue',
-                    classname: 'ApiProcessingPerformanceRequestEvidenceField',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
                 evidenceField: [
                 ],
+                stringValue: [
+                ],
                 instantValue: [
                 ],
                 numericValue: [
-                ],
-                stringValue: [
                 ],
             }
         }
@@ -114,13 +114,13 @@ export namespace ApiProcessingPerformanceRequestEvidenceField {
   //               evidenceField: {
   //                   validators: []
   //               },
+  //               stringValue: {
+  //                   validators: []
+  //               },
   //               instantValue: {
   //                   validators: []
   //               },
   //               numericValue: {
-  //                   validators: []
-  //               },
-  //               stringValue: {
   //                   validators: []
   //               },
   //     }

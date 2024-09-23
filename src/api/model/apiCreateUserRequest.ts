@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -27,21 +27,21 @@ export interface ApiCreateUserRequest {
      */
     email: string;
     /**
-     * language
+     * Password.
      */
-    language?: ApiCreateUserRequest.LanguageEnum;
+    password: string;
     /**
      * Name.
      */
     name: string;
     /**
-     * Password.
-     */
-    password: string;
-    /**
      * Surname.
      */
     surname: string;
+    /**
+     * language
+     */
+    language?: ApiCreateUserRequest.LanguageEnum;
 }
 
 /**
@@ -57,21 +57,21 @@ export namespace ApiCreateUserRequest {
          */
         email = 'email',
         /**
-         * language
+         * Password.
          */
-        language = 'language',
+        password = 'password',
         /**
          * Name.
          */
         name = 'name',
         /**
-         * Password.
-         */
-        password = 'password',
-        /**
          * Surname.
          */
-        surname = 'surname'
+        surname = 'surname',
+        /**
+         * language
+         */
+        language = 'language'
     }
 
     /**
@@ -103,10 +103,9 @@ export namespace ApiCreateUserRequest {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiCreateUserRequest.LanguageEnum',
-                    required: false,
-                    name: 'language',
+                    isEnum: false,
+                    required: true,
+                    name: 'password',
                     classname: 'ApiCreateUserRequest',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -128,7 +127,7 @@ export namespace ApiCreateUserRequest {
                     isReadOnly: false,
                     isEnum: false,
                     required: true,
-                    name: 'password',
+                    name: 'surname',
                     classname: 'ApiCreateUserRequest',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -137,9 +136,10 @@ export namespace ApiCreateUserRequest {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
-                    required: true,
-                    name: 'surname',
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiCreateUserRequest.LanguageEnum',
+                    required: false,
+                    name: 'language',
                     classname: 'ApiCreateUserRequest',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -150,17 +150,25 @@ export namespace ApiCreateUserRequest {
             validators: {
                 email: [
                         ['required'],
-                ],
-                language: [
-                ],
-                name: [
-                        ['required'],
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 password: [
                         ['required'],
+                        ['minlength', 0],
+                        ['maxlength', 100],
+                ],
+                name: [
+                        ['required'],
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 surname: [
                         ['required'],
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                language: [
                 ],
             }
         }
@@ -172,16 +180,16 @@ export namespace ApiCreateUserRequest {
   //               email: {
   //                   validators: []
   //               },
-  //               language: {
+  //               password: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               password: {
+  //               surname: {
   //                   validators: []
   //               },
-  //               surname: {
+  //               language: {
   //                   validators: []
   //               },
   //     }

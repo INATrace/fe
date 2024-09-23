@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,25 +20,28 @@
 
 
 
+/**
+ * Measurement unit type of final product
+ */
 
 export interface ApiMeasureUnitType { 
-    /**
-     * code
-     */
-    code?: string;
     /**
      * Entity id
      */
     id?: number;
     /**
+     * code
+     */
+    code: string;
+    /**
      * label
      */
-    label?: string;
-    underlyingMeasurementUnitType?: ApiMeasureUnitType;
+    label: string;
     /**
      * the weight of the measurement unit type
      */
     weight?: number;
+    underlyingMeasurementUnitType?: ApiMeasureUnitType;
 }
 
 /**
@@ -50,22 +53,22 @@ export namespace ApiMeasureUnitType {
      */
     export enum Properties {
         /**
-         * code
-         */
-        code = 'code',
-        /**
          * Entity id
          */
         id = 'id',
         /**
+         * code
+         */
+        code = 'code',
+        /**
          * label
          */
         label = 'label',
-        underlyingMeasurementUnitType = 'underlyingMeasurementUnitType',
         /**
          * the weight of the measurement unit type
          */
-        weight = 'weight'
+        weight = 'weight',
+        underlyingMeasurementUnitType = 'underlyingMeasurementUnitType'
     }
 
 
@@ -74,17 +77,6 @@ export namespace ApiMeasureUnitType {
             metadata: formMetadata,
             classname: 'ApiMeasureUnitType',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'code',
-                    classname: 'ApiMeasureUnitType',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -99,10 +91,32 @@ export namespace ApiMeasureUnitType {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: false,
+                    required: true,
+                    name: 'code',
+                    classname: 'ApiMeasureUnitType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: true,
                     name: 'label',
                     classname: 'ApiMeasureUnitType',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'weight',
+                    classname: 'ApiMeasureUnitType',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -119,28 +133,19 @@ export namespace ApiMeasureUnitType {
                     isListContainer: false,
                     complexType: 'ApiMeasureUnitType'
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'weight',
-                    classname: 'ApiMeasureUnitType',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                code: [
-                ],
                 id: [
                 ],
-                label: [
+                code: [
+                        ['required'],
                 ],
-                underlyingMeasurementUnitType: [
+                label: [
+                        ['required'],
                 ],
                 weight: [
+                ],
+                underlyingMeasurementUnitType: [
                 ],
             }
         }
@@ -149,19 +154,19 @@ export namespace ApiMeasureUnitType {
   // export const ApiMeasureUnitTypeValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               code: {
+  //               id: {
   //                   validators: []
   //               },
-  //               id: {
+  //               code: {
   //                   validators: []
   //               },
   //               label: {
   //                   validators: []
   //               },
-  //               underlyingMeasurementUnitType: {
+  //               weight: {
   //                   validators: []
   //               },
-  //               weight: {
+  //               underlyingMeasurementUnitType: {
   //                   validators: []
   //               },
   //     }

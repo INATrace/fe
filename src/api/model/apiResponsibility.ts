@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,6 +20,9 @@
 
 
 
+/**
+ * social responsibility
+ */
 
 export interface ApiResponsibility { 
     /**
@@ -62,6 +65,8 @@ export namespace ApiResponsibility {
             ],
             validators: {
                 laborPolicies: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
                 ],
             }
         }

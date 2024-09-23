@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,16 +21,19 @@
 import { ApiLocation } from './apiLocation';
 
 
+/**
+ * origin - text and location 
+ */
 
 export interface ApiProductOrigin { 
-    /**
-     * origin - farmer location
-     */
-    locations?: Array<ApiLocation>;
     /**
      * origin - text and quantity input - Briefly describe where the product or its ingredients are produced
      */
     text?: string;
+    /**
+     * origin - farmer location
+     */
+    locations?: Array<ApiLocation>;
 }
 
 /**
@@ -42,13 +45,13 @@ export namespace ApiProductOrigin {
      */
     export enum Properties {
         /**
-         * origin - farmer location
-         */
-        locations = 'locations',
-        /**
          * origin - text and quantity input - Briefly describe where the product or its ingredients are produced
          */
-        text = 'text'
+        text = 'text',
+        /**
+         * origin - farmer location
+         */
+        locations = 'locations'
     }
 
 
@@ -57,6 +60,17 @@ export namespace ApiProductOrigin {
             metadata: formMetadata,
             classname: 'ApiProductOrigin',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'text',
+                    classname: 'ApiProductOrigin',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     metadata: ApiLocation.formMetadata,
                     isReadOnly: false,
@@ -69,22 +83,13 @@ export namespace ApiProductOrigin {
                     isListContainer: true,
                     complexType: 'ApiLocation'
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'text',
-                    classname: 'ApiProductOrigin',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                locations: [
-                ],
                 text: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
+                ],
+                locations: [
                 ],
             }
         }
@@ -93,10 +98,10 @@ export namespace ApiProductOrigin {
   // export const ApiProductOriginValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               locations: {
+  //               text: {
   //                   validators: []
   //               },
-  //               text: {
+  //               locations: {
   //                   validators: []
   //               },
   //     }

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,10 +21,13 @@
 import { ApiDeliveriesTotalItem } from './apiDeliveriesTotalItem';
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiDeliveriesTotal { 
-    totals?: Array<ApiDeliveriesTotalItem>;
     unitType?: ApiDeliveriesTotal.UnitTypeEnum;
+    totals?: Array<ApiDeliveriesTotalItem>;
 }
 
 /**
@@ -35,8 +38,8 @@ export namespace ApiDeliveriesTotal {
      * All properties of ApiDeliveriesTotal.
      */
     export enum Properties {
-        totals = 'totals',
-        unitType = 'unitType'
+        unitType = 'unitType',
+        totals = 'totals'
     }
 
     /**
@@ -56,18 +59,6 @@ export namespace ApiDeliveriesTotal {
             classname: 'ApiDeliveriesTotal',
             vars: [
                 {
-                    metadata: ApiDeliveriesTotalItem.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'totals',
-                    classname: 'ApiDeliveriesTotal',
-                    dataType: 'Array&lt;ApiDeliveriesTotalItem&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiDeliveriesTotalItem'
-                },
-                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiDeliveriesTotal.UnitTypeEnum',
@@ -79,11 +70,23 @@ export namespace ApiDeliveriesTotal {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiDeliveriesTotalItem.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'totals',
+                    classname: 'ApiDeliveriesTotal',
+                    dataType: 'Array&lt;ApiDeliveriesTotalItem&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiDeliveriesTotalItem'
+                },
             ],
             validators: {
-                totals: [
-                ],
                 unitType: [
+                ],
+                totals: [
                 ],
             }
         }
@@ -92,10 +95,10 @@ export namespace ApiDeliveriesTotal {
   // export const ApiDeliveriesTotalValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               totals: {
+  //               unitType: {
   //                   validators: []
   //               },
-  //               unitType: {
+  //               totals: {
   //                   validators: []
   //               },
   //     }

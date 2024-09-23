@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,17 +21,20 @@
 import { ApiProductType } from './apiProductType';
 
 
+/**
+ * List of plant information
+ */
 
 export interface ApiFarmPlantInformation { 
-    /**
-     * Number of plants
-     */
-    numberOfPlants?: number;
+    productType?: ApiProductType;
     /**
      * Area cultivated with plant (ha)
      */
     plantCultivatedArea?: number;
-    productType?: ApiProductType;
+    /**
+     * Number of plants
+     */
+    numberOfPlants?: number;
 }
 
 /**
@@ -42,15 +45,15 @@ export namespace ApiFarmPlantInformation {
      * All properties of ApiFarmPlantInformation.
      */
     export enum Properties {
-        /**
-         * Number of plants
-         */
-        numberOfPlants = 'numberOfPlants',
+        productType = 'productType',
         /**
          * Area cultivated with plant (ha)
          */
         plantCultivatedArea = 'plantCultivatedArea',
-        productType = 'productType'
+        /**
+         * Number of plants
+         */
+        numberOfPlants = 'numberOfPlants'
     }
 
 
@@ -60,15 +63,16 @@ export namespace ApiFarmPlantInformation {
             classname: 'ApiFarmPlantInformation',
             vars: [
                 {
+                    metadata: ApiProductType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'numberOfPlants',
+                    name: 'productType',
                     classname: 'ApiFarmPlantInformation',
-                    dataType: 'number',
-                    isPrimitiveType: true,
+                    dataType: 'ApiProductType',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ApiProductType'
                 },
                 {
                     isReadOnly: false,
@@ -82,24 +86,23 @@ export namespace ApiFarmPlantInformation {
                     complexType: ''
                 },
                 {
-                    metadata: ApiProductType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'productType',
+                    name: 'numberOfPlants',
                     classname: 'ApiFarmPlantInformation',
-                    dataType: 'ApiProductType',
-                    isPrimitiveType: false,
+                    dataType: 'number',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiProductType'
+                    complexType: ''
                 },
             ],
             validators: {
-                numberOfPlants: [
+                productType: [
                 ],
                 plantCultivatedArea: [
                 ],
-                productType: [
+                numberOfPlants: [
                 ],
             }
         }
@@ -108,13 +111,13 @@ export namespace ApiFarmPlantInformation {
   // export const ApiFarmPlantInformationValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               numberOfPlants: {
+  //               productType: {
   //                   validators: []
   //               },
   //               plantCultivatedArea: {
   //                   validators: []
   //               },
-  //               productType: {
+  //               numberOfPlants: {
   //                   validators: []
   //               },
   //     }

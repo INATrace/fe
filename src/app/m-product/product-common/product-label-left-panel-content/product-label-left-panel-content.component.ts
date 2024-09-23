@@ -49,7 +49,7 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
   }
 
   async preparePhoto() {
-    const resp = await this.productController.getProductUsingGET(this.productId).pipe(take(1)).toPromise();
+    const resp = await this.productController.getProduct(this.productId).pipe(take(1)).toPromise();
     if (resp.status === 'OK' && resp.data && resp.data.photo) {
       this.imgStorageKey = resp.data.photo.storageKey;
     }
@@ -64,7 +64,7 @@ export class ProductLabelLeftPanelContentComponent implements OnInit {
       dismissable: false
     });
     if (result !== 'ok') { return; }
-    const res = await this.productController.deleteProductUsingDELETE(productId).pipe(take(1)).toPromise();
+    const res = await this.productController.deleteProduct(productId).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
       this.globalEventsManager.push({
         action: 'success',

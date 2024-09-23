@@ -25,7 +25,7 @@ export class ConfirmEmailComponent implements OnInit, OnDestroy {
   sub: Subscription;
   ngOnInit(): void {
     this.sub = this.activationToken$.pipe(
-      switchMap(token => this.userController.confirmEmailUsingPOST({ token }).pipe(
+      switchMap(token => this.userController.confirmEmail({ token }).pipe(
         catchError(_ => of('_ERROR_'))
       ))
     ).subscribe(resp => {

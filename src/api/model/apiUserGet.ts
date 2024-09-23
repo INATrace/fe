@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,8 +20,39 @@
 
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiUserGet { 
+    /**
+     * Entity id
+     */
+    id?: number;
+    /**
+     * Email/username
+     */
+    email?: string;
+    /**
+     * Name
+     */
+    name?: string;
+    /**
+     * Surname
+     */
+    surname?: string;
+    /**
+     * Status
+     */
+    status?: ApiUserGet.StatusEnum;
+    /**
+     * User role
+     */
+    role?: ApiUserGet.RoleEnum;
+    /**
+     * language
+     */
+    language?: ApiUserGet.LanguageEnum;
     /**
      * Possible actions
      */
@@ -34,34 +65,6 @@ export interface ApiUserGet {
      * User's company ids where user is company admin
      */
     companyIdsAdmin?: Array<number>;
-    /**
-     * Email/username
-     */
-    email?: string;
-    /**
-     * Entity id
-     */
-    id?: number;
-    /**
-     * language
-     */
-    language?: ApiUserGet.LanguageEnum;
-    /**
-     * Name
-     */
-    name?: string;
-    /**
-     * User role
-     */
-    role?: ApiUserGet.RoleEnum;
-    /**
-     * Status
-     */
-    status?: ApiUserGet.StatusEnum;
-    /**
-     * Surname
-     */
-    surname?: string;
 }
 
 /**
@@ -73,6 +76,34 @@ export namespace ApiUserGet {
      */
     export enum Properties {
         /**
+         * Entity id
+         */
+        id = 'id',
+        /**
+         * Email/username
+         */
+        email = 'email',
+        /**
+         * Name
+         */
+        name = 'name',
+        /**
+         * Surname
+         */
+        surname = 'surname',
+        /**
+         * Status
+         */
+        status = 'status',
+        /**
+         * User role
+         */
+        role = 'role',
+        /**
+         * language
+         */
+        language = 'language',
+        /**
          * Possible actions
          */
         actions = 'actions',
@@ -83,35 +114,36 @@ export namespace ApiUserGet {
         /**
          * User's company ids where user is company admin
          */
-        companyIdsAdmin = 'companyIdsAdmin',
-        /**
-         * Email/username
-         */
-        email = 'email',
-        /**
-         * Entity id
-         */
-        id = 'id',
-        /**
-         * language
-         */
-        language = 'language',
-        /**
-         * Name
-         */
-        name = 'name',
-        /**
-         * User role
-         */
-        role = 'role',
-        /**
-         * Status
-         */
-        status = 'status',
-        /**
-         * Surname
-         */
-        surname = 'surname'
+        companyIdsAdmin = 'companyIdsAdmin'
+    }
+
+    /**
+     * All possible values of status.
+     */
+    export enum StatusEnum {
+        UNCONFIRMED = 'UNCONFIRMED',
+        CONFIRMEDEMAIL = 'CONFIRMED_EMAIL',
+        ACTIVE = 'ACTIVE',
+        DEACTIVATED = 'DEACTIVATED'
+    }
+
+    /**
+     * All possible values of role.
+     */
+    export enum RoleEnum {
+        USER = 'USER',
+        SYSTEMADMIN = 'SYSTEM_ADMIN',
+        REGIONALADMIN = 'REGIONAL_ADMIN'
+    }
+
+    /**
+     * All possible values of language.
+     */
+    export enum LanguageEnum {
+        EN = 'EN',
+        DE = 'DE',
+        RW = 'RW',
+        ES = 'ES'
     }
 
     /**
@@ -130,41 +162,92 @@ export namespace ApiUserGet {
         UNSETUSERREGIONALADMIN = 'UNSET_USER_REGIONAL_ADMIN'
     }
 
-    /**
-     * All possible values of language.
-     */
-    export enum LanguageEnum {
-        EN = 'EN',
-        DE = 'DE',
-        RW = 'RW',
-        ES = 'ES'
-    }
-
-    /**
-     * All possible values of role.
-     */
-    export enum RoleEnum {
-        USER = 'USER',
-        SYSTEMADMIN = 'SYSTEM_ADMIN',
-        REGIONALADMIN = 'REGIONAL_ADMIN'
-    }
-
-    /**
-     * All possible values of status.
-     */
-    export enum StatusEnum {
-        UNCONFIRMED = 'UNCONFIRMED',
-        CONFIRMEDEMAIL = 'CONFIRMED_EMAIL',
-        ACTIVE = 'ACTIVE',
-        DEACTIVATED = 'DEACTIVATED'
-    }
-
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
             classname: 'ApiUserGet',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiUserGet',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'email',
+                    classname: 'ApiUserGet',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
+                    classname: 'ApiUserGet',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'surname',
+                    classname: 'ApiUserGet',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiUserGet.StatusEnum',
+                    required: false,
+                    name: 'status',
+                    classname: 'ApiUserGet',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiUserGet.RoleEnum',
+                    required: false,
+                    name: 'role',
+                    classname: 'ApiUserGet',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiUserGet.LanguageEnum',
+                    required: false,
+                    name: 'language',
+                    classname: 'ApiUserGet',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: true,
@@ -199,107 +282,27 @@ export namespace ApiUserGet {
                     isListContainer: true,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'email',
-                    classname: 'ApiUserGet',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiUserGet',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserGet.LanguageEnum',
-                    required: false,
-                    name: 'language',
-                    classname: 'ApiUserGet',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiUserGet',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserGet.RoleEnum',
-                    required: false,
-                    name: 'role',
-                    classname: 'ApiUserGet',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserGet.StatusEnum',
-                    required: false,
-                    name: 'status',
-                    classname: 'ApiUserGet',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'surname',
-                    classname: 'ApiUserGet',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
+                id: [
+                ],
+                email: [
+                ],
+                name: [
+                ],
+                surname: [
+                ],
+                status: [
+                ],
+                role: [
+                ],
+                language: [
+                ],
                 actions: [
                 ],
                 companyIds: [
                 ],
                 companyIdsAdmin: [
-                ],
-                email: [
-                ],
-                id: [
-                ],
-                language: [
-                ],
-                name: [
-                ],
-                role: [
-                ],
-                status: [
-                ],
-                surname: [
                 ],
             }
         }
@@ -308,6 +311,27 @@ export namespace ApiUserGet {
   // export const ApiUserGetValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               id: {
+  //                   validators: []
+  //               },
+  //               email: {
+  //                   validators: []
+  //               },
+  //               name: {
+  //                   validators: []
+  //               },
+  //               surname: {
+  //                   validators: []
+  //               },
+  //               status: {
+  //                   validators: []
+  //               },
+  //               role: {
+  //                   validators: []
+  //               },
+  //               language: {
+  //                   validators: []
+  //               },
   //               actions: {
   //                   validators: []
   //               },
@@ -315,27 +339,6 @@ export namespace ApiUserGet {
   //                   validators: []
   //               },
   //               companyIdsAdmin: {
-  //                   validators: []
-  //               },
-  //               email: {
-  //                   validators: []
-  //               },
-  //               id: {
-  //                   validators: []
-  //               },
-  //               language: {
-  //                   validators: []
-  //               },
-  //               name: {
-  //                   validators: []
-  //               },
-  //               role: {
-  //                   validators: []
-  //               },
-  //               status: {
-  //                   validators: []
-  //               },
-  //               surname: {
   //                   validators: []
   //               },
   //     }

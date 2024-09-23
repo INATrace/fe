@@ -72,9 +72,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
       const newParams = {...params};
       delete newParams['myProducts'];
       if (myProducts) {
-        return this.productController.listProductsUsingGETByMap(params);
+        return this.productController.listProductsByMap(params);
       } else {
-        return this.productController.listProductsAdminUsingGETByMap(params);
+        return this.productController.listProductsAdminByMap(params);
       }
     }),
     map((resp: ApiPaginatedResponseApiProductListResponse) => {
@@ -122,12 +122,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   async setAllProducts() {
     if (this.isSystemAdmin) {
-      const res = await this.productController.listProductsAdminUsingGET('COUNT').pipe(take(1)).toPromise();
+      const res = await this.productController.listProductsAdmin('COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allProducts = res.data.count;
       }
     } else {
-      const res = await this.productController.listProductsUsingGET('COUNT').pipe(take(1)).toPromise();
+      const res = await this.productController.listProducts('COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allProducts = res.data.count;
       }

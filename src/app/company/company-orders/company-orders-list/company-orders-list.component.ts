@@ -8,8 +8,8 @@ import {finalize, map, switchMap, take, tap} from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { ApiPaginatedResponseApiStockOrder } from '../../../../api/model/apiPaginatedResponseApiStockOrder';
 import {
-  GetQuoteOrdersInFacilityUsingGET,
-  GetStockOrdersInFacilityForCustomerUsingGET,
+  GetQuoteOrdersInFacility,
+  GetStockOrdersInFacilityForCustomer,
   StockOrderControllerService
 } from '../../../../api/api/stockOrderController.service';
 import { Router } from '@angular/router';
@@ -267,18 +267,18 @@ export class CompanyOrdersListComponent implements OnInit {
     );
   }
 
-  private loadStockOrders(params: GetQuoteOrdersInFacilityUsingGET.PartialParamMap | GetStockOrdersInFacilityForCustomerUsingGET.PartialParamMap):
+  private loadStockOrders(params: GetQuoteOrdersInFacility.PartialParamMap | GetStockOrdersInFacilityForCustomer.PartialParamMap):
     Observable<ApiPaginatedResponseApiStockOrder> {
 
     // If we are in input mode, that means we need stock orders that are quoted to the current company
     if (this.orderType === 'RECEIVED') {
 
-      return this.stockOrderController.getQuoteOrdersInFacilityUsingGETByMap(params);
+      return this.stockOrderController.getQuoteOrdersInFacilityByMap(params);
 
     } else if (this.orderType === 'PLACED') {
 
       // If we are in customer mode, that means we need stock orders the were created form the current company for a customer company
-      return this.stockOrderController.getStockOrdersInFacilityForCustomerUsingGETByMap(params);
+      return this.stockOrderController.getStockOrdersInFacilityForCustomerByMap(params);
     }
 
     throw Error('Wrong mode: ' + this.orderType);
@@ -315,12 +315,12 @@ export class CompanyOrdersListComponent implements OnInit {
       return;
     }
 
-    this.stockOrderController.getStockOrderUsingGET(order.id, true)
+    this.stockOrderController.getStockOrder(order.id, true)
       .pipe(
         tap(() => this.globalEventsManager.showLoading(true)),
         switchMap(orderResp => {
           if (orderResp && orderResp.status === 'OK' && orderResp.data) {
-            return this.processingOrderController.deleteProcessingOrderUsingDELETE(orderResp.data.processingOrder.id);
+            return this.processingOrderController.deleteProcessingOrder(orderResp.data.processingOrder.id);
           }
           return of(null);
         })
@@ -338,7 +338,7 @@ export class CompanyOrdersListComponent implements OnInit {
 
     this.globalEventsManager.showLoading(true);
 
-    const res = await this.stockOrderController.exportGeoDataUsingGET(order.id)
+    const res = await this.stockOrderController.exportGeoData(order.id)
       .pipe(
         take(1),
         finalize(() => {

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,6 +20,9 @@
 
 
 
+/**
+ * associated company
+ */
 
 export interface ApiCompanyListResponse { 
     /**
@@ -27,17 +30,17 @@ export interface ApiCompanyListResponse {
      */
     id?: number;
     /**
-     * storage key (file on system, s3, ...).
+     * Company status
      */
-    logoStorageKey?: string;
+    status?: ApiCompanyListResponse.StatusEnum;
     /**
      * Name
      */
     name?: string;
     /**
-     * Company status
+     * storage key (file on system, s3, ...).
      */
-    status?: ApiCompanyListResponse.StatusEnum;
+    logoStorageKey?: string;
 }
 
 /**
@@ -53,17 +56,17 @@ export namespace ApiCompanyListResponse {
          */
         id = 'id',
         /**
-         * storage key (file on system, s3, ...).
+         * Company status
          */
-        logoStorageKey = 'logoStorageKey',
+        status = 'status',
         /**
          * Name
          */
         name = 'name',
         /**
-         * Company status
+         * storage key (file on system, s3, ...).
          */
-        status = 'status'
+        logoStorageKey = 'logoStorageKey'
     }
 
     /**
@@ -94,9 +97,10 @@ export namespace ApiCompanyListResponse {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiCompanyListResponse.StatusEnum',
                     required: false,
-                    name: 'logoStorageKey',
+                    name: 'status',
                     classname: 'ApiCompanyListResponse',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -116,10 +120,9 @@ export namespace ApiCompanyListResponse {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiCompanyListResponse.StatusEnum',
+                    isEnum: false,
                     required: false,
-                    name: 'status',
+                    name: 'logoStorageKey',
                     classname: 'ApiCompanyListResponse',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -130,11 +133,11 @@ export namespace ApiCompanyListResponse {
             validators: {
                 id: [
                 ],
-                logoStorageKey: [
+                status: [
                 ],
                 name: [
                 ],
-                status: [
+                logoStorageKey: [
                 ],
             }
         }
@@ -146,13 +149,13 @@ export namespace ApiCompanyListResponse {
   //               id: {
   //                   validators: []
   //               },
-  //               logoStorageKey: {
+  //               status: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               status: {
+  //               logoStorageKey: {
   //                   validators: []
   //               },
   //     }

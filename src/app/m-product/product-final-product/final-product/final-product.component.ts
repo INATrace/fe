@@ -36,7 +36,7 @@ export class FinalProductComponent implements OnInit {
     this.productId = this.route.snapshot.params.id;
     this.companyId = (await this.selUserCompanyService.selectedCompanyProfile$.pipe(take(1)).toPromise())?.id;
 
-    this.productController.getProductUsingGET(this.productId).pipe(take(1)).subscribe(product => {
+    this.productController.getProduct(this.productId).pipe(take(1)).subscribe(product => {
       if (product && product.data) {
         this.isProductAdmin = product.data.associatedCompanies.some(value => value.type === ApiProductCompany.TypeEnum.OWNER && value.company.id === this.companyId);
       }

@@ -5,7 +5,7 @@ import { GeneralSifrantService } from './general-sifrant.service';
 import { CodebookTranslations } from './codebook-translations';
 import { ApiProcessingEvidenceType } from '../../api/model/apiProcessingEvidenceType';
 import {
-  GetProcessingEvidenceTypeListUsingGET,
+  GetProcessingEvidenceTypeList,
   ProcessingEvidenceTypeControllerService
 } from '../../api/api/processingEvidenceTypeController.service';
 import { ApiPaginatedResponseApiProcessingEvidenceType } from '../../api/model/apiPaginatedResponseApiProcessingEvidenceType';
@@ -24,7 +24,7 @@ export class ProcessingEvidenceTypeService extends GeneralSifrantService<ApiProc
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetProcessingEvidenceTypeListUsingGET.PartialParamMap;
+  } as GetProcessingEvidenceTypeList.PartialParamMap;
 
   public identifier(el: ApiProcessingEvidenceType) {
     return el.id;
@@ -36,7 +36,7 @@ export class ProcessingEvidenceTypeService extends GeneralSifrantService<ApiProc
 
   public makeQuery(key: string, params?: any, productId?: string): Observable<PagedSearchResults<ApiProcessingEvidenceType>> {
     const limit = params && params.limit ? params.limit : this.limit();
-    const reqPars: GetProcessingEvidenceTypeListUsingGET.PartialParamMap = {
+    const reqPars: GetProcessingEvidenceTypeList.PartialParamMap = {
       ...this.requestParams
     };
 
@@ -64,9 +64,9 @@ export class ProcessingEvidenceTypeService extends GeneralSifrantService<ApiProc
 
   private fetchProcessingEvidenceTypes(reqParams, valueChainIdList?: Array<number>): Observable<ApiPaginatedResponseApiProcessingEvidenceType> {
     if (valueChainIdList !== null && valueChainIdList !== undefined) {
-      return this.codebookService.listProcessingEvidenceTypesByValueChainsUsingGETByMap({ valueChainIds: valueChainIdList, ...reqParams });
+      return this.codebookService.listProcessingEvidenceTypesByValueChainsByMap({ valueChainIds: valueChainIdList, ...reqParams });
     } else {
-      return this.codebookService.getProcessingEvidenceTypeListUsingGETByMap(reqParams);
+      return this.codebookService.getProcessingEvidenceTypeListByMap(reqParams);
     }
   }
 

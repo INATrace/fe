@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,33 +20,27 @@
 
 
 
+/**
+ * Response items.
+ */
 
 export interface ApiGroupStockOrder { 
-    available?: boolean;
     /**
-     * Available quantity
+     * Entity id
      */
-    availableQuantity?: number;
-    /**
-     * Delivery time
-     */
-    deliveryTime?: string;
-    /**
-     * Final product name
-     */
-    finalProductName?: string;
-    /**
-     * Fulfilled quantity
-     */
-    fulfilledQuantity?: number;
+    id?: number;
     /**
      * List of stock order ID's, belonging to this group
      */
     groupedIds?: Array<number>;
     /**
-     * Entity id
+     * Production date
      */
-    id?: number;
+    productionDate?: string;
+    /**
+     * Timestamp indicates when process order have been updated
+     */
+    updateTimestamp?: Date;
     /**
      * Internal LOT number
      */
@@ -60,25 +54,34 @@ export interface ApiGroupStockOrder {
      */
     orderType?: ApiGroupStockOrder.OrderTypeEnum;
     /**
-     * Production date
-     */
-    productionDate?: string;
-    /**
      * Semi product name
      */
     semiProductName?: string;
+    /**
+     * Final product name
+     */
+    finalProductName?: string;
     /**
      * Total quantity
      */
     totalQuantity?: number;
     /**
+     * Fulfilled quantity
+     */
+    fulfilledQuantity?: number;
+    /**
+     * Available quantity
+     */
+    availableQuantity?: number;
+    /**
      * Measurement unit
      */
     unitLabel?: string;
     /**
-     * Timestamp indicates when process order have been updated
+     * Delivery time
      */
-    updateTimestamp?: Date;
+    deliveryTime?: string;
+    available?: boolean;
 }
 
 /**
@@ -89,31 +92,22 @@ export namespace ApiGroupStockOrder {
      * All properties of ApiGroupStockOrder.
      */
     export enum Properties {
-        available = 'available',
         /**
-         * Available quantity
+         * Entity id
          */
-        availableQuantity = 'availableQuantity',
-        /**
-         * Delivery time
-         */
-        deliveryTime = 'deliveryTime',
-        /**
-         * Final product name
-         */
-        finalProductName = 'finalProductName',
-        /**
-         * Fulfilled quantity
-         */
-        fulfilledQuantity = 'fulfilledQuantity',
+        id = 'id',
         /**
          * List of stock order ID's, belonging to this group
          */
         groupedIds = 'groupedIds',
         /**
-         * Entity id
+         * Production date
          */
-        id = 'id',
+        productionDate = 'productionDate',
+        /**
+         * Timestamp indicates when process order have been updated
+         */
+        updateTimestamp = 'updateTimestamp',
         /**
          * Internal LOT number
          */
@@ -127,25 +121,34 @@ export namespace ApiGroupStockOrder {
          */
         orderType = 'orderType',
         /**
-         * Production date
-         */
-        productionDate = 'productionDate',
-        /**
          * Semi product name
          */
         semiProductName = 'semiProductName',
+        /**
+         * Final product name
+         */
+        finalProductName = 'finalProductName',
         /**
          * Total quantity
          */
         totalQuantity = 'totalQuantity',
         /**
+         * Fulfilled quantity
+         */
+        fulfilledQuantity = 'fulfilledQuantity',
+        /**
+         * Available quantity
+         */
+        availableQuantity = 'availableQuantity',
+        /**
          * Measurement unit
          */
         unitLabel = 'unitLabel',
         /**
-         * Timestamp indicates when process order have been updated
+         * Delivery time
          */
-        updateTimestamp = 'updateTimestamp'
+        deliveryTime = 'deliveryTime',
+        available = 'available'
     }
 
     /**
@@ -168,51 +171,7 @@ export namespace ApiGroupStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'available',
-                    classname: 'ApiGroupStockOrder',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'availableQuantity',
-                    classname: 'ApiGroupStockOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'deliveryTime',
-                    classname: 'ApiGroupStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'finalProductName',
-                    classname: 'ApiGroupStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'fulfilledQuantity',
+                    name: 'id',
                     classname: 'ApiGroupStockOrder',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -234,9 +193,20 @@ export namespace ApiGroupStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'productionDate',
                     classname: 'ApiGroupStockOrder',
-                    dataType: 'number',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updateTimestamp',
+                    classname: 'ApiGroupStockOrder',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -279,7 +249,7 @@ export namespace ApiGroupStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'productionDate',
+                    name: 'semiProductName',
                     classname: 'ApiGroupStockOrder',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -290,7 +260,7 @@ export namespace ApiGroupStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'semiProductName',
+                    name: 'finalProductName',
                     classname: 'ApiGroupStockOrder',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -312,6 +282,28 @@ export namespace ApiGroupStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'fulfilledQuantity',
+                    classname: 'ApiGroupStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'availableQuantity',
+                    classname: 'ApiGroupStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'unitLabel',
                     classname: 'ApiGroupStockOrder',
                     dataType: 'string',
@@ -323,28 +315,33 @@ export namespace ApiGroupStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'updateTimestamp',
+                    name: 'deliveryTime',
                     classname: 'ApiGroupStockOrder',
-                    dataType: 'Date',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'available',
+                    classname: 'ApiGroupStockOrder',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                available: [
-                ],
-                availableQuantity: [
-                ],
-                deliveryTime: [
-                ],
-                finalProductName: [
-                ],
-                fulfilledQuantity: [
+                id: [
                 ],
                 groupedIds: [
                 ],
-                id: [
+                productionDate: [
+                ],
+                updateTimestamp: [
                 ],
                 internalLotNumber: [
                 ],
@@ -352,15 +349,21 @@ export namespace ApiGroupStockOrder {
                 ],
                 orderType: [
                 ],
-                productionDate: [
-                ],
                 semiProductName: [
+                ],
+                finalProductName: [
                 ],
                 totalQuantity: [
                 ],
+                fulfilledQuantity: [
+                ],
+                availableQuantity: [
+                ],
                 unitLabel: [
                 ],
-                updateTimestamp: [
+                deliveryTime: [
+                ],
+                available: [
                 ],
             }
         }
@@ -369,25 +372,16 @@ export namespace ApiGroupStockOrder {
   // export const ApiGroupStockOrderValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               available: {
-  //                   validators: []
-  //               },
-  //               availableQuantity: {
-  //                   validators: []
-  //               },
-  //               deliveryTime: {
-  //                   validators: []
-  //               },
-  //               finalProductName: {
-  //                   validators: []
-  //               },
-  //               fulfilledQuantity: {
+  //               id: {
   //                   validators: []
   //               },
   //               groupedIds: {
   //                   validators: []
   //               },
-  //               id: {
+  //               productionDate: {
+  //                   validators: []
+  //               },
+  //               updateTimestamp: {
   //                   validators: []
   //               },
   //               internalLotNumber: {
@@ -399,19 +393,28 @@ export namespace ApiGroupStockOrder {
   //               orderType: {
   //                   validators: []
   //               },
-  //               productionDate: {
+  //               semiProductName: {
   //                   validators: []
   //               },
-  //               semiProductName: {
+  //               finalProductName: {
   //                   validators: []
   //               },
   //               totalQuantity: {
   //                   validators: []
   //               },
+  //               fulfilledQuantity: {
+  //                   validators: []
+  //               },
+  //               availableQuantity: {
+  //                   validators: []
+  //               },
   //               unitLabel: {
   //                   validators: []
   //               },
-  //               updateTimestamp: {
+  //               deliveryTime: {
+  //                   validators: []
+  //               },
+  //               available: {
   //                   validators: []
   //               },
   //     }

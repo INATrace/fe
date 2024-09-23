@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -25,17 +25,39 @@ import { ApiUserCustomer } from './apiUserCustomer';
 
 export interface ApiPurchaseOrderFarmer { 
     /**
+     * Entity id
+     */
+    id?: number;
+    /**
+     * Purchase order identifier
+     */
+    identifier?: string;
+    producerUserCustomer?: ApiUserCustomer;
+    semiProduct?: ApiSemiProduct;
+    /**
+     * Total quantity
+     */
+    totalQuantity?: number;
+    /**
+     * Total gross quantity
+     */
+    totalGrossQuantity?: number;
+    /**
+     * Fulfilled quantity
+     */
+    fulfilledQuantity?: number;
+    /**
      * Available quantity
      */
     availableQuantity?: number;
     /**
-     * Balance
+     * Price per unit
      */
-    balance?: number;
+    pricePerUnit?: number;
     /**
-     * Cost
+     * Tare
      */
-    cost?: number;
+    tare?: number;
     /**
      * Damaged price deduction
      */
@@ -45,43 +67,21 @@ export interface ApiPurchaseOrderFarmer {
      */
     damagedWeightDeduction?: number;
     /**
-     * Fulfilled quantity
-     */
-    fulfilledQuantity?: number;
-    /**
-     * Entity id
-     */
-    id?: number;
-    /**
-     * Purchase order identifier
-     */
-    identifier?: string;
-    /**
      * Organic
      */
     organic?: boolean;
     /**
-     * Price per unit
-     */
-    pricePerUnit?: number;
-    producerUserCustomer?: ApiUserCustomer;
-    semiProduct?: ApiSemiProduct;
-    /**
-     * Tare
-     */
-    tare?: number;
-    /**
-     * Total gross quantity
-     */
-    totalGrossQuantity?: number;
-    /**
-     * Total quantity
-     */
-    totalQuantity?: number;
-    /**
      * Women only
      */
     womenShare?: boolean;
+    /**
+     * Cost
+     */
+    cost?: number;
+    /**
+     * Balance
+     */
+    balance?: number;
 }
 
 /**
@@ -93,17 +93,39 @@ export namespace ApiPurchaseOrderFarmer {
      */
     export enum Properties {
         /**
+         * Entity id
+         */
+        id = 'id',
+        /**
+         * Purchase order identifier
+         */
+        identifier = 'identifier',
+        producerUserCustomer = 'producerUserCustomer',
+        semiProduct = 'semiProduct',
+        /**
+         * Total quantity
+         */
+        totalQuantity = 'totalQuantity',
+        /**
+         * Total gross quantity
+         */
+        totalGrossQuantity = 'totalGrossQuantity',
+        /**
+         * Fulfilled quantity
+         */
+        fulfilledQuantity = 'fulfilledQuantity',
+        /**
          * Available quantity
          */
         availableQuantity = 'availableQuantity',
         /**
-         * Balance
+         * Price per unit
          */
-        balance = 'balance',
+        pricePerUnit = 'pricePerUnit',
         /**
-         * Cost
+         * Tare
          */
-        cost = 'cost',
+        tare = 'tare',
         /**
          * Damaged price deduction
          */
@@ -113,43 +135,21 @@ export namespace ApiPurchaseOrderFarmer {
          */
         damagedWeightDeduction = 'damagedWeightDeduction',
         /**
-         * Fulfilled quantity
-         */
-        fulfilledQuantity = 'fulfilledQuantity',
-        /**
-         * Entity id
-         */
-        id = 'id',
-        /**
-         * Purchase order identifier
-         */
-        identifier = 'identifier',
-        /**
          * Organic
          */
         organic = 'organic',
         /**
-         * Price per unit
-         */
-        pricePerUnit = 'pricePerUnit',
-        producerUserCustomer = 'producerUserCustomer',
-        semiProduct = 'semiProduct',
-        /**
-         * Tare
-         */
-        tare = 'tare',
-        /**
-         * Total gross quantity
-         */
-        totalGrossQuantity = 'totalGrossQuantity',
-        /**
-         * Total quantity
-         */
-        totalQuantity = 'totalQuantity',
-        /**
          * Women only
          */
-        womenShare = 'womenShare'
+        womenShare = 'womenShare',
+        /**
+         * Cost
+         */
+        cost = 'cost',
+        /**
+         * Balance
+         */
+        balance = 'balance'
     }
 
 
@@ -158,72 +158,6 @@ export namespace ApiPurchaseOrderFarmer {
             metadata: formMetadata,
             classname: 'ApiPurchaseOrderFarmer',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'availableQuantity',
-                    classname: 'ApiPurchaseOrderFarmer',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'balance',
-                    classname: 'ApiPurchaseOrderFarmer',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'cost',
-                    classname: 'ApiPurchaseOrderFarmer',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'damagedPriceDeduction',
-                    classname: 'ApiPurchaseOrderFarmer',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'damagedWeightDeduction',
-                    classname: 'ApiPurchaseOrderFarmer',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'fulfilledQuantity',
-                    classname: 'ApiPurchaseOrderFarmer',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -242,28 +176,6 @@ export namespace ApiPurchaseOrderFarmer {
                     name: 'identifier',
                     classname: 'ApiPurchaseOrderFarmer',
                     dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'organic',
-                    classname: 'ApiPurchaseOrderFarmer',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'pricePerUnit',
-                    classname: 'ApiPurchaseOrderFarmer',
-                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -296,7 +208,7 @@ export namespace ApiPurchaseOrderFarmer {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'tare',
+                    name: 'totalQuantity',
                     classname: 'ApiPurchaseOrderFarmer',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -318,9 +230,75 @@ export namespace ApiPurchaseOrderFarmer {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'totalQuantity',
+                    name: 'fulfilledQuantity',
                     classname: 'ApiPurchaseOrderFarmer',
                     dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'availableQuantity',
+                    classname: 'ApiPurchaseOrderFarmer',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'pricePerUnit',
+                    classname: 'ApiPurchaseOrderFarmer',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'tare',
+                    classname: 'ApiPurchaseOrderFarmer',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'damagedPriceDeduction',
+                    classname: 'ApiPurchaseOrderFarmer',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'damagedWeightDeduction',
+                    classname: 'ApiPurchaseOrderFarmer',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'organic',
+                    classname: 'ApiPurchaseOrderFarmer',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -336,39 +314,61 @@ export namespace ApiPurchaseOrderFarmer {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cost',
+                    classname: 'ApiPurchaseOrderFarmer',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'balance',
+                    classname: 'ApiPurchaseOrderFarmer',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                availableQuantity: [
-                ],
-                balance: [
-                ],
-                cost: [
-                ],
-                damagedPriceDeduction: [
-                ],
-                damagedWeightDeduction: [
-                ],
-                fulfilledQuantity: [
-                ],
                 id: [
                 ],
                 identifier: [
-                ],
-                organic: [
-                ],
-                pricePerUnit: [
                 ],
                 producerUserCustomer: [
                 ],
                 semiProduct: [
                 ],
-                tare: [
+                totalQuantity: [
                 ],
                 totalGrossQuantity: [
                 ],
-                totalQuantity: [
+                fulfilledQuantity: [
+                ],
+                availableQuantity: [
+                ],
+                pricePerUnit: [
+                ],
+                tare: [
+                ],
+                damagedPriceDeduction: [
+                ],
+                damagedWeightDeduction: [
+                ],
+                organic: [
                 ],
                 womenShare: [
+                ],
+                cost: [
+                ],
+                balance: [
                 ],
             }
         }
@@ -377,34 +377,10 @@ export namespace ApiPurchaseOrderFarmer {
   // export const ApiPurchaseOrderFarmerValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               availableQuantity: {
-  //                   validators: []
-  //               },
-  //               balance: {
-  //                   validators: []
-  //               },
-  //               cost: {
-  //                   validators: []
-  //               },
-  //               damagedPriceDeduction: {
-  //                   validators: []
-  //               },
-  //               damagedWeightDeduction: {
-  //                   validators: []
-  //               },
-  //               fulfilledQuantity: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
   //               identifier: {
-  //                   validators: []
-  //               },
-  //               organic: {
-  //                   validators: []
-  //               },
-  //               pricePerUnit: {
   //                   validators: []
   //               },
   //               producerUserCustomer: {
@@ -413,16 +389,40 @@ export namespace ApiPurchaseOrderFarmer {
   //               semiProduct: {
   //                   validators: []
   //               },
-  //               tare: {
+  //               totalQuantity: {
   //                   validators: []
   //               },
   //               totalGrossQuantity: {
   //                   validators: []
   //               },
-  //               totalQuantity: {
+  //               fulfilledQuantity: {
+  //                   validators: []
+  //               },
+  //               availableQuantity: {
+  //                   validators: []
+  //               },
+  //               pricePerUnit: {
+  //                   validators: []
+  //               },
+  //               tare: {
+  //                   validators: []
+  //               },
+  //               damagedPriceDeduction: {
+  //                   validators: []
+  //               },
+  //               damagedWeightDeduction: {
+  //                   validators: []
+  //               },
+  //               organic: {
   //                   validators: []
   //               },
   //               womenShare: {
+  //                   validators: []
+  //               },
+  //               cost: {
+  //                   validators: []
+  //               },
+  //               balance: {
   //                   validators: []
   //               },
   //     }

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,13 +21,16 @@
 import { ApiAddress } from './apiAddress';
 
 
+/**
+ * Production location
+ */
 
 export interface ApiStockOrderLocation { 
-    address?: ApiAddress;
     /**
      * Entity id
      */
     id?: number;
+    address?: ApiAddress;
     /**
      * Location latitude
      */
@@ -54,11 +57,11 @@ export namespace ApiStockOrderLocation {
      * All properties of ApiStockOrderLocation.
      */
     export enum Properties {
-        address = 'address',
         /**
          * Entity id
          */
         id = 'id',
+        address = 'address',
         /**
          * Location latitude
          */
@@ -84,6 +87,17 @@ export namespace ApiStockOrderLocation {
             classname: 'ApiStockOrderLocation',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiStockOrderLocation',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiAddress.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -94,17 +108,6 @@ export namespace ApiStockOrderLocation {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiAddress'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiStockOrderLocation',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -152,9 +155,9 @@ export namespace ApiStockOrderLocation {
                 },
             ],
             validators: {
-                address: [
-                ],
                 id: [
+                ],
+                address: [
                 ],
                 latitude: [
                 ],
@@ -171,10 +174,10 @@ export namespace ApiStockOrderLocation {
   // export const ApiStockOrderLocationValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               address: {
+  //               id: {
   //                   validators: []
   //               },
-  //               id: {
+  //               address: {
   //                   validators: []
   //               },
   //               latitude: {

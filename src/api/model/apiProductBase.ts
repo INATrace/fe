@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,12 +21,11 @@
 import { ApiProductOrigin } from './apiProductOrigin';
 
 
+/**
+ * The Product that this final product belongs
+ */
 
 export interface ApiProductBase { 
-    /**
-     * product description
-     */
-    description?: string;
     /**
      * Entity id
      */
@@ -34,7 +33,11 @@ export interface ApiProductBase {
     /**
      * product name
      */
-    name?: string;
+    name: string;
+    /**
+     * product description
+     */
+    description?: string;
     origin?: ApiProductOrigin;
 }
 
@@ -47,10 +50,6 @@ export namespace ApiProductBase {
      */
     export enum Properties {
         /**
-         * product description
-         */
-        description = 'description',
-        /**
          * Entity id
          */
         id = 'id',
@@ -58,6 +57,10 @@ export namespace ApiProductBase {
          * product name
          */
         name = 'name',
+        /**
+         * product description
+         */
+        description = 'description',
         origin = 'origin'
     }
 
@@ -67,17 +70,6 @@ export namespace ApiProductBase {
             metadata: formMetadata,
             classname: 'ApiProductBase',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'description',
-                    classname: 'ApiProductBase',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -92,8 +84,19 @@ export namespace ApiProductBase {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: false,
+                    required: true,
                     name: 'name',
+                    classname: 'ApiProductBase',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'description',
                     classname: 'ApiProductBase',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -114,11 +117,16 @@ export namespace ApiProductBase {
                 },
             ],
             validators: {
-                description: [
-                ],
                 id: [
                 ],
                 name: [
+                        ['required'],
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                description: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
                 ],
                 origin: [
                 ],
@@ -129,13 +137,13 @@ export namespace ApiProductBase {
   // export const ApiProductBaseValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               description: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               description: {
   //                   validators: []
   //               },
   //               origin: {

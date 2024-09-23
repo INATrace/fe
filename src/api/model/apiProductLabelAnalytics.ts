@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,40 +20,11 @@
 
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiProductLabelAnalytics { 
-    /**
-     * number of authenticity checks per country
-     */
-    authCountries?: { [key: string]: number; };
-    /**
-     * number of unsuccessful authenticity checks
-     */
-    authFalse?: number;
-    /**
-     * number of authenticity checks per lat:lon
-     */
-    authLocations?: { [key: string]: number; };
-    /**
-     * number of successful authenticity checks
-     */
-    authTrue?: number;
-    /**
-     * number of origin checks per country
-     */
-    originCountries?: { [key: string]: number; };
-    /**
-     * number of unsuccessful origin checks
-     */
-    originFalse?: number;
-    /**
-     * number of origin checks per lat:lon
-     */
-    originLocations?: { [key: string]: number; };
-    /**
-     * number of successful origin checks
-     */
-    originTrue?: number;
     /**
      * number of vistis
      */
@@ -66,6 +37,38 @@ export interface ApiProductLabelAnalytics {
      * number of visits per lat:lon
      */
     visitsLocations?: { [key: string]: number; };
+    /**
+     * number of successful authenticity checks
+     */
+    authTrue?: number;
+    /**
+     * number of unsuccessful authenticity checks
+     */
+    authFalse?: number;
+    /**
+     * number of authenticity checks per country
+     */
+    authCountries?: { [key: string]: number; };
+    /**
+     * number of authenticity checks per lat:lon
+     */
+    authLocations?: { [key: string]: number; };
+    /**
+     * number of successful origin checks
+     */
+    originTrue?: number;
+    /**
+     * number of unsuccessful origin checks
+     */
+    originFalse?: number;
+    /**
+     * number of origin checks per country
+     */
+    originCountries?: { [key: string]: number; };
+    /**
+     * number of origin checks per lat:lon
+     */
+    originLocations?: { [key: string]: number; };
 }
 
 /**
@@ -77,38 +80,6 @@ export namespace ApiProductLabelAnalytics {
      */
     export enum Properties {
         /**
-         * number of authenticity checks per country
-         */
-        authCountries = 'authCountries',
-        /**
-         * number of unsuccessful authenticity checks
-         */
-        authFalse = 'authFalse',
-        /**
-         * number of authenticity checks per lat:lon
-         */
-        authLocations = 'authLocations',
-        /**
-         * number of successful authenticity checks
-         */
-        authTrue = 'authTrue',
-        /**
-         * number of origin checks per country
-         */
-        originCountries = 'originCountries',
-        /**
-         * number of unsuccessful origin checks
-         */
-        originFalse = 'originFalse',
-        /**
-         * number of origin checks per lat:lon
-         */
-        originLocations = 'originLocations',
-        /**
-         * number of successful origin checks
-         */
-        originTrue = 'originTrue',
-        /**
          * number of vistis
          */
         visits = 'visits',
@@ -119,7 +90,39 @@ export namespace ApiProductLabelAnalytics {
         /**
          * number of visits per lat:lon
          */
-        visitsLocations = 'visitsLocations'
+        visitsLocations = 'visitsLocations',
+        /**
+         * number of successful authenticity checks
+         */
+        authTrue = 'authTrue',
+        /**
+         * number of unsuccessful authenticity checks
+         */
+        authFalse = 'authFalse',
+        /**
+         * number of authenticity checks per country
+         */
+        authCountries = 'authCountries',
+        /**
+         * number of authenticity checks per lat:lon
+         */
+        authLocations = 'authLocations',
+        /**
+         * number of successful origin checks
+         */
+        originTrue = 'originTrue',
+        /**
+         * number of unsuccessful origin checks
+         */
+        originFalse = 'originFalse',
+        /**
+         * number of origin checks per country
+         */
+        originCountries = 'originCountries',
+        /**
+         * number of origin checks per lat:lon
+         */
+        originLocations = 'originLocations'
     }
 
 
@@ -128,94 +131,6 @@ export namespace ApiProductLabelAnalytics {
             metadata: formMetadata,
             classname: 'ApiProductLabelAnalytics',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'authCountries',
-                    classname: 'ApiProductLabelAnalytics',
-                    dataType: '{ [key: string]: number; }',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'authFalse',
-                    classname: 'ApiProductLabelAnalytics',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'authLocations',
-                    classname: 'ApiProductLabelAnalytics',
-                    dataType: '{ [key: string]: number; }',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'authTrue',
-                    classname: 'ApiProductLabelAnalytics',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'originCountries',
-                    classname: 'ApiProductLabelAnalytics',
-                    dataType: '{ [key: string]: number; }',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'originFalse',
-                    classname: 'ApiProductLabelAnalytics',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'originLocations',
-                    classname: 'ApiProductLabelAnalytics',
-                    dataType: '{ [key: string]: number; }',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'originTrue',
-                    classname: 'ApiProductLabelAnalytics',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -249,29 +164,117 @@ export namespace ApiProductLabelAnalytics {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'authTrue',
+                    classname: 'ApiProductLabelAnalytics',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'authFalse',
+                    classname: 'ApiProductLabelAnalytics',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'authCountries',
+                    classname: 'ApiProductLabelAnalytics',
+                    dataType: '{ [key: string]: number; }',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'authLocations',
+                    classname: 'ApiProductLabelAnalytics',
+                    dataType: '{ [key: string]: number; }',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'originTrue',
+                    classname: 'ApiProductLabelAnalytics',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'originFalse',
+                    classname: 'ApiProductLabelAnalytics',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'originCountries',
+                    classname: 'ApiProductLabelAnalytics',
+                    dataType: '{ [key: string]: number; }',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'originLocations',
+                    classname: 'ApiProductLabelAnalytics',
+                    dataType: '{ [key: string]: number; }',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                authCountries: [
-                ],
-                authFalse: [
-                ],
-                authLocations: [
-                ],
-                authTrue: [
-                ],
-                originCountries: [
-                ],
-                originFalse: [
-                ],
-                originLocations: [
-                ],
-                originTrue: [
-                ],
                 visits: [
                 ],
                 visitsCountries: [
                 ],
                 visitsLocations: [
+                ],
+                authTrue: [
+                ],
+                authFalse: [
+                ],
+                authCountries: [
+                ],
+                authLocations: [
+                ],
+                originTrue: [
+                ],
+                originFalse: [
+                ],
+                originCountries: [
+                ],
+                originLocations: [
                 ],
             }
         }
@@ -280,30 +283,6 @@ export namespace ApiProductLabelAnalytics {
   // export const ApiProductLabelAnalyticsValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               authCountries: {
-  //                   validators: []
-  //               },
-  //               authFalse: {
-  //                   validators: []
-  //               },
-  //               authLocations: {
-  //                   validators: []
-  //               },
-  //               authTrue: {
-  //                   validators: []
-  //               },
-  //               originCountries: {
-  //                   validators: []
-  //               },
-  //               originFalse: {
-  //                   validators: []
-  //               },
-  //               originLocations: {
-  //                   validators: []
-  //               },
-  //               originTrue: {
-  //                   validators: []
-  //               },
   //               visits: {
   //                   validators: []
   //               },
@@ -311,6 +290,30 @@ export namespace ApiProductLabelAnalytics {
   //                   validators: []
   //               },
   //               visitsLocations: {
+  //                   validators: []
+  //               },
+  //               authTrue: {
+  //                   validators: []
+  //               },
+  //               authFalse: {
+  //                   validators: []
+  //               },
+  //               authCountries: {
+  //                   validators: []
+  //               },
+  //               authLocations: {
+  //                   validators: []
+  //               },
+  //               originTrue: {
+  //                   validators: []
+  //               },
+  //               originFalse: {
+  //                   validators: []
+  //               },
+  //               originCountries: {
+  //                   validators: []
+  //               },
+  //               originLocations: {
   //                   validators: []
   //               },
   //     }

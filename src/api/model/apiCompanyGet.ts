@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -27,91 +27,94 @@ import { ApiDocument } from './apiDocument';
 import { ApiValueChain } from './apiValueChain';
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiCompanyGet { 
-    /**
-     * company abbreviation
-     */
-    abbreviation?: string;
-    /**
-     * about the company
-     */
-    about?: string;
-    /**
-     * Possible actions
-     */
-    actions?: Array<ApiCompanyGet.ActionsEnum>;
-    /**
-     * Is company allowed to export orders to Beyco platform
-     */
-    allowBeycoIntegration?: boolean;
-    /**
-     * company certifications
-     */
-    certifications?: Array<ApiCertification>;
-    /**
-     * Roles by which this company is connected in the Products where it is part of
-     */
-    companyRoles?: Array<ApiCompanyGet.CompanyRolesEnum>;
-    currency?: ApiCurrencyType;
-    /**
-     * Display preferred way of payment on purchase order form
-     */
-    displayPrefferedWayOfPayment?: boolean;
-    /**
-     * company documents
-     */
-    documents?: Array<ApiCompanyDocument>;
-    /**
-     * email
-     */
-    email?: string;
-    headquarters?: ApiAddress;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * interview
+     * company name
      */
-    interview?: string;
-    logo?: ApiDocument;
+    name?: string;
+    /**
+     * company abbreviation
+     */
+    abbreviation?: string;
+    headquarters?: ApiAddress;
+    /**
+     * about the company
+     */
+    about?: string;
     /**
      * name of manager / CEO
      */
     manager?: string;
     /**
-     * social media URL links (Facebook, Instagram, Twitter, YouTube, ...)
-     */
-    mediaLinks?: { [key: string]: string; };
-    /**
-     * company name
-     */
-    name?: string;
-    /**
      * webpage
      */
-    phone?: string;
+    webPage?: string;
+    /**
+     * Display preferred way of payment on purchase order form
+     */
+    displayPrefferedWayOfPayment?: boolean;
     /**
      * Enable adding multiple farmers for one proof document on purchase order form
      */
     purchaseProofDocumentMultipleFarmers?: boolean;
     /**
-     * Flag indicating that the company supports collectors for deliveries
+     * email
      */
-    supportsCollectors?: boolean;
+    email?: string;
+    /**
+     * webpage
+     */
+    phone?: string;
+    /**
+     * social media URL links (Facebook, Instagram, Twitter, YouTube, ...)
+     */
+    mediaLinks?: { [key: string]: string; };
+    logo?: ApiDocument;
+    /**
+     * interview
+     */
+    interview?: string;
+    /**
+     * company documents
+     */
+    documents?: Array<ApiCompanyDocument>;
+    /**
+     * company certifications
+     */
+    certifications?: Array<ApiCertification>;
+    /**
+     * company value chains
+     */
+    valueChains?: Array<ApiValueChain>;
+    currency?: ApiCurrencyType;
+    /**
+     * Is company allowed to export orders to Beyco platform
+     */
+    allowBeycoIntegration?: boolean;
+    /**
+     * Possible actions
+     */
+    actions?: Array<ApiCompanyGet.ActionsEnum>;
     /**
      * Company users
      */
     users?: Array<ApiCompanyUser>;
     /**
-     * company value chains
+     * Roles by which this company is connected in the Products where it is part of
      */
-    valueChains?: Array<ApiValueChain>;
+    companyRoles?: Array<ApiCompanyGet.CompanyRolesEnum>;
     /**
-     * webpage
+     * Flag indicating that the company supports collectors for deliveries
      */
-    webPage?: string;
+    supportsCollectors?: boolean;
 }
 
 /**
@@ -123,88 +126,88 @@ export namespace ApiCompanyGet {
      */
     export enum Properties {
         /**
-         * company abbreviation
-         */
-        abbreviation = 'abbreviation',
-        /**
-         * about the company
-         */
-        about = 'about',
-        /**
-         * Possible actions
-         */
-        actions = 'actions',
-        /**
-         * Is company allowed to export orders to Beyco platform
-         */
-        allowBeycoIntegration = 'allowBeycoIntegration',
-        /**
-         * company certifications
-         */
-        certifications = 'certifications',
-        /**
-         * Roles by which this company is connected in the Products where it is part of
-         */
-        companyRoles = 'companyRoles',
-        currency = 'currency',
-        /**
-         * Display preferred way of payment on purchase order form
-         */
-        displayPrefferedWayOfPayment = 'displayPrefferedWayOfPayment',
-        /**
-         * company documents
-         */
-        documents = 'documents',
-        /**
-         * email
-         */
-        email = 'email',
-        headquarters = 'headquarters',
-        /**
          * Entity id
          */
         id = 'id',
-        /**
-         * interview
-         */
-        interview = 'interview',
-        logo = 'logo',
-        /**
-         * name of manager / CEO
-         */
-        manager = 'manager',
-        /**
-         * social media URL links (Facebook, Instagram, Twitter, YouTube, ...)
-         */
-        mediaLinks = 'mediaLinks',
         /**
          * company name
          */
         name = 'name',
         /**
+         * company abbreviation
+         */
+        abbreviation = 'abbreviation',
+        headquarters = 'headquarters',
+        /**
+         * about the company
+         */
+        about = 'about',
+        /**
+         * name of manager / CEO
+         */
+        manager = 'manager',
+        /**
          * webpage
          */
-        phone = 'phone',
+        webPage = 'webPage',
+        /**
+         * Display preferred way of payment on purchase order form
+         */
+        displayPrefferedWayOfPayment = 'displayPrefferedWayOfPayment',
         /**
          * Enable adding multiple farmers for one proof document on purchase order form
          */
         purchaseProofDocumentMultipleFarmers = 'purchaseProofDocumentMultipleFarmers',
         /**
-         * Flag indicating that the company supports collectors for deliveries
+         * email
          */
-        supportsCollectors = 'supportsCollectors',
+        email = 'email',
+        /**
+         * webpage
+         */
+        phone = 'phone',
+        /**
+         * social media URL links (Facebook, Instagram, Twitter, YouTube, ...)
+         */
+        mediaLinks = 'mediaLinks',
+        logo = 'logo',
+        /**
+         * interview
+         */
+        interview = 'interview',
+        /**
+         * company documents
+         */
+        documents = 'documents',
+        /**
+         * company certifications
+         */
+        certifications = 'certifications',
+        /**
+         * company value chains
+         */
+        valueChains = 'valueChains',
+        currency = 'currency',
+        /**
+         * Is company allowed to export orders to Beyco platform
+         */
+        allowBeycoIntegration = 'allowBeycoIntegration',
+        /**
+         * Possible actions
+         */
+        actions = 'actions',
         /**
          * Company users
          */
         users = 'users',
         /**
-         * company value chains
+         * Roles by which this company is connected in the Products where it is part of
          */
-        valueChains = 'valueChains',
+        companyRoles = 'companyRoles',
         /**
-         * webpage
+         * Flag indicating that the company supports collectors for deliveries
          */
-        webPage = 'webPage'
+        supportsCollectors = 'supportsCollectors'
     }
 
     /**
@@ -246,111 +249,29 @@ export namespace ApiCompanyGet {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'id',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'abbreviation',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'about',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'Array&lt;ApiCompanyGet.ActionsEnum&gt;',
-                    required: false,
-                    name: 'actions',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'Array&lt;string&gt;',
-                    isPrimitiveType: true,
-                    isListContainer: true,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'allowBeycoIntegration',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiCertification.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'certifications',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'Array&lt;ApiCertification&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiCertification'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'Array&lt;ApiCompanyGet.CompanyRolesEnum&gt;',
-                    required: false,
-                    name: 'companyRoles',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'Array&lt;string&gt;',
-                    isPrimitiveType: true,
-                    isListContainer: true,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiCurrencyType.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'currency',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'ApiCurrencyType',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiCurrencyType'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'displayPrefferedWayOfPayment',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiCompanyDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'documents',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'Array&lt;ApiCompanyDocument&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiCompanyDocument'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'email',
                     classname: 'ApiCompanyGet',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -373,35 +294,12 @@ export namespace ApiCompanyGet {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'interview',
+                    name: 'about',
                     classname: 'ApiCompanyGet',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
-                },
-                {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'logo',
-                    classname: 'ApiCompanyGet',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiDocument'
                 },
                 {
                     isReadOnly: false,
@@ -418,9 +316,9 @@ export namespace ApiCompanyGet {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'mediaLinks',
+                    name: 'webPage',
                     classname: 'ApiCompanyGet',
-                    dataType: '{ [key: string]: string; }',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -429,7 +327,29 @@ export namespace ApiCompanyGet {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
+                    name: 'displayPrefferedWayOfPayment',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'purchaseProofDocumentMultipleFarmers',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'email',
                     classname: 'ApiCompanyGet',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -451,7 +371,89 @@ export namespace ApiCompanyGet {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'purchaseProofDocumentMultipleFarmers',
+                    name: 'mediaLinks',
+                    classname: 'ApiCompanyGet',
+                    dataType: '{ [key: string]: string; }',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'logo',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'interview',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiCompanyDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'documents',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'Array&lt;ApiCompanyDocument&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCompanyDocument'
+                },
+                {
+                    metadata: ApiCertification.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'certifications',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'Array&lt;ApiCertification&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCertification'
+                },
+                {
+                    metadata: ApiValueChain.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'valueChains',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'Array&lt;ApiValueChain&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiValueChain'
+                },
+                {
+                    metadata: ApiCurrencyType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'currency',
+                    classname: 'ApiCompanyGet',
+                    dataType: 'ApiCurrencyType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCurrencyType'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'allowBeycoIntegration',
                     classname: 'ApiCompanyGet',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -460,13 +462,14 @@ export namespace ApiCompanyGet {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'Array&lt;ApiCompanyGet.ActionsEnum&gt;',
                     required: false,
-                    name: 'supportsCollectors',
+                    name: 'actions',
                     classname: 'ApiCompanyGet',
-                    dataType: 'boolean',
+                    dataType: 'Array&lt;string&gt;',
                     isPrimitiveType: true,
-                    isListContainer: false,
+                    isListContainer: true,
                     complexType: ''
                 },
                 {
@@ -482,75 +485,91 @@ export namespace ApiCompanyGet {
                     complexType: 'ApiCompanyUser'
                 },
                 {
-                    metadata: ApiValueChain.formMetadata,
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'Array&lt;ApiCompanyGet.CompanyRolesEnum&gt;',
                     required: false,
-                    name: 'valueChains',
+                    name: 'companyRoles',
                     classname: 'ApiCompanyGet',
-                    dataType: 'Array&lt;ApiValueChain&gt;',
-                    isPrimitiveType: false,
+                    dataType: 'Array&lt;string&gt;',
+                    isPrimitiveType: true,
                     isListContainer: true,
-                    complexType: 'ApiValueChain'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'webPage',
+                    name: 'supportsCollectors',
                     classname: 'ApiCompanyGet',
-                    dataType: 'string',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
+                id: [
+                ],
+                name: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
                 abbreviation: [
-                ],
-                about: [
-                ],
-                actions: [
-                ],
-                allowBeycoIntegration: [
-                ],
-                certifications: [
-                ],
-                companyRoles: [
-                ],
-                currency: [
-                ],
-                displayPrefferedWayOfPayment: [
-                ],
-                documents: [
-                ],
-                email: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 headquarters: [
                 ],
-                id: [
-                ],
-                interview: [
-                ],
-                logo: [
+                about: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
                 ],
                 manager: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
-                mediaLinks: [
+                webPage: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
-                name: [
-                ],
-                phone: [
+                displayPrefferedWayOfPayment: [
                 ],
                 purchaseProofDocumentMultipleFarmers: [
                 ],
-                supportsCollectors: [
+                email: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
-                users: [
+                phone: [
+                        ['minlength', 0],
+                        ['maxlength', 20],
+                ],
+                mediaLinks: [
+                ],
+                logo: [
+                ],
+                interview: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
+                ],
+                documents: [
+                ],
+                certifications: [
                 ],
                 valueChains: [
                 ],
-                webPage: [
+                currency: [
+                ],
+                allowBeycoIntegration: [
+                ],
+                actions: [
+                ],
+                users: [
+                ],
+                companyRoles: [
+                ],
+                supportsCollectors: [
                 ],
             }
         }
@@ -559,73 +578,73 @@ export namespace ApiCompanyGet {
   // export const ApiCompanyGetValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               abbreviation: {
-  //                   validators: []
-  //               },
-  //               about: {
-  //                   validators: []
-  //               },
-  //               actions: {
-  //                   validators: []
-  //               },
-  //               allowBeycoIntegration: {
-  //                   validators: []
-  //               },
-  //               certifications: {
-  //                   validators: []
-  //               },
-  //               companyRoles: {
-  //                   validators: []
-  //               },
-  //               currency: {
-  //                   validators: []
-  //               },
-  //               displayPrefferedWayOfPayment: {
-  //                   validators: []
-  //               },
-  //               documents: {
-  //                   validators: []
-  //               },
-  //               email: {
-  //                   validators: []
-  //               },
-  //               headquarters: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               interview: {
-  //                   validators: []
-  //               },
-  //               logo: {
-  //                   validators: []
-  //               },
-  //               manager: {
-  //                   validators: []
-  //               },
-  //               mediaLinks: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               phone: {
+  //               abbreviation: {
+  //                   validators: []
+  //               },
+  //               headquarters: {
+  //                   validators: []
+  //               },
+  //               about: {
+  //                   validators: []
+  //               },
+  //               manager: {
+  //                   validators: []
+  //               },
+  //               webPage: {
+  //                   validators: []
+  //               },
+  //               displayPrefferedWayOfPayment: {
   //                   validators: []
   //               },
   //               purchaseProofDocumentMultipleFarmers: {
   //                   validators: []
   //               },
-  //               supportsCollectors: {
+  //               email: {
   //                   validators: []
   //               },
-  //               users: {
+  //               phone: {
+  //                   validators: []
+  //               },
+  //               mediaLinks: {
+  //                   validators: []
+  //               },
+  //               logo: {
+  //                   validators: []
+  //               },
+  //               interview: {
+  //                   validators: []
+  //               },
+  //               documents: {
+  //                   validators: []
+  //               },
+  //               certifications: {
   //                   validators: []
   //               },
   //               valueChains: {
   //                   validators: []
   //               },
-  //               webPage: {
+  //               currency: {
+  //                   validators: []
+  //               },
+  //               allowBeycoIntegration: {
+  //                   validators: []
+  //               },
+  //               actions: {
+  //                   validators: []
+  //               },
+  //               users: {
+  //                   validators: []
+  //               },
+  //               companyRoles: {
+  //                   validators: []
+  //               },
+  //               supportsCollectors: {
   //                   validators: []
   //               },
   //     }

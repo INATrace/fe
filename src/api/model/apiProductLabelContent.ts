@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -31,34 +31,34 @@ import { ApiSustainability } from './apiSustainability';
 
 
 export interface ApiProductLabelContent { 
-    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
-    company?: ApiCompany;
-    /**
-     * product description
-     */
-    description?: string;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * Product journey path
+     * product name
      */
-    journeyMarkers?: Array<ApiProductJourneyMarker>;
+    name: string;
+    /**
+     * product description
+     */
+    description?: string;
+    origin?: ApiProductOrigin;
+    photo?: ApiDocument;
+    process?: ApiProcess;
+    responsibility?: ApiResponsibility;
+    sustainability?: ApiSustainability;
+    settings?: ApiProductSettings;
+    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
+    company?: ApiCompany;
     /**
      * label id
      */
     labelId?: number;
     /**
-     * product name
+     * Product journey path
      */
-    name?: string;
-    origin?: ApiProductOrigin;
-    photo?: ApiDocument;
-    process?: ApiProcess;
-    responsibility?: ApiResponsibility;
-    settings?: ApiProductSettings;
-    sustainability?: ApiSustainability;
+    journeyMarkers?: Array<ApiProductJourneyMarker>;
 }
 
 /**
@@ -69,34 +69,34 @@ export namespace ApiProductLabelContent {
      * All properties of ApiProductLabelContent.
      */
     export enum Properties {
-        businessToCustomerSettings = 'businessToCustomerSettings',
-        company = 'company',
-        /**
-         * product description
-         */
-        description = 'description',
         /**
          * Entity id
          */
         id = 'id',
         /**
-         * Product journey path
+         * product name
          */
-        journeyMarkers = 'journeyMarkers',
+        name = 'name',
+        /**
+         * product description
+         */
+        description = 'description',
+        origin = 'origin',
+        photo = 'photo',
+        process = 'process',
+        responsibility = 'responsibility',
+        sustainability = 'sustainability',
+        settings = 'settings',
+        businessToCustomerSettings = 'businessToCustomerSettings',
+        company = 'company',
         /**
          * label id
          */
         labelId = 'labelId',
         /**
-         * product name
+         * Product journey path
          */
-        name = 'name',
-        origin = 'origin',
-        photo = 'photo',
-        process = 'process',
-        responsibility = 'responsibility',
-        settings = 'settings',
-        sustainability = 'sustainability'
+        journeyMarkers = 'journeyMarkers'
     }
 
 
@@ -105,41 +105,6 @@ export namespace ApiProductLabelContent {
             metadata: formMetadata,
             classname: 'ApiProductLabelContent',
             vars: [
-                {
-                    metadata: ApiBusinessToCustomerSettings.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'businessToCustomerSettings',
-                    classname: 'ApiProductLabelContent',
-                    dataType: 'ApiBusinessToCustomerSettings',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiBusinessToCustomerSettings'
-                },
-                {
-                    metadata: ApiCompany.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'company',
-                    classname: 'ApiProductLabelContent',
-                    dataType: 'ApiCompany',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiCompany'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'description',
-                    classname: 'ApiProductLabelContent',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -152,24 +117,12 @@ export namespace ApiProductLabelContent {
                     complexType: ''
                 },
                 {
-                    metadata: ApiProductJourneyMarker.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
-                    required: false,
-                    name: 'journeyMarkers',
+                    required: true,
+                    name: 'name',
                     classname: 'ApiProductLabelContent',
-                    dataType: 'Array&lt;ApiProductJourneyMarker&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProductJourneyMarker'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'labelId',
-                    classname: 'ApiProductLabelContent',
-                    dataType: 'number',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -178,7 +131,7 @@ export namespace ApiProductLabelContent {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
+                    name: 'description',
                     classname: 'ApiProductLabelContent',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -234,6 +187,18 @@ export namespace ApiProductLabelContent {
                     complexType: 'ApiResponsibility'
                 },
                 {
+                    metadata: ApiSustainability.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'sustainability',
+                    classname: 'ApiProductLabelContent',
+                    dataType: 'ApiSustainability',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiSustainability'
+                },
+                {
                     metadata: ApiProductSettings.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -246,32 +211,64 @@ export namespace ApiProductLabelContent {
                     complexType: 'ApiProductSettings'
                 },
                 {
-                    metadata: ApiSustainability.formMetadata,
+                    metadata: ApiBusinessToCustomerSettings.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'sustainability',
+                    name: 'businessToCustomerSettings',
                     classname: 'ApiProductLabelContent',
-                    dataType: 'ApiSustainability',
+                    dataType: 'ApiBusinessToCustomerSettings',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiSustainability'
+                    complexType: 'ApiBusinessToCustomerSettings'
+                },
+                {
+                    metadata: ApiCompany.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'company',
+                    classname: 'ApiProductLabelContent',
+                    dataType: 'ApiCompany',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCompany'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'labelId',
+                    classname: 'ApiProductLabelContent',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiProductJourneyMarker.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'journeyMarkers',
+                    classname: 'ApiProductLabelContent',
+                    dataType: 'Array&lt;ApiProductJourneyMarker&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductJourneyMarker'
                 },
             ],
             validators: {
-                businessToCustomerSettings: [
-                ],
-                company: [
-                ],
-                description: [
-                ],
                 id: [
                 ],
-                journeyMarkers: [
-                ],
-                labelId: [
-                ],
                 name: [
+                        ['required'],
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                description: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
                 ],
                 origin: [
                 ],
@@ -281,9 +278,17 @@ export namespace ApiProductLabelContent {
                 ],
                 responsibility: [
                 ],
+                sustainability: [
+                ],
                 settings: [
                 ],
-                sustainability: [
+                businessToCustomerSettings: [
+                ],
+                company: [
+                ],
+                labelId: [
+                ],
+                journeyMarkers: [
                 ],
             }
         }
@@ -292,25 +297,13 @@ export namespace ApiProductLabelContent {
   // export const ApiProductLabelContentValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               businessToCustomerSettings: {
-  //                   validators: []
-  //               },
-  //               company: {
-  //                   validators: []
-  //               },
-  //               description: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
-  //               journeyMarkers: {
-  //                   validators: []
-  //               },
-  //               labelId: {
-  //                   validators: []
-  //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               description: {
   //                   validators: []
   //               },
   //               origin: {
@@ -325,10 +318,22 @@ export namespace ApiProductLabelContent {
   //               responsibility: {
   //                   validators: []
   //               },
+  //               sustainability: {
+  //                   validators: []
+  //               },
   //               settings: {
   //                   validators: []
   //               },
-  //               sustainability: {
+  //               businessToCustomerSettings: {
+  //                   validators: []
+  //               },
+  //               company: {
+  //                   validators: []
+  //               },
+  //               labelId: {
+  //                   validators: []
+  //               },
+  //               journeyMarkers: {
   //                   validators: []
   //               },
   //     }

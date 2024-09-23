@@ -101,7 +101,7 @@ export class BeycoTokenService {
 
   private requestToken(authCode: string) {
 
-    return this.beycoService.getTokenUsingGET(authCode, this.companyId).pipe(
+    return this.beycoService.getToken(authCode, this.companyId).pipe(
         tap((tokenResp) => {
           this.tokenAvailable$.next(true);
           this.beycoToken = tokenResp.data;
@@ -113,7 +113,7 @@ export class BeycoTokenService {
 
   private refreshToken() {
 
-    return this.beycoService.refreshTokenUsingGET(this.beycoToken.refreshToken, this.companyId).pipe(
+    return this.beycoService.refreshToken(this.beycoToken.refreshToken, this.companyId).pipe(
         tap((resp) => {
           this.beycoToken = resp.data;
           this.timeoutId = window.setTimeout(this.refreshToken, (this.beycoToken.expiresIn / 3) * 2);

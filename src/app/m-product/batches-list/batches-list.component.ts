@@ -63,7 +63,7 @@ export class BatchesListComponent implements OnInit {
 
   async setAllBatches() {
     let labelId = this.route.snapshot.params.labelId
-    let res = await this.productController.getProductLabelBatchesUsingGET(labelId, 'COUNT').pipe(take(1)).toPromise();
+    let res = await this.productController.getProductLabelBatches(labelId, 'COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allBatches = res.data.count;
       }
@@ -82,7 +82,7 @@ export class BatchesListComponent implements OnInit {
       tap(val => this.globalEventsManager.showLoading(true)),
       switchMap(params => {
         let labelId = this.route.snapshot.params.labelId
-        return this.productController.getProductLabelBatchesUsingGETByMap({...params, id: labelId})
+        return this.productController.getProductLabelBatchesByMap({...params, id: labelId})
       }),
       map((resp: ApiPaginatedResponseApiProductLabelBatch) => {
         if (resp) {
@@ -118,7 +118,7 @@ export class BatchesListComponent implements OnInit {
       options: { centered: true }
     });
     if(result != "ok") return
-    let res = await this.productController.deleteProductLabelBatchUsingDELETEByMap(batch).pipe(take(1)).toPromise();
+    let res = await this.productController.deleteProductLabelBatchByMap(batch).pipe(take(1)).toPromise();
     if(res && res.status == 'OK') {
       this.reloadPage()
     }

@@ -85,7 +85,7 @@ export class CurrencyListComponent implements OnInit {
     }).pipe(
       tap(_ => this.globalEventsManager.showLoading(true)),
       switchMap(params => {
-        return this.currencyService.getEnabledCurrencyTypesUsingGETByMap(params);
+        return this.currencyService.getEnabledCurrencyTypesByMap(params);
       }),
       map((resp: ApiPaginatedResponseApiCurrencyType) => {
         if (resp) {
@@ -108,7 +108,7 @@ export class CurrencyListComponent implements OnInit {
     }).pipe(
         tap(_ => this.globalEventsManager.showLoading(true)),
         switchMap(params => {
-          return this.currencyService.getDisabledCurrencyTypesUsingGETByMap(params);
+          return this.currencyService.getDisabledCurrencyTypesByMap(params);
         }),
         map((resp: ApiPaginatedResponseApiCurrencyType) => {
           if (resp) {
@@ -136,13 +136,13 @@ export class CurrencyListComponent implements OnInit {
   }
 
   enableCurrency(id) {
-    this.currencyService.enableCurrencyUsingPUT(id).pipe(first()).subscribe(() => {
+    this.currencyService.enableCurrency(id).pipe(first()).subscribe(() => {
       this.ping$.next(null);
     });
   }
 
   disableCurrency(id) {
-    this.currencyService.disableCurrencyUsingPUT(id).pipe(first()).subscribe(() => {
+    this.currencyService.disableCurrency(id).pipe(first()).subscribe(() => {
       this.ping$.next(null);
     });
   }

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -26,8 +26,33 @@ import { ApiUser } from './apiUser';
 import { ApiUserCustomer } from './apiUserCustomer';
 
 
+/**
+ * Payments for stock order
+ */
 
 export interface ApiPayment { 
+    /**
+     * Entity id
+     */
+    id?: number;
+    /**
+     * Last updated timestamp
+     */
+    updatedTimestamp?: Date;
+    createdBy?: ApiUser;
+    updatedBy?: ApiUser;
+    /**
+     * Payment type
+     */
+    paymentType?: ApiPayment.PaymentTypeEnum;
+    /**
+     * Payment's currency
+     */
+    currency?: string;
+    /**
+     * Quantity purchased to be paid
+     */
+    purchased?: number;
     /**
      * Payment amount paid (to a farmer or recipient company)
      */
@@ -36,25 +61,24 @@ export interface ApiPayment {
      * Payment amount paid to the collector
      */
     amountPaidToTheCollector?: number;
-    createdBy?: ApiUser;
     /**
-     * Payment's currency
+     * Payment total amount
      */
-    currency?: string;
+    totalPaid?: number;
+    stockOrder?: ApiStockOrder;
     /**
-     * Formal creation date (for example: date on receipt)
+     * Recipient type
      */
-    formalCreationTime?: string;
+    recipientType?: ApiPayment.RecipientTypeEnum;
     /**
-     * Entity id
+     * Receipt number
      */
-    id?: number;
-    payingCompany?: ApiCompany;
+    receiptNumber?: string;
+    receiptDocument?: ApiDocument;
     /**
-     * Payment time confirmation
+     * Receipt document type
      */
-    paymentConfirmedAtTime?: Date;
-    paymentConfirmedByUser?: ApiUser;
+    receiptDocumentType?: ApiPayment.ReceiptDocumentTypeEnum;
     /**
      * Payment purpose type
      */
@@ -63,10 +87,15 @@ export interface ApiPayment {
      * Payment status
      */
     paymentStatus?: ApiPayment.PaymentStatusEnum;
+    paymentConfirmedByUser?: ApiUser;
     /**
-     * Payment type
+     * Payment time confirmation
      */
-    paymentType?: ApiPayment.PaymentTypeEnum;
+    paymentConfirmedAtTime?: Date;
+    /**
+     * Formal creation date (for example: date on receipt)
+     */
+    formalCreationTime?: string;
     /**
      * Preferred way of payment
      */
@@ -75,36 +104,10 @@ export interface ApiPayment {
      * Production date
      */
     productionDate?: string;
-    /**
-     * Quantity purchased to be paid
-     */
-    purchased?: number;
-    receiptDocument?: ApiDocument;
-    /**
-     * Receipt document type
-     */
-    receiptDocumentType?: ApiPayment.ReceiptDocumentTypeEnum;
-    /**
-     * Receipt number
-     */
-    receiptNumber?: string;
+    payingCompany?: ApiCompany;
     recipientCompany?: ApiCompanyBase;
-    /**
-     * Recipient type
-     */
-    recipientType?: ApiPayment.RecipientTypeEnum;
     recipientUserCustomer?: ApiUserCustomer;
     representativeOfRecipientUserCustomer?: ApiUserCustomer;
-    stockOrder?: ApiStockOrder;
-    /**
-     * Payment total amount
-     */
-    totalPaid?: number;
-    updatedBy?: ApiUser;
-    /**
-     * Last updated timestamp
-     */
-    updatedTimestamp?: Date;
 }
 
 /**
@@ -116,6 +119,28 @@ export namespace ApiPayment {
      */
     export enum Properties {
         /**
+         * Entity id
+         */
+        id = 'id',
+        /**
+         * Last updated timestamp
+         */
+        updatedTimestamp = 'updatedTimestamp',
+        createdBy = 'createdBy',
+        updatedBy = 'updatedBy',
+        /**
+         * Payment type
+         */
+        paymentType = 'paymentType',
+        /**
+         * Payment's currency
+         */
+        currency = 'currency',
+        /**
+         * Quantity purchased to be paid
+         */
+        purchased = 'purchased',
+        /**
          * Payment amount paid (to a farmer or recipient company)
          */
         amount = 'amount',
@@ -123,25 +148,24 @@ export namespace ApiPayment {
          * Payment amount paid to the collector
          */
         amountPaidToTheCollector = 'amountPaidToTheCollector',
-        createdBy = 'createdBy',
         /**
-         * Payment's currency
+         * Payment total amount
          */
-        currency = 'currency',
+        totalPaid = 'totalPaid',
+        stockOrder = 'stockOrder',
         /**
-         * Formal creation date (for example: date on receipt)
+         * Recipient type
          */
-        formalCreationTime = 'formalCreationTime',
+        recipientType = 'recipientType',
         /**
-         * Entity id
+         * Receipt number
          */
-        id = 'id',
-        payingCompany = 'payingCompany',
+        receiptNumber = 'receiptNumber',
+        receiptDocument = 'receiptDocument',
         /**
-         * Payment time confirmation
+         * Receipt document type
          */
-        paymentConfirmedAtTime = 'paymentConfirmedAtTime',
-        paymentConfirmedByUser = 'paymentConfirmedByUser',
+        receiptDocumentType = 'receiptDocumentType',
         /**
          * Payment purpose type
          */
@@ -150,10 +174,15 @@ export namespace ApiPayment {
          * Payment status
          */
         paymentStatus = 'paymentStatus',
+        paymentConfirmedByUser = 'paymentConfirmedByUser',
         /**
-         * Payment type
+         * Payment time confirmation
          */
-        paymentType = 'paymentType',
+        paymentConfirmedAtTime = 'paymentConfirmedAtTime',
+        /**
+         * Formal creation date (for example: date on receipt)
+         */
+        formalCreationTime = 'formalCreationTime',
         /**
          * Preferred way of payment
          */
@@ -162,36 +191,37 @@ export namespace ApiPayment {
          * Production date
          */
         productionDate = 'productionDate',
-        /**
-         * Quantity purchased to be paid
-         */
-        purchased = 'purchased',
-        receiptDocument = 'receiptDocument',
-        /**
-         * Receipt document type
-         */
-        receiptDocumentType = 'receiptDocumentType',
-        /**
-         * Receipt number
-         */
-        receiptNumber = 'receiptNumber',
+        payingCompany = 'payingCompany',
         recipientCompany = 'recipientCompany',
-        /**
-         * Recipient type
-         */
-        recipientType = 'recipientType',
         recipientUserCustomer = 'recipientUserCustomer',
-        representativeOfRecipientUserCustomer = 'representativeOfRecipientUserCustomer',
-        stockOrder = 'stockOrder',
-        /**
-         * Payment total amount
-         */
-        totalPaid = 'totalPaid',
-        updatedBy = 'updatedBy',
-        /**
-         * Last updated timestamp
-         */
-        updatedTimestamp = 'updatedTimestamp'
+        representativeOfRecipientUserCustomer = 'representativeOfRecipientUserCustomer'
+    }
+
+    /**
+     * All possible values of paymentType.
+     */
+    export enum PaymentTypeEnum {
+        CASH = 'CASH',
+        CASHVIACOLLECTOR = 'CASH_VIA_COLLECTOR',
+        BANKTRANSFER = 'BANK_TRANSFER',
+        CHEQUE = 'CHEQUE',
+        OFFSETTING = 'OFFSETTING'
+    }
+
+    /**
+     * All possible values of recipientType.
+     */
+    export enum RecipientTypeEnum {
+        COMPANY = 'COMPANY',
+        USERCUSTOMER = 'USER_CUSTOMER'
+    }
+
+    /**
+     * All possible values of receiptDocumentType.
+     */
+    export enum ReceiptDocumentTypeEnum {
+        PURCHASESHEET = 'PURCHASE_SHEET',
+        RECEIPT = 'RECEIPT'
     }
 
     /**
@@ -214,17 +244,6 @@ export namespace ApiPayment {
     }
 
     /**
-     * All possible values of paymentType.
-     */
-    export enum PaymentTypeEnum {
-        CASH = 'CASH',
-        CASHVIACOLLECTOR = 'CASH_VIA_COLLECTOR',
-        BANKTRANSFER = 'BANK_TRANSFER',
-        CHEQUE = 'CHEQUE',
-        OFFSETTING = 'OFFSETTING'
-    }
-
-    /**
      * All possible values of preferredWayOfPayment.
      */
     export enum PreferredWayOfPaymentEnum {
@@ -236,28 +255,92 @@ export namespace ApiPayment {
         UNKNOWN = 'UNKNOWN'
     }
 
-    /**
-     * All possible values of receiptDocumentType.
-     */
-    export enum ReceiptDocumentTypeEnum {
-        PURCHASESHEET = 'PURCHASE_SHEET',
-        RECEIPT = 'RECEIPT'
-    }
-
-    /**
-     * All possible values of recipientType.
-     */
-    export enum RecipientTypeEnum {
-        COMPANY = 'COMPANY',
-        USERCUSTOMER = 'USER_CUSTOMER'
-    }
-
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
             classname: 'ApiPayment',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiPayment',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updatedTimestamp',
+                    classname: 'ApiPayment',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiUser.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'createdBy',
+                    classname: 'ApiPayment',
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUser'
+                },
+                {
+                    metadata: ApiUser.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updatedBy',
+                    classname: 'ApiPayment',
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUser'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiPayment.PaymentTypeEnum',
+                    required: false,
+                    name: 'paymentType',
+                    classname: 'ApiPayment',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'currency',
+                    classname: 'ApiPayment',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'purchased',
+                    classname: 'ApiPayment',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -281,44 +364,10 @@ export namespace ApiPayment {
                     complexType: ''
                 },
                 {
-                    metadata: ApiUser.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'createdBy',
-                    classname: 'ApiPayment',
-                    dataType: 'ApiUser',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiUser'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'currency',
-                    classname: 'ApiPayment',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'formalCreationTime',
-                    classname: 'ApiPayment',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
+                    name: 'totalPaid',
                     classname: 'ApiPayment',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -326,82 +375,23 @@ export namespace ApiPayment {
                     complexType: ''
                 },
                 {
-                    metadata: ApiCompany.formMetadata,
+                    metadata: ApiStockOrder.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'payingCompany',
+                    name: 'stockOrder',
                     classname: 'ApiPayment',
-                    dataType: 'ApiCompany',
+                    dataType: 'ApiStockOrder',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiCompany'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'paymentConfirmedAtTime',
-                    classname: 'ApiPayment',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiUser.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'paymentConfirmedByUser',
-                    classname: 'ApiPayment',
-                    dataType: 'ApiUser',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiUser'
+                    complexType: 'ApiStockOrder'
                 },
                 {
                     isReadOnly: false,
                     isEnum: true,
-                    datatypeWithEnum: 'ApiPayment.PaymentPurposeTypeEnum',
+                    datatypeWithEnum: 'ApiPayment.RecipientTypeEnum',
                     required: false,
-                    name: 'paymentPurposeType',
-                    classname: 'ApiPayment',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiPayment.PaymentStatusEnum',
-                    required: false,
-                    name: 'paymentStatus',
-                    classname: 'ApiPayment',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiPayment.PaymentTypeEnum',
-                    required: false,
-                    name: 'paymentType',
-                    classname: 'ApiPayment',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiPayment.PreferredWayOfPaymentEnum',
-                    required: false,
-                    name: 'preferredWayOfPayment',
+                    name: 'recipientType',
                     classname: 'ApiPayment',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -412,20 +402,9 @@ export namespace ApiPayment {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'productionDate',
+                    name: 'receiptNumber',
                     classname: 'ApiPayment',
                     dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'purchased',
-                    classname: 'ApiPayment',
-                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -456,14 +435,96 @@ export namespace ApiPayment {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiPayment.PaymentPurposeTypeEnum',
                     required: false,
-                    name: 'receiptNumber',
+                    name: 'paymentPurposeType',
                     classname: 'ApiPayment',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiPayment.PaymentStatusEnum',
+                    required: false,
+                    name: 'paymentStatus',
+                    classname: 'ApiPayment',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiUser.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'paymentConfirmedByUser',
+                    classname: 'ApiPayment',
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUser'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'paymentConfirmedAtTime',
+                    classname: 'ApiPayment',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'formalCreationTime',
+                    classname: 'ApiPayment',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiPayment.PreferredWayOfPaymentEnum',
+                    required: false,
+                    name: 'preferredWayOfPayment',
+                    classname: 'ApiPayment',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productionDate',
+                    classname: 'ApiPayment',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiCompany.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'payingCompany',
+                    classname: 'ApiPayment',
+                    dataType: 'ApiCompany',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCompany'
                 },
                 {
                     metadata: ApiCompanyBase.formMetadata,
@@ -476,18 +537,6 @@ export namespace ApiPayment {
                     isPrimitiveType: false,
                     isListContainer: false,
                     complexType: 'ApiCompanyBase'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiPayment.RecipientTypeEnum',
-                    required: false,
-                    name: 'recipientType',
-                    classname: 'ApiPayment',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
                 },
                 {
                     metadata: ApiUserCustomer.formMetadata,
@@ -513,105 +562,59 @@ export namespace ApiPayment {
                     isListContainer: false,
                     complexType: 'ApiUserCustomer'
                 },
-                {
-                    metadata: ApiStockOrder.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'stockOrder',
-                    classname: 'ApiPayment',
-                    dataType: 'ApiStockOrder',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiStockOrder'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'totalPaid',
-                    classname: 'ApiPayment',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiUser.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'updatedBy',
-                    classname: 'ApiPayment',
-                    dataType: 'ApiUser',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiUser'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'updatedTimestamp',
-                    classname: 'ApiPayment',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
+                id: [
+                ],
+                updatedTimestamp: [
+                ],
+                createdBy: [
+                ],
+                updatedBy: [
+                ],
+                paymentType: [
+                ],
+                currency: [
+                ],
+                purchased: [
+                ],
                 amount: [
                 ],
                 amountPaidToTheCollector: [
                 ],
-                createdBy: [
+                totalPaid: [
                 ],
-                currency: [
+                stockOrder: [
                 ],
-                formalCreationTime: [
+                recipientType: [
                 ],
-                id: [
-                ],
-                payingCompany: [
-                ],
-                paymentConfirmedAtTime: [
-                ],
-                paymentConfirmedByUser: [
-                ],
-                paymentPurposeType: [
-                ],
-                paymentStatus: [
-                ],
-                paymentType: [
-                ],
-                preferredWayOfPayment: [
-                ],
-                productionDate: [
-                ],
-                purchased: [
+                receiptNumber: [
                 ],
                 receiptDocument: [
                 ],
                 receiptDocumentType: [
                 ],
-                receiptNumber: [
+                paymentPurposeType: [
+                ],
+                paymentStatus: [
+                ],
+                paymentConfirmedByUser: [
+                ],
+                paymentConfirmedAtTime: [
+                ],
+                formalCreationTime: [
+                ],
+                preferredWayOfPayment: [
+                ],
+                productionDate: [
+                ],
+                payingCompany: [
                 ],
                 recipientCompany: [
-                ],
-                recipientType: [
                 ],
                 recipientUserCustomer: [
                 ],
                 representativeOfRecipientUserCustomer: [
-                ],
-                stockOrder: [
-                ],
-                totalPaid: [
-                ],
-                updatedBy: [
-                ],
-                updatedTimestamp: [
                 ],
             }
         }
@@ -620,49 +623,43 @@ export namespace ApiPayment {
   // export const ApiPaymentValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               id: {
+  //                   validators: []
+  //               },
+  //               updatedTimestamp: {
+  //                   validators: []
+  //               },
+  //               createdBy: {
+  //                   validators: []
+  //               },
+  //               updatedBy: {
+  //                   validators: []
+  //               },
+  //               paymentType: {
+  //                   validators: []
+  //               },
+  //               currency: {
+  //                   validators: []
+  //               },
+  //               purchased: {
+  //                   validators: []
+  //               },
   //               amount: {
   //                   validators: []
   //               },
   //               amountPaidToTheCollector: {
   //                   validators: []
   //               },
-  //               createdBy: {
+  //               totalPaid: {
   //                   validators: []
   //               },
-  //               currency: {
+  //               stockOrder: {
   //                   validators: []
   //               },
-  //               formalCreationTime: {
+  //               recipientType: {
   //                   validators: []
   //               },
-  //               id: {
-  //                   validators: []
-  //               },
-  //               payingCompany: {
-  //                   validators: []
-  //               },
-  //               paymentConfirmedAtTime: {
-  //                   validators: []
-  //               },
-  //               paymentConfirmedByUser: {
-  //                   validators: []
-  //               },
-  //               paymentPurposeType: {
-  //                   validators: []
-  //               },
-  //               paymentStatus: {
-  //                   validators: []
-  //               },
-  //               paymentType: {
-  //                   validators: []
-  //               },
-  //               preferredWayOfPayment: {
-  //                   validators: []
-  //               },
-  //               productionDate: {
-  //                   validators: []
-  //               },
-  //               purchased: {
+  //               receiptNumber: {
   //                   validators: []
   //               },
   //               receiptDocument: {
@@ -671,31 +668,37 @@ export namespace ApiPayment {
   //               receiptDocumentType: {
   //                   validators: []
   //               },
-  //               receiptNumber: {
+  //               paymentPurposeType: {
+  //                   validators: []
+  //               },
+  //               paymentStatus: {
+  //                   validators: []
+  //               },
+  //               paymentConfirmedByUser: {
+  //                   validators: []
+  //               },
+  //               paymentConfirmedAtTime: {
+  //                   validators: []
+  //               },
+  //               formalCreationTime: {
+  //                   validators: []
+  //               },
+  //               preferredWayOfPayment: {
+  //                   validators: []
+  //               },
+  //               productionDate: {
+  //                   validators: []
+  //               },
+  //               payingCompany: {
   //                   validators: []
   //               },
   //               recipientCompany: {
-  //                   validators: []
-  //               },
-  //               recipientType: {
   //                   validators: []
   //               },
   //               recipientUserCustomer: {
   //                   validators: []
   //               },
   //               representativeOfRecipientUserCustomer: {
-  //                   validators: []
-  //               },
-  //               stockOrder: {
-  //                   validators: []
-  //               },
-  //               totalPaid: {
-  //                   validators: []
-  //               },
-  //               updatedBy: {
-  //                   validators: []
-  //               },
-  //               updatedTimestamp: {
   //                   validators: []
   //               },
   //     }

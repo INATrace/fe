@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,19 +22,22 @@ import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProductTranslation } from './apiSemiProductTranslation';
 
 
+/**
+ * list of supported semi-products
+ */
 
 export interface ApiSemiProduct { 
-    buyable?: boolean;
-    description?: string;
     /**
      * Entity id
      */
     id?: number;
-    measurementUnitType?: ApiMeasureUnitType;
     name?: string;
-    sku?: boolean;
-    skuendCustomer?: boolean;
+    description?: string;
+    measurementUnitType?: ApiMeasureUnitType;
     translations?: Array<ApiSemiProductTranslation>;
+    sku?: boolean;
+    buyable?: boolean;
+    skuendCustomer?: boolean;
 }
 
 /**
@@ -45,17 +48,17 @@ export namespace ApiSemiProduct {
      * All properties of ApiSemiProduct.
      */
     export enum Properties {
-        buyable = 'buyable',
-        description = 'description',
         /**
          * Entity id
          */
         id = 'id',
-        measurementUnitType = 'measurementUnitType',
         name = 'name',
+        description = 'description',
+        measurementUnitType = 'measurementUnitType',
+        translations = 'translations',
         sku = 'sku',
-        skuendCustomer = 'skuendCustomer',
-        translations = 'translations'
+        buyable = 'buyable',
+        skuendCustomer = 'skuendCustomer'
     }
 
 
@@ -68,9 +71,20 @@ export namespace ApiSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'buyable',
+                    name: 'id',
                     classname: 'ApiSemiProduct',
-                    dataType: 'boolean',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
+                    classname: 'ApiSemiProduct',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -82,17 +96,6 @@ export namespace ApiSemiProduct {
                     name: 'description',
                     classname: 'ApiSemiProduct',
                     dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiSemiProduct',
-                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -110,12 +113,24 @@ export namespace ApiSemiProduct {
                     complexType: 'ApiMeasureUnitType'
                 },
                 {
+                    metadata: ApiSemiProductTranslation.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
+                    name: 'translations',
                     classname: 'ApiSemiProduct',
-                    dataType: 'string',
+                    dataType: 'Array&lt;ApiSemiProductTranslation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiSemiProductTranslation'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'sku',
+                    classname: 'ApiSemiProduct',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -124,7 +139,7 @@ export namespace ApiSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'sku',
+                    name: 'buyable',
                     classname: 'ApiSemiProduct',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -142,35 +157,23 @@ export namespace ApiSemiProduct {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    metadata: ApiSemiProductTranslation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'translations',
-                    classname: 'ApiSemiProduct',
-                    dataType: 'Array&lt;ApiSemiProductTranslation&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiSemiProductTranslation'
-                },
             ],
             validators: {
-                buyable: [
-                ],
-                description: [
-                ],
                 id: [
-                ],
-                measurementUnitType: [
                 ],
                 name: [
                 ],
-                sku: [
+                description: [
                 ],
-                skuendCustomer: [
+                measurementUnitType: [
                 ],
                 translations: [
+                ],
+                sku: [
+                ],
+                buyable: [
+                ],
+                skuendCustomer: [
                 ],
             }
         }
@@ -179,28 +182,28 @@ export namespace ApiSemiProduct {
   // export const ApiSemiProductValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               buyable: {
-  //                   validators: []
-  //               },
-  //               description: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               measurementUnitType: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               sku: {
+  //               description: {
   //                   validators: []
   //               },
-  //               skuendCustomer: {
+  //               measurementUnitType: {
   //                   validators: []
   //               },
   //               translations: {
+  //                   validators: []
+  //               },
+  //               sku: {
+  //                   validators: []
+  //               },
+  //               buyable: {
+  //                   validators: []
+  //               },
+  //               skuendCustomer: {
   //                   validators: []
   //               },
   //     }

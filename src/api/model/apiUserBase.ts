@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,36 +20,39 @@
 
 
 
+/**
+ * Response items.
+ */
 
 export interface ApiUserBase { 
-    /**
-     * Email/username
-     */
-    email?: string;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * language
+     * Email/username
      */
-    language?: ApiUserBase.LanguageEnum;
+    email?: string;
     /**
      * Name
      */
     name?: string;
     /**
-     * User role
+     * Surname
      */
-    role?: ApiUserBase.RoleEnum;
+    surname?: string;
     /**
      * Status
      */
     status?: ApiUserBase.StatusEnum;
     /**
-     * Surname
+     * User role
      */
-    surname?: string;
+    role?: ApiUserBase.RoleEnum;
+    /**
+     * language
+     */
+    language?: ApiUserBase.LanguageEnum;
 }
 
 /**
@@ -61,52 +64,33 @@ export namespace ApiUserBase {
      */
     export enum Properties {
         /**
-         * Email/username
-         */
-        email = 'email',
-        /**
          * Entity id
          */
         id = 'id',
         /**
-         * language
+         * Email/username
          */
-        language = 'language',
+        email = 'email',
         /**
          * Name
          */
         name = 'name',
         /**
-         * User role
+         * Surname
          */
-        role = 'role',
+        surname = 'surname',
         /**
          * Status
          */
         status = 'status',
         /**
-         * Surname
+         * User role
          */
-        surname = 'surname'
-    }
-
-    /**
-     * All possible values of language.
-     */
-    export enum LanguageEnum {
-        EN = 'EN',
-        DE = 'DE',
-        RW = 'RW',
-        ES = 'ES'
-    }
-
-    /**
-     * All possible values of role.
-     */
-    export enum RoleEnum {
-        USER = 'USER',
-        SYSTEMADMIN = 'SYSTEM_ADMIN',
-        REGIONALADMIN = 'REGIONAL_ADMIN'
+        role = 'role',
+        /**
+         * language
+         */
+        language = 'language'
     }
 
     /**
@@ -119,12 +103,42 @@ export namespace ApiUserBase {
         DEACTIVATED = 'DEACTIVATED'
     }
 
+    /**
+     * All possible values of role.
+     */
+    export enum RoleEnum {
+        USER = 'USER',
+        SYSTEMADMIN = 'SYSTEM_ADMIN',
+        REGIONALADMIN = 'REGIONAL_ADMIN'
+    }
+
+    /**
+     * All possible values of language.
+     */
+    export enum LanguageEnum {
+        EN = 'EN',
+        DE = 'DE',
+        RW = 'RW',
+        ES = 'ES'
+    }
+
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
             classname: 'ApiUserBase',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiUserBase',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -140,19 +154,7 @@ export namespace ApiUserBase {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
-                    classname: 'ApiUserBase',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserBase.LanguageEnum',
-                    required: false,
-                    name: 'language',
+                    name: 'name',
                     classname: 'ApiUserBase',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -163,7 +165,19 @@ export namespace ApiUserBase {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
+                    name: 'surname',
+                    classname: 'ApiUserBase',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiUserBase.StatusEnum',
+                    required: false,
+                    name: 'status',
                     classname: 'ApiUserBase',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -185,20 +199,9 @@ export namespace ApiUserBase {
                 {
                     isReadOnly: false,
                     isEnum: true,
-                    datatypeWithEnum: 'ApiUserBase.StatusEnum',
+                    datatypeWithEnum: 'ApiUserBase.LanguageEnum',
                     required: false,
-                    name: 'status',
-                    classname: 'ApiUserBase',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'surname',
+                    name: 'language',
                     classname: 'ApiUserBase',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -207,19 +210,19 @@ export namespace ApiUserBase {
                 },
             ],
             validators: {
-                email: [
-                ],
                 id: [
                 ],
-                language: [
+                email: [
                 ],
                 name: [
                 ],
-                role: [
+                surname: [
                 ],
                 status: [
                 ],
-                surname: [
+                role: [
+                ],
+                language: [
                 ],
             }
         }
@@ -228,25 +231,25 @@ export namespace ApiUserBase {
   // export const ApiUserBaseValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               email: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
-  //               language: {
+  //               email: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               role: {
+  //               surname: {
   //                   validators: []
   //               },
   //               status: {
   //                   validators: []
   //               },
-  //               surname: {
+  //               role: {
+  //                   validators: []
+  //               },
+  //               language: {
   //                   validators: []
   //               },
   //     }

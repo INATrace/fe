@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,13 +23,13 @@
 
 export interface ApiGlobalSettingsValue { 
     /**
-     * Can be accessed via public api
-     */
-    isPublic?: boolean;
-    /**
      * Global settings value
      */
     value?: string;
+    /**
+     * Can be accessed via public api
+     */
+    isPublic?: boolean;
 }
 
 /**
@@ -41,13 +41,13 @@ export namespace ApiGlobalSettingsValue {
      */
     export enum Properties {
         /**
-         * Can be accessed via public api
-         */
-        isPublic = 'isPublic',
-        /**
          * Global settings value
          */
-        value = 'value'
+        value = 'value',
+        /**
+         * Can be accessed via public api
+         */
+        isPublic = 'isPublic'
     }
 
 
@@ -60,9 +60,9 @@ export namespace ApiGlobalSettingsValue {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'isPublic',
+                    name: 'value',
                     classname: 'ApiGlobalSettingsValue',
-                    dataType: 'boolean',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -71,18 +71,20 @@ export namespace ApiGlobalSettingsValue {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'value',
+                    name: 'isPublic',
                     classname: 'ApiGlobalSettingsValue',
-                    dataType: 'string',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                isPublic: [
-                ],
                 value: [
+                        ['minlength', 0],
+                        ['maxlength', 1000],
+                ],
+                isPublic: [
                 ],
             }
         }
@@ -91,10 +93,10 @@ export namespace ApiGlobalSettingsValue {
   // export const ApiGlobalSettingsValueValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               isPublic: {
+  //               value: {
   //                   validators: []
   //               },
-  //               value: {
+  //               isPublic: {
   //                   validators: []
   //               },
   //     }

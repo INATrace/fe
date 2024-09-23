@@ -46,7 +46,7 @@ export class ResetPasswordComponent implements OnInit {
     if (this.form.invalid) return
     this.globalEventsManager.showLoading(true);
     this.route.params.subscribe(params => {
-      this.userController.resetPasswordUsingPOST({ token: params.token, password: this.form.get('password').value})
+      this.userController.resetPassword({ token: params.token, password: this.form.get('password').value})
         .subscribe(val => {
           this.router.navigate(['home']);
           this.globalEventsManager.showLoading(false);

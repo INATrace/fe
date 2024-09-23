@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,16 +21,19 @@
 import { ApiFarmPlantInformation } from './apiFarmPlantInformation';
 
 
+/**
+ * Farm information
+ */
 
 export interface ApiFarmInformation { 
-    /**
-     * Area is organic certified
-     */
-    areaOrganicCertified?: number;
     /**
      * Area unit
      */
     areaUnit?: string;
+    /**
+     * Total cultivated area (ha)
+     */
+    totalCultivatedArea?: number;
     /**
      * List of plant information
      */
@@ -40,13 +43,13 @@ export interface ApiFarmInformation {
      */
     organic?: boolean;
     /**
+     * Area is organic certified
+     */
+    areaOrganicCertified?: number;
+    /**
      * Start date of transition to organic
      */
     startTransitionToOrganic?: Date;
-    /**
-     * Total cultivated area (ha)
-     */
-    totalCultivatedArea?: number;
 }
 
 /**
@@ -58,13 +61,13 @@ export namespace ApiFarmInformation {
      */
     export enum Properties {
         /**
-         * Area is organic certified
-         */
-        areaOrganicCertified = 'areaOrganicCertified',
-        /**
          * Area unit
          */
         areaUnit = 'areaUnit',
+        /**
+         * Total cultivated area (ha)
+         */
+        totalCultivatedArea = 'totalCultivatedArea',
         /**
          * List of plant information
          */
@@ -74,13 +77,13 @@ export namespace ApiFarmInformation {
          */
         organic = 'organic',
         /**
+         * Area is organic certified
+         */
+        areaOrganicCertified = 'areaOrganicCertified',
+        /**
          * Start date of transition to organic
          */
-        startTransitionToOrganic = 'startTransitionToOrganic',
-        /**
-         * Total cultivated area (ha)
-         */
-        totalCultivatedArea = 'totalCultivatedArea'
+        startTransitionToOrganic = 'startTransitionToOrganic'
     }
 
 
@@ -93,9 +96,9 @@ export namespace ApiFarmInformation {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'areaOrganicCertified',
+                    name: 'areaUnit',
                     classname: 'ApiFarmInformation',
-                    dataType: 'number',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -104,9 +107,9 @@ export namespace ApiFarmInformation {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'areaUnit',
+                    name: 'totalCultivatedArea',
                     classname: 'ApiFarmInformation',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -138,9 +141,9 @@ export namespace ApiFarmInformation {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'startTransitionToOrganic',
+                    name: 'areaOrganicCertified',
                     classname: 'ApiFarmInformation',
-                    dataType: 'Date',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -149,26 +152,26 @@ export namespace ApiFarmInformation {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'totalCultivatedArea',
+                    name: 'startTransitionToOrganic',
                     classname: 'ApiFarmInformation',
-                    dataType: 'number',
+                    dataType: 'Date',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                areaOrganicCertified: [
-                ],
                 areaUnit: [
+                ],
+                totalCultivatedArea: [
                 ],
                 farmPlantInformationList: [
                 ],
                 organic: [
                 ],
-                startTransitionToOrganic: [
+                areaOrganicCertified: [
                 ],
-                totalCultivatedArea: [
+                startTransitionToOrganic: [
                 ],
             }
         }
@@ -177,10 +180,10 @@ export namespace ApiFarmInformation {
   // export const ApiFarmInformationValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               areaOrganicCertified: {
+  //               areaUnit: {
   //                   validators: []
   //               },
-  //               areaUnit: {
+  //               totalCultivatedArea: {
   //                   validators: []
   //               },
   //               farmPlantInformationList: {
@@ -189,10 +192,10 @@ export namespace ApiFarmInformation {
   //               organic: {
   //                   validators: []
   //               },
-  //               startTransitionToOrganic: {
+  //               areaOrganicCertified: {
   //                   validators: []
   //               },
-  //               totalCultivatedArea: {
+  //               startTransitionToOrganic: {
   //                   validators: []
   //               },
   //     }

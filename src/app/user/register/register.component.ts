@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
     this._registerErrorStatus$.next("");
     this.submitted = true
     if (!this.registerForm.invalid) {
-      let sub = this.userController.createUserUsingPOST(this.registerForm.value)
+      let sub = this.userController.createUser(this.registerForm.value)
         .subscribe(val => {
           this.router.navigate(['/account-activation']);
           sub.unsubscribe()

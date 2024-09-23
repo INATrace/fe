@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -31,68 +31,68 @@ import { ApiUserCustomerLocation } from './apiUserCustomerLocation';
 
 export interface ApiUserCustomer { 
     /**
-     * List of associations
+     * Entity id
      */
-    associations?: Array<ApiUserCustomerAssociation>;
-    bank?: ApiBankInformation;
-    /**
-     * User customer certifications
-     */
-    certifications?: Array<ApiCertification>;
+    id?: number;
     /**
      * Company id
      */
     companyId?: number;
     /**
-     * List of cooperatives
-     */
-    cooperatives?: Array<ApiUserCustomerCooperative>;
-    /**
-     * Email
-     */
-    email?: string;
-    farm?: ApiFarmInformation;
-    /**
      * Company internal farmer ID
      */
     farmerCompanyInternalId?: string;
     /**
-     * Gender
+     * Type
      */
-    gender?: ApiUserCustomer.GenderEnum;
-    /**
-     * Has smartphone
-     */
-    hasSmartphone?: boolean;
-    /**
-     * Entity id
-     */
-    id?: number;
-    location?: ApiUserCustomerLocation;
+    type?: ApiUserCustomer.TypeEnum;
     /**
      * Name
      */
     name?: string;
     /**
+     * Surname
+     */
+    surname?: string;
+    /**
      * Phone
      */
     phone?: string;
     /**
-     * Plots in possession of the user customer (only applicable for type FARMER)
+     * Email
      */
-    plots?: Array<ApiPlot>;
+    email?: string;
+    /**
+     * Has smartphone
+     */
+    hasSmartphone?: boolean;
+    location?: ApiUserCustomerLocation;
+    /**
+     * Gender
+     */
+    gender?: ApiUserCustomer.GenderEnum;
+    bank?: ApiBankInformation;
+    farm?: ApiFarmInformation;
+    /**
+     * List of associations
+     */
+    associations?: Array<ApiUserCustomerAssociation>;
+    /**
+     * List of cooperatives
+     */
+    cooperatives?: Array<ApiUserCustomerCooperative>;
+    /**
+     * User customer certifications
+     */
+    certifications?: Array<ApiCertification>;
     /**
      * User customer product types
      */
     productTypes?: Array<ApiProductType>;
     /**
-     * Surname
+     * Plots in possession of the user customer (only applicable for type FARMER)
      */
-    surname?: string;
-    /**
-     * Type
-     */
-    type?: ApiUserCustomer.TypeEnum;
+    plots?: Array<ApiPlot>;
 }
 
 /**
@@ -104,68 +104,76 @@ export namespace ApiUserCustomer {
      */
     export enum Properties {
         /**
-         * List of associations
+         * Entity id
          */
-        associations = 'associations',
-        bank = 'bank',
-        /**
-         * User customer certifications
-         */
-        certifications = 'certifications',
+        id = 'id',
         /**
          * Company id
          */
         companyId = 'companyId',
         /**
-         * List of cooperatives
-         */
-        cooperatives = 'cooperatives',
-        /**
-         * Email
-         */
-        email = 'email',
-        farm = 'farm',
-        /**
          * Company internal farmer ID
          */
         farmerCompanyInternalId = 'farmerCompanyInternalId',
         /**
-         * Gender
+         * Type
          */
-        gender = 'gender',
-        /**
-         * Has smartphone
-         */
-        hasSmartphone = 'hasSmartphone',
-        /**
-         * Entity id
-         */
-        id = 'id',
-        location = 'location',
+        type = 'type',
         /**
          * Name
          */
         name = 'name',
         /**
+         * Surname
+         */
+        surname = 'surname',
+        /**
          * Phone
          */
         phone = 'phone',
         /**
-         * Plots in possession of the user customer (only applicable for type FARMER)
+         * Email
          */
-        plots = 'plots',
+        email = 'email',
+        /**
+         * Has smartphone
+         */
+        hasSmartphone = 'hasSmartphone',
+        location = 'location',
+        /**
+         * Gender
+         */
+        gender = 'gender',
+        bank = 'bank',
+        farm = 'farm',
+        /**
+         * List of associations
+         */
+        associations = 'associations',
+        /**
+         * List of cooperatives
+         */
+        cooperatives = 'cooperatives',
+        /**
+         * User customer certifications
+         */
+        certifications = 'certifications',
         /**
          * User customer product types
          */
         productTypes = 'productTypes',
         /**
-         * Surname
+         * Plots in possession of the user customer (only applicable for type FARMER)
          */
-        surname = 'surname',
-        /**
-         * Type
-         */
-        type = 'type'
+        plots = 'plots'
+    }
+
+    /**
+     * All possible values of type.
+     */
+    export enum TypeEnum {
+        COLLECTOR = 'COLLECTOR',
+        FARMER = 'FARMER'
     }
 
     /**
@@ -178,14 +186,6 @@ export namespace ApiUserCustomer {
         DIVERSE = 'DIVERSE'
     }
 
-    /**
-     * All possible values of type.
-     */
-    export enum TypeEnum {
-        COLLECTOR = 'COLLECTOR',
-        FARMER = 'FARMER'
-    }
-
 
     export function formMetadata() {
         return  {
@@ -193,40 +193,15 @@ export namespace ApiUserCustomer {
             classname: 'ApiUserCustomer',
             vars: [
                 {
-                    metadata: ApiUserCustomerAssociation.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'associations',
+                    name: 'id',
                     classname: 'ApiUserCustomer',
-                    dataType: 'Array&lt;ApiUserCustomerAssociation&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiUserCustomerAssociation'
-                },
-                {
-                    metadata: ApiBankInformation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'bank',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'ApiBankInformation',
-                    isPrimitiveType: false,
+                    dataType: 'number',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiBankInformation'
-                },
-                {
-                    metadata: ApiCertification.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'certifications',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'Array&lt;ApiCertification&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiCertification'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -240,148 +215,10 @@ export namespace ApiUserCustomer {
                     complexType: ''
                 },
                 {
-                    metadata: ApiUserCustomerCooperative.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'cooperatives',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'Array&lt;ApiUserCustomerCooperative&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiUserCustomerCooperative'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'email',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiFarmInformation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'farm',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'ApiFarmInformation',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiFarmInformation'
-                },
-                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'farmerCompanyInternalId',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiUserCustomer.GenderEnum',
-                    required: false,
-                    name: 'gender',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'hasSmartphone',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiUserCustomerLocation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'location',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'ApiUserCustomerLocation',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiUserCustomerLocation'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'phone',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiPlot.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'plots',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'Array&lt;ApiPlot&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiPlot'
-                },
-                {
-                    metadata: ApiProductType.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'productTypes',
-                    classname: 'ApiUserCustomer',
-                    dataType: 'Array&lt;ApiProductType&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProductType'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'surname',
                     classname: 'ApiUserCustomer',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -400,43 +237,214 @@ export namespace ApiUserCustomer {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'surname',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'phone',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'email',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'hasSmartphone',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiUserCustomerLocation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'location',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'ApiUserCustomerLocation',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUserCustomerLocation'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiUserCustomer.GenderEnum',
+                    required: false,
+                    name: 'gender',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiBankInformation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'bank',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'ApiBankInformation',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiBankInformation'
+                },
+                {
+                    metadata: ApiFarmInformation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'farm',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'ApiFarmInformation',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFarmInformation'
+                },
+                {
+                    metadata: ApiUserCustomerAssociation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'associations',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiUserCustomerAssociation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiUserCustomerAssociation'
+                },
+                {
+                    metadata: ApiUserCustomerCooperative.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cooperatives',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiUserCustomerCooperative&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiUserCustomerCooperative'
+                },
+                {
+                    metadata: ApiCertification.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'certifications',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiCertification&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCertification'
+                },
+                {
+                    metadata: ApiProductType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productTypes',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiProductType&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductType'
+                },
+                {
+                    metadata: ApiPlot.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'plots',
+                    classname: 'ApiUserCustomer',
+                    dataType: 'Array&lt;ApiPlot&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiPlot'
+                },
             ],
             validators: {
-                associations: [
-                ],
-                bank: [
-                ],
-                certifications: [
+                id: [
                 ],
                 companyId: [
                 ],
-                cooperatives: [
-                ],
-                email: [
-                ],
-                farm: [
-                ],
                 farmerCompanyInternalId: [
                 ],
-                gender: [
+                type: [
+                ],
+                name: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                surname: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                phone: [
+                        ['minlength', 0],
+                        ['maxlength', 20],
+                ],
+                email: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 hasSmartphone: [
                 ],
-                id: [
-                ],
                 location: [
                 ],
-                name: [
+                gender: [
                 ],
-                phone: [
+                bank: [
                 ],
-                plots: [
+                farm: [
+                ],
+                associations: [
+                ],
+                cooperatives: [
+                ],
+                certifications: [
                 ],
                 productTypes: [
                 ],
-                surname: [
-                ],
-                type: [
+                plots: [
                 ],
             }
         }
@@ -445,58 +453,58 @@ export namespace ApiUserCustomer {
   // export const ApiUserCustomerValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               associations: {
-  //                   validators: []
-  //               },
-  //               bank: {
-  //                   validators: []
-  //               },
-  //               certifications: {
+  //               id: {
   //                   validators: []
   //               },
   //               companyId: {
   //                   validators: []
   //               },
-  //               cooperatives: {
-  //                   validators: []
-  //               },
-  //               email: {
-  //                   validators: []
-  //               },
-  //               farm: {
-  //                   validators: []
-  //               },
   //               farmerCompanyInternalId: {
   //                   validators: []
   //               },
-  //               gender: {
-  //                   validators: []
-  //               },
-  //               hasSmartphone: {
-  //                   validators: []
-  //               },
-  //               id: {
-  //                   validators: []
-  //               },
-  //               location: {
+  //               type: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
+  //               surname: {
+  //                   validators: []
+  //               },
   //               phone: {
   //                   validators: []
   //               },
-  //               plots: {
+  //               email: {
+  //                   validators: []
+  //               },
+  //               hasSmartphone: {
+  //                   validators: []
+  //               },
+  //               location: {
+  //                   validators: []
+  //               },
+  //               gender: {
+  //                   validators: []
+  //               },
+  //               bank: {
+  //                   validators: []
+  //               },
+  //               farm: {
+  //                   validators: []
+  //               },
+  //               associations: {
+  //                   validators: []
+  //               },
+  //               cooperatives: {
+  //                   validators: []
+  //               },
+  //               certifications: {
   //                   validators: []
   //               },
   //               productTypes: {
   //                   validators: []
   //               },
-  //               surname: {
-  //                   validators: []
-  //               },
-  //               type: {
+  //               plots: {
   //                   validators: []
   //               },
   //     }

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,37 +21,40 @@
 import { ApiDocument } from './apiDocument';
 
 
+/**
+ * company documents
+ */
 
 export interface ApiCompanyDocument { 
-    /**
-     * document category
-     */
-    category?: ApiCompanyDocument.CategoryEnum;
-    /**
-     * description of this document
-     */
-    description?: string;
-    document?: ApiDocument;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * link
+     * type of the document (link, file)
      */
-    link?: string;
+    type?: ApiCompanyDocument.TypeEnum;
+    /**
+     * document category
+     */
+    category?: ApiCompanyDocument.CategoryEnum;
     /**
      * name
      */
     name?: string;
     /**
+     * description of this document
+     */
+    description?: string;
+    /**
      * quote of this document
      */
     quote?: string;
     /**
-     * type of the document (link, file)
+     * link
      */
-    type?: ApiCompanyDocument.TypeEnum;
+    link?: string;
+    document?: ApiDocument;
 }
 
 /**
@@ -63,34 +66,42 @@ export namespace ApiCompanyDocument {
      */
     export enum Properties {
         /**
-         * document category
-         */
-        category = 'category',
-        /**
-         * description of this document
-         */
-        description = 'description',
-        document = 'document',
-        /**
          * Entity id
          */
         id = 'id',
         /**
-         * link
+         * type of the document (link, file)
          */
-        link = 'link',
+        type = 'type',
+        /**
+         * document category
+         */
+        category = 'category',
         /**
          * name
          */
         name = 'name',
         /**
+         * description of this document
+         */
+        description = 'description',
+        /**
          * quote of this document
          */
         quote = 'quote',
         /**
-         * type of the document (link, file)
+         * link
          */
-        type = 'type'
+        link = 'link',
+        document = 'document'
+    }
+
+    /**
+     * All possible values of type.
+     */
+    export enum TypeEnum {
+        LINK = 'LINK',
+        FILE = 'FILE'
     }
 
     /**
@@ -102,55 +113,12 @@ export namespace ApiCompanyDocument {
         MEETTHEFARMER = 'MEET_THE_FARMER'
     }
 
-    /**
-     * All possible values of type.
-     */
-    export enum TypeEnum {
-        LINK = 'LINK',
-        FILE = 'FILE'
-    }
-
 
     export function formMetadata() {
         return  {
             metadata: formMetadata,
             classname: 'ApiCompanyDocument',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiCompanyDocument.CategoryEnum',
-                    required: false,
-                    name: 'category',
-                    classname: 'ApiCompanyDocument',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'description',
-                    classname: 'ApiCompanyDocument',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'document',
-                    classname: 'ApiCompanyDocument',
-                    dataType: 'ApiDocument',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiDocument'
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -164,9 +132,22 @@ export namespace ApiCompanyDocument {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiCompanyDocument.TypeEnum',
                     required: false,
-                    name: 'link',
+                    name: 'type',
+                    classname: 'ApiCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiCompanyDocument.CategoryEnum',
+                    required: false,
+                    name: 'category',
                     classname: 'ApiCompanyDocument',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -188,6 +169,17 @@ export namespace ApiCompanyDocument {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'description',
+                    classname: 'ApiCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'quote',
                     classname: 'ApiCompanyDocument',
                     dataType: 'string',
@@ -197,33 +189,52 @@ export namespace ApiCompanyDocument {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiCompanyDocument.TypeEnum',
+                    isEnum: false,
                     required: false,
-                    name: 'type',
+                    name: 'link',
                     classname: 'ApiCompanyDocument',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'document',
+                    classname: 'ApiCompanyDocument',
+                    dataType: 'ApiDocument',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiDocument'
+                },
             ],
             validators: {
-                category: [
-                ],
-                description: [
-                ],
-                document: [
-                ],
                 id: [
                 ],
-                link: [
+                type: [
+                ],
+                category: [
                 ],
                 name: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                description: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 quote: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
                 ],
-                type: [
+                link: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                document: [
                 ],
             }
         }
@@ -232,28 +243,28 @@ export namespace ApiCompanyDocument {
   // export const ApiCompanyDocumentValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               category: {
-  //                   validators: []
-  //               },
-  //               description: {
-  //                   validators: []
-  //               },
-  //               document: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
-  //               link: {
+  //               type: {
+  //                   validators: []
+  //               },
+  //               category: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
+  //               description: {
+  //                   validators: []
+  //               },
   //               quote: {
   //                   validators: []
   //               },
-  //               type: {
+  //               link: {
+  //                   validators: []
+  //               },
+  //               document: {
   //                   validators: []
   //               },
   //     }

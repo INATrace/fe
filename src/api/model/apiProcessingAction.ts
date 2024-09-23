@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -29,52 +29,39 @@ import { ApiSemiProduct } from './apiSemiProduct';
 import { ApiValueChain } from './apiValueChain';
 
 
+/**
+ * Processing action
+ */
 
 export interface ApiProcessingAction { 
-    company?: ApiCompanyBase;
+    /**
+     * Entity id
+     */
+    id?: number;
+    /**
+     * Processing action name
+     */
+    name?: string;
     /**
      * Processing action description
      */
     description?: string;
     /**
-     * The estimated output quantity per unit for this processing action
-     */
-    estimatedOutputQuantityPerUnit?: number;
-    /**
-     * Denoting if this processing action is Transfer or Quote of a Final product
-     */
-    finalProductAction?: boolean;
-    /**
-     * Entity id
-     */
-    id?: number;
-    inputFinalProduct?: ApiFinalProduct;
-    inputSemiProduct?: ApiSemiProduct;
-    /**
      * Processing action language
      */
     language?: ApiProcessingAction.LanguageEnum;
     /**
-     * Processing action maximum output weight when repacked outputs for final product is set to 'true'
+     * Sort order number. Lower number means first
      */
-    maxOutputWeight?: number;
-    /**
-     * Processing action name
-     */
-    name?: string;
-    outputFinalProduct?: ApiFinalProduct;
-    /**
-     * List of supported output semi-products
-     */
-    outputSemiProducts?: Array<ApiProcessingActionOutputSemiProduct>;
+    sortOrder?: number;
     /**
      * Processing action prefix
      */
     prefix?: string;
     /**
-     * Processing action public timeline icon type
+     * The estimated output quantity per unit for this processing action
      */
-    publicTimelineIconType?: ApiProcessingAction.PublicTimelineIconTypeEnum;
+    estimatedOutputQuantityPerUnit?: number;
     /**
      * Processing action public timeline label
      */
@@ -83,11 +70,39 @@ export interface ApiProcessingAction {
      * Processing action public timeline location
      */
     publicTimelineLocation?: string;
-    qrCodeForFinalProduct?: ApiFinalProduct;
+    company?: ApiCompanyBase;
+    inputSemiProduct?: ApiSemiProduct;
+    /**
+     * List of supported output semi-products
+     */
+    outputSemiProducts?: Array<ApiProcessingActionOutputSemiProduct>;
+    inputFinalProduct?: ApiFinalProduct;
+    outputFinalProduct?: ApiFinalProduct;
     /**
      * Processing action repacked outputs when using output final product
      */
     repackedOutputFinalProducts?: boolean;
+    /**
+     * Processing action maximum output weight when repacked outputs for final product is set to 'true'
+     */
+    maxOutputWeight?: number;
+    qrCodeForFinalProduct?: ApiFinalProduct;
+    /**
+     * Processing action type
+     */
+    type?: ApiProcessingAction.TypeEnum;
+    /**
+     * Processing action public timeline icon type
+     */
+    publicTimelineIconType?: ApiProcessingAction.PublicTimelineIconTypeEnum;
+    /**
+     * Denoting if this processing action is Transfer or Quote of a Final product
+     */
+    finalProductAction?: boolean;
+    /**
+     * List of value chains for this processing action
+     */
+    valueChains?: Array<ApiValueChain>;
     /**
      * Processing action required document types
      */
@@ -97,10 +112,6 @@ export interface ApiProcessingAction {
      */
     requiredEvidenceFields?: Array<ApiProcessingEvidenceField>;
     /**
-     * Sort order number. Lower number means first
-     */
-    sortOrder?: number;
-    /**
      * List of facilities where this processing starts
      */
     supportedFacilities?: Array<ApiFacility>;
@@ -108,14 +119,6 @@ export interface ApiProcessingAction {
      * Processing action translations
      */
     translations?: Array<ApiProcessingActionTranslation>;
-    /**
-     * Processing action type
-     */
-    type?: ApiProcessingAction.TypeEnum;
-    /**
-     * List of value chains for this processing action
-     */
-    valueChains?: Array<ApiValueChain>;
 }
 
 /**
@@ -126,50 +129,34 @@ export namespace ApiProcessingAction {
      * All properties of ApiProcessingAction.
      */
     export enum Properties {
-        company = 'company',
+        /**
+         * Entity id
+         */
+        id = 'id',
+        /**
+         * Processing action name
+         */
+        name = 'name',
         /**
          * Processing action description
          */
         description = 'description',
         /**
-         * The estimated output quantity per unit for this processing action
-         */
-        estimatedOutputQuantityPerUnit = 'estimatedOutputQuantityPerUnit',
-        /**
-         * Denoting if this processing action is Transfer or Quote of a Final product
-         */
-        finalProductAction = 'finalProductAction',
-        /**
-         * Entity id
-         */
-        id = 'id',
-        inputFinalProduct = 'inputFinalProduct',
-        inputSemiProduct = 'inputSemiProduct',
-        /**
          * Processing action language
          */
         language = 'language',
         /**
-         * Processing action maximum output weight when repacked outputs for final product is set to 'true'
+         * Sort order number. Lower number means first
          */
-        maxOutputWeight = 'maxOutputWeight',
-        /**
-         * Processing action name
-         */
-        name = 'name',
-        outputFinalProduct = 'outputFinalProduct',
-        /**
-         * List of supported output semi-products
-         */
-        outputSemiProducts = 'outputSemiProducts',
+        sortOrder = 'sortOrder',
         /**
          * Processing action prefix
          */
         prefix = 'prefix',
         /**
-         * Processing action public timeline icon type
+         * The estimated output quantity per unit for this processing action
          */
-        publicTimelineIconType = 'publicTimelineIconType',
+        estimatedOutputQuantityPerUnit = 'estimatedOutputQuantityPerUnit',
         /**
          * Processing action public timeline label
          */
@@ -178,11 +165,39 @@ export namespace ApiProcessingAction {
          * Processing action public timeline location
          */
         publicTimelineLocation = 'publicTimelineLocation',
-        qrCodeForFinalProduct = 'qrCodeForFinalProduct',
+        company = 'company',
+        inputSemiProduct = 'inputSemiProduct',
+        /**
+         * List of supported output semi-products
+         */
+        outputSemiProducts = 'outputSemiProducts',
+        inputFinalProduct = 'inputFinalProduct',
+        outputFinalProduct = 'outputFinalProduct',
         /**
          * Processing action repacked outputs when using output final product
          */
         repackedOutputFinalProducts = 'repackedOutputFinalProducts',
+        /**
+         * Processing action maximum output weight when repacked outputs for final product is set to 'true'
+         */
+        maxOutputWeight = 'maxOutputWeight',
+        qrCodeForFinalProduct = 'qrCodeForFinalProduct',
+        /**
+         * Processing action type
+         */
+        type = 'type',
+        /**
+         * Processing action public timeline icon type
+         */
+        publicTimelineIconType = 'publicTimelineIconType',
+        /**
+         * Denoting if this processing action is Transfer or Quote of a Final product
+         */
+        finalProductAction = 'finalProductAction',
+        /**
+         * List of value chains for this processing action
+         */
+        valueChains = 'valueChains',
         /**
          * Processing action required document types
          */
@@ -192,25 +207,13 @@ export namespace ApiProcessingAction {
          */
         requiredEvidenceFields = 'requiredEvidenceFields',
         /**
-         * Sort order number. Lower number means first
-         */
-        sortOrder = 'sortOrder',
-        /**
          * List of facilities where this processing starts
          */
         supportedFacilities = 'supportedFacilities',
         /**
          * Processing action translations
          */
-        translations = 'translations',
-        /**
-         * Processing action type
-         */
-        type = 'type',
-        /**
-         * List of value chains for this processing action
-         */
-        valueChains = 'valueChains'
+        translations = 'translations'
     }
 
     /**
@@ -224,17 +227,6 @@ export namespace ApiProcessingAction {
     }
 
     /**
-     * All possible values of publicTimelineIconType.
-     */
-    export enum PublicTimelineIconTypeEnum {
-        SHIP = 'SHIP',
-        LEAF = 'LEAF',
-        WAREHOUSE = 'WAREHOUSE',
-        QRCODE = 'QRCODE',
-        OTHER = 'OTHER'
-    }
-
-    /**
      * All possible values of type.
      */
     export enum TypeEnum {
@@ -245,6 +237,17 @@ export namespace ApiProcessingAction {
         GENERATEQRCODE = 'GENERATE_QR_CODE'
     }
 
+    /**
+     * All possible values of publicTimelineIconType.
+     */
+    export enum PublicTimelineIconTypeEnum {
+        SHIP = 'SHIP',
+        LEAF = 'LEAF',
+        WAREHOUSE = 'WAREHOUSE',
+        QRCODE = 'QRCODE',
+        OTHER = 'OTHER'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -252,102 +255,10 @@ export namespace ApiProcessingAction {
             classname: 'ApiProcessingAction',
             vars: [
                 {
-                    metadata: ApiCompanyBase.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'company',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'ApiCompanyBase',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiCompanyBase'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'description',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'estimatedOutputQuantityPerUnit',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'finalProductAction',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'id',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiFinalProduct.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'inputFinalProduct',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'ApiFinalProduct',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiFinalProduct'
-                },
-                {
-                    metadata: ApiSemiProduct.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'inputSemiProduct',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'ApiSemiProduct',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiSemiProduct'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProcessingAction.LanguageEnum',
-                    required: false,
-                    name: 'language',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'maxOutputWeight',
                     classname: 'ApiProcessingAction',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -366,28 +277,38 @@ export namespace ApiProcessingAction {
                     complexType: ''
                 },
                 {
-                    metadata: ApiFinalProduct.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'outputFinalProduct',
+                    name: 'description',
                     classname: 'ApiProcessingAction',
-                    dataType: 'ApiFinalProduct',
-                    isPrimitiveType: false,
+                    dataType: 'string',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiFinalProduct'
+                    complexType: ''
                 },
                 {
-                    metadata: ApiProcessingActionOutputSemiProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProcessingAction.LanguageEnum',
+                    required: false,
+                    name: 'language',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'outputSemiProducts',
+                    name: 'sortOrder',
                     classname: 'ApiProcessingAction',
-                    dataType: 'Array&lt;ApiProcessingActionOutputSemiProduct&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProcessingActionOutputSemiProduct'
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
@@ -402,12 +323,11 @@ export namespace ApiProcessingAction {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProcessingAction.PublicTimelineIconTypeEnum',
+                    isEnum: false,
                     required: false,
-                    name: 'publicTimelineIconType',
+                    name: 'estimatedOutputQuantityPerUnit',
                     classname: 'ApiProcessingAction',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -435,11 +355,59 @@ export namespace ApiProcessingAction {
                     complexType: ''
                 },
                 {
+                    metadata: ApiCompanyBase.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'company',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'ApiCompanyBase',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCompanyBase'
+                },
+                {
+                    metadata: ApiSemiProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'inputSemiProduct',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'ApiSemiProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiSemiProduct'
+                },
+                {
+                    metadata: ApiProcessingActionOutputSemiProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'outputSemiProducts',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'Array&lt;ApiProcessingActionOutputSemiProduct&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProcessingActionOutputSemiProduct'
+                },
+                {
                     metadata: ApiFinalProduct.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'qrCodeForFinalProduct',
+                    name: 'inputFinalProduct',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'ApiFinalProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFinalProduct'
+                },
+                {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'outputFinalProduct',
                     classname: 'ApiProcessingAction',
                     dataType: 'ApiFinalProduct',
                     isPrimitiveType: false,
@@ -456,6 +424,76 @@ export namespace ApiProcessingAction {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'maxOutputWeight',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'qrCodeForFinalProduct',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'ApiFinalProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFinalProduct'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProcessingAction.TypeEnum',
+                    required: false,
+                    name: 'type',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProcessingAction.PublicTimelineIconTypeEnum',
+                    required: false,
+                    name: 'publicTimelineIconType',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'finalProductAction',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiValueChain.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'valueChains',
+                    classname: 'ApiProcessingAction',
+                    dataType: 'Array&lt;ApiValueChain&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiValueChain'
                 },
                 {
                     metadata: ApiProcessingEvidenceType.formMetadata,
@@ -482,17 +520,6 @@ export namespace ApiProcessingAction {
                     complexType: 'ApiProcessingEvidenceField'
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'sortOrder',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiFacility.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -516,81 +543,57 @@ export namespace ApiProcessingAction {
                     isListContainer: true,
                     complexType: 'ApiProcessingActionTranslation'
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProcessingAction.TypeEnum',
-                    required: false,
-                    name: 'type',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiValueChain.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'valueChains',
-                    classname: 'ApiProcessingAction',
-                    dataType: 'Array&lt;ApiValueChain&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiValueChain'
-                },
             ],
             validators: {
-                company: [
-                ],
-                description: [
-                ],
-                estimatedOutputQuantityPerUnit: [
-                ],
-                finalProductAction: [
-                ],
                 id: [
-                ],
-                inputFinalProduct: [
-                ],
-                inputSemiProduct: [
-                ],
-                language: [
-                ],
-                maxOutputWeight: [
                 ],
                 name: [
                 ],
-                outputFinalProduct: [
+                description: [
                 ],
-                outputSemiProducts: [
+                language: [
+                ],
+                sortOrder: [
                 ],
                 prefix: [
                 ],
-                publicTimelineIconType: [
+                estimatedOutputQuantityPerUnit: [
                 ],
                 publicTimelineLabel: [
                 ],
                 publicTimelineLocation: [
                 ],
-                qrCodeForFinalProduct: [
+                company: [
+                ],
+                inputSemiProduct: [
+                ],
+                outputSemiProducts: [
+                ],
+                inputFinalProduct: [
+                ],
+                outputFinalProduct: [
                 ],
                 repackedOutputFinalProducts: [
+                ],
+                maxOutputWeight: [
+                ],
+                qrCodeForFinalProduct: [
+                ],
+                type: [
+                ],
+                publicTimelineIconType: [
+                ],
+                finalProductAction: [
+                ],
+                valueChains: [
                 ],
                 requiredDocumentTypes: [
                 ],
                 requiredEvidenceFields: [
                 ],
-                sortOrder: [
-                ],
                 supportedFacilities: [
                 ],
                 translations: [
-                ],
-                type: [
-                ],
-                valueChains: [
                 ],
             }
         }
@@ -599,46 +602,25 @@ export namespace ApiProcessingAction {
   // export const ApiProcessingActionValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               company: {
-  //                   validators: []
-  //               },
-  //               description: {
-  //                   validators: []
-  //               },
-  //               estimatedOutputQuantityPerUnit: {
-  //                   validators: []
-  //               },
-  //               finalProductAction: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               inputFinalProduct: {
-  //                   validators: []
-  //               },
-  //               inputSemiProduct: {
-  //                   validators: []
-  //               },
-  //               language: {
-  //                   validators: []
-  //               },
-  //               maxOutputWeight: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               outputFinalProduct: {
+  //               description: {
   //                   validators: []
   //               },
-  //               outputSemiProducts: {
+  //               language: {
+  //                   validators: []
+  //               },
+  //               sortOrder: {
   //                   validators: []
   //               },
   //               prefix: {
   //                   validators: []
   //               },
-  //               publicTimelineIconType: {
+  //               estimatedOutputQuantityPerUnit: {
   //                   validators: []
   //               },
   //               publicTimelineLabel: {
@@ -647,10 +629,40 @@ export namespace ApiProcessingAction {
   //               publicTimelineLocation: {
   //                   validators: []
   //               },
-  //               qrCodeForFinalProduct: {
+  //               company: {
+  //                   validators: []
+  //               },
+  //               inputSemiProduct: {
+  //                   validators: []
+  //               },
+  //               outputSemiProducts: {
+  //                   validators: []
+  //               },
+  //               inputFinalProduct: {
+  //                   validators: []
+  //               },
+  //               outputFinalProduct: {
   //                   validators: []
   //               },
   //               repackedOutputFinalProducts: {
+  //                   validators: []
+  //               },
+  //               maxOutputWeight: {
+  //                   validators: []
+  //               },
+  //               qrCodeForFinalProduct: {
+  //                   validators: []
+  //               },
+  //               type: {
+  //                   validators: []
+  //               },
+  //               publicTimelineIconType: {
+  //                   validators: []
+  //               },
+  //               finalProductAction: {
+  //                   validators: []
+  //               },
+  //               valueChains: {
   //                   validators: []
   //               },
   //               requiredDocumentTypes: {
@@ -659,19 +671,10 @@ export namespace ApiProcessingAction {
   //               requiredEvidenceFields: {
   //                   validators: []
   //               },
-  //               sortOrder: {
-  //                   validators: []
-  //               },
   //               supportedFacilities: {
   //                   validators: []
   //               },
   //               translations: {
-  //                   validators: []
-  //               },
-  //               type: {
-  //                   validators: []
-  //               },
-  //               valueChains: {
   //                   validators: []
   //               },
   //     }

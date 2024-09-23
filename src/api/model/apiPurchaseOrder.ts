@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -28,42 +28,42 @@ import { ApiUserCustomer } from './apiUserCustomer';
 
 export interface ApiPurchaseOrder { 
     /**
-     * Activity proofs
+     * Entity id
      */
-    activityProofs?: Array<ApiActivityProof>;
+    id?: number;
+    /**
+     * Timestamp indicates when purchase order have been updated
+     */
+    updateTimestamp?: Date;
     createdBy?: ApiUser;
     /**
      * ID of the user who has created the stock order
      */
     creatorId?: number;
-    /**
-     * Currency
-     */
-    currency?: string;
+    updatedBy?: ApiUser;
     /**
      * Delivery date
      */
     deliveryTime?: string;
-    facility?: ApiFacility;
-    farmers?: Array<ApiPurchaseOrderFarmer>;
-    /**
-     * Entity id
-     */
-    id?: number;
-    /**
-     * Preferred way of payment
-     */
-    preferredWayOfPayment?: ApiPurchaseOrder.PreferredWayOfPaymentEnum;
     /**
      * Production date
      */
     productionDate?: string;
-    representativeOfProducerUserCustomer?: ApiUserCustomer;
     /**
-     * Timestamp indicates when purchase order have been updated
+     * Currency
      */
-    updateTimestamp?: Date;
-    updatedBy?: ApiUser;
+    currency?: string;
+    representativeOfProducerUserCustomer?: ApiUserCustomer;
+    farmers?: Array<ApiPurchaseOrderFarmer>;
+    /**
+     * Preferred way of payment
+     */
+    preferredWayOfPayment?: ApiPurchaseOrder.PreferredWayOfPaymentEnum;
+    facility?: ApiFacility;
+    /**
+     * Activity proofs
+     */
+    activityProofs?: Array<ApiActivityProof>;
 }
 
 /**
@@ -75,42 +75,42 @@ export namespace ApiPurchaseOrder {
      */
     export enum Properties {
         /**
-         * Activity proofs
+         * Entity id
          */
-        activityProofs = 'activityProofs',
+        id = 'id',
+        /**
+         * Timestamp indicates when purchase order have been updated
+         */
+        updateTimestamp = 'updateTimestamp',
         createdBy = 'createdBy',
         /**
          * ID of the user who has created the stock order
          */
         creatorId = 'creatorId',
-        /**
-         * Currency
-         */
-        currency = 'currency',
+        updatedBy = 'updatedBy',
         /**
          * Delivery date
          */
         deliveryTime = 'deliveryTime',
-        facility = 'facility',
-        farmers = 'farmers',
-        /**
-         * Entity id
-         */
-        id = 'id',
-        /**
-         * Preferred way of payment
-         */
-        preferredWayOfPayment = 'preferredWayOfPayment',
         /**
          * Production date
          */
         productionDate = 'productionDate',
-        representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
         /**
-         * Timestamp indicates when purchase order have been updated
+         * Currency
          */
-        updateTimestamp = 'updateTimestamp',
-        updatedBy = 'updatedBy'
+        currency = 'currency',
+        representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
+        farmers = 'farmers',
+        /**
+         * Preferred way of payment
+         */
+        preferredWayOfPayment = 'preferredWayOfPayment',
+        facility = 'facility',
+        /**
+         * Activity proofs
+         */
+        activityProofs = 'activityProofs'
     }
 
     /**
@@ -132,16 +132,26 @@ export namespace ApiPurchaseOrder {
             classname: 'ApiPurchaseOrder',
             vars: [
                 {
-                    metadata: ApiActivityProof.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'activityProofs',
+                    name: 'id',
                     classname: 'ApiPurchaseOrder',
-                    dataType: 'Array&lt;ApiActivityProof&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiActivityProof'
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updateTimestamp',
+                    classname: 'ApiPurchaseOrder',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     metadata: ApiUser.formMetadata,
@@ -167,15 +177,16 @@ export namespace ApiPurchaseOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiUser.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'currency',
+                    name: 'updatedBy',
                     classname: 'ApiPurchaseOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ApiUser'
                 },
                 {
                     isReadOnly: false,
@@ -189,46 +200,10 @@ export namespace ApiPurchaseOrder {
                     complexType: ''
                 },
                 {
-                    metadata: ApiFacility.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'facility',
-                    classname: 'ApiPurchaseOrder',
-                    dataType: 'ApiFacility',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiFacility'
-                },
-                {
-                    metadata: ApiPurchaseOrderFarmer.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'farmers',
-                    classname: 'ApiPurchaseOrder',
-                    dataType: 'Array&lt;ApiPurchaseOrderFarmer&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiPurchaseOrderFarmer'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiPurchaseOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiPurchaseOrder.PreferredWayOfPaymentEnum',
-                    required: false,
-                    name: 'preferredWayOfPayment',
+                    name: 'productionDate',
                     classname: 'ApiPurchaseOrder',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -239,7 +214,7 @@ export namespace ApiPurchaseOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'productionDate',
+                    name: 'currency',
                     classname: 'ApiPurchaseOrder',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -259,55 +234,80 @@ export namespace ApiPurchaseOrder {
                     complexType: 'ApiUserCustomer'
                 },
                 {
+                    metadata: ApiPurchaseOrderFarmer.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'updateTimestamp',
+                    name: 'farmers',
                     classname: 'ApiPurchaseOrder',
-                    dataType: 'Date',
+                    dataType: 'Array&lt;ApiPurchaseOrderFarmer&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiPurchaseOrderFarmer'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiPurchaseOrder.PreferredWayOfPaymentEnum',
+                    required: false,
+                    name: 'preferredWayOfPayment',
+                    classname: 'ApiPurchaseOrder',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
                 {
-                    metadata: ApiUser.formMetadata,
+                    metadata: ApiFacility.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'updatedBy',
+                    name: 'facility',
                     classname: 'ApiPurchaseOrder',
-                    dataType: 'ApiUser',
+                    dataType: 'ApiFacility',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiUser'
+                    complexType: 'ApiFacility'
+                },
+                {
+                    metadata: ApiActivityProof.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'activityProofs',
+                    classname: 'ApiPurchaseOrder',
+                    dataType: 'Array&lt;ApiActivityProof&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiActivityProof'
                 },
             ],
             validators: {
-                activityProofs: [
+                id: [
+                ],
+                updateTimestamp: [
                 ],
                 createdBy: [
                 ],
                 creatorId: [
                 ],
-                currency: [
+                updatedBy: [
                 ],
                 deliveryTime: [
                 ],
-                facility: [
-                ],
-                farmers: [
-                ],
-                id: [
-                ],
-                preferredWayOfPayment: [
-                ],
                 productionDate: [
+                ],
+                currency: [
                 ],
                 representativeOfProducerUserCustomer: [
                 ],
-                updateTimestamp: [
+                farmers: [
                 ],
-                updatedBy: [
+                preferredWayOfPayment: [
+                ],
+                facility: [
+                ],
+                activityProofs: [
                 ],
             }
         }
@@ -316,7 +316,10 @@ export namespace ApiPurchaseOrder {
   // export const ApiPurchaseOrderValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               activityProofs: {
+  //               id: {
+  //                   validators: []
+  //               },
+  //               updateTimestamp: {
   //                   validators: []
   //               },
   //               createdBy: {
@@ -325,34 +328,31 @@ export namespace ApiPurchaseOrder {
   //               creatorId: {
   //                   validators: []
   //               },
-  //               currency: {
+  //               updatedBy: {
   //                   validators: []
   //               },
   //               deliveryTime: {
   //                   validators: []
   //               },
-  //               facility: {
-  //                   validators: []
-  //               },
-  //               farmers: {
-  //                   validators: []
-  //               },
-  //               id: {
-  //                   validators: []
-  //               },
-  //               preferredWayOfPayment: {
-  //                   validators: []
-  //               },
   //               productionDate: {
+  //                   validators: []
+  //               },
+  //               currency: {
   //                   validators: []
   //               },
   //               representativeOfProducerUserCustomer: {
   //                   validators: []
   //               },
-  //               updateTimestamp: {
+  //               farmers: {
   //                   validators: []
   //               },
-  //               updatedBy: {
+  //               preferredWayOfPayment: {
+  //                   validators: []
+  //               },
+  //               facility: {
+  //                   validators: []
+  //               },
+  //               activityProofs: {
   //                   validators: []
   //               },
   //     }

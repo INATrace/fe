@@ -180,7 +180,7 @@ export class ValueChainDetailComponent implements OnInit {
   private getValueChain() {
     this.globalEventsManager.showLoading(true);
     const id = this.route.snapshot.paramMap.get('id');
-    this.valueChainService.getValueChainUsingGET(Number(id))
+    this.valueChainService.getValueChain(Number(id))
       .pipe(
         finalize(() => this.globalEventsManager.showLoading(false))
       )
@@ -250,7 +250,7 @@ export class ValueChainDetailComponent implements OnInit {
   private createOrUpdateValueChain(): void {
 
     this.globalEventsManager.showLoading(true);
-    this.valueChainService.createOrUpdateValueChainUsingPUT(this.valueChainDetailForm.value)
+    this.valueChainService.createOrUpdateValueChain(this.valueChainDetailForm.value)
       .pipe(
         finalize(() => this.globalEventsManager.showLoading(false))
       )

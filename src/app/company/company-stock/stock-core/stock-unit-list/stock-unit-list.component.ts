@@ -317,9 +317,9 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
 
     if (this.mode === 'PURCHASE') {
       if (!facilityId) {
-        return this.stockOrderControllerService.getStockOrderListByCompanyIdUsingGETByMap({ ...params, companyId: this.companyId });
+        return this.stockOrderControllerService.getStockOrderListByCompanyIdByMap({ ...params, companyId: this.companyId });
       }
-      return this.stockOrderControllerService.getStockOrderListByFacilityIdUsingGETByMap({ ...params, facilityId });
+      return this.stockOrderControllerService.getStockOrderListByFacilityIdByMap({ ...params, facilityId });
     }
 
     if (this.mode === 'GENERAL') {
@@ -333,7 +333,7 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
           status: StatusEnum.OK
         });
       }
-      return this.stockOrderControllerService.getStockOrderListByFacilityIdUsingGETByMap({ ...params, facilityId });
+      return this.stockOrderControllerService.getStockOrderListByFacilityIdByMap({ ...params, facilityId });
     }
   }
 
@@ -446,9 +446,9 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
 
       if (order.orderType === 'PROCESSING_ORDER' || order.orderType === 'TRANSFER_ORDER' || order.orderType === 'GENERAL_ORDER') {
 
-        const stockOrderResp = await this.stockOrderControllerService.getStockOrderUsingGET(order.id, true).pipe(take(1)).toPromise();
+        const stockOrderResp = await this.stockOrderControllerService.getStockOrder(order.id, true).pipe(take(1)).toPromise();
         if (stockOrderResp && stockOrderResp.status === 'OK' && stockOrderResp.data) {
-          const procOrderResp = await this.processingOrderController.deleteProcessingOrderUsingDELETE(stockOrderResp.data.processingOrder.id).pipe(take(1)).toPromise();
+          const procOrderResp = await this.processingOrderController.deleteProcessingOrder(stockOrderResp.data.processingOrder.id).pipe(take(1)).toPromise();
           if (procOrderResp && procOrderResp.status === 'OK') {
             this.reloadPingList$.next(true);
           }
@@ -458,7 +458,7 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
       }
 
       // Remove purchase order
-      const response = await this.stockOrderControllerService.deleteStockOrderUsingDELETE(order.id).pipe(take(1)).toPromise();
+      const response = await this.stockOrderControllerService.deleteStockOrder(order.id).pipe(take(1)).toPromise();
       if (response && response.status === StatusEnum.OK) {
         this.reloadPingList$.next(true);
         this.clearCBs();
@@ -690,7 +690,7 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
 
   async exportGeoData(order: ApiStockOrder) {
     this.globalEventsManager.showLoading(true);
-    const res = await this.stockOrderControllerService.exportGeoDataUsingGET(order.id)
+    const res = await this.stockOrderControllerService.exportGeoData(order.id)
       .pipe(
         take(1),
         finalize(() => {

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,17 +21,20 @@
 import { ApiDocument } from './apiDocument';
 
 
+/**
+ * Data sharing agreements
+ */
 
 export interface ApiProductDataSharingAgreement { 
+    /**
+     * Entity id
+     */
+    id?: number;
     /**
      * Description of this document
      */
     description?: string;
     document?: ApiDocument;
-    /**
-     * Entity id
-     */
-    id?: number;
 }
 
 /**
@@ -43,14 +46,14 @@ export namespace ApiProductDataSharingAgreement {
      */
     export enum Properties {
         /**
+         * Entity id
+         */
+        id = 'id',
+        /**
          * Description of this document
          */
         description = 'description',
-        document = 'document',
-        /**
-         * Entity id
-         */
-        id = 'id'
+        document = 'document'
     }
 
 
@@ -59,6 +62,17 @@ export namespace ApiProductDataSharingAgreement {
             metadata: formMetadata,
             classname: 'ApiProductDataSharingAgreement',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiProductDataSharingAgreement',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -82,24 +96,13 @@ export namespace ApiProductDataSharingAgreement {
                     isListContainer: false,
                     complexType: 'ApiDocument'
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiProductDataSharingAgreement',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
+                id: [
+                ],
                 description: [
                 ],
                 document: [
-                ],
-                id: [
                 ],
             }
         }
@@ -108,13 +111,13 @@ export namespace ApiProductDataSharingAgreement {
   // export const ApiProductDataSharingAgreementValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               id: {
+  //                   validators: []
+  //               },
   //               description: {
   //                   validators: []
   //               },
   //               document: {
-  //                   validators: []
-  //               },
-  //               id: {
   //                   validators: []
   //               },
   //     }

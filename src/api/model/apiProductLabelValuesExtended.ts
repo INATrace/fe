@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,58 +23,61 @@ import { ApiCompanyDocument } from './apiCompanyDocument';
 import { ApiProductLabelFieldValue } from './apiProductLabelFieldValue';
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiProductLabelValuesExtended { 
-    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
-    /**
-     * Number of true 'checkAuthenticity' fields over all of batches
-     */
-    checkAuthenticityCount?: number;
-    /**
-     * Fields
-     */
-    fields?: Array<ApiProductLabelFieldValue>;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * Label language
-     */
-    language?: ApiProductLabelValuesExtended.LanguageEnum;
-    /**
-     * Number of batches
-     */
-    numberOfBatches?: number;
-    /**
-     * Meet the farmers photos
-     */
-    photosMeetTheFarmers?: Array<ApiCompanyDocument>;
-    /**
      * Product id
      */
     productId?: number;
-    /**
-     * Production records
-     */
-    productionRecords?: Array<ApiCompanyDocument>;
     /**
      * Product label status
      */
     status?: ApiProductLabelValuesExtended.StatusEnum;
     /**
+     * Product label uuid (for url)
+     */
+    uuid?: string;
+    /**
      * label title
      */
     title?: string;
     /**
+     * Label language
+     */
+    language?: ApiProductLabelValuesExtended.LanguageEnum;
+    /**
+     * Fields
+     */
+    fields?: Array<ApiProductLabelFieldValue>;
+    /**
+     * Number of batches
+     */
+    numberOfBatches?: number;
+    /**
+     * Number of true 'checkAuthenticity' fields over all of batches
+     */
+    checkAuthenticityCount?: number;
+    /**
      * Number of true 'traceOrigin' fields over all of batches
      */
     traceOriginCount?: number;
-    /**
-     * Product label uuid (for url)
-     */
-    uuid?: string;
+    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
     videoMeetTheFarmers?: ApiCompanyDocument;
+    /**
+     * Meet the farmers photos
+     */
+    photosMeetTheFarmers?: Array<ApiCompanyDocument>;
+    /**
+     * Production records
+     */
+    productionRecords?: Array<ApiCompanyDocument>;
 }
 
 /**
@@ -85,56 +88,64 @@ export namespace ApiProductLabelValuesExtended {
      * All properties of ApiProductLabelValuesExtended.
      */
     export enum Properties {
-        businessToCustomerSettings = 'businessToCustomerSettings',
-        /**
-         * Number of true 'checkAuthenticity' fields over all of batches
-         */
-        checkAuthenticityCount = 'checkAuthenticityCount',
-        /**
-         * Fields
-         */
-        fields = 'fields',
         /**
          * Entity id
          */
         id = 'id',
         /**
-         * Label language
-         */
-        language = 'language',
-        /**
-         * Number of batches
-         */
-        numberOfBatches = 'numberOfBatches',
-        /**
-         * Meet the farmers photos
-         */
-        photosMeetTheFarmers = 'photosMeetTheFarmers',
-        /**
          * Product id
          */
         productId = 'productId',
-        /**
-         * Production records
-         */
-        productionRecords = 'productionRecords',
         /**
          * Product label status
          */
         status = 'status',
         /**
+         * Product label uuid (for url)
+         */
+        uuid = 'uuid',
+        /**
          * label title
          */
         title = 'title',
         /**
+         * Label language
+         */
+        language = 'language',
+        /**
+         * Fields
+         */
+        fields = 'fields',
+        /**
+         * Number of batches
+         */
+        numberOfBatches = 'numberOfBatches',
+        /**
+         * Number of true 'checkAuthenticity' fields over all of batches
+         */
+        checkAuthenticityCount = 'checkAuthenticityCount',
+        /**
          * Number of true 'traceOrigin' fields over all of batches
          */
         traceOriginCount = 'traceOriginCount',
+        businessToCustomerSettings = 'businessToCustomerSettings',
+        videoMeetTheFarmers = 'videoMeetTheFarmers',
         /**
-         * Product label uuid (for url)
+         * Meet the farmers photos
          */
-        uuid = 'uuid',
-        videoMeetTheFarmers = 'videoMeetTheFarmers'
+        photosMeetTheFarmers = 'photosMeetTheFarmers',
+        /**
+         * Production records
+         */
+        productionRecords = 'productionRecords'
+    }
+
+    /**
+     * All possible values of status.
+     */
+    export enum StatusEnum {
+        UNPUBLISHED = 'UNPUBLISHED',
+        PUBLISHED = 'PUBLISHED'
     }
 
     /**
@@ -147,14 +158,6 @@ export namespace ApiProductLabelValuesExtended {
         ES = 'ES'
     }
 
-    /**
-     * All possible values of status.
-     */
-    export enum StatusEnum {
-        UNPUBLISHED = 'UNPUBLISHED',
-        PUBLISHED = 'PUBLISHED'
-    }
-
 
     export function formMetadata() {
         return  {
@@ -162,24 +165,69 @@ export namespace ApiProductLabelValuesExtended {
             classname: 'ApiProductLabelValuesExtended',
             vars: [
                 {
-                    metadata: ApiBusinessToCustomerSettings.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'businessToCustomerSettings',
+                    name: 'id',
                     classname: 'ApiProductLabelValuesExtended',
-                    dataType: 'ApiBusinessToCustomerSettings',
-                    isPrimitiveType: false,
+                    dataType: 'number',
+                    isPrimitiveType: true,
                     isListContainer: false,
-                    complexType: 'ApiBusinessToCustomerSettings'
+                    complexType: ''
                 },
                 {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'checkAuthenticityCount',
+                    name: 'productId',
                     classname: 'ApiProductLabelValuesExtended',
                     dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelValuesExtended.StatusEnum',
+                    required: false,
+                    name: 'status',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'uuid',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'title',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelValuesExtended.LanguageEnum',
+                    required: false,
+                    name: 'language',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -200,29 +248,6 @@ export namespace ApiProductLabelValuesExtended {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
-                    classname: 'ApiProductLabelValuesExtended',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProductLabelValuesExtended.LanguageEnum',
-                    required: false,
-                    name: 'language',
-                    classname: 'ApiProductLabelValuesExtended',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'numberOfBatches',
                     classname: 'ApiProductLabelValuesExtended',
                     dataType: 'number',
@@ -231,59 +256,12 @@ export namespace ApiProductLabelValuesExtended {
                     complexType: ''
                 },
                 {
-                    metadata: ApiCompanyDocument.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'photosMeetTheFarmers',
-                    classname: 'ApiProductLabelValuesExtended',
-                    dataType: 'Array&lt;ApiCompanyDocument&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiCompanyDocument'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'productId',
+                    name: 'checkAuthenticityCount',
                     classname: 'ApiProductLabelValuesExtended',
                     dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiCompanyDocument.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'productionRecords',
-                    classname: 'ApiProductLabelValuesExtended',
-                    dataType: 'Array&lt;ApiCompanyDocument&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiCompanyDocument'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProductLabelValuesExtended.StatusEnum',
-                    required: false,
-                    name: 'status',
-                    classname: 'ApiProductLabelValuesExtended',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'title',
-                    classname: 'ApiProductLabelValuesExtended',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -300,15 +278,16 @@ export namespace ApiProductLabelValuesExtended {
                     complexType: ''
                 },
                 {
+                    metadata: ApiBusinessToCustomerSettings.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'uuid',
+                    name: 'businessToCustomerSettings',
                     classname: 'ApiProductLabelValuesExtended',
-                    dataType: 'string',
-                    isPrimitiveType: true,
+                    dataType: 'ApiBusinessToCustomerSettings',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ApiBusinessToCustomerSettings'
                 },
                 {
                     metadata: ApiCompanyDocument.formMetadata,
@@ -322,35 +301,61 @@ export namespace ApiProductLabelValuesExtended {
                     isListContainer: false,
                     complexType: 'ApiCompanyDocument'
                 },
+                {
+                    metadata: ApiCompanyDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'photosMeetTheFarmers',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'Array&lt;ApiCompanyDocument&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCompanyDocument'
+                },
+                {
+                    metadata: ApiCompanyDocument.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productionRecords',
+                    classname: 'ApiProductLabelValuesExtended',
+                    dataType: 'Array&lt;ApiCompanyDocument&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCompanyDocument'
+                },
             ],
             validators: {
-                businessToCustomerSettings: [
-                ],
-                checkAuthenticityCount: [
-                ],
-                fields: [
-                ],
                 id: [
-                ],
-                language: [
-                ],
-                numberOfBatches: [
-                ],
-                photosMeetTheFarmers: [
                 ],
                 productId: [
                 ],
-                productionRecords: [
-                ],
                 status: [
-                ],
-                title: [
-                ],
-                traceOriginCount: [
                 ],
                 uuid: [
                 ],
+                title: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                language: [
+                ],
+                fields: [
+                ],
+                numberOfBatches: [
+                ],
+                checkAuthenticityCount: [
+                ],
+                traceOriginCount: [
+                ],
+                businessToCustomerSettings: [
+                ],
                 videoMeetTheFarmers: [
+                ],
+                photosMeetTheFarmers: [
+                ],
+                productionRecords: [
                 ],
             }
         }
@@ -359,46 +364,46 @@ export namespace ApiProductLabelValuesExtended {
   // export const ApiProductLabelValuesExtendedValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               businessToCustomerSettings: {
-  //                   validators: []
-  //               },
-  //               checkAuthenticityCount: {
-  //                   validators: []
-  //               },
-  //               fields: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               language: {
-  //                   validators: []
-  //               },
-  //               numberOfBatches: {
-  //                   validators: []
-  //               },
-  //               photosMeetTheFarmers: {
   //                   validators: []
   //               },
   //               productId: {
   //                   validators: []
   //               },
-  //               productionRecords: {
-  //                   validators: []
-  //               },
   //               status: {
-  //                   validators: []
-  //               },
-  //               title: {
-  //                   validators: []
-  //               },
-  //               traceOriginCount: {
   //                   validators: []
   //               },
   //               uuid: {
   //                   validators: []
   //               },
+  //               title: {
+  //                   validators: []
+  //               },
+  //               language: {
+  //                   validators: []
+  //               },
+  //               fields: {
+  //                   validators: []
+  //               },
+  //               numberOfBatches: {
+  //                   validators: []
+  //               },
+  //               checkAuthenticityCount: {
+  //                   validators: []
+  //               },
+  //               traceOriginCount: {
+  //                   validators: []
+  //               },
+  //               businessToCustomerSettings: {
+  //                   validators: []
+  //               },
   //               videoMeetTheFarmers: {
+  //                   validators: []
+  //               },
+  //               photosMeetTheFarmers: {
+  //                   validators: []
+  //               },
+  //               productionRecords: {
   //                   validators: []
   //               },
   //     }

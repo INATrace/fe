@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -35,66 +35,11 @@ import { ApiUser } from './apiUser';
 import { ApiUserCustomer } from './apiUserCustomer';
 
 
+/**
+ * Source stock order
+ */
 
 export interface ApiStockOrder { 
-    /**
-     * Activity proofs
-     */
-    activityProofs?: Array<ApiActivityProof>;
-    available?: boolean;
-    /**
-     * Available quantity
-     */
-    availableQuantity?: number;
-    /**
-     * Balance
-     */
-    balance?: number;
-    /**
-     * Comments
-     */
-    comments?: string;
-    company?: ApiCompany;
-    consumerCompanyCustomer?: ApiCompanyCustomer;
-    /**
-     * Cost
-     */
-    cost?: number;
-    createdBy?: ApiUser;
-    /**
-     * Timestamp indicates when stock order have been created
-     */
-    creationTimestamp?: Date;
-    /**
-     * ID of the user who has created the stock order
-     */
-    creatorId?: number;
-    /**
-     * Currency
-     */
-    currency?: string;
-    /**
-     * Currency for price per unit for end customer
-     */
-    currencyForEndCustomer?: string;
-    /**
-     * Damaged price deduction
-     */
-    damagedPriceDeduction?: number;
-    /**
-     * Damaged weight deduction
-     */
-    damagedWeightDeduction?: number;
-    /**
-     * Delivery time
-     */
-    deliveryTime?: string;
-    facility?: ApiFacility;
-    finalProduct?: ApiFinalProduct;
-    /**
-     * Fulfilled quantity
-     */
-    fulfilledQuantity?: number;
     /**
      * Entity id
      */
@@ -104,84 +49,26 @@ export interface ApiStockOrder {
      */
     identifier?: string;
     /**
-     * Internal LOT number
+     * Timestamp indicates when stock order have been created
      */
-    internalLotNumber?: string;
+    creationTimestamp?: Date;
     /**
-     * Is stock available
+     * Timestamp indicates when stock order have been updated
      */
-    isAvailable?: boolean;
+    updateTimestamp?: Date;
+    createdBy?: ApiUser;
+    updatedBy?: ApiUser;
     /**
-     * The prefix for the LOT name - retrieved from the Processing action
+     * ID of the user who has created the stock order
      */
-    lotPrefix?: string;
-    measureUnitType?: ApiMeasureUnitType;
-    openOrder?: boolean;
-    /**
-     * User entered Order ID when placing Quote order
-     */
-    orderId?: string;
-    /**
-     * Order type
-     */
-    orderType?: ApiStockOrder.OrderTypeEnum;
-    /**
-     * Organic
-     */
-    organic?: boolean;
-    /**
-     * Other processing evidence documents - evidence types that can be provided but are not mandatory
-     */
-    otherEvidenceDocuments?: Array<ApiStockOrderEvidenceTypeValue>;
-    /**
-     * Total quantity of this stock order is not within the expected range
-     */
-    outQuantityNotInRange?: boolean;
-    /**
-     * Paid
-     */
-    paid?: number;
-    /**
-     * Payments for stock order
-     */
-    payments?: Array<ApiPayment>;
-    /**
-     * Preferred way of payment
-     */
-    preferredWayOfPayment?: ApiStockOrder.PreferredWayOfPaymentEnum;
-    /**
-     * Option to determine price later after taking delivery
-     */
-    priceDeterminedLater?: boolean;
-    /**
-     * Price per unit
-     */
-    pricePerUnit?: number;
-    /**
-     * Price per unit for end customer
-     */
-    pricePerUnitForEndCustomer?: number;
-    processingOrder?: ApiProcessingOrder;
-    producerUserCustomer?: ApiUserCustomer;
-    productOrder?: ApiProductOrder;
-    /**
-     * Production date
-     */
-    productionDate?: string;
-    productionLocation?: ApiStockOrderLocation;
-    purchaseOrder?: boolean;
-    /**
-     * Generated UUID tag for this stock order QR code
-     */
-    qrCodeTag?: string;
-    qrCodeTagFinalProduct?: ApiFinalProduct;
-    quoteCompany?: ApiCompany;
-    quoteFacility?: ApiFacility;
-    /**
-     * The ID from which this repacked stock order was created; This ID is generated and provided by the client; Only applicable for repacked stock orders
-     */
-    repackedOriginStockOrderId?: string;
+    creatorId?: number;
     representativeOfProducerUserCustomer?: ApiUserCustomer;
+    producerUserCustomer?: ApiUserCustomer;
+    productionLocation?: ApiStockOrderLocation;
+    /**
+     * Activity proofs
+     */
+    activityProofs?: Array<ApiActivityProof>;
     /**
      * Processing evidence fields stored values for this stock order
      */
@@ -191,31 +78,147 @@ export interface ApiStockOrder {
      */
     requiredEvidenceTypeValues?: Array<ApiStockOrderEvidenceTypeValue>;
     /**
-     * SAC number
+     * Other processing evidence documents - evidence types that can be provided but are not mandatory
      */
-    sacNumber?: number;
+    otherEvidenceDocuments?: Array<ApiStockOrderEvidenceTypeValue>;
     semiProduct?: ApiSemiProduct;
     /**
-     * Tare
+     * Option to determine price later after taking delivery
      */
-    tare?: number;
-    /**
-     * Total gross quantity
-     */
-    totalGrossQuantity?: number;
+    priceDeterminedLater?: boolean;
+    finalProduct?: ApiFinalProduct;
+    facility?: ApiFacility;
+    company?: ApiCompany;
+    measureUnitType?: ApiMeasureUnitType;
     /**
      * Total quantity
      */
     totalQuantity?: number;
     /**
-     * Timestamp indicates when stock order have been updated
+     * Total gross quantity
      */
-    updateTimestamp?: Date;
-    updatedBy?: ApiUser;
+    totalGrossQuantity?: number;
+    /**
+     * Fulfilled quantity
+     */
+    fulfilledQuantity?: number;
+    /**
+     * Available quantity
+     */
+    availableQuantity?: number;
+    /**
+     * Is stock available
+     */
+    isAvailable?: boolean;
+    /**
+     * Total quantity of this stock order is not within the expected range
+     */
+    outQuantityNotInRange?: boolean;
+    /**
+     * Production date
+     */
+    productionDate?: string;
+    /**
+     * Delivery time
+     */
+    deliveryTime?: string;
+    productOrder?: ApiProductOrder;
+    /**
+     * User entered Order ID when placing Quote order
+     */
+    orderId?: string;
+    processingOrder?: ApiProcessingOrder;
+    /**
+     * Price per unit
+     */
+    pricePerUnit?: number;
+    /**
+     * Currency
+     */
+    currency?: string;
+    /**
+     * Order type
+     */
+    orderType?: ApiStockOrder.OrderTypeEnum;
+    /**
+     * The prefix for the LOT name - retrieved from the Processing action
+     */
+    lotPrefix?: string;
+    /**
+     * Internal LOT number
+     */
+    internalLotNumber?: string;
+    /**
+     * Comments
+     */
+    comments?: string;
     /**
      * Is women share
      */
     womenShare?: boolean;
+    /**
+     * Cost
+     */
+    cost?: number;
+    /**
+     * Paid
+     */
+    paid?: number;
+    /**
+     * Balance
+     */
+    balance?: number;
+    /**
+     * Preferred way of payment
+     */
+    preferredWayOfPayment?: ApiStockOrder.PreferredWayOfPaymentEnum;
+    /**
+     * SAC number
+     */
+    sacNumber?: number;
+    quoteFacility?: ApiFacility;
+    quoteCompany?: ApiCompany;
+    consumerCompanyCustomer?: ApiCompanyCustomer;
+    /**
+     * Price per unit for end customer
+     */
+    pricePerUnitForEndCustomer?: number;
+    /**
+     * Currency for price per unit for end customer
+     */
+    currencyForEndCustomer?: string;
+    /**
+     * Organic
+     */
+    organic?: boolean;
+    /**
+     * Tare
+     */
+    tare?: number;
+    /**
+     * Damaged price deduction
+     */
+    damagedPriceDeduction?: number;
+    /**
+     * Damaged weight deduction
+     */
+    damagedWeightDeduction?: number;
+    /**
+     * Generated UUID tag for this stock order QR code
+     */
+    qrCodeTag?: string;
+    qrCodeTagFinalProduct?: ApiFinalProduct;
+    /**
+     * Payments for stock order
+     */
+    payments?: Array<ApiPayment>;
+    /**
+     * The ID from which this repacked stock order was created; This ID is generated and provided by the client; Only applicable for repacked stock orders
+     */
+    repackedOriginStockOrderId?: string;
+    purchaseOrder?: boolean;
+    openOrder?: boolean;
+    available?: boolean;
 }
 
 /**
@@ -227,64 +230,6 @@ export namespace ApiStockOrder {
      */
     export enum Properties {
         /**
-         * Activity proofs
-         */
-        activityProofs = 'activityProofs',
-        available = 'available',
-        /**
-         * Available quantity
-         */
-        availableQuantity = 'availableQuantity',
-        /**
-         * Balance
-         */
-        balance = 'balance',
-        /**
-         * Comments
-         */
-        comments = 'comments',
-        company = 'company',
-        consumerCompanyCustomer = 'consumerCompanyCustomer',
-        /**
-         * Cost
-         */
-        cost = 'cost',
-        createdBy = 'createdBy',
-        /**
-         * Timestamp indicates when stock order have been created
-         */
-        creationTimestamp = 'creationTimestamp',
-        /**
-         * ID of the user who has created the stock order
-         */
-        creatorId = 'creatorId',
-        /**
-         * Currency
-         */
-        currency = 'currency',
-        /**
-         * Currency for price per unit for end customer
-         */
-        currencyForEndCustomer = 'currencyForEndCustomer',
-        /**
-         * Damaged price deduction
-         */
-        damagedPriceDeduction = 'damagedPriceDeduction',
-        /**
-         * Damaged weight deduction
-         */
-        damagedWeightDeduction = 'damagedWeightDeduction',
-        /**
-         * Delivery time
-         */
-        deliveryTime = 'deliveryTime',
-        facility = 'facility',
-        finalProduct = 'finalProduct',
-        /**
-         * Fulfilled quantity
-         */
-        fulfilledQuantity = 'fulfilledQuantity',
-        /**
          * Entity id
          */
         id = 'id',
@@ -293,84 +238,26 @@ export namespace ApiStockOrder {
          */
         identifier = 'identifier',
         /**
-         * Internal LOT number
+         * Timestamp indicates when stock order have been created
          */
-        internalLotNumber = 'internalLotNumber',
+        creationTimestamp = 'creationTimestamp',
         /**
-         * Is stock available
+         * Timestamp indicates when stock order have been updated
          */
-        isAvailable = 'isAvailable',
+        updateTimestamp = 'updateTimestamp',
+        createdBy = 'createdBy',
+        updatedBy = 'updatedBy',
         /**
-         * The prefix for the LOT name - retrieved from the Processing action
+         * ID of the user who has created the stock order
          */
-        lotPrefix = 'lotPrefix',
-        measureUnitType = 'measureUnitType',
-        openOrder = 'openOrder',
-        /**
-         * User entered Order ID when placing Quote order
-         */
-        orderId = 'orderId',
-        /**
-         * Order type
-         */
-        orderType = 'orderType',
-        /**
-         * Organic
-         */
-        organic = 'organic',
-        /**
-         * Other processing evidence documents - evidence types that can be provided but are not mandatory
-         */
-        otherEvidenceDocuments = 'otherEvidenceDocuments',
-        /**
-         * Total quantity of this stock order is not within the expected range
-         */
-        outQuantityNotInRange = 'outQuantityNotInRange',
-        /**
-         * Paid
-         */
-        paid = 'paid',
-        /**
-         * Payments for stock order
-         */
-        payments = 'payments',
-        /**
-         * Preferred way of payment
-         */
-        preferredWayOfPayment = 'preferredWayOfPayment',
-        /**
-         * Option to determine price later after taking delivery
-         */
-        priceDeterminedLater = 'priceDeterminedLater',
-        /**
-         * Price per unit
-         */
-        pricePerUnit = 'pricePerUnit',
-        /**
-         * Price per unit for end customer
-         */
-        pricePerUnitForEndCustomer = 'pricePerUnitForEndCustomer',
-        processingOrder = 'processingOrder',
-        producerUserCustomer = 'producerUserCustomer',
-        productOrder = 'productOrder',
-        /**
-         * Production date
-         */
-        productionDate = 'productionDate',
-        productionLocation = 'productionLocation',
-        purchaseOrder = 'purchaseOrder',
-        /**
-         * Generated UUID tag for this stock order QR code
-         */
-        qrCodeTag = 'qrCodeTag',
-        qrCodeTagFinalProduct = 'qrCodeTagFinalProduct',
-        quoteCompany = 'quoteCompany',
-        quoteFacility = 'quoteFacility',
-        /**
-         * The ID from which this repacked stock order was created; This ID is generated and provided by the client; Only applicable for repacked stock orders
-         */
-        repackedOriginStockOrderId = 'repackedOriginStockOrderId',
+        creatorId = 'creatorId',
         representativeOfProducerUserCustomer = 'representativeOfProducerUserCustomer',
+        producerUserCustomer = 'producerUserCustomer',
+        productionLocation = 'productionLocation',
+        /**
+         * Activity proofs
+         */
+        activityProofs = 'activityProofs',
         /**
          * Processing evidence fields stored values for this stock order
          */
@@ -380,31 +267,147 @@ export namespace ApiStockOrder {
          */
         requiredEvidenceTypeValues = 'requiredEvidenceTypeValues',
         /**
-         * SAC number
+         * Other processing evidence documents - evidence types that can be provided but are not mandatory
          */
-        sacNumber = 'sacNumber',
+        otherEvidenceDocuments = 'otherEvidenceDocuments',
         semiProduct = 'semiProduct',
         /**
-         * Tare
+         * Option to determine price later after taking delivery
          */
-        tare = 'tare',
-        /**
-         * Total gross quantity
-         */
-        totalGrossQuantity = 'totalGrossQuantity',
+        priceDeterminedLater = 'priceDeterminedLater',
+        finalProduct = 'finalProduct',
+        facility = 'facility',
+        company = 'company',
+        measureUnitType = 'measureUnitType',
         /**
          * Total quantity
          */
         totalQuantity = 'totalQuantity',
         /**
-         * Timestamp indicates when stock order have been updated
+         * Total gross quantity
          */
-        updateTimestamp = 'updateTimestamp',
-        updatedBy = 'updatedBy',
+        totalGrossQuantity = 'totalGrossQuantity',
+        /**
+         * Fulfilled quantity
+         */
+        fulfilledQuantity = 'fulfilledQuantity',
+        /**
+         * Available quantity
+         */
+        availableQuantity = 'availableQuantity',
+        /**
+         * Is stock available
+         */
+        isAvailable = 'isAvailable',
+        /**
+         * Total quantity of this stock order is not within the expected range
+         */
+        outQuantityNotInRange = 'outQuantityNotInRange',
+        /**
+         * Production date
+         */
+        productionDate = 'productionDate',
+        /**
+         * Delivery time
+         */
+        deliveryTime = 'deliveryTime',
+        productOrder = 'productOrder',
+        /**
+         * User entered Order ID when placing Quote order
+         */
+        orderId = 'orderId',
+        processingOrder = 'processingOrder',
+        /**
+         * Price per unit
+         */
+        pricePerUnit = 'pricePerUnit',
+        /**
+         * Currency
+         */
+        currency = 'currency',
+        /**
+         * Order type
+         */
+        orderType = 'orderType',
+        /**
+         * The prefix for the LOT name - retrieved from the Processing action
+         */
+        lotPrefix = 'lotPrefix',
+        /**
+         * Internal LOT number
+         */
+        internalLotNumber = 'internalLotNumber',
+        /**
+         * Comments
+         */
+        comments = 'comments',
         /**
          * Is women share
          */
-        womenShare = 'womenShare'
+        womenShare = 'womenShare',
+        /**
+         * Cost
+         */
+        cost = 'cost',
+        /**
+         * Paid
+         */
+        paid = 'paid',
+        /**
+         * Balance
+         */
+        balance = 'balance',
+        /**
+         * Preferred way of payment
+         */
+        preferredWayOfPayment = 'preferredWayOfPayment',
+        /**
+         * SAC number
+         */
+        sacNumber = 'sacNumber',
+        quoteFacility = 'quoteFacility',
+        quoteCompany = 'quoteCompany',
+        consumerCompanyCustomer = 'consumerCompanyCustomer',
+        /**
+         * Price per unit for end customer
+         */
+        pricePerUnitForEndCustomer = 'pricePerUnitForEndCustomer',
+        /**
+         * Currency for price per unit for end customer
+         */
+        currencyForEndCustomer = 'currencyForEndCustomer',
+        /**
+         * Organic
+         */
+        organic = 'organic',
+        /**
+         * Tare
+         */
+        tare = 'tare',
+        /**
+         * Damaged price deduction
+         */
+        damagedPriceDeduction = 'damagedPriceDeduction',
+        /**
+         * Damaged weight deduction
+         */
+        damagedWeightDeduction = 'damagedWeightDeduction',
+        /**
+         * Generated UUID tag for this stock order QR code
+         */
+        qrCodeTag = 'qrCodeTag',
+        qrCodeTagFinalProduct = 'qrCodeTagFinalProduct',
+        /**
+         * Payments for stock order
+         */
+        payments = 'payments',
+        /**
+         * The ID from which this repacked stock order was created; This ID is generated and provided by the client; Only applicable for repacked stock orders
+         */
+        repackedOriginStockOrderId = 'repackedOriginStockOrderId',
+        purchaseOrder = 'purchaseOrder',
+        openOrder = 'openOrder',
+        available = 'available'
     }
 
     /**
@@ -436,6 +439,121 @@ export namespace ApiStockOrder {
             classname: 'ApiStockOrder',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'identifier',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'creationTimestamp',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updateTimestamp',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiUser.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'createdBy',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUser'
+                },
+                {
+                    metadata: ApiUser.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'updatedBy',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiUser',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUser'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'creatorId',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiUserCustomer.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'representativeOfProducerUserCustomer',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiUserCustomer',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUserCustomer'
+                },
+                {
+                    metadata: ApiUserCustomer.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'producerUserCustomer',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiUserCustomer',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiUserCustomer'
+                },
+                {
+                    metadata: ApiStockOrderLocation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productionLocation',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiStockOrderLocation',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiStockOrderLocation'
+                },
+                {
                     metadata: ApiActivityProof.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -448,12 +566,141 @@ export namespace ApiStockOrder {
                     complexType: 'ApiActivityProof'
                 },
                 {
+                    metadata: ApiStockOrderEvidenceFieldValue.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'available',
+                    name: 'requiredEvidenceFieldValues',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Array&lt;ApiStockOrderEvidenceFieldValue&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiStockOrderEvidenceFieldValue'
+                },
+                {
+                    metadata: ApiStockOrderEvidenceTypeValue.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'requiredEvidenceTypeValues',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Array&lt;ApiStockOrderEvidenceTypeValue&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiStockOrderEvidenceTypeValue'
+                },
+                {
+                    metadata: ApiStockOrderEvidenceTypeValue.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'otherEvidenceDocuments',
+                    classname: 'ApiStockOrder',
+                    dataType: 'Array&lt;ApiStockOrderEvidenceTypeValue&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiStockOrderEvidenceTypeValue'
+                },
+                {
+                    metadata: ApiSemiProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'semiProduct',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiSemiProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiSemiProduct'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'priceDeterminedLater',
                     classname: 'ApiStockOrder',
                     dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiFinalProduct.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'finalProduct',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiFinalProduct',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFinalProduct'
+                },
+                {
+                    metadata: ApiFacility.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'facility',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiFacility',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFacility'
+                },
+                {
+                    metadata: ApiCompany.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'company',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiCompany',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCompany'
+                },
+                {
+                    metadata: ApiMeasureUnitType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'measureUnitType',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiMeasureUnitType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiMeasureUnitType'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'totalQuantity',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'totalGrossQuantity',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'fulfilledQuantity',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -473,9 +720,133 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'balance',
+                    name: 'isAvailable',
+                    classname: 'ApiStockOrder',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'outQuantityNotInRange',
+                    classname: 'ApiStockOrder',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productionDate',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'deliveryTime',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiProductOrder.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productOrder',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiProductOrder',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiProductOrder'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'orderId',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiProcessingOrder.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'processingOrder',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiProcessingOrder',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiProcessingOrder'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'pricePerUnit',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'currency',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiStockOrder.OrderTypeEnum',
+                    required: false,
+                    name: 'orderType',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'lotPrefix',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'internalLotNumber',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -492,11 +863,90 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'womenShare',
+                    classname: 'ApiStockOrder',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cost',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'paid',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'balance',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiStockOrder.PreferredWayOfPaymentEnum',
+                    required: false,
+                    name: 'preferredWayOfPayment',
+                    classname: 'ApiStockOrder',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'sacNumber',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiFacility.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'quoteFacility',
+                    classname: 'ApiStockOrder',
+                    dataType: 'ApiFacility',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiFacility'
+                },
+                {
                     metadata: ApiCompany.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'company',
+                    name: 'quoteCompany',
                     classname: 'ApiStockOrder',
                     dataType: 'ApiCompany',
                     isPrimitiveType: false,
@@ -519,54 +969,9 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'cost',
+                    name: 'pricePerUnitForEndCustomer',
                     classname: 'ApiStockOrder',
                     dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiUser.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'createdBy',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiUser',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiUser'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'creationTimestamp',
-                    classname: 'ApiStockOrder',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'creatorId',
-                    classname: 'ApiStockOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'currency',
-                    classname: 'ApiStockOrder',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -578,6 +983,28 @@ export namespace ApiStockOrder {
                     name: 'currencyForEndCustomer',
                     classname: 'ApiStockOrder',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'organic',
+                    classname: 'ApiStockOrder',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'tare',
+                    classname: 'ApiStockOrder',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -608,325 +1035,6 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'deliveryTime',
-                    classname: 'ApiStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiFacility.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'facility',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiFacility',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiFacility'
-                },
-                {
-                    metadata: ApiFinalProduct.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'finalProduct',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiFinalProduct',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiFinalProduct'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'fulfilledQuantity',
-                    classname: 'ApiStockOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiStockOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'identifier',
-                    classname: 'ApiStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'internalLotNumber',
-                    classname: 'ApiStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'isAvailable',
-                    classname: 'ApiStockOrder',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'lotPrefix',
-                    classname: 'ApiStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiMeasureUnitType.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'measureUnitType',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiMeasureUnitType',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiMeasureUnitType'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'openOrder',
-                    classname: 'ApiStockOrder',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'orderId',
-                    classname: 'ApiStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiStockOrder.OrderTypeEnum',
-                    required: false,
-                    name: 'orderType',
-                    classname: 'ApiStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'organic',
-                    classname: 'ApiStockOrder',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiStockOrderEvidenceTypeValue.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'otherEvidenceDocuments',
-                    classname: 'ApiStockOrder',
-                    dataType: 'Array&lt;ApiStockOrderEvidenceTypeValue&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiStockOrderEvidenceTypeValue'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'outQuantityNotInRange',
-                    classname: 'ApiStockOrder',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'paid',
-                    classname: 'ApiStockOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiPayment.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'payments',
-                    classname: 'ApiStockOrder',
-                    dataType: 'Array&lt;ApiPayment&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiPayment'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiStockOrder.PreferredWayOfPaymentEnum',
-                    required: false,
-                    name: 'preferredWayOfPayment',
-                    classname: 'ApiStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'priceDeterminedLater',
-                    classname: 'ApiStockOrder',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'pricePerUnit',
-                    classname: 'ApiStockOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'pricePerUnitForEndCustomer',
-                    classname: 'ApiStockOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiProcessingOrder.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'processingOrder',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiProcessingOrder',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiProcessingOrder'
-                },
-                {
-                    metadata: ApiUserCustomer.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'producerUserCustomer',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiUserCustomer',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiUserCustomer'
-                },
-                {
-                    metadata: ApiProductOrder.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'productOrder',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiProductOrder',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiProductOrder'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'productionDate',
-                    classname: 'ApiStockOrder',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiStockOrderLocation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'productionLocation',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiStockOrderLocation',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiStockOrderLocation'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'purchaseOrder',
-                    classname: 'ApiStockOrder',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'qrCodeTag',
                     classname: 'ApiStockOrder',
                     dataType: 'string',
@@ -947,28 +1055,16 @@ export namespace ApiStockOrder {
                     complexType: 'ApiFinalProduct'
                 },
                 {
-                    metadata: ApiCompany.formMetadata,
+                    metadata: ApiPayment.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'quoteCompany',
+                    name: 'payments',
                     classname: 'ApiStockOrder',
-                    dataType: 'ApiCompany',
+                    dataType: 'Array&lt;ApiPayment&gt;',
                     isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiCompany'
-                },
-                {
-                    metadata: ApiFacility.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'quoteFacility',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiFacility',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiFacility'
+                    isListContainer: true,
+                    complexType: 'ApiPayment'
                 },
                 {
                     isReadOnly: false,
@@ -982,71 +1078,12 @@ export namespace ApiStockOrder {
                     complexType: ''
                 },
                 {
-                    metadata: ApiUserCustomer.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'representativeOfProducerUserCustomer',
+                    name: 'purchaseOrder',
                     classname: 'ApiStockOrder',
-                    dataType: 'ApiUserCustomer',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiUserCustomer'
-                },
-                {
-                    metadata: ApiStockOrderEvidenceFieldValue.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'requiredEvidenceFieldValues',
-                    classname: 'ApiStockOrder',
-                    dataType: 'Array&lt;ApiStockOrderEvidenceFieldValue&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiStockOrderEvidenceFieldValue'
-                },
-                {
-                    metadata: ApiStockOrderEvidenceTypeValue.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'requiredEvidenceTypeValues',
-                    classname: 'ApiStockOrder',
-                    dataType: 'Array&lt;ApiStockOrderEvidenceTypeValue&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiStockOrderEvidenceTypeValue'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'sacNumber',
-                    classname: 'ApiStockOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiSemiProduct.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'semiProduct',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiSemiProduct',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiSemiProduct'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'tare',
-                    classname: 'ApiStockOrder',
-                    dataType: 'number',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -1055,9 +1092,9 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'totalGrossQuantity',
+                    name: 'openOrder',
                     classname: 'ApiStockOrder',
-                    dataType: 'number',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -1066,41 +1103,7 @@ export namespace ApiStockOrder {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'totalQuantity',
-                    classname: 'ApiStockOrder',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'updateTimestamp',
-                    classname: 'ApiStockOrder',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiUser.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'updatedBy',
-                    classname: 'ApiStockOrder',
-                    dataType: 'ApiUser',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiUser'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'womenShare',
+                    name: 'available',
                     classname: 'ApiStockOrder',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -1109,123 +1112,123 @@ export namespace ApiStockOrder {
                 },
             ],
             validators: {
-                activityProofs: [
-                ],
-                available: [
-                ],
-                availableQuantity: [
-                ],
-                balance: [
-                ],
-                comments: [
-                ],
-                company: [
-                ],
-                consumerCompanyCustomer: [
-                ],
-                cost: [
-                ],
-                createdBy: [
-                ],
-                creationTimestamp: [
-                ],
-                creatorId: [
-                ],
-                currency: [
-                ],
-                currencyForEndCustomer: [
-                ],
-                damagedPriceDeduction: [
-                ],
-                damagedWeightDeduction: [
-                ],
-                deliveryTime: [
-                ],
-                facility: [
-                ],
-                finalProduct: [
-                ],
-                fulfilledQuantity: [
-                ],
                 id: [
                 ],
                 identifier: [
                 ],
-                internalLotNumber: [
+                creationTimestamp: [
                 ],
-                isAvailable: [
+                updateTimestamp: [
                 ],
-                lotPrefix: [
+                createdBy: [
                 ],
-                measureUnitType: [
+                updatedBy: [
                 ],
-                openOrder: [
+                creatorId: [
                 ],
-                orderId: [
-                ],
-                orderType: [
-                ],
-                organic: [
-                ],
-                otherEvidenceDocuments: [
-                ],
-                outQuantityNotInRange: [
-                ],
-                paid: [
-                ],
-                payments: [
-                ],
-                preferredWayOfPayment: [
-                ],
-                priceDeterminedLater: [
-                ],
-                pricePerUnit: [
-                ],
-                pricePerUnitForEndCustomer: [
-                ],
-                processingOrder: [
+                representativeOfProducerUserCustomer: [
                 ],
                 producerUserCustomer: [
                 ],
-                productOrder: [
-                ],
-                productionDate: [
-                ],
                 productionLocation: [
                 ],
-                purchaseOrder: [
-                ],
-                qrCodeTag: [
-                ],
-                qrCodeTagFinalProduct: [
-                ],
-                quoteCompany: [
-                ],
-                quoteFacility: [
-                ],
-                repackedOriginStockOrderId: [
-                ],
-                representativeOfProducerUserCustomer: [
+                activityProofs: [
                 ],
                 requiredEvidenceFieldValues: [
                 ],
                 requiredEvidenceTypeValues: [
                 ],
-                sacNumber: [
+                otherEvidenceDocuments: [
                 ],
                 semiProduct: [
                 ],
-                tare: [
+                priceDeterminedLater: [
                 ],
-                totalGrossQuantity: [
+                finalProduct: [
+                ],
+                facility: [
+                ],
+                company: [
+                ],
+                measureUnitType: [
                 ],
                 totalQuantity: [
                 ],
-                updateTimestamp: [
+                totalGrossQuantity: [
                 ],
-                updatedBy: [
+                fulfilledQuantity: [
+                ],
+                availableQuantity: [
+                ],
+                isAvailable: [
+                ],
+                outQuantityNotInRange: [
+                ],
+                productionDate: [
+                ],
+                deliveryTime: [
+                ],
+                productOrder: [
+                ],
+                orderId: [
+                ],
+                processingOrder: [
+                ],
+                pricePerUnit: [
+                ],
+                currency: [
+                ],
+                orderType: [
+                ],
+                lotPrefix: [
+                ],
+                internalLotNumber: [
+                ],
+                comments: [
                 ],
                 womenShare: [
+                ],
+                cost: [
+                ],
+                paid: [
+                ],
+                balance: [
+                ],
+                preferredWayOfPayment: [
+                ],
+                sacNumber: [
+                ],
+                quoteFacility: [
+                ],
+                quoteCompany: [
+                ],
+                consumerCompanyCustomer: [
+                ],
+                pricePerUnitForEndCustomer: [
+                ],
+                currencyForEndCustomer: [
+                ],
+                organic: [
+                ],
+                tare: [
+                ],
+                damagedPriceDeduction: [
+                ],
+                damagedWeightDeduction: [
+                ],
+                qrCodeTag: [
+                ],
+                qrCodeTagFinalProduct: [
+                ],
+                payments: [
+                ],
+                repackedOriginStockOrderId: [
+                ],
+                purchaseOrder: [
+                ],
+                openOrder: [
+                ],
+                available: [
                 ],
             }
         }
@@ -1234,151 +1237,37 @@ export namespace ApiStockOrder {
   // export const ApiStockOrderValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               activityProofs: {
-  //                   validators: []
-  //               },
-  //               available: {
-  //                   validators: []
-  //               },
-  //               availableQuantity: {
-  //                   validators: []
-  //               },
-  //               balance: {
-  //                   validators: []
-  //               },
-  //               comments: {
-  //                   validators: []
-  //               },
-  //               company: {
-  //                   validators: []
-  //               },
-  //               consumerCompanyCustomer: {
-  //                   validators: []
-  //               },
-  //               cost: {
-  //                   validators: []
-  //               },
-  //               createdBy: {
-  //                   validators: []
-  //               },
-  //               creationTimestamp: {
-  //                   validators: []
-  //               },
-  //               creatorId: {
-  //                   validators: []
-  //               },
-  //               currency: {
-  //                   validators: []
-  //               },
-  //               currencyForEndCustomer: {
-  //                   validators: []
-  //               },
-  //               damagedPriceDeduction: {
-  //                   validators: []
-  //               },
-  //               damagedWeightDeduction: {
-  //                   validators: []
-  //               },
-  //               deliveryTime: {
-  //                   validators: []
-  //               },
-  //               facility: {
-  //                   validators: []
-  //               },
-  //               finalProduct: {
-  //                   validators: []
-  //               },
-  //               fulfilledQuantity: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
   //               identifier: {
   //                   validators: []
   //               },
-  //               internalLotNumber: {
+  //               creationTimestamp: {
   //                   validators: []
   //               },
-  //               isAvailable: {
+  //               updateTimestamp: {
   //                   validators: []
   //               },
-  //               lotPrefix: {
+  //               createdBy: {
   //                   validators: []
   //               },
-  //               measureUnitType: {
+  //               updatedBy: {
   //                   validators: []
   //               },
-  //               openOrder: {
+  //               creatorId: {
   //                   validators: []
   //               },
-  //               orderId: {
-  //                   validators: []
-  //               },
-  //               orderType: {
-  //                   validators: []
-  //               },
-  //               organic: {
-  //                   validators: []
-  //               },
-  //               otherEvidenceDocuments: {
-  //                   validators: []
-  //               },
-  //               outQuantityNotInRange: {
-  //                   validators: []
-  //               },
-  //               paid: {
-  //                   validators: []
-  //               },
-  //               payments: {
-  //                   validators: []
-  //               },
-  //               preferredWayOfPayment: {
-  //                   validators: []
-  //               },
-  //               priceDeterminedLater: {
-  //                   validators: []
-  //               },
-  //               pricePerUnit: {
-  //                   validators: []
-  //               },
-  //               pricePerUnitForEndCustomer: {
-  //                   validators: []
-  //               },
-  //               processingOrder: {
+  //               representativeOfProducerUserCustomer: {
   //                   validators: []
   //               },
   //               producerUserCustomer: {
   //                   validators: []
   //               },
-  //               productOrder: {
-  //                   validators: []
-  //               },
-  //               productionDate: {
-  //                   validators: []
-  //               },
   //               productionLocation: {
   //                   validators: []
   //               },
-  //               purchaseOrder: {
-  //                   validators: []
-  //               },
-  //               qrCodeTag: {
-  //                   validators: []
-  //               },
-  //               qrCodeTagFinalProduct: {
-  //                   validators: []
-  //               },
-  //               quoteCompany: {
-  //                   validators: []
-  //               },
-  //               quoteFacility: {
-  //                   validators: []
-  //               },
-  //               repackedOriginStockOrderId: {
-  //                   validators: []
-  //               },
-  //               representativeOfProducerUserCustomer: {
+  //               activityProofs: {
   //                   validators: []
   //               },
   //               requiredEvidenceFieldValues: {
@@ -1387,28 +1276,142 @@ export namespace ApiStockOrder {
   //               requiredEvidenceTypeValues: {
   //                   validators: []
   //               },
-  //               sacNumber: {
+  //               otherEvidenceDocuments: {
   //                   validators: []
   //               },
   //               semiProduct: {
   //                   validators: []
   //               },
-  //               tare: {
+  //               priceDeterminedLater: {
   //                   validators: []
   //               },
-  //               totalGrossQuantity: {
+  //               finalProduct: {
+  //                   validators: []
+  //               },
+  //               facility: {
+  //                   validators: []
+  //               },
+  //               company: {
+  //                   validators: []
+  //               },
+  //               measureUnitType: {
   //                   validators: []
   //               },
   //               totalQuantity: {
   //                   validators: []
   //               },
-  //               updateTimestamp: {
+  //               totalGrossQuantity: {
   //                   validators: []
   //               },
-  //               updatedBy: {
+  //               fulfilledQuantity: {
+  //                   validators: []
+  //               },
+  //               availableQuantity: {
+  //                   validators: []
+  //               },
+  //               isAvailable: {
+  //                   validators: []
+  //               },
+  //               outQuantityNotInRange: {
+  //                   validators: []
+  //               },
+  //               productionDate: {
+  //                   validators: []
+  //               },
+  //               deliveryTime: {
+  //                   validators: []
+  //               },
+  //               productOrder: {
+  //                   validators: []
+  //               },
+  //               orderId: {
+  //                   validators: []
+  //               },
+  //               processingOrder: {
+  //                   validators: []
+  //               },
+  //               pricePerUnit: {
+  //                   validators: []
+  //               },
+  //               currency: {
+  //                   validators: []
+  //               },
+  //               orderType: {
+  //                   validators: []
+  //               },
+  //               lotPrefix: {
+  //                   validators: []
+  //               },
+  //               internalLotNumber: {
+  //                   validators: []
+  //               },
+  //               comments: {
   //                   validators: []
   //               },
   //               womenShare: {
+  //                   validators: []
+  //               },
+  //               cost: {
+  //                   validators: []
+  //               },
+  //               paid: {
+  //                   validators: []
+  //               },
+  //               balance: {
+  //                   validators: []
+  //               },
+  //               preferredWayOfPayment: {
+  //                   validators: []
+  //               },
+  //               sacNumber: {
+  //                   validators: []
+  //               },
+  //               quoteFacility: {
+  //                   validators: []
+  //               },
+  //               quoteCompany: {
+  //                   validators: []
+  //               },
+  //               consumerCompanyCustomer: {
+  //                   validators: []
+  //               },
+  //               pricePerUnitForEndCustomer: {
+  //                   validators: []
+  //               },
+  //               currencyForEndCustomer: {
+  //                   validators: []
+  //               },
+  //               organic: {
+  //                   validators: []
+  //               },
+  //               tare: {
+  //                   validators: []
+  //               },
+  //               damagedPriceDeduction: {
+  //                   validators: []
+  //               },
+  //               damagedWeightDeduction: {
+  //                   validators: []
+  //               },
+  //               qrCodeTag: {
+  //                   validators: []
+  //               },
+  //               qrCodeTagFinalProduct: {
+  //                   validators: []
+  //               },
+  //               payments: {
+  //                   validators: []
+  //               },
+  //               repackedOriginStockOrderId: {
+  //                   validators: []
+  //               },
+  //               purchaseOrder: {
+  //                   validators: []
+  //               },
+  //               openOrder: {
+  //                   validators: []
+  //               },
+  //               available: {
   //                   validators: []
   //               },
   //     }

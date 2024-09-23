@@ -83,7 +83,7 @@ export class ProductLabelStatisticsPageComponent implements OnInit, OnDestroy {
   getStatistics() {
     this.globalEventsManager.showLoading(true);
 
-    let sub = this.productController.getProductLabelUsingGET(this.id).
+    let sub = this.productController.getProductLabel(this.id).
     subscribe(lab => {
       if(lab.status == "OK") {
         this.getStatistcsData(lab.data.uuid);
@@ -94,7 +94,7 @@ export class ProductLabelStatisticsPageComponent implements OnInit, OnDestroy {
   }
 
   getStatistcsData(uuid: string) {
-    let sub = this.productController.getProductLabelAnalyticsUsingGET(uuid)
+    let sub = this.productController.getProductLabelAnalytics(uuid)
     .subscribe(stat => {
       if (stat.status == "OK") {
         this.statistics = stat.data;

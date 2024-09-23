@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,14 +22,17 @@ import { ApiCompany } from './apiCompany';
 import { ApiUserCustomer } from './apiUserCustomer';
 
 
+/**
+ * List of associations
+ */
 
 export interface ApiUserCustomerAssociation { 
-    company?: ApiCompany;
     /**
      * Entity id
      */
     id?: number;
     userCustomer?: ApiUserCustomer;
+    company?: ApiCompany;
 }
 
 /**
@@ -40,12 +43,12 @@ export namespace ApiUserCustomerAssociation {
      * All properties of ApiUserCustomerAssociation.
      */
     export enum Properties {
-        company = 'company',
         /**
          * Entity id
          */
         id = 'id',
-        userCustomer = 'userCustomer'
+        userCustomer = 'userCustomer',
+        company = 'company'
     }
 
 
@@ -54,18 +57,6 @@ export namespace ApiUserCustomerAssociation {
             metadata: formMetadata,
             classname: 'ApiUserCustomerAssociation',
             vars: [
-                {
-                    metadata: ApiCompany.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'company',
-                    classname: 'ApiUserCustomerAssociation',
-                    dataType: 'ApiCompany',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiCompany'
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -89,13 +80,25 @@ export namespace ApiUserCustomerAssociation {
                     isListContainer: false,
                     complexType: 'ApiUserCustomer'
                 },
+                {
+                    metadata: ApiCompany.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'company',
+                    classname: 'ApiUserCustomerAssociation',
+                    dataType: 'ApiCompany',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCompany'
+                },
             ],
             validators: {
-                company: [
-                ],
                 id: [
                 ],
                 userCustomer: [
+                ],
+                company: [
                 ],
             }
         }
@@ -104,13 +107,13 @@ export namespace ApiUserCustomerAssociation {
   // export const ApiUserCustomerAssociationValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               company: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
   //               userCustomer: {
+  //                   validators: []
+  //               },
+  //               company: {
   //                   validators: []
   //               },
   //     }

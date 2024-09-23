@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -26,20 +26,20 @@ import { ApiProductLabelBase } from './apiProductLabelBase';
 
 export interface ApiFinalProduct { 
     /**
-     * Description of final product
-     */
-    description?: string;
-    /**
      * Entity id
      */
     id?: number;
-    labels?: Array<ApiProductLabelBase>;
-    measurementUnitType?: ApiMeasureUnitType;
     /**
      * Name of final product
      */
     name?: string;
+    /**
+     * Description of final product
+     */
+    description?: string;
     product?: ApiProductBase;
+    measurementUnitType?: ApiMeasureUnitType;
+    labels?: Array<ApiProductLabelBase>;
 }
 
 /**
@@ -51,20 +51,20 @@ export namespace ApiFinalProduct {
      */
     export enum Properties {
         /**
-         * Description of final product
-         */
-        description = 'description',
-        /**
          * Entity id
          */
         id = 'id',
-        labels = 'labels',
-        measurementUnitType = 'measurementUnitType',
         /**
          * Name of final product
          */
         name = 'name',
-        product = 'product'
+        /**
+         * Description of final product
+         */
+        description = 'description',
+        product = 'product',
+        measurementUnitType = 'measurementUnitType',
+        labels = 'labels'
     }
 
 
@@ -77,7 +77,18 @@ export namespace ApiFinalProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'description',
+                    name: 'id',
+                    classname: 'ApiFinalProduct',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
                     classname: 'ApiFinalProduct',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -88,42 +99,7 @@ export namespace ApiFinalProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
-                    classname: 'ApiFinalProduct',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiProductLabelBase.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'labels',
-                    classname: 'ApiFinalProduct',
-                    dataType: 'Array&lt;ApiProductLabelBase&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProductLabelBase'
-                },
-                {
-                    metadata: ApiMeasureUnitType.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'measurementUnitType',
-                    classname: 'ApiFinalProduct',
-                    dataType: 'ApiMeasureUnitType',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiMeasureUnitType'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
+                    name: 'description',
                     classname: 'ApiFinalProduct',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -142,19 +118,43 @@ export namespace ApiFinalProduct {
                     isListContainer: false,
                     complexType: 'ApiProductBase'
                 },
+                {
+                    metadata: ApiMeasureUnitType.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'measurementUnitType',
+                    classname: 'ApiFinalProduct',
+                    dataType: 'ApiMeasureUnitType',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiMeasureUnitType'
+                },
+                {
+                    metadata: ApiProductLabelBase.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'labels',
+                    classname: 'ApiFinalProduct',
+                    dataType: 'Array&lt;ApiProductLabelBase&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductLabelBase'
+                },
             ],
             validators: {
-                description: [
-                ],
                 id: [
-                ],
-                labels: [
-                ],
-                measurementUnitType: [
                 ],
                 name: [
                 ],
+                description: [
+                ],
                 product: [
+                ],
+                measurementUnitType: [
+                ],
+                labels: [
                 ],
             }
         }
@@ -163,22 +163,22 @@ export namespace ApiFinalProduct {
   // export const ApiFinalProductValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               description: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               labels: {
-  //                   validators: []
-  //               },
-  //               measurementUnitType: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
+  //               description: {
+  //                   validators: []
+  //               },
   //               product: {
+  //                   validators: []
+  //               },
+  //               measurementUnitType: {
+  //                   validators: []
+  //               },
+  //               labels: {
   //                   validators: []
   //               },
   //     }

@@ -70,9 +70,9 @@ export class CompanyListComponent implements OnInit, OnDestroy {
         const newParams = { ...params };
         delete newParams['myCompanies'];
         if (myCompanies) {
-          return this.companyController.listCompaniesUsingGETByMap(newParams);
+          return this.companyController.listCompaniesByMap(newParams);
         } else {
-          return this.companyController.listCompaniesAdminUsingGETByMap(newParams);
+          return this.companyController.listCompaniesAdminByMap(newParams);
         }
       }),
       map((resp: ApiPaginatedResponseApiCompanyListResponse) => {
@@ -154,12 +154,12 @@ export class CompanyListComponent implements OnInit, OnDestroy {
 
   async setAllCompanies() {
     if (this.isSystemAdmin) {
-      const res = await this.companyController.listCompaniesAdminUsingGET('COUNT').pipe(take(1)).toPromise();
+      const res = await this.companyController.listCompaniesAdmin(null, null, null, 'COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allCompanies = res.data.count;
       }
     } else {
-      const res = await this.companyController.listCompaniesUsingGET('COUNT').pipe(take(1)).toPromise();
+      const res = await this.companyController.listCompanies(null, null, null, 'COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allCompanies = res.data.count;
       }
@@ -186,7 +186,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   async activate(id) {
     try {
       this.globalEventsManager.showLoading(true);
-      await this.companyController.executeActionUsingPOST('ACTIVATE_COMPANY', { companyId: id }).pipe(take(1)).toPromise();
+      await this.companyController.executeCompanyAction('ACTIVATE_COMPANY', { companyId: id }).pipe(take(1)).toPromise();
       this.reloadPage();
       this.globalEventsManager.push({
         action: 'success',
@@ -209,7 +209,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   async deactivate(id) {
     try {
       this.globalEventsManager.showLoading(true);
-      await this.companyController.executeActionUsingPOST('DEACTIVATE_COMPANY', { companyId: id }).pipe(take(1)).toPromise();
+      await this.companyController.executeCompanyAction('DEACTIVATE_COMPANY', { companyId: id }).pipe(take(1)).toPromise();
       this.reloadPage();
       this.globalEventsManager.push({
         action: 'success',
@@ -241,7 +241,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
     });
     const otherCompany = await modalRef.result;
     if (otherCompany) {
-      const res = await this.companyController.executeActionUsingPOST('MERGE_TO_COMPANY', {
+      const res = await this.companyController.executeCompanyAction('MERGE_TO_COMPANY', {
         companyId: company.id,
         otherCompanyId: otherCompany.id
       }).pipe(take(1)).toPromise();

@@ -275,22 +275,22 @@ export class TypeListComponent implements OnInit, OnChanges {
 
   apiLink(params) {
     if (this.type === 'facility-types') {
-      return this.facilityTypeService.getFacilityTypeListUsingGETByMap({ ...params });
+      return this.facilityTypeService.getFacilityTypeListByMap({ ...params });
     }
     if (this.type === 'measurement-unit-types') {
-      return this.measureUnitTypeService.getMeasureUnitTypeListUsingGETByMap({ ...params });
+      return this.measureUnitTypeService.getMeasureUnitTypeListByMap({ ...params });
     }
     if (this.type === 'processing-evidence-types') {
-      return this.processingEvidenceTypeService.getProcessingEvidenceTypeListUsingGETByMap({ ...params });
+      return this.processingEvidenceTypeService.getProcessingEvidenceTypeListByMap({ ...params });
     }
     if (this.type === 'processing-evidence-fields') {
-      return this.processingEvidenceFieldService.getProcessingEvidenceFieldListUsingGETByMap({ ...params });
+      return this.processingEvidenceFieldService.getProcessingEvidenceFieldListByMap({ ...params });
     }
     if (this.type === 'semi-products') {
-      return this.semiProductsService.getSemiProductListUsingGETByMap({ ...params });
+      return this.semiProductsService.getSemiProductListByMap({ ...params });
     }
     if (this.type === 'product-types') {
-      return this.productTypesService.getProductTypesUsingGETByMap({ ...params });
+      return this.productTypesService.getProductTypesByMap({ ...params });
     }
   }
 
@@ -347,31 +347,31 @@ export class TypeListComponent implements OnInit, OnChanges {
     try {
       this.globalEventsManager.showLoading(true);
       if (this.type === 'facility-types') {
-        const res = await this.facilityTypeService.deleteFacilityTypeUsingDELETE(type.id).pipe(take(1)).toPromise();
+        const res = await this.facilityTypeService.deleteFacilityType(type.id).pipe(take(1)).toPromise();
         if (res && res.status === 'OK') {
           this.reloadPage();
         }
       }
       if (this.type === 'measurement-unit-types') {
-        const res = await this.measureUnitTypeService.deleteMeasurementUnitTypeUsingDELETE(type.id).pipe(take(1)).toPromise();
+        const res = await this.measureUnitTypeService.deleteMeasurementUnitType(type.id).pipe(take(1)).toPromise();
         if (res && res.status === 'OK') {
           this.reloadPage();
         }
       }
       if (this.type === 'processing-evidence-types') {
-        const res = await this.processingEvidenceTypeService.deleteProcessingEvidenceTypeUsingDELETE(type.id).pipe(take(1)).toPromise();
+        const res = await this.processingEvidenceTypeService.deleteProcessingEvidenceType(type.id).pipe(take(1)).toPromise();
         if (res && res.status === 'OK') {
           this.reloadPage();
         }
       }
       if (this.type === 'processing-evidence-fields') {
-        const res = await this.processingEvidenceFieldService.deleteProcessingEvidenceFieldUsingDELETE(type.id).pipe(take(1)).toPromise();
+        const res = await this.processingEvidenceFieldService.deleteProcessingEvidenceField(type.id).pipe(take(1)).toPromise();
         if (res && res.status === 'OK') {
           this.reloadPage();
         }
       }
       if (this.type === 'semi-products') {
-        const res = await this.semiProductsService.deleteSemiProductUsingDELETE(type.id).pipe(take(1)).toPromise();
+        const res = await this.semiProductsService.deleteSemiProduct(type.id).pipe(take(1)).toPromise();
         if (res && res.status === 'OK') {
           this.reloadPage();
         }
@@ -389,42 +389,42 @@ export class TypeListComponent implements OnInit, OnChanges {
   async setAll() {
 
     if (this.type === 'facility-types') {
-      const res = await this.facilityTypeService.getFacilityTypeListUsingGET().pipe(take(1)).toPromise();
+      const res = await this.facilityTypeService.getFacilityTypeList().pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.all = res.data.count;
         this.countAll.emit(res.data.count);
       }
     }
     if (this.type === 'measurement-unit-types') {
-      const res = await this.measureUnitTypeService.getMeasureUnitTypeListUsingGET().pipe(take(1)).toPromise();
+      const res = await this.measureUnitTypeService.getMeasureUnitTypeList().pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.all = res.data.count;
         this.countAll.emit(res.data.count);
       }
     }
     if (this.type === 'processing-evidence-types') {
-      const res = await this.processingEvidenceTypeService.getProcessingEvidenceTypeListUsingGET().pipe(take(1)).toPromise();
+      const res = await this.processingEvidenceTypeService.getProcessingEvidenceTypeList().pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.all = res.data.count;
         this.countAll.emit(res.data.count);
       }
     }
     if (this.type === 'processing-evidence-fields') {
-      const res = await this.processingEvidenceFieldService.getProcessingEvidenceFieldListUsingGET().pipe(take(1)).toPromise();
+      const res = await this.processingEvidenceFieldService.getProcessingEvidenceFieldList().pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.all = res.data.count;
         this.countAll.emit(res.data.count);
       }
     }
     if (this.type === 'semi-products') {
-      const res = await this.semiProductsService.getSemiProductListUsingGET().pipe(take(1)).toPromise();
+      const res = await this.semiProductsService.getSemiProductList().pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.all = res.data.count;
         this.countAll.emit(res.data.count);
       }
     }
     if (this.type === 'product-types') {
-      const res = await this.productTypesService.getProductTypesUsingGET().pipe(take(1)).toPromise();
+      const res = await this.productTypesService.getProductTypes().pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.all = res.data.count;
         this.countAll.emit(res.data.count);

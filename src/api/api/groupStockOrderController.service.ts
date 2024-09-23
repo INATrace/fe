@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -35,11 +35,11 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for getGroupedStockOrderListUsingGET.
+ * Namespace for getGroupedStockOrderList.
  */
-export namespace GetGroupedStockOrderListUsingGET {
+export namespace GetGroupedStockOrderList {
     /**
-     * Parameter map for getGroupedStockOrderListUsingGET.
+     * Parameter map for getGroupedStockOrderList.
      */
     export interface PartialParamMap {
       /**
@@ -78,14 +78,11 @@ export namespace GetGroupedStockOrderListUsingGET {
        * Semi-product ID
        */
       semiProductId?: number;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getGroupedStockOrderListUsingGET.
+     * Enumeration of all parameters for getGroupedStockOrderList.
      */
     export enum Parameters {
       /**
@@ -124,25 +121,24 @@ export namespace GetGroupedStockOrderListUsingGET {
        * Semi-product ID
        */
       semiProductId = 'semiProductId',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getGroupedStockOrderListUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getGroupedStockOrderList
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetGroupedStockOrderListUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetGroupedStockOrderList.PartialParamMap]?: [string, ValidatorFn][]} = {
       facilityId: [
               ['required', Validators.required],
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -203,23 +199,23 @@ export class GroupStockOrderControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getGroupedStockOrderListUsingGETByMap(
-    map: GetGroupedStockOrderListUsingGET.PartialParamMap,
+  public getGroupedStockOrderListByMap(
+    map: GetGroupedStockOrderList.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiGroupStockOrder>;
-  public getGroupedStockOrderListUsingGETByMap(
-    map: GetGroupedStockOrderListUsingGET.PartialParamMap,
+  public getGroupedStockOrderListByMap(
+    map: GetGroupedStockOrderList.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiGroupStockOrder>>;
-  public getGroupedStockOrderListUsingGETByMap(
-    map: GetGroupedStockOrderListUsingGET.PartialParamMap,
+  public getGroupedStockOrderListByMap(
+    map: GetGroupedStockOrderList.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiGroupStockOrder>>;
-  public getGroupedStockOrderListUsingGETByMap(
-    map: GetGroupedStockOrderListUsingGET.PartialParamMap,
+  public getGroupedStockOrderListByMap(
+    map: GetGroupedStockOrderList.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getGroupedStockOrderListUsingGET(
+    return this.getGroupedStockOrderList(
       map.facilityId,
       map.requestType,
       map.limit,
@@ -248,16 +244,16 @@ export class GroupStockOrderControllerService {
      * @param availableOnly Available orders only
      * @param isPurchaseOrderOnly Is purchase orders only
      * @param semiProductId Semi-product ID
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiGroupStockOrder>;
-    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiGroupStockOrder>>;
-    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiGroupStockOrder>>;
-    public getGroupedStockOrderListUsingGET(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getGroupedStockOrderList(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiGroupStockOrder>;
+    public getGroupedStockOrderList(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiGroupStockOrder>>;
+    public getGroupedStockOrderList(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiGroupStockOrder>>;
+    public getGroupedStockOrderList(facilityId: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', availableOnly?: boolean, isPurchaseOrderOnly?: boolean, semiProductId?: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (facilityId === null || facilityId === undefined) {
-            throw new Error('Required parameter facilityId was null or undefined when calling getGroupedStockOrderListUsingGET.');
+            throw new Error('Required parameter facilityId was null or undefined when calling getGroupedStockOrderList.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -320,7 +316,7 @@ export class GroupStockOrderControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getGroupedStockOrderListUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getGroupedStockOrderList')));
         }
         return handle;
     }

@@ -72,7 +72,7 @@ export class CompanyCustomersDetailsComponent implements OnInit {
     } else if (action === 'update') {
       this.title = $localize`:@@customerDetail.updateCustomer.title:Edit customer`;
       this.update = true;
-      const res = await this.companyService.getCompanyCustomerUsingGET(this.customerId).pipe(take(1)).toPromise();
+      const res = await this.companyService.getCompanyCustomer(this.customerId).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.customer = res.data;
       }
@@ -118,9 +118,9 @@ export class CompanyCustomersDetailsComponent implements OnInit {
 
       let res;
       if (!this.update) {
-        res = await this.companyService.createCompanyCustomerUsingPOST(data).toPromise();
+        res = await this.companyService.createCompanyCustomer(data).toPromise();
       } else {
-        res = await this.companyService.updateCompanyCustomerUsingPUT(data).toPromise();
+        res = await this.companyService.updateCompanyCustomer(data).toPromise();
       }
 
       if (res && res.status === 'OK') {

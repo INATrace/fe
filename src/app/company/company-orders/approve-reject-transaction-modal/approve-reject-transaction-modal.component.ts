@@ -40,7 +40,7 @@ export class ApproveRejectTransactionModalComponent implements OnInit {
 
   async prepare() {
 
-    const resp = await this.transactionController.getStockOrderInputTransactionsUsingGET(this.stockOrderId).pipe(take(1)).toPromise();
+    const resp = await this.transactionController.getStockOrderInputTransactions(this.stockOrderId).pipe(take(1)).toPromise();
     if (resp && resp.status === 'OK' && resp.data) {
       for (const item of resp.data.items) {
         if (item.status === 'PENDING') {
@@ -65,10 +65,10 @@ export class ApproveRejectTransactionModalComponent implements OnInit {
     for (const item of this.approveRejectForm.controls) {
       if (item.value.rejectComment) {
         await this.transactionController
-          .rejectTransactionUsingPUT(item.value.id, { id: item.value.id, rejectComment: item.value.rejectComment })
+          .rejectTransaction(item.value.id, { id: item.value.id, rejectComment: item.value.rejectComment })
           .pipe(take(1)).toPromise();
       } else {
-       await this.transactionController.approveTransactionUsingPUT(item.value.id).pipe(take(1)).toPromise();
+       await this.transactionController.approveTransaction(item.value.id).pipe(take(1)).toPromise();
       }
     }
     this.activeModal.close({confirmed: true});

@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { GeneralSifrantService } from './general-sifrant.service';
 import { CodebookTranslations } from './codebook-translations';
 import {
-  GetProcessingEvidenceFieldListUsingGET,
+  GetProcessingEvidenceFieldList,
   ProcessingEvidenceFieldControllerService
 } from '../../api/api/processingEvidenceFieldController.service';
 import { ApiPaginatedResponseApiProcessingEvidenceField } from '../../api/model/apiPaginatedResponseApiProcessingEvidenceField';
@@ -23,7 +23,7 @@ export class ProcessingEvidenceFieldsService extends GeneralSifrantService<ApiPr
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetProcessingEvidenceFieldListUsingGET.PartialParamMap;
+  } as GetProcessingEvidenceFieldList.PartialParamMap;
 
   public identifier(el: ApiProcessingEvidenceField) {
     return el.id;
@@ -61,9 +61,9 @@ export class ProcessingEvidenceFieldsService extends GeneralSifrantService<ApiPr
 
   private fetchProcessingEvidenceFields(reqParams, valueChainIdList?: Array<number>): Observable<ApiPaginatedResponseApiProcessingEvidenceField> {
     if (valueChainIdList !== null && valueChainIdList !== undefined) {
-      return this.codebookService.listProcessingEvidenceFieldsByValueChainsUsingGETByMap({ valueChainIds: valueChainIdList, ...reqParams });
+      return this.codebookService.listProcessingEvidenceFieldsByValueChainsByMap({ valueChainIds: valueChainIdList, ...reqParams });
     } else {
-      return this.codebookService.getProcessingEvidenceFieldListUsingGETByMap(reqParams);
+      return this.codebookService.getProcessingEvidenceFieldListByMap(reqParams);
     }
   }
 

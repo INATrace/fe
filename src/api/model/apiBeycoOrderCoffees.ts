@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,25 +21,24 @@
 import { ApiBeycoCoffee } from './apiBeycoCoffee';
 
 
+/**
+ * Array of coffee orders
+ */
 
 export interface ApiBeycoOrderCoffees { 
     coffee?: ApiBeycoCoffee;
     /**
-     * Used currency
+     * Is fixed price
      */
-    currency?: ApiBeycoOrderCoffees.CurrencyEnum;
-    /**
-     * Custom incoterms
-     */
-    customIncoterms?: string;
+    isFixedPrice?: boolean;
     /**
      * Incoterms
      */
     incoterms?: ApiBeycoOrderCoffees.IncotermsEnum;
     /**
-     * Is fixed price
+     * Custom incoterms
      */
-    isFixedPrice?: boolean;
+    customIncoterms?: string;
     /**
      * Price of order
      */
@@ -48,6 +47,10 @@ export interface ApiBeycoOrderCoffees {
      * Price unit
      */
     priceUnit?: ApiBeycoOrderCoffees.PriceUnitEnum;
+    /**
+     * Used currency
+     */
+    currency?: ApiBeycoOrderCoffees.CurrencyEnum;
 }
 
 /**
@@ -60,21 +63,17 @@ export namespace ApiBeycoOrderCoffees {
     export enum Properties {
         coffee = 'coffee',
         /**
-         * Used currency
+         * Is fixed price
          */
-        currency = 'currency',
-        /**
-         * Custom incoterms
-         */
-        customIncoterms = 'customIncoterms',
+        isFixedPrice = 'isFixedPrice',
         /**
          * Incoterms
          */
         incoterms = 'incoterms',
         /**
-         * Is fixed price
+         * Custom incoterms
          */
-        isFixedPrice = 'isFixedPrice',
+        customIncoterms = 'customIncoterms',
         /**
          * Price of order
          */
@@ -82,16 +81,11 @@ export namespace ApiBeycoOrderCoffees {
         /**
          * Price unit
          */
-        priceUnit = 'priceUnit'
-    }
-
-    /**
-     * All possible values of currency.
-     */
-    export enum CurrencyEnum {
-        Usd = 'Usd',
-        UsdCt = 'UsdCt',
-        Eur = 'Eur'
+        priceUnit = 'priceUnit',
+        /**
+         * Used currency
+         */
+        currency = 'currency'
     }
 
     /**
@@ -123,6 +117,15 @@ export namespace ApiBeycoOrderCoffees {
         Kg = 'Kg'
     }
 
+    /**
+     * All possible values of currency.
+     */
+    export enum CurrencyEnum {
+        Usd = 'Usd',
+        UsdCt = 'UsdCt',
+        Eur = 'Eur'
+    }
+
 
     export function formMetadata() {
         return  {
@@ -143,23 +146,11 @@ export namespace ApiBeycoOrderCoffees {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiBeycoOrderCoffees.CurrencyEnum',
-                    required: false,
-                    name: 'currency',
-                    classname: 'ApiBeycoOrderCoffees',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'customIncoterms',
+                    name: 'isFixedPrice',
                     classname: 'ApiBeycoOrderCoffees',
-                    dataType: 'string',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -180,9 +171,9 @@ export namespace ApiBeycoOrderCoffees {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'isFixedPrice',
+                    name: 'customIncoterms',
                     classname: 'ApiBeycoOrderCoffees',
-                    dataType: 'boolean',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -210,21 +201,35 @@ export namespace ApiBeycoOrderCoffees {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiBeycoOrderCoffees.CurrencyEnum',
+                    required: false,
+                    name: 'currency',
+                    classname: 'ApiBeycoOrderCoffees',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
                 coffee: [
                 ],
-                currency: [
-                ],
-                customIncoterms: [
+                isFixedPrice: [
                 ],
                 incoterms: [
                 ],
-                isFixedPrice: [
+                customIncoterms: [
                 ],
                 price: [
+                        ['min', 0],
+                        ['max', 999999999999999999],
                 ],
                 priceUnit: [
+                ],
+                currency: [
                 ],
             }
         }
@@ -236,22 +241,22 @@ export namespace ApiBeycoOrderCoffees {
   //               coffee: {
   //                   validators: []
   //               },
-  //               currency: {
-  //                   validators: []
-  //               },
-  //               customIncoterms: {
+  //               isFixedPrice: {
   //                   validators: []
   //               },
   //               incoterms: {
   //                   validators: []
   //               },
-  //               isFixedPrice: {
+  //               customIncoterms: {
   //                   validators: []
   //               },
   //               price: {
   //                   validators: []
   //               },
   //               priceUnit: {
+  //                   validators: []
+  //               },
+  //               currency: {
   //                   validators: []
   //               },
   //     }

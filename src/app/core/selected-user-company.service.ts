@@ -86,7 +86,7 @@ export class SelectedUserCompanyService {
 
   private async fetchCompanyProfile(id: number): Promise<ApiCompanyGet | null> {
 
-    const resp = await this.companyControllerService.getCompanyUsingGET(id).toPromise();
+    const resp = await this.companyControllerService.getCompany(id).toPromise();
     if (resp && resp.status === 'OK' && resp.data) {
       return resp.data;
     }

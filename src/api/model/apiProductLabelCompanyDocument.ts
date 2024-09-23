@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,36 +23,36 @@ import { ApiDocument } from './apiDocument';
 
 
 export interface ApiProductLabelCompanyDocument { 
-    active?: boolean;
-    /**
-     * document category
-     */
-    category?: ApiProductLabelCompanyDocument.CategoryEnum;
-    /**
-     * description of this document
-     */
-    description?: string;
-    document?: ApiDocument;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * link
+     * type of the document (link, file)
      */
-    link?: string;
+    type?: ApiProductLabelCompanyDocument.TypeEnum;
+    /**
+     * document category
+     */
+    category?: ApiProductLabelCompanyDocument.CategoryEnum;
     /**
      * name
      */
     name?: string;
     /**
+     * description of this document
+     */
+    description?: string;
+    /**
      * quote of this document
      */
     quote?: string;
     /**
-     * type of the document (link, file)
+     * link
      */
-    type?: ApiProductLabelCompanyDocument.TypeEnum;
+    link?: string;
+    document?: ApiDocument;
+    active?: boolean;
 }
 
 /**
@@ -63,36 +63,44 @@ export namespace ApiProductLabelCompanyDocument {
      * All properties of ApiProductLabelCompanyDocument.
      */
     export enum Properties {
-        active = 'active',
-        /**
-         * document category
-         */
-        category = 'category',
-        /**
-         * description of this document
-         */
-        description = 'description',
-        document = 'document',
         /**
          * Entity id
          */
         id = 'id',
         /**
-         * link
+         * type of the document (link, file)
          */
-        link = 'link',
+        type = 'type',
+        /**
+         * document category
+         */
+        category = 'category',
         /**
          * name
          */
         name = 'name',
         /**
+         * description of this document
+         */
+        description = 'description',
+        /**
          * quote of this document
          */
         quote = 'quote',
         /**
-         * type of the document (link, file)
+         * link
          */
-        type = 'type'
+        link = 'link',
+        document = 'document',
+        active = 'active'
+    }
+
+    /**
+     * All possible values of type.
+     */
+    export enum TypeEnum {
+        LINK = 'LINK',
+        FILE = 'FILE'
     }
 
     /**
@@ -102,14 +110,6 @@ export namespace ApiProductLabelCompanyDocument {
         VIDEO = 'VIDEO',
         PRODUCTIONRECORD = 'PRODUCTION_RECORD',
         MEETTHEFARMER = 'MEET_THE_FARMER'
-    }
-
-    /**
-     * All possible values of type.
-     */
-    export enum TypeEnum {
-        LINK = 'LINK',
-        FILE = 'FILE'
     }
 
 
@@ -122,9 +122,21 @@ export namespace ApiProductLabelCompanyDocument {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'active',
+                    name: 'id',
                     classname: 'ApiProductLabelCompanyDocument',
-                    dataType: 'boolean',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelCompanyDocument.TypeEnum',
+                    required: false,
+                    name: 'type',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -145,7 +157,40 @@ export namespace ApiProductLabelCompanyDocument {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'name',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'description',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'quote',
+                    classname: 'ApiProductLabelCompanyDocument',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'link',
                     classname: 'ApiProductLabelCompanyDocument',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -168,77 +213,40 @@ export namespace ApiProductLabelCompanyDocument {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'active',
                     classname: 'ApiProductLabelCompanyDocument',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'link',
-                    classname: 'ApiProductLabelCompanyDocument',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiProductLabelCompanyDocument',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'quote',
-                    classname: 'ApiProductLabelCompanyDocument',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProductLabelCompanyDocument.TypeEnum',
-                    required: false,
-                    name: 'type',
-                    classname: 'ApiProductLabelCompanyDocument',
-                    dataType: 'string',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
             ],
             validators: {
-                active: [
+                id: [
+                ],
+                type: [
                 ],
                 category: [
                 ],
+                name: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
                 description: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                quote: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
+                ],
+                link: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 document: [
                 ],
-                id: [
-                ],
-                link: [
-                ],
-                name: [
-                ],
-                quote: [
-                ],
-                type: [
+                active: [
                 ],
             }
         }
@@ -247,31 +255,31 @@ export namespace ApiProductLabelCompanyDocument {
   // export const ApiProductLabelCompanyDocumentValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               active: {
+  //               id: {
+  //                   validators: []
+  //               },
+  //               type: {
   //                   validators: []
   //               },
   //               category: {
   //                   validators: []
   //               },
-  //               description: {
-  //                   validators: []
-  //               },
-  //               document: {
-  //                   validators: []
-  //               },
-  //               id: {
-  //                   validators: []
-  //               },
-  //               link: {
-  //                   validators: []
-  //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               description: {
   //                   validators: []
   //               },
   //               quote: {
   //                   validators: []
   //               },
-  //               type: {
+  //               link: {
+  //                   validators: []
+  //               },
+  //               document: {
+  //                   validators: []
+  //               },
+  //               active: {
   //                   validators: []
   //               },
   //     }

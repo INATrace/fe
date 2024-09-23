@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -25,7 +25,7 @@ export interface ApiToken {
     /**
      * Entity id
      */
-    token?: string;
+    token: string;
 }
 
 /**
@@ -51,7 +51,7 @@ export namespace ApiToken {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: false,
+                    required: true,
                     name: 'token',
                     classname: 'ApiToken',
                     dataType: 'string',
@@ -62,6 +62,7 @@ export namespace ApiToken {
             ],
             validators: {
                 token: [
+                        ['required'],
                 ],
             }
         }

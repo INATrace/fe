@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { SortOrder } from '../../../shared/result-sorter/result-sorter-types';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
-import { CompanyControllerService, GetCompanyCustomersListUsingGET } from '../../../../api/api/companyController.service';
+import { CompanyControllerService, GetCompanyCustomersList } from '../../../../api/api/companyController.service';
 import { Router } from '@angular/router';
 import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
@@ -81,7 +81,7 @@ export class CompanyCustomersListComponent implements OnInit {
     this.customer$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
         .pipe(
             map(([sort, queryString, search, page, ping]) => {
-              const params: GetCompanyCustomersListUsingGET.PartialParamMap = {
+              const params: GetCompanyCustomersList.PartialParamMap = {
                 companyId: this.organizationId,
                 sort: sort.sortOrder,
                 sortBy: sort.key,
@@ -92,7 +92,7 @@ export class CompanyCustomersListComponent implements OnInit {
               return params;
             }),
             tap(() => this.globalEventsManager.showLoading(true)),
-            switchMap(params => this.companyController.getCompanyCustomersListUsingGETByMap(params)),
+            switchMap(params => this.companyController.getCompanyCustomersListByMap(params)),
             map(response => {
               if (response) {
                 this.customerCount = response.data.count;
@@ -124,7 +124,7 @@ export class CompanyCustomersListComponent implements OnInit {
     if (result !== 'ok') {
       return;
     }
-    const res = await this.companyController.deleteCompanyCustomerUsingDELETE(id).pipe(take(1)).toPromise();
+    const res = await this.companyController.deleteCompanyCustomer(id).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
       this.ping$.next(null);
     }
