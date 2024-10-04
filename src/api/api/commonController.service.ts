@@ -456,7 +456,7 @@ export class CommonControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -499,15 +499,15 @@ export class CommonControllerService {
   public getDocumentByMap(
     map: GetDocument.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<string>;
+    reportProgress?: boolean): Observable<Blob>;
   public getDocumentByMap(
     map: GetDocument.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<string>>;
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
   public getDocumentByMap(
     map: GetDocument.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<string>>;
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
   public getDocumentByMap(
     map: GetDocument.PartialParamMap,
     observe: any = 'body',
@@ -527,9 +527,9 @@ export class CommonControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getDocument(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
-    public getDocument(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
-    public getDocument(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public getDocument(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public getDocument(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public getDocument(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
     public getDocument(storageKey: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (storageKey === null || storageKey === undefined) {
             throw new Error('Required parameter storageKey was null or undefined when calling getDocument.');
@@ -539,7 +539,7 @@ export class CommonControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -556,8 +556,9 @@ export class CommonControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<string>(`${this.configuration.basePath}/api/common/document/${encodeURIComponent(String(storageKey))}`,
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/common/document/${encodeURIComponent(String(storageKey))}`,
             {
+                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -621,7 +622,7 @@ export class CommonControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -663,15 +664,15 @@ export class CommonControllerService {
   public getImageByMap(
     map: GetImage.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<string>;
+    reportProgress?: boolean): Observable<Blob>;
   public getImageByMap(
     map: GetImage.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<string>>;
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
   public getImageByMap(
     map: GetImage.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<string>>;
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
   public getImageByMap(
     map: GetImage.PartialParamMap,
     observe: any = 'body',
@@ -691,9 +692,9 @@ export class CommonControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getImage(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
-    public getImage(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
-    public getImage(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public getImage(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public getImage(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public getImage(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
     public getImage(storageKey: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (storageKey === null || storageKey === undefined) {
             throw new Error('Required parameter storageKey was null or undefined when calling getImage.');
@@ -703,7 +704,7 @@ export class CommonControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -720,8 +721,9 @@ export class CommonControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<string>(`${this.configuration.basePath}/api/common/image/${encodeURIComponent(String(storageKey))}`,
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/common/image/${encodeURIComponent(String(storageKey))}`,
             {
+                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -745,15 +747,15 @@ export class CommonControllerService {
   public getResizedImageByMap(
     map: GetResizedImage.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<string>;
+    reportProgress?: boolean): Observable<Blob>;
   public getResizedImageByMap(
     map: GetResizedImage.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<string>>;
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
   public getResizedImageByMap(
     map: GetResizedImage.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<string>>;
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
   public getResizedImageByMap(
     map: GetResizedImage.PartialParamMap,
     observe: any = 'body',
@@ -775,9 +777,9 @@ export class CommonControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getResizedImage(storageKey: string, size: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
-    public getResizedImage(storageKey: string, size: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
-    public getResizedImage(storageKey: string, size: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public getResizedImage(storageKey: string, size: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public getResizedImage(storageKey: string, size: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public getResizedImage(storageKey: string, size: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
     public getResizedImage(storageKey: string, size: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (storageKey === null || storageKey === undefined) {
             throw new Error('Required parameter storageKey was null or undefined when calling getResizedImage.');
@@ -790,7 +792,7 @@ export class CommonControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -807,8 +809,9 @@ export class CommonControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<string>(`${this.configuration.basePath}/api/common/image/${encodeURIComponent(String(storageKey))}/${encodeURIComponent(String(size))}`,
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/common/image/${encodeURIComponent(String(storageKey))}/${encodeURIComponent(String(size))}`,
             {
+                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -877,7 +880,7 @@ export class CommonControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -972,7 +975,7 @@ export class CommonControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1082,7 +1085,7 @@ export class CommonControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {

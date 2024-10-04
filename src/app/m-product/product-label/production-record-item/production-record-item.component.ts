@@ -69,6 +69,3 @@ export class ProductionRecordItemComponent extends GenericEditableItemComponent<
       }
     }
 }
-
-
-

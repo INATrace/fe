@@ -1216,7 +1216,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1304,7 +1304,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1392,7 +1392,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1434,15 +1434,15 @@ export class StockOrderControllerService {
   public exportDeliveriesByCompanyByMap(
     map: ExportDeliveriesByCompany.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<string>;
+    reportProgress?: boolean): Observable<Blob>;
   public exportDeliveriesByCompanyByMap(
     map: ExportDeliveriesByCompany.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<string>>;
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
   public exportDeliveriesByCompanyByMap(
     map: ExportDeliveriesByCompany.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<string>>;
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
   public exportDeliveriesByCompanyByMap(
     map: ExportDeliveriesByCompany.PartialParamMap,
     observe: any = 'body',
@@ -1464,9 +1464,9 @@ export class StockOrderControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
-    public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
-    public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
     public exportDeliveriesByCompany(companyId: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
             throw new Error('Required parameter companyId was null or undefined when calling exportDeliveriesByCompany.');
@@ -1479,7 +1479,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            'application/blob'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1496,8 +1496,9 @@ export class StockOrderControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<string>(`${this.configuration.basePath}/api/chain/stock-order/export/deliveries/company/${encodeURIComponent(String(companyId))}`,
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/chain/stock-order/export/deliveries/company/${encodeURIComponent(String(companyId))}`,
             {
+                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1521,15 +1522,15 @@ export class StockOrderControllerService {
   public exportGeoDataByMap(
     map: ExportGeoData.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<string>;
+    reportProgress?: boolean): Observable<Blob>;
   public exportGeoDataByMap(
     map: ExportGeoData.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<string>>;
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
   public exportGeoDataByMap(
     map: ExportGeoData.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<string>>;
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
   public exportGeoDataByMap(
     map: ExportGeoData.PartialParamMap,
     observe: any = 'body',
@@ -1551,9 +1552,9 @@ export class StockOrderControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
-    public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
-    public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
     public exportGeoData(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling exportGeoData.');
@@ -1583,8 +1584,9 @@ export class StockOrderControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<string>(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}/exportGeoData`,
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/chain/stock-order/${encodeURIComponent(String(id))}/exportGeoData`,
             {
+                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1715,7 +1717,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1845,7 +1847,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1940,7 +1942,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -2028,7 +2030,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -2202,7 +2204,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -2362,7 +2364,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -2450,7 +2452,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -2579,7 +2581,7 @@ export class StockOrderControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {

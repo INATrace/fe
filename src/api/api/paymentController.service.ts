@@ -744,7 +744,7 @@ export class PaymentControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -832,7 +832,7 @@ export class PaymentControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -920,7 +920,7 @@ export class PaymentControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -962,15 +962,15 @@ export class PaymentControllerService {
   public exportBulkPaymentsByCompanyByMap(
     map: ExportBulkPaymentsByCompany.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<string>;
+    reportProgress?: boolean): Observable<Blob>;
   public exportBulkPaymentsByCompanyByMap(
     map: ExportBulkPaymentsByCompany.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<string>>;
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
   public exportBulkPaymentsByCompanyByMap(
     map: ExportBulkPaymentsByCompany.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<string>>;
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
   public exportBulkPaymentsByCompanyByMap(
     map: ExportBulkPaymentsByCompany.PartialParamMap,
     observe: any = 'body',
@@ -992,9 +992,9 @@ export class PaymentControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportBulkPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
-    public exportBulkPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
-    public exportBulkPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public exportBulkPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportBulkPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportBulkPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
     public exportBulkPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling exportBulkPaymentsByCompany.');
@@ -1007,7 +1007,7 @@ export class PaymentControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1024,8 +1024,9 @@ export class PaymentControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<string>(`${this.configuration.basePath}/api/chain/payment/export/bulk-payment/company/${encodeURIComponent(String(id))}`,
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/chain/payment/export/bulk-payment/company/${encodeURIComponent(String(id))}`,
             {
+                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1049,15 +1050,15 @@ export class PaymentControllerService {
   public exportPaymentsByCompanyByMap(
     map: ExportPaymentsByCompany.PartialParamMap,
     observe?: 'body',
-    reportProgress?: boolean): Observable<string>;
+    reportProgress?: boolean): Observable<Blob>;
   public exportPaymentsByCompanyByMap(
     map: ExportPaymentsByCompany.PartialParamMap,
     observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<string>>;
+    reportProgress?: boolean): Observable<HttpResponse<Blob>>;
   public exportPaymentsByCompanyByMap(
     map: ExportPaymentsByCompany.PartialParamMap,
     observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<string>>;
+    reportProgress?: boolean): Observable<HttpEvent<Blob>>;
   public exportPaymentsByCompanyByMap(
     map: ExportPaymentsByCompany.PartialParamMap,
     observe: any = 'body',
@@ -1079,9 +1080,9 @@ export class PaymentControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<string>;
-    public exportPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<string>>;
-    public exportPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<string>>;
+    public exportPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
     public exportPaymentsByCompany(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling exportPaymentsByCompany.');
@@ -1094,7 +1095,7 @@ export class PaymentControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1111,8 +1112,9 @@ export class PaymentControllerService {
                 }
             }
 
-        const handle = this.httpClient.get<string>(`${this.configuration.basePath}/api/chain/payment/export/company/${encodeURIComponent(String(id))}`,
+        const handle = this.httpClient.get(`${this.configuration.basePath}/api/chain/payment/export/company/${encodeURIComponent(String(id))}`,
             {
+                responseType: "blob",
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -1176,7 +1178,7 @@ export class PaymentControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1258,7 +1260,7 @@ export class PaymentControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1367,7 +1369,7 @@ export class PaymentControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1512,7 +1514,7 @@ export class PaymentControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1647,7 +1649,7 @@ export class PaymentControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
