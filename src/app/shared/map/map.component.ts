@@ -21,6 +21,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   private map: mapboxgl.Map;
   private MAPBOX_STYLE_BASE_PATH = 'mapbox://styles/mapbox/';
 
+  private MAPBOX_SOURCE_PREFIX = 'ina_plot_';
+
   @Input()
   mapId = 'map';
 
@@ -127,9 +129,18 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.markers = [];
     this.plotCoordinates = [];
 
-    console.log('Layers: ', this.map.getStyle().layers);
+    // Find the plots that shall be removed
+    const plotsToRemove: Array<ApiPlot> = [];
+    this.plots.forEach(plot => {
+      const existingPlot = plots.find(p => plot.plotName === p.plotName);
+      if (existingPlot == null) {
+        plotsToRemove.push(plot);
+      }
+    });
 
-    plots.forEach(plot => {
+    // Remove layers of plots that are removed
+    plotsToRemove.forEach((plot) => {
+
       if (this.map.getLayer(plot.plotName)) {
         this.map.removeLayer(plot.plotName);
       }
@@ -137,8 +148,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.map.getLayer(borderName)) {
         this.map.removeLayer(borderName);
       }
-      if (this.map.getSource(plot.plotName)) {
-        this.map.removeSource(plot.plotName);
+
+      if (this.map.getSource(this.MAPBOX_SOURCE_PREFIX + plot.plotName)) {
+        this.map.removeSource(this.MAPBOX_SOURCE_PREFIX + plot.plotName);
       }
     });
 
@@ -256,8 +268,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   updateMap(plots: Array<ApiPlot>): void {
 
+    this.setExistingPlots(plots);
     this.plots = plots;
-    this.setExistingPlots(this.plots);
   }
 
   placeMarkerOnMap(lat: number, lng: number, plot?: ApiPlot, isPin?: boolean) {
@@ -496,7 +508,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    this.map.addSource(name, {
+    const sourceName = this.MAPBOX_SOURCE_PREFIX + name;
+
+    this.map.addSource(sourceName, {
       type: 'geojson',
       data: {
         type: 'Feature',
@@ -516,7 +530,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.map.addLayer({
       id: name,
       type: 'fill',
-      source: name, // reference the data source
+      source: sourceName, // reference the data source
       layout: {},
       paint: {
       'fill-color': '#999933',
@@ -529,7 +543,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.map.addLayer({
       id: borderId,
       type: 'line',
-      source: name,
+      source: sourceName,
       layout: {},
       paint: {
       'line-color': '#999933',
@@ -539,17 +553,22 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   hidePlot(plotName?: string) {
+
     if (!plotName) {
+
       if (this.map.getLayer('polygonPreview')) {
         this.map.removeLayer('polygonPreview');
       }
       if (this.map.getLayer('polygonPreviewBorder')) {
         this.map.removeLayer('polygonPreviewBorder');
       }
-      if (this.map.getSource('polygonPreview')) {
-        this.map.removeSource('polygonPreview');
+
+      if (this.map.getSource(this.MAPBOX_SOURCE_PREFIX + 'polygonPreview')) {
+        this.map.removeSource(this.MAPBOX_SOURCE_PREFIX + 'polygonPreview');
       }
+
     } else {
+
       if (this.map.getLayer(plotName)) {
         this.map.removeLayer(plotName);
       }
@@ -557,8 +576,9 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.map.getLayer(borderName)) {
         this.map.removeLayer(borderName);
       }
-      if (this.map.getSource(plotName)) {
-        this.map.removeSource(plotName);
+
+      if (this.map.getSource(this.MAPBOX_SOURCE_PREFIX + plotName)) {
+        this.map.removeSource(this.MAPBOX_SOURCE_PREFIX + plotName);
       }
     }
   }
