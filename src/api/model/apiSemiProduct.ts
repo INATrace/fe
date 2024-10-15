@@ -35,9 +35,9 @@ export interface ApiSemiProduct {
     description?: string;
     measurementUnitType?: ApiMeasureUnitType;
     translations?: Array<ApiSemiProductTranslation>;
+    skuendCustomer?: boolean;
     sku?: boolean;
     buyable?: boolean;
-    skuendCustomer?: boolean;
 }
 
 /**
@@ -56,9 +56,9 @@ export namespace ApiSemiProduct {
         description = 'description',
         measurementUnitType = 'measurementUnitType',
         translations = 'translations',
+        skuendCustomer = 'skuendCustomer',
         sku = 'sku',
-        buyable = 'buyable',
-        skuendCustomer = 'skuendCustomer'
+        buyable = 'buyable'
     }
 
 
@@ -128,6 +128,17 @@ export namespace ApiSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'skuendCustomer',
+                    classname: 'ApiSemiProduct',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'sku',
                     classname: 'ApiSemiProduct',
                     dataType: 'boolean',
@@ -146,17 +157,6 @@ export namespace ApiSemiProduct {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'skuendCustomer',
-                    classname: 'ApiSemiProduct',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
                 id: [
@@ -169,11 +169,11 @@ export namespace ApiSemiProduct {
                 ],
                 translations: [
                 ],
+                skuendCustomer: [
+                ],
                 sku: [
                 ],
                 buyable: [
-                ],
-                skuendCustomer: [
                 ],
             }
         }
@@ -197,13 +197,13 @@ export namespace ApiSemiProduct {
   //               translations: {
   //                   validators: []
   //               },
+  //               skuendCustomer: {
+  //                   validators: []
+  //               },
   //               sku: {
   //                   validators: []
   //               },
   //               buyable: {
-  //                   validators: []
-  //               },
-  //               skuendCustomer: {
   //                   validators: []
   //               },
   //     }

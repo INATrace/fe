@@ -37,6 +37,14 @@ export interface ApiCountry {
      * Country name.
      */
     name: string;
+    /**
+     * The latitude of the country
+     */
+    latitude?: number;
+    /**
+     * The longitude of the country
+     */
+    longitude?: number;
 }
 
 /**
@@ -58,7 +66,15 @@ export namespace ApiCountry {
         /**
          * Country name.
          */
-        name = 'name'
+        name = 'name',
+        /**
+         * The latitude of the country
+         */
+        latitude = 'latitude',
+        /**
+         * The longitude of the country
+         */
+        longitude = 'longitude'
     }
 
 
@@ -100,6 +116,28 @@ export namespace ApiCountry {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'latitude',
+                    classname: 'ApiCountry',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'longitude',
+                    classname: 'ApiCountry',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
                 id: [
@@ -115,6 +153,10 @@ export namespace ApiCountry {
                         ['minlength', 0],
                         ['maxlength', 100],
                 ],
+                latitude: [
+                ],
+                longitude: [
+                ],
             }
         }
     }
@@ -129,6 +171,12 @@ export namespace ApiCountry {
   //                   validators: []
   //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               latitude: {
+  //                   validators: []
+  //               },
+  //               longitude: {
   //                   validators: []
   //               },
   //     }

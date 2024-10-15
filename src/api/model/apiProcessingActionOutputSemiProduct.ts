@@ -43,9 +43,9 @@ export interface ApiProcessingActionOutputSemiProduct {
      * Maximum output weight when repacked outputs
      */
     maxOutputWeight?: number;
+    skuendCustomer?: boolean;
     sku?: boolean;
     buyable?: boolean;
-    skuendCustomer?: boolean;
 }
 
 /**
@@ -72,9 +72,9 @@ export namespace ApiProcessingActionOutputSemiProduct {
          * Maximum output weight when repacked outputs
          */
         maxOutputWeight = 'maxOutputWeight',
+        skuendCustomer = 'skuendCustomer',
         sku = 'sku',
-        buyable = 'buyable',
-        skuendCustomer = 'skuendCustomer'
+        buyable = 'buyable'
     }
 
 
@@ -166,6 +166,17 @@ export namespace ApiProcessingActionOutputSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'skuendCustomer',
+                    classname: 'ApiProcessingActionOutputSemiProduct',
+                    dataType: 'boolean',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'sku',
                     classname: 'ApiProcessingActionOutputSemiProduct',
                     dataType: 'boolean',
@@ -178,17 +189,6 @@ export namespace ApiProcessingActionOutputSemiProduct {
                     isEnum: false,
                     required: false,
                     name: 'buyable',
-                    classname: 'ApiProcessingActionOutputSemiProduct',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'skuendCustomer',
                     classname: 'ApiProcessingActionOutputSemiProduct',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -211,11 +211,11 @@ export namespace ApiProcessingActionOutputSemiProduct {
                 ],
                 maxOutputWeight: [
                 ],
+                skuendCustomer: [
+                ],
                 sku: [
                 ],
                 buyable: [
-                ],
-                skuendCustomer: [
                 ],
             }
         }
@@ -245,13 +245,13 @@ export namespace ApiProcessingActionOutputSemiProduct {
   //               maxOutputWeight: {
   //                   validators: []
   //               },
+  //               skuendCustomer: {
+  //                   validators: []
+  //               },
   //               sku: {
   //                   validators: []
   //               },
   //               buyable: {
-  //                   validators: []
-  //               },
-  //               skuendCustomer: {
   //                   validators: []
   //               },
   //     }

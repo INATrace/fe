@@ -16,6 +16,7 @@ import {
   OpenPlotDetailsExternallyModalComponent
 } from '../open-plot-details-externally-modal/open-plot-details-externally-modal.component';
 import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
+import { ApiCompany } from "../../../../api/model/apiCompany";
 
 @Component({
   selector: 'app-company-farmers-list',
@@ -25,6 +26,7 @@ import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-imp
 export class CompanyFarmersListComponent implements OnInit {
 
   organizationId;
+  selectedCompany: ApiCompany;
   page = 1;
   pageSize = 10;
 
@@ -187,6 +189,7 @@ export class CompanyFarmersListComponent implements OnInit {
       if (cp) {
 
         this.organizationId = cp.id;
+        this.selectedCompany = cp;
 
         this.showRwanda = cp.headquarters &&
             cp.headquarters.country &&

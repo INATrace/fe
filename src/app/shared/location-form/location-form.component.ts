@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { CountryService } from 'src/app/shared-services/countries.service';
 import { GlobalEventManagerService } from 'src/app/core/global-event-manager.service';
 import { EnumSifrant } from 'src/app/shared-services/enum-sifrant';
-import _ from 'lodash-es';
+import { ApiCountry } from "../../../api/model/apiCountry";
 
 @Component({
   selector: 'location-form',
@@ -99,11 +99,13 @@ export class LocationFormComponent implements OnInit, OnDestroy {
   }
 
   showRwandaFields() {
-    return this.form.get('address.country') && _.isEqual(this.form.get('address.country').value, { id: 184, code: 'RW', name: 'Rwanda' });
+    let country = this.form.get('address.country')?.value as ApiCountry;
+    return country && country.code === 'RW';
   }
 
   showHondurasFields() {
-    return this.form.get('address.country') && _.isEqual(this.form.get('address.country').value, { id: 99, code: 'HN', name: 'Honduras' });
+    let country = this.form.get('address.country')?.value as ApiCountry;
+    return country && country.code === 'HN';
   }
 
   enableValidationHonduras() {

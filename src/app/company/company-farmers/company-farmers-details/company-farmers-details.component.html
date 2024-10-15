@@ -121,13 +121,16 @@
                 <div class="af-form-block--c6">
                     <h2 i18n="@@collectorDetail.section.plots">Plots</h2>
                     <div class="af-form-element">
-                        <app-plots-form
+                        <app-plots-form #plotsForm
                           [productTypesCodebook]="productTypesCodebook"
                           [form]="$any(farmerForm)"
                           [submitted]="submitted"
                           [updateMode]="update"
                           (uploadGeoData)="fileUpload.click()"
-                          (exportGeoData)="exportGeoData()"></app-plots-form>
+                          (exportGeoData)="exportGeoData()"
+                          (savePlot)="save(true)"
+                          (deletePlot)="save(true)">
+                        </app-plots-form>
                         <input type="file"
                                (change)="geoJSONSelectedToUpload($event)"
                                [multiple]="false"

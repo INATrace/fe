@@ -13,7 +13,7 @@
 </div>
 
 <div class="af-row">
-    <app-map
+    <app-map #map
       style="width: 100%"
       [mapId]="'map-viewer'"
       [plots]="plots"
@@ -23,6 +23,8 @@
       (geoIdOpenChange)="openGeoIdWhisp($event)"
       [pin]="pin"
       [farmerId]="form.get('id')?.value"
+      [initialLat]="initialLat"
+      [initialLng]="initialLng"
       [plotCoordinatesManager]="plotCoordinatesManager">
     </app-map>
 </div>
@@ -44,7 +46,11 @@
                             [isOpen]="plotsListManager.isOpen(i)"
                             [productTypesCodebook]="productTypesCodebook"
                             [listEditorManager]="this.plotsListManager"
-                            [listEditorManagerPosition]="i">
+                            [listEditorManagerPosition]="i"
+                            [initialLat]="initialLat"
+                            [initialLng]="initialLng"
+                            (onSave)="savePlot.emit()"
+                            (onDelete)="deletePlot.emit()">
             </app-plots-item>
         </div>
     </list-editor-items>

@@ -17,10 +17,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
-  
-  private lat = 45.7; // initial values for focus
-  private lng = 13.7; // initial values for focus
-  
+
   private map: mapboxgl.Map;
   private MAPBOX_STYLE_BASE_PATH = 'mapbox://styles/mapbox/';
 
@@ -50,6 +47,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input()
   farmerId: number;
+
+  @Input()
+  initialLat: number;
+
+  @Input()
+  initialLng: number;
 
   @Output()
   plotCoordinatesChange = new EventEmitter<Array<ApiPlotCoordinate>>();
@@ -87,6 +90,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handlePlotCoordinateEvent(actionWrapper: PlotActionWrapper) {
+
     switch (actionWrapper.action) {
       case PlotCoordinateAction.DELETE_LAST_COORDINATE:
         this.undoLastPlotCoordinate();
@@ -101,6 +105,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getInitialMapExtremes(coordinates: Array<ApiPlotCoordinate>): [[number, number], [number, number]] {
+
     let latMin = coordinates[0].latitude;
     let latMax = coordinates[0].latitude;
     let lngMin = coordinates[0].longitude;
@@ -117,6 +122,25 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setExistingPlots(plots: Array<ApiPlot>) {
+
+    this.markers.forEach(marker => marker.remove());
+    this.markers = [];
+    this.plotCoordinates = [];
+
+    console.log('Layers: ', this.map.getStyle().layers);
+
+    plots.forEach(plot => {
+      if (this.map.getLayer(plot.plotName)) {
+        this.map.removeLayer(plot.plotName);
+      }
+      const borderName = plot.plotName + 'Border';
+      if (this.map.getLayer(borderName)) {
+        this.map.removeLayer(borderName);
+      }
+      if (this.map.getSource(plot.plotName)) {
+        this.map.removeSource(plot.plotName);
+      }
+    });
 
     const allPlotsCoordinates = [];
     plots.forEach(plot => {
@@ -157,6 +181,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   deletePlot(plotId?: string) {
+
     if (plotId) {
       this.hidePlot(plotId);
     } else {
@@ -181,12 +206,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   
   initializeMap(): void {
+
     if (this.editMode) {
-      if (this.editable) {
+      if (this.editable && (this.initialLat == null || this.initialLng == null)) {
         this.flyToCurrentPosition();
       }
     } else {
-      if (!this.plots || this.plots.length === 0) {
+      if ((!this.plots || this.plots.length === 0) && (this.initialLat == null || this.initialLng == null)) {
         this.flyToCurrentPosition();
       }
     }
@@ -202,10 +228,8 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   flyToCurrentPosition(): void {
     navigator.geolocation.getCurrentPosition( position => {
-      this.lat = position.coords.latitude;
-      this.lng = position.coords.longitude;
       this.map.flyTo({
-        center: [this.lng, this.lat]
+        center: [position.coords.longitude, position.coords.latitude]
       });
     });
   }
@@ -216,7 +240,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
       container: this.mapId, // id of div that holds the map
       style: `${this.MAPBOX_STYLE_BASE_PATH}${this.mapStyle.value}`,
       zoom: 10,
-      center: [this.lng, this.lat],
+      center: [this.initialLng ?? 14.995463, this.initialLat ?? 46.151241],
       cooperativeGestures: true
     });
 
@@ -228,6 +252,12 @@ export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.map.on('click', e => this.mapClicked(e));
     this.map.on('load', () => this.mapLoaded());
+  }
+
+  updateMap(plots: Array<ApiPlot>): void {
+
+    this.plots = plots;
+    this.setExistingPlots(this.plots);
   }
 
   placeMarkerOnMap(lat: number, lng: number, plot?: ApiPlot, isPin?: boolean) {

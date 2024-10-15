@@ -31,6 +31,12 @@ export class PlotsItemComponent extends GenericEditableItemComponent<ApiPlot> im
   @Input()
   productTypesCodebook: CompanyProductTypesService;
 
+  @Input()
+  initialLat: number;
+
+  @Input()
+  initialLng: number;
+
   faCopy = faCopy;
 
   plotCoordinatesManager: PlotCoordinatesManagerService = new PlotCoordinatesManagerService();

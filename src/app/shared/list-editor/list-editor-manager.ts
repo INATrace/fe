@@ -42,7 +42,6 @@ export class ListEditorManager<T> {
             this.lastNew = oldLength
             this.formArray.push(form)
             this.toggle(oldLength, returnFocusElement)
-            // this.scrollToTarget()
         }
     }
 
@@ -75,11 +74,6 @@ export class ListEditorManager<T> {
         this.formArray.updateValueAndValidity()
     }
 
-    public dragDisabled(i: number) {
-        return true; // TODO: ko bomo rabili urejanje, popravi
-        // return this.open >= 0 || this.formArray.length == 1
-    }
-
     public cancel(i: number) {
         // preveri, da trenutni skenslani ni slučajno prazen
         if (i == this.lastNew) {
@@ -106,7 +100,6 @@ export class ListEditorManager<T> {
     public isDisabled() {
         return this.formArray && this.formArray.enabled === false
     }
-
 
 }
 

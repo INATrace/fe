@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -36,6 +36,7 @@ import {ApiFarmPlantInformation} from '../../../../api/model/apiFarmPlantInforma
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 import { FileSaverService } from "ngx-filesaver";
 import { HttpClient } from "@angular/common/http";
+import { PlotsFormComponent } from "../../company-common/plots-form/plots-form.component";
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -153,6 +154,9 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       inactive: true
     }
   ];
+
+  @ViewChild('plotsForm', { static: false })
+  plotsForm: PlotsFormComponent;
 
   public areaTranslations = {
     totalCultivatedLabel: $localize`:@@collectorDetail.textinput.totalCultivatedArea.label:Total cultivated area`,
@@ -447,7 +451,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       const res = await this.companyService.exportUserCustomerGeoData(this.farmer.id)
           .pipe(take(1))
           .toPromise();
-      this.fileSaverService.save(res, 'farmer_geo_data.json');
+      this.fileSaverService.save(res, `${this.farmer.name}_${this.farmer.surname}_geo_data.json`);
     } finally {
       this.globalEventsManager.showLoading(false);
     }
@@ -539,13 +543,14 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     return result === 'ok';
   }
 
-  async save() {
+  async save(stayOnPage: boolean = false) {
+
     this.submitted = true;
 
     if (this.farmerForm.invalid) {
       return;
     }
-    if (this.checkNullEmpty(this.areaUnit) && this.checkAreaFieldsRequired()){
+    if (this.checkNullEmpty(this.areaUnit) && this.checkAreaFieldsRequired()) {
       this.updateAreaUnitValidators();
       return;
     }
@@ -561,7 +566,11 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         res = await this.companyService.updateUserCustomer(data).toPromise();
       }
       if (res && res.status === 'OK') {
-        this.dismiss();
+        if (!stayOnPage) {
+          this.dismiss();
+        } else {
+          this.plotsForm.updatePlots();
+        }
       }
     } finally {
       this.globalEventsManager.showLoading(false);
