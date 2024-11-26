@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,11 +22,11 @@
 
 
 export interface ApiProcessingPerformanceTotalItem { 
+    unit?: string;
+    year?: number;
     inputQuantity?: number;
     outputQuantity?: number;
     ratio?: number;
-    unit?: string;
-    year?: number;
 }
 
 /**
@@ -37,11 +37,11 @@ export namespace ApiProcessingPerformanceTotalItem {
      * All properties of ApiProcessingPerformanceTotalItem.
      */
     export enum Properties {
+        unit = 'unit',
+        year = 'year',
         inputQuantity = 'inputQuantity',
         outputQuantity = 'outputQuantity',
-        ratio = 'ratio',
-        unit = 'unit',
-        year = 'year'
+        ratio = 'ratio'
     }
 
 
@@ -50,6 +50,28 @@ export namespace ApiProcessingPerformanceTotalItem {
             metadata: formMetadata,
             classname: 'ApiProcessingPerformanceTotalItem',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'unit',
+                    classname: 'ApiProcessingPerformanceTotalItem',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'year',
+                    classname: 'ApiProcessingPerformanceTotalItem',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -83,39 +105,17 @@ export namespace ApiProcessingPerformanceTotalItem {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'unit',
-                    classname: 'ApiProcessingPerformanceTotalItem',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'year',
-                    classname: 'ApiProcessingPerformanceTotalItem',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
+                unit: [
+                ],
+                year: [
+                ],
                 inputQuantity: [
                 ],
                 outputQuantity: [
                 ],
                 ratio: [
-                ],
-                unit: [
-                ],
-                year: [
                 ],
             }
         }
@@ -124,6 +124,12 @@ export namespace ApiProcessingPerformanceTotalItem {
   // export const ApiProcessingPerformanceTotalItemValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               unit: {
+  //                   validators: []
+  //               },
+  //               year: {
+  //                   validators: []
+  //               },
   //               inputQuantity: {
   //                   validators: []
   //               },
@@ -131,12 +137,6 @@ export namespace ApiProcessingPerformanceTotalItem {
   //                   validators: []
   //               },
   //               ratio: {
-  //                   validators: []
-  //               },
-  //               unit: {
-  //                   validators: []
-  //               },
-  //               year: {
   //                   validators: []
   //               },
   //     }

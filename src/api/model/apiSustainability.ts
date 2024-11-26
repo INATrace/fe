@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,20 +20,23 @@
 
 
 
+/**
+ * environmental sustainability
+ */
 
 export interface ApiSustainability { 
     /**
-     * CO2 footprint - If you have calculated your company CO2 footprint, please add this information
+     * environmentally friendly production, max 1000 chars
      */
-    co2Footprint?: string;
+    production?: string;
     /**
      * sustainable packaging - Describe the environmental sustainability of your packaging, max 1000 chars
      */
     packaging?: string;
     /**
-     * environmentally friendly production, max 1000 chars
+     * CO2 footprint - If you have calculated your company CO2 footprint, please add this information
      */
-    production?: string;
+    co2Footprint?: string;
 }
 
 /**
@@ -45,17 +48,17 @@ export namespace ApiSustainability {
      */
     export enum Properties {
         /**
-         * CO2 footprint - If you have calculated your company CO2 footprint, please add this information
+         * environmentally friendly production, max 1000 chars
          */
-        co2Footprint = 'co2Footprint',
+        production = 'production',
         /**
          * sustainable packaging - Describe the environmental sustainability of your packaging, max 1000 chars
          */
         packaging = 'packaging',
         /**
-         * environmentally friendly production, max 1000 chars
+         * CO2 footprint - If you have calculated your company CO2 footprint, please add this information
          */
-        production = 'production'
+        co2Footprint = 'co2Footprint'
     }
 
 
@@ -68,7 +71,7 @@ export namespace ApiSustainability {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'co2Footprint',
+                    name: 'production',
                     classname: 'ApiSustainability',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -90,7 +93,7 @@ export namespace ApiSustainability {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'production',
+                    name: 'co2Footprint',
                     classname: 'ApiSustainability',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -99,11 +102,17 @@ export namespace ApiSustainability {
                 },
             ],
             validators: {
-                co2Footprint: [
+                production: [
+                        ['minlength', 0],
+                        ['maxlength', 1000],
                 ],
                 packaging: [
+                        ['minlength', 0],
+                        ['maxlength', 1000],
                 ],
-                production: [
+                co2Footprint: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
             }
         }
@@ -112,13 +121,13 @@ export namespace ApiSustainability {
   // export const ApiSustainabilityValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               co2Footprint: {
+  //               production: {
   //                   validators: []
   //               },
   //               packaging: {
   //                   validators: []
   //               },
-  //               production: {
+  //               co2Footprint: {
   //                   validators: []
   //               },
   //     }

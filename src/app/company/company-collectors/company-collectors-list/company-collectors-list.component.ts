@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { SortOption, SortOrder } from '../../../shared/result-sorter/result-sorter-types';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
-import { CompanyControllerService, GetUserCustomersForCompanyAndTypeUsingGET } from '../../../../api/api/companyController.service';
+import { CompanyControllerService, GetUserCustomersForCompanyAndType } from '../../../../api/api/companyController.service';
 import { Router } from '@angular/router';
 import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
@@ -188,7 +188,7 @@ export class CompanyCollectorsListComponent implements OnInit{
     this.collector$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
         .pipe(
             map(([sort, queryString, search, page, ping]) => {
-              const params: GetUserCustomersForCompanyAndTypeUsingGET.PartialParamMap = {
+              const params: GetUserCustomersForCompanyAndType.PartialParamMap = {
                 companyId: this.organizationId,
                 type: 'COLLECTOR',
                 sort: sort.sortOrder,
@@ -201,7 +201,7 @@ export class CompanyCollectorsListComponent implements OnInit{
               return params;
             }),
             tap(() => this.globalEventsManager.showLoading(true)),
-            switchMap(params => this.companyController.getUserCustomersForCompanyAndTypeUsingGETByMap(params)),
+            switchMap(params => this.companyController.getUserCustomersForCompanyAndTypeByMap(params)),
             map(response => {
               if (response) {
                 this.collectorCount = response.data.count;
@@ -233,7 +233,7 @@ export class CompanyCollectorsListComponent implements OnInit{
     if (result !== 'ok') {
       return;
     }
-    const res = await this.companyController.deleteUserCustomerUsingDELETE(id).pipe(take(1)).toPromise();
+    const res = await this.companyController.deleteUserCustomer(id).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
       this.ping$.next(null);
     }

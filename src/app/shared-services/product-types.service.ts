@@ -5,7 +5,7 @@ import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiProductType } from '../../api/model/apiProductType';
 import { ApiPaginatedResponseApiProductType } from '../../api/model/apiPaginatedResponseApiProductType';
-import { GetProductTypesUsingGET, ProductTypeControllerService } from '../../api/api/productTypeController.service';
+import { GetProductTypes, ProductTypeControllerService } from '../../api/api/productTypeController.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class ProductTypesService extends GeneralSifrantService<ApiProductType> {
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetProductTypesUsingGET.PartialParamMap;
+  } as GetProductTypes.PartialParamMap;
 
   public identifier(el: ApiProductType) {
     return el.id;
@@ -34,7 +34,7 @@ export class ProductTypesService extends GeneralSifrantService<ApiProductType> {
   public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiProductType>> {
     const limit = params && params.limit ? params.limit : this.limit();
 
-    return this.codebookService.getProductTypesUsingGETByMap(this.requestParams).pipe(
+    return this.codebookService.getProductTypesByMap(this.requestParams).pipe(
       map((res: ApiPaginatedResponseApiProductType) => {
         return {
           results: res.data.items,

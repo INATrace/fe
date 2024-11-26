@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,20 +20,31 @@
 
 
 
+/**
+ * country
+ */
 
 export interface ApiCountry { 
+    /**
+     * Db id.
+     */
+    id: number;
     /**
      * Two letter country code of country (ISO 3166-1 alpha-2 code).
      */
     code: string;
     /**
-     * Db id.
-     */
-    id?: number;
-    /**
      * Country name.
      */
     name: string;
+    /**
+     * The latitude of the country
+     */
+    latitude?: number;
+    /**
+     * The longitude of the country
+     */
+    longitude?: number;
 }
 
 /**
@@ -45,17 +56,25 @@ export namespace ApiCountry {
      */
     export enum Properties {
         /**
-         * Two letter country code of country (ISO 3166-1 alpha-2 code).
-         */
-        code = 'code',
-        /**
          * Db id.
          */
         id = 'id',
         /**
+         * Two letter country code of country (ISO 3166-1 alpha-2 code).
+         */
+        code = 'code',
+        /**
          * Country name.
          */
-        name = 'name'
+        name = 'name',
+        /**
+         * The latitude of the country
+         */
+        latitude = 'latitude',
+        /**
+         * The longitude of the country
+         */
+        longitude = 'longitude'
     }
 
 
@@ -68,9 +87,9 @@ export namespace ApiCountry {
                     isReadOnly: false,
                     isEnum: false,
                     required: true,
-                    name: 'code',
+                    name: 'id',
                     classname: 'ApiCountry',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -78,10 +97,10 @@ export namespace ApiCountry {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: false,
-                    name: 'id',
+                    required: true,
+                    name: 'code',
                     classname: 'ApiCountry',
-                    dataType: 'number',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -97,15 +116,46 @@ export namespace ApiCountry {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'latitude',
+                    classname: 'ApiCountry',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'longitude',
+                    classname: 'ApiCountry',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                code: [
+                id: [
                         ['required'],
                 ],
-                id: [
+                code: [
+                        ['required'],
+                        ['minlength', 0],
+                        ['maxlength', 3],
                 ],
                 name: [
                         ['required'],
+                        ['minlength', 0],
+                        ['maxlength', 100],
+                ],
+                latitude: [
+                ],
+                longitude: [
                 ],
             }
         }
@@ -114,13 +164,19 @@ export namespace ApiCountry {
   // export const ApiCountryValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               code: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
+  //               code: {
+  //                   validators: []
+  //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               latitude: {
+  //                   validators: []
+  //               },
+  //               longitude: {
   //                   validators: []
   //               },
   //     }

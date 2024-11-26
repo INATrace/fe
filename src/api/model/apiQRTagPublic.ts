@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,45 +22,48 @@ import { ApiCertification } from './apiCertification';
 import { ApiHistoryTimeline } from './apiHistoryTimeline';
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiQRTagPublic { 
-    /**
-     * List of certificates of the participating companies in this Stock order
-     */
-    certificates?: Array<ApiCertification>;
-    /**
-     * The cupping flavour entered during one of the processing actions
-     */
-    cuppingFlavour?: string;
-    /**
-     * The cupping score entered during one of the processing actions
-     */
-    cuppingScore?: number;
-    historyTimeline?: ApiHistoryTimeline;
-    /**
-     * The global (product) order of the Stock order
-     */
-    orderId?: string;
-    /**
-     * Price paid to farmers in EUR/kg
-     */
-    priceToFarmer?: number;
-    /**
-     * Price paid to producer in EUR/kg
-     */
-    priceToProducer?: number;
-    /**
-     * The Producer name
-     */
-    producerName?: string;
     /**
      * The QR code tag
      */
     qrTag?: string;
     /**
+     * The global (product) order of the Stock order
+     */
+    orderId?: string;
+    /**
+     * The Producer name
+     */
+    producerName?: string;
+    /**
+     * Price paid to producer in EUR/kg
+     */
+    priceToProducer?: number;
+    /**
+     * Price paid to farmers in EUR/kg
+     */
+    priceToFarmer?: number;
+    /**
+     * The cupping score entered during one of the processing actions
+     */
+    cuppingScore?: number;
+    /**
+     * The cupping flavour entered during one of the processing actions
+     */
+    cuppingFlavour?: string;
+    /**
      * The roasting profile entered during one of the processing actions
      */
     roastingProfile?: string;
+    /**
+     * List of certificates of the participating companies in this Stock order
+     */
+    certificates?: Array<ApiCertification>;
+    historyTimeline?: ApiHistoryTimeline;
 }
 
 /**
@@ -72,42 +75,42 @@ export namespace ApiQRTagPublic {
      */
     export enum Properties {
         /**
-         * List of certificates of the participating companies in this Stock order
+         * The QR code tag
          */
-        certificates = 'certificates',
-        /**
-         * The cupping flavour entered during one of the processing actions
-         */
-        cuppingFlavour = 'cuppingFlavour',
-        /**
-         * The cupping score entered during one of the processing actions
-         */
-        cuppingScore = 'cuppingScore',
-        historyTimeline = 'historyTimeline',
+        qrTag = 'qrTag',
         /**
          * The global (product) order of the Stock order
          */
         orderId = 'orderId',
         /**
-         * Price paid to farmers in EUR/kg
+         * The Producer name
          */
-        priceToFarmer = 'priceToFarmer',
+        producerName = 'producerName',
         /**
          * Price paid to producer in EUR/kg
          */
         priceToProducer = 'priceToProducer',
         /**
-         * The Producer name
+         * Price paid to farmers in EUR/kg
          */
-        producerName = 'producerName',
+        priceToFarmer = 'priceToFarmer',
         /**
-         * The QR code tag
+         * The cupping score entered during one of the processing actions
          */
-        qrTag = 'qrTag',
+        cuppingScore = 'cuppingScore',
+        /**
+         * The cupping flavour entered during one of the processing actions
+         */
+        cuppingFlavour = 'cuppingFlavour',
         /**
          * The roasting profile entered during one of the processing actions
          */
-        roastingProfile = 'roastingProfile'
+        roastingProfile = 'roastingProfile',
+        /**
+         * List of certificates of the participating companies in this Stock order
+         */
+        certificates = 'certificates',
+        historyTimeline = 'historyTimeline'
     }
 
 
@@ -117,50 +120,15 @@ export namespace ApiQRTagPublic {
             classname: 'ApiQRTagPublic',
             vars: [
                 {
-                    metadata: ApiCertification.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'certificates',
-                    classname: 'ApiQRTagPublic',
-                    dataType: 'Array&lt;ApiCertification&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiCertification'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'cuppingFlavour',
+                    name: 'qrTag',
                     classname: 'ApiQRTagPublic',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'cuppingScore',
-                    classname: 'ApiQRTagPublic',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiHistoryTimeline.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'historyTimeline',
-                    classname: 'ApiQRTagPublic',
-                    dataType: 'ApiHistoryTimeline',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiHistoryTimeline'
                 },
                 {
                     isReadOnly: false,
@@ -169,28 +137,6 @@ export namespace ApiQRTagPublic {
                     name: 'orderId',
                     classname: 'ApiQRTagPublic',
                     dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'priceToFarmer',
-                    classname: 'ApiQRTagPublic',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'priceToProducer',
-                    classname: 'ApiQRTagPublic',
-                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -210,7 +156,40 @@ export namespace ApiQRTagPublic {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'qrTag',
+                    name: 'priceToProducer',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'priceToFarmer',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cuppingScore',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cuppingFlavour',
                     classname: 'ApiQRTagPublic',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -228,27 +207,51 @@ export namespace ApiQRTagPublic {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiCertification.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'certificates',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'Array&lt;ApiCertification&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiCertification'
+                },
+                {
+                    metadata: ApiHistoryTimeline.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'historyTimeline',
+                    classname: 'ApiQRTagPublic',
+                    dataType: 'ApiHistoryTimeline',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiHistoryTimeline'
+                },
             ],
             validators: {
-                certificates: [
-                ],
-                cuppingFlavour: [
-                ],
-                cuppingScore: [
-                ],
-                historyTimeline: [
+                qrTag: [
                 ],
                 orderId: [
                 ],
-                priceToFarmer: [
+                producerName: [
                 ],
                 priceToProducer: [
                 ],
-                producerName: [
+                priceToFarmer: [
                 ],
-                qrTag: [
+                cuppingScore: [
+                ],
+                cuppingFlavour: [
                 ],
                 roastingProfile: [
+                ],
+                certificates: [
+                ],
+                historyTimeline: [
                 ],
             }
         }
@@ -257,34 +260,34 @@ export namespace ApiQRTagPublic {
   // export const ApiQRTagPublicValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               certificates: {
-  //                   validators: []
-  //               },
-  //               cuppingFlavour: {
-  //                   validators: []
-  //               },
-  //               cuppingScore: {
-  //                   validators: []
-  //               },
-  //               historyTimeline: {
+  //               qrTag: {
   //                   validators: []
   //               },
   //               orderId: {
   //                   validators: []
   //               },
-  //               priceToFarmer: {
+  //               producerName: {
   //                   validators: []
   //               },
   //               priceToProducer: {
   //                   validators: []
   //               },
-  //               producerName: {
+  //               priceToFarmer: {
   //                   validators: []
   //               },
-  //               qrTag: {
+  //               cuppingScore: {
+  //                   validators: []
+  //               },
+  //               cuppingFlavour: {
   //                   validators: []
   //               },
   //               roastingProfile: {
+  //                   validators: []
+  //               },
+  //               certificates: {
+  //                   validators: []
+  //               },
+  //               historyTimeline: {
   //                   validators: []
   //               },
   //     }

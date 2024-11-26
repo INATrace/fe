@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,6 +20,9 @@
 
 
 
+/**
+ * Fields
+ */
 
 export interface ApiProductLabelFieldValue { 
     /**
@@ -100,8 +103,12 @@ export namespace ApiProductLabelFieldValue {
             ],
             validators: {
                 name: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 section: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 value: [
                 ],

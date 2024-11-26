@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -39,43 +39,37 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createOrUpdateMeasurementUnitTypeUsingPUT.
+ * Namespace for createOrUpdateMeasurementUnitType.
  */
-export namespace CreateOrUpdateMeasurementUnitTypeUsingPUT {
+export namespace CreateOrUpdateMeasurementUnitType {
     /**
-     * Parameter map for createOrUpdateMeasurementUnitTypeUsingPUT.
+     * Parameter map for createOrUpdateMeasurementUnitType.
      */
     export interface PartialParamMap {
-      /**
-       * apiMeasureUnitType
-       */
       ApiMeasureUnitType: ApiMeasureUnitType;
     }
 
     /**
-     * Enumeration of all parameters for createOrUpdateMeasurementUnitTypeUsingPUT.
+     * Enumeration of all parameters for createOrUpdateMeasurementUnitType.
      */
     export enum Parameters {
-      /**
-       * apiMeasureUnitType
-       */
       ApiMeasureUnitType = 'ApiMeasureUnitType'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateMeasurementUnitTypeUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateMeasurementUnitType
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateOrUpdateMeasurementUnitTypeUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateOrUpdateMeasurementUnitType.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for deleteMeasurementUnitTypeUsingDELETE.
+ * Namespace for deleteMeasurementUnitType.
  */
-export namespace DeleteMeasurementUnitTypeUsingDELETE {
+export namespace DeleteMeasurementUnitType {
     /**
-     * Parameter map for deleteMeasurementUnitTypeUsingDELETE.
+     * Parameter map for deleteMeasurementUnitType.
      */
     export interface PartialParamMap {
       /**
@@ -85,7 +79,7 @@ export namespace DeleteMeasurementUnitTypeUsingDELETE {
     }
 
     /**
-     * Enumeration of all parameters for deleteMeasurementUnitTypeUsingDELETE.
+     * Enumeration of all parameters for deleteMeasurementUnitType.
      */
     export enum Parameters {
       /**
@@ -95,10 +89,10 @@ export namespace DeleteMeasurementUnitTypeUsingDELETE {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteMeasurementUnitTypeUsingDELETE
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteMeasurementUnitType
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof DeleteMeasurementUnitTypeUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof DeleteMeasurementUnitType.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -106,11 +100,11 @@ export namespace DeleteMeasurementUnitTypeUsingDELETE {
 }
 
 /**
- * Namespace for getMeasureUnitTypeListUsingGET.
+ * Namespace for getMeasureUnitTypeList.
  */
-export namespace GetMeasureUnitTypeListUsingGET {
+export namespace GetMeasureUnitTypeList {
     /**
-     * Parameter map for getMeasureUnitTypeListUsingGET.
+     * Parameter map for getMeasureUnitTypeList.
      */
     export interface PartialParamMap {
       /**
@@ -136,7 +130,7 @@ export namespace GetMeasureUnitTypeListUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for getMeasureUnitTypeListUsingGET.
+     * Enumeration of all parameters for getMeasureUnitTypeList.
      */
     export enum Parameters {
       /**
@@ -162,15 +156,17 @@ export namespace GetMeasureUnitTypeListUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getMeasureUnitTypeListUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getMeasureUnitTypeList
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetMeasureUnitTypeListUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetMeasureUnitTypeList.PartialParamMap]?: [string, ValidatorFn][]} = {
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -180,11 +176,11 @@ export namespace GetMeasureUnitTypeListUsingGET {
 }
 
 /**
- * Namespace for getMeasurementUnitTypeUsingGET.
+ * Namespace for getMeasurementUnitType.
  */
-export namespace GetMeasurementUnitTypeUsingGET {
+export namespace GetMeasurementUnitType {
     /**
-     * Parameter map for getMeasurementUnitTypeUsingGET.
+     * Parameter map for getMeasurementUnitType.
      */
     export interface PartialParamMap {
       /**
@@ -194,7 +190,7 @@ export namespace GetMeasurementUnitTypeUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for getMeasurementUnitTypeUsingGET.
+     * Enumeration of all parameters for getMeasurementUnitType.
      */
     export enum Parameters {
       /**
@@ -204,10 +200,10 @@ export namespace GetMeasurementUnitTypeUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getMeasurementUnitTypeUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getMeasurementUnitType
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetMeasurementUnitTypeUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetMeasurementUnitType.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -258,23 +254,23 @@ export class MeasureUnitTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createOrUpdateMeasurementUnitTypeUsingPUTByMap(
-    map: CreateOrUpdateMeasurementUnitTypeUsingPUT.PartialParamMap,
+  public createOrUpdateMeasurementUnitTypeByMap(
+    map: CreateOrUpdateMeasurementUnitType.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public createOrUpdateMeasurementUnitTypeUsingPUTByMap(
-    map: CreateOrUpdateMeasurementUnitTypeUsingPUT.PartialParamMap,
+  public createOrUpdateMeasurementUnitTypeByMap(
+    map: CreateOrUpdateMeasurementUnitType.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public createOrUpdateMeasurementUnitTypeUsingPUTByMap(
-    map: CreateOrUpdateMeasurementUnitTypeUsingPUT.PartialParamMap,
+  public createOrUpdateMeasurementUnitTypeByMap(
+    map: CreateOrUpdateMeasurementUnitType.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public createOrUpdateMeasurementUnitTypeUsingPUTByMap(
-    map: CreateOrUpdateMeasurementUnitTypeUsingPUT.PartialParamMap,
+  public createOrUpdateMeasurementUnitTypeByMap(
+    map: CreateOrUpdateMeasurementUnitType.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createOrUpdateMeasurementUnitTypeUsingPUT(
+    return this.createOrUpdateMeasurementUnitType(
       map.ApiMeasureUnitType,
       observe,
       reportProgress
@@ -285,23 +281,23 @@ export class MeasureUnitTypeControllerService {
     /**
      * Create or update measurement unit type. If ID is provided, the entity with the provided ID is updated.
      * 
-     * @param ApiMeasureUnitType apiMeasureUnitType
+     * @param ApiMeasureUnitType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public createOrUpdateMeasurementUnitTypeUsingPUT(ApiMeasureUnitType: ApiMeasureUnitType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createOrUpdateMeasurementUnitType(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateMeasurementUnitType(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateMeasurementUnitType(ApiMeasureUnitType: ApiMeasureUnitType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createOrUpdateMeasurementUnitType(ApiMeasureUnitType: ApiMeasureUnitType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiMeasureUnitType === null || ApiMeasureUnitType === undefined) {
-            throw new Error('Required parameter ApiMeasureUnitType was null or undefined when calling createOrUpdateMeasurementUnitTypeUsingPUT.');
+            throw new Error('Required parameter ApiMeasureUnitType was null or undefined when calling createOrUpdateMeasurementUnitType.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -333,7 +329,7 @@ export class MeasureUnitTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateMeasurementUnitTypeUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateMeasurementUnitType')));
         }
         return handle;
     }
@@ -346,23 +342,23 @@ export class MeasureUnitTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public deleteMeasurementUnitTypeUsingDELETEByMap(
-    map: DeleteMeasurementUnitTypeUsingDELETE.PartialParamMap,
+  public deleteMeasurementUnitTypeByMap(
+    map: DeleteMeasurementUnitType.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public deleteMeasurementUnitTypeUsingDELETEByMap(
-    map: DeleteMeasurementUnitTypeUsingDELETE.PartialParamMap,
+  public deleteMeasurementUnitTypeByMap(
+    map: DeleteMeasurementUnitType.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public deleteMeasurementUnitTypeUsingDELETEByMap(
-    map: DeleteMeasurementUnitTypeUsingDELETE.PartialParamMap,
+  public deleteMeasurementUnitTypeByMap(
+    map: DeleteMeasurementUnitType.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public deleteMeasurementUnitTypeUsingDELETEByMap(
-    map: DeleteMeasurementUnitTypeUsingDELETE.PartialParamMap,
+  public deleteMeasurementUnitTypeByMap(
+    map: DeleteMeasurementUnitType.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.deleteMeasurementUnitTypeUsingDELETE(
+    return this.deleteMeasurementUnitType(
       map.id,
       observe,
       reportProgress
@@ -377,19 +373,19 @@ export class MeasureUnitTypeControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteMeasurementUnitTypeUsingDELETE(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public deleteMeasurementUnitTypeUsingDELETE(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public deleteMeasurementUnitTypeUsingDELETE(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public deleteMeasurementUnitTypeUsingDELETE(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public deleteMeasurementUnitType(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public deleteMeasurementUnitType(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public deleteMeasurementUnitType(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public deleteMeasurementUnitType(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteMeasurementUnitTypeUsingDELETE.');
+            throw new Error('Required parameter id was null or undefined when calling deleteMeasurementUnitType.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -415,7 +411,7 @@ export class MeasureUnitTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteMeasurementUnitTypeUsingDELETE')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteMeasurementUnitType')));
         }
         return handle;
     }
@@ -428,23 +424,23 @@ export class MeasureUnitTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getMeasureUnitTypeListUsingGETByMap(
-    map: GetMeasureUnitTypeListUsingGET.PartialParamMap,
+  public getMeasureUnitTypeListByMap(
+    map: GetMeasureUnitTypeList.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiMeasureUnitType>;
-  public getMeasureUnitTypeListUsingGETByMap(
-    map: GetMeasureUnitTypeListUsingGET.PartialParamMap,
+  public getMeasureUnitTypeListByMap(
+    map: GetMeasureUnitTypeList.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiMeasureUnitType>>;
-  public getMeasureUnitTypeListUsingGETByMap(
-    map: GetMeasureUnitTypeListUsingGET.PartialParamMap,
+  public getMeasureUnitTypeListByMap(
+    map: GetMeasureUnitTypeList.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiMeasureUnitType>>;
-  public getMeasureUnitTypeListUsingGETByMap(
-    map: GetMeasureUnitTypeListUsingGET.PartialParamMap,
+  public getMeasureUnitTypeListByMap(
+    map: GetMeasureUnitTypeList.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getMeasureUnitTypeListUsingGET(
+    return this.getMeasureUnitTypeList(
       map.requestType,
       map.limit,
       map.offset,
@@ -467,10 +463,10 @@ export class MeasureUnitTypeControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMeasureUnitTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiMeasureUnitType>;
-    public getMeasureUnitTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiMeasureUnitType>>;
-    public getMeasureUnitTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiMeasureUnitType>>;
-    public getMeasureUnitTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getMeasureUnitTypeList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiMeasureUnitType>;
+    public getMeasureUnitTypeList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiMeasureUnitType>>;
+    public getMeasureUnitTypeList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiMeasureUnitType>>;
+    public getMeasureUnitTypeList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -493,7 +489,7 @@ export class MeasureUnitTypeControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -520,7 +516,7 @@ export class MeasureUnitTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getMeasureUnitTypeListUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getMeasureUnitTypeList')));
         }
         return handle;
     }
@@ -533,23 +529,23 @@ export class MeasureUnitTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getMeasurementUnitTypeUsingGETByMap(
-    map: GetMeasurementUnitTypeUsingGET.PartialParamMap,
+  public getMeasurementUnitTypeByMap(
+    map: GetMeasurementUnitType.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiMeasureUnitType>;
-  public getMeasurementUnitTypeUsingGETByMap(
-    map: GetMeasurementUnitTypeUsingGET.PartialParamMap,
+  public getMeasurementUnitTypeByMap(
+    map: GetMeasurementUnitType.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiMeasureUnitType>>;
-  public getMeasurementUnitTypeUsingGETByMap(
-    map: GetMeasurementUnitTypeUsingGET.PartialParamMap,
+  public getMeasurementUnitTypeByMap(
+    map: GetMeasurementUnitType.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiMeasureUnitType>>;
-  public getMeasurementUnitTypeUsingGETByMap(
-    map: GetMeasurementUnitTypeUsingGET.PartialParamMap,
+  public getMeasurementUnitTypeByMap(
+    map: GetMeasurementUnitType.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getMeasurementUnitTypeUsingGET(
+    return this.getMeasurementUnitType(
       map.id,
       observe,
       reportProgress
@@ -564,19 +560,19 @@ export class MeasureUnitTypeControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMeasurementUnitTypeUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiMeasureUnitType>;
-    public getMeasurementUnitTypeUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiMeasureUnitType>>;
-    public getMeasurementUnitTypeUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiMeasureUnitType>>;
-    public getMeasurementUnitTypeUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getMeasurementUnitType(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiMeasureUnitType>;
+    public getMeasurementUnitType(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiMeasureUnitType>>;
+    public getMeasurementUnitType(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiMeasureUnitType>>;
+    public getMeasurementUnitType(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getMeasurementUnitTypeUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling getMeasurementUnitType.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -602,7 +598,7 @@ export class MeasureUnitTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getMeasurementUnitTypeUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getMeasurementUnitType')));
         }
         return handle;
     }

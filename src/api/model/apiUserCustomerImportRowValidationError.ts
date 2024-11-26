@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,8 +23,8 @@ import { ApiUserCustomerImportColumnValidationError } from './apiUserCustomerImp
 
 
 export interface ApiUserCustomerImportRowValidationError { 
-    columnValidationErrors?: Array<ApiUserCustomerImportColumnValidationError>;
     rowIndex?: number;
+    columnValidationErrors?: Array<ApiUserCustomerImportColumnValidationError>;
 }
 
 /**
@@ -35,8 +35,8 @@ export namespace ApiUserCustomerImportRowValidationError {
      * All properties of ApiUserCustomerImportRowValidationError.
      */
     export enum Properties {
-        columnValidationErrors = 'columnValidationErrors',
-        rowIndex = 'rowIndex'
+        rowIndex = 'rowIndex',
+        columnValidationErrors = 'columnValidationErrors'
     }
 
 
@@ -45,6 +45,17 @@ export namespace ApiUserCustomerImportRowValidationError {
             metadata: formMetadata,
             classname: 'ApiUserCustomerImportRowValidationError',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'rowIndex',
+                    classname: 'ApiUserCustomerImportRowValidationError',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     metadata: ApiUserCustomerImportColumnValidationError.formMetadata,
                     isReadOnly: false,
@@ -57,22 +68,11 @@ export namespace ApiUserCustomerImportRowValidationError {
                     isListContainer: true,
                     complexType: 'ApiUserCustomerImportColumnValidationError'
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'rowIndex',
-                    classname: 'ApiUserCustomerImportRowValidationError',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                columnValidationErrors: [
-                ],
                 rowIndex: [
+                ],
+                columnValidationErrors: [
                 ],
             }
         }
@@ -81,10 +81,10 @@ export namespace ApiUserCustomerImportRowValidationError {
   // export const ApiUserCustomerImportRowValidationErrorValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               columnValidationErrors: {
+  //               rowIndex: {
   //                   validators: []
   //               },
-  //               rowIndex: {
+  //               columnValidationErrors: {
   //                   validators: []
   //               },
   //     }

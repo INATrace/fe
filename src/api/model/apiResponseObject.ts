@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -27,6 +27,14 @@ import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 
 export interface ApiResponseObject { 
     /**
+     * Response status. OK for successful reponses.
+     */
+    status: ApiResponseObject.StatusEnum;
+    /**
+     * Simple message to explain client developers the reason for error.
+     */
+    errorMessage?: string;
+    /**
      * Response body for successful responses.
      */
     data?: any;
@@ -34,14 +42,6 @@ export interface ApiResponseObject {
      * Optional details for unexpected error responses.
      */
     errorDetails?: string;
-    /**
-     * Simple message to explain client developers the reason for error.
-     */
-    errorMessage?: string;
-    /**
-     * Response status. OK for successful reponses.
-     */
-    status: ApiResponseObject.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -54,6 +54,14 @@ export namespace ApiResponseObject {
      */
     export enum Properties {
         /**
+         * Response status. OK for successful reponses.
+         */
+        status = 'status',
+        /**
+         * Simple message to explain client developers the reason for error.
+         */
+        errorMessage = 'errorMessage',
+        /**
          * Response body for successful responses.
          */
         data = 'data',
@@ -61,14 +69,6 @@ export namespace ApiResponseObject {
          * Optional details for unexpected error responses.
          */
         errorDetails = 'errorDetails',
-        /**
-         * Simple message to explain client developers the reason for error.
-         */
-        errorMessage = 'errorMessage',
-        /**
-         * Response status. OK for successful reponses.
-         */
-        status = 'status',
         validationErrorDetails = 'validationErrorDetails'
     }
 
@@ -98,6 +98,29 @@ export namespace ApiResponseObject {
             vars: [
                 {
                     isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiResponseObject.StatusEnum',
+                    required: true,
+                    name: 'status',
+                    classname: 'ApiResponseObject',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'errorMessage',
+                    classname: 'ApiResponseObject',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'data',
@@ -119,29 +142,6 @@ export namespace ApiResponseObject {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'errorMessage',
-                    classname: 'ApiResponseObject',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiResponseObject.StatusEnum',
-                    required: true,
-                    name: 'status',
-                    classname: 'ApiResponseObject',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiValidationErrorDetails.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -155,14 +155,14 @@ export namespace ApiResponseObject {
                 },
             ],
             validators: {
-                data: [
-                ],
-                errorDetails: [
+                status: [
+                        ['required'],
                 ],
                 errorMessage: [
                 ],
-                status: [
-                        ['required'],
+                data: [
+                ],
+                errorDetails: [
                 ],
                 validationErrorDetails: [
                 ],
@@ -173,16 +173,16 @@ export namespace ApiResponseObject {
   // export const ApiResponseObjectValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               data: {
-  //                   validators: []
-  //               },
-  //               errorDetails: {
+  //               status: {
   //                   validators: []
   //               },
   //               errorMessage: {
   //                   validators: []
   //               },
-  //               status: {
+  //               data: {
+  //                   validators: []
+  //               },
+  //               errorDetails: {
   //                   validators: []
   //               },
   //               validationErrorDetails: {

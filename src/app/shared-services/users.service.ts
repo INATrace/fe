@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
-import { AdminListUsersUsingGET, UserControllerService } from 'src/api/api/userController.service';
+import { AdminListUsers, UserControllerService } from 'src/api/api/userController.service';
 import { ApiPaginatedResponseApiUserBase } from 'src/api/model/apiPaginatedResponseApiUserBase';
 import { ApiUserBase } from 'src/api/model/apiUserBase';
 import { AuthService } from '../core/auth.service';
@@ -18,7 +18,7 @@ export class UsersService extends GeneralSifrantService<ApiUserBase> {
         requestType: 'FETCH',
         limit: 1000,
         offset: 0,
-    } as AdminListUsersUsingGET.PartialParamMap;
+    } as AdminListUsers.PartialParamMap;
 
     constructor(
         private userController: UserControllerService,
@@ -56,9 +56,9 @@ export class UsersService extends GeneralSifrantService<ApiUserBase> {
           take(1),
           switchMap(up => {
               if (up?.role === 'REGIONAL_ADMIN') {
-                  return this.userController.regionalAdminListUsersUsingGETByMap(reqPars);
+                  return this.userController.regionalAdminListUsersByMap(reqPars);
               } else {
-                  return this.userController.adminListUsersUsingGETByMap(reqPars);
+                  return this.userController.adminListUsersByMap(reqPars);
               }
           }),
           map((resp: ApiPaginatedResponseApiUserBase) => {

@@ -4,7 +4,10 @@ import { map } from 'rxjs/operators';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
 import { CodebookTranslations } from './codebook-translations';
-import { GetMeasureUnitTypeListUsingGET, MeasureUnitTypeControllerService } from '../../api/api/measureUnitTypeController.service';
+import {
+  GetMeasureUnitTypeList,
+  MeasureUnitTypeControllerService
+} from '../../api/api/measureUnitTypeController.service';
 import { ApiPaginatedResponseApiMeasureUnitType } from '../../api/model/apiPaginatedResponseApiMeasureUnitType';
 import { ApiMeasureUnitType } from '../../api/model/apiMeasureUnitType';
 
@@ -23,7 +26,7 @@ export class ActiveMeasureUnitTypeService extends GeneralSifrantService<ApiMeasu
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetMeasureUnitTypeListUsingGET.PartialParamMap;
+  } as GetMeasureUnitTypeList.PartialParamMap;
 
   public identifier(el: ApiMeasureUnitType) {
     return el.id;
@@ -40,7 +43,7 @@ export class ActiveMeasureUnitTypeService extends GeneralSifrantService<ApiMeasu
       ...this.requestParams
     };
 
-    return this.codebookService.getMeasureUnitTypeListUsingGETByMap(reqPars).pipe(
+    return this.codebookService.getMeasureUnitTypeListByMap(reqPars).pipe(
         map((res: ApiPaginatedResponseApiMeasureUnitType) => {
           return {
             results: res.data.items,

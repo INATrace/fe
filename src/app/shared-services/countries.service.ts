@@ -53,7 +53,7 @@ export class CountryService extends GeneralCodesService<ApiCountry> {
   }
 
   public initializeCodebook() {
-    this.sifrant$ = this.sifrant$ || this.commonController.getCountriesUsingGET("FETCH", 500, null, null, "ASC").pipe(
+    this.sifrant$ = this.sifrant$ || this.commonController.getCountries(null,"FETCH", 500, null, null, "ASC").pipe(
       map(x => this.pack(x.data.items))
     )
   }

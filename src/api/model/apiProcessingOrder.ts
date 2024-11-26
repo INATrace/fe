@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,12 +23,11 @@ import { ApiStockOrder } from './apiStockOrder';
 import { ApiTransaction } from './apiTransaction';
 
 
+/**
+ * The processing order that created this stock order
+ */
 
 export interface ApiProcessingOrder { 
-    /**
-     * Timestamp indicates when processing order have been created
-     */
-    creationTimestamp?: Date;
     /**
      * Entity id
      */
@@ -38,14 +37,18 @@ export interface ApiProcessingOrder {
      */
     initiatorUserId?: number;
     /**
-     * Input transactions
+     * Timestamp indicates when processing order have been created
      */
-    inputTransactions?: Array<ApiTransaction>;
+    creationTimestamp?: Date;
     processingAction?: ApiProcessingAction;
     /**
      * Processing date
      */
     processingDate?: string;
+    /**
+     * Input transactions
+     */
+    inputTransactions?: Array<ApiTransaction>;
     /**
      * Target stock orders
      */
@@ -61,10 +64,6 @@ export namespace ApiProcessingOrder {
      */
     export enum Properties {
         /**
-         * Timestamp indicates when processing order have been created
-         */
-        creationTimestamp = 'creationTimestamp',
-        /**
          * Entity id
          */
         id = 'id',
@@ -73,14 +72,18 @@ export namespace ApiProcessingOrder {
          */
         initiatorUserId = 'initiatorUserId',
         /**
-         * Input transactions
+         * Timestamp indicates when processing order have been created
          */
-        inputTransactions = 'inputTransactions',
+        creationTimestamp = 'creationTimestamp',
         processingAction = 'processingAction',
         /**
          * Processing date
          */
         processingDate = 'processingDate',
+        /**
+         * Input transactions
+         */
+        inputTransactions = 'inputTransactions',
         /**
          * Target stock orders
          */
@@ -93,17 +96,6 @@ export namespace ApiProcessingOrder {
             metadata: formMetadata,
             classname: 'ApiProcessingOrder',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'creationTimestamp',
-                    classname: 'ApiProcessingOrder',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -127,16 +119,15 @@ export namespace ApiProcessingOrder {
                     complexType: ''
                 },
                 {
-                    metadata: ApiTransaction.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'inputTransactions',
+                    name: 'creationTimestamp',
                     classname: 'ApiProcessingOrder',
-                    dataType: 'Array&lt;ApiTransaction&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiTransaction'
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     metadata: ApiProcessingAction.formMetadata,
@@ -162,6 +153,18 @@ export namespace ApiProcessingOrder {
                     complexType: ''
                 },
                 {
+                    metadata: ApiTransaction.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'inputTransactions',
+                    classname: 'ApiProcessingOrder',
+                    dataType: 'Array&lt;ApiTransaction&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiTransaction'
+                },
+                {
                     metadata: ApiStockOrder.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -175,17 +178,17 @@ export namespace ApiProcessingOrder {
                 },
             ],
             validators: {
-                creationTimestamp: [
-                ],
                 id: [
                 ],
                 initiatorUserId: [
                 ],
-                inputTransactions: [
+                creationTimestamp: [
                 ],
                 processingAction: [
                 ],
                 processingDate: [
+                ],
+                inputTransactions: [
                 ],
                 targetStockOrders: [
                 ],
@@ -196,22 +199,22 @@ export namespace ApiProcessingOrder {
   // export const ApiProcessingOrderValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               creationTimestamp: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
   //               initiatorUserId: {
   //                   validators: []
   //               },
-  //               inputTransactions: {
+  //               creationTimestamp: {
   //                   validators: []
   //               },
   //               processingAction: {
   //                   validators: []
   //               },
   //               processingDate: {
+  //                   validators: []
+  //               },
+  //               inputTransactions: {
   //                   validators: []
   //               },
   //               targetStockOrders: {

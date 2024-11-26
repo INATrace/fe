@@ -230,7 +230,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   ).pipe(
     filter(val => val != null),
     tap(() => { this.globalEventsManager.showLoading(true); }),
-    switchMap(id => this.productController.getProductUsingGET(id).pipe(
+    switchMap(id => this.productController.getProduct(id).pipe(
       catchError(() => of(null))
     )),
     filter(resp => !!resp),
@@ -286,7 +286,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
   ).pipe(
     filter(val => val != null),
-    switchMap(id => this.productController.getProductLabelsUsingGET(id).pipe(
+    switchMap(id => this.productController.getProductLabels(id).pipe(
       catchError(() => of(null))
     )),
     filter(val => val != null),
@@ -306,7 +306,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       return initialized ? labelId : null;
     }).pipe(
       filter(val => val != null),
-      switchMap(id => this.productController.getProductLabelUsingGET(id).pipe(
+      switchMap(id => this.productController.getProductLabel(id).pipe(
         catchError(() => of(null))
       )),
       filter(x => x != null),
@@ -701,11 +701,11 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     const valueChainId = this.route.snapshot.params.valueChainId;
     try {
       this.globalEventsManager.showLoading(true);
-      let resp = await this.companyController.getCompanyUsingGET(Number(companyId)).pipe(take(1)).toPromise();
+      let resp = await this.companyController.getCompany(Number(companyId)).pipe(take(1)).toPromise();
       const company = resp.data;
       const companyForm = generateFormFromMetadata(ApiCompany.formMetadata(), company, ApiCompanyValidationScheme);
       this.productForm.setControl('company', companyForm);
-      resp = await this.valueChainController.getValueChainUsingGET(Number(valueChainId)).toPromise();
+      resp = await this.valueChainController.getValueChain(Number(valueChainId)).toPromise();
       const valueChain = resp.data;
       const valueChainForm = generateFormFromMetadata(ApiValueChain.formMetadata(), valueChain, ApiValueChainValidationScheme);
       this.productForm.setControl('valueChain', valueChainForm);
@@ -765,7 +765,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     try {
       this.globalEventsManager.showLoading(true);
       const data = this.productForm.value;
-      const res = await this.productController.updateProductUsingPUT(data).pipe(take(1)).toPromise();
+      const res = await this.productController.updateProduct(data).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.productForm.markAsPristine();
         if (this.visibilityForm) { this.visibilityForm.markAsPristine(); }
@@ -795,7 +795,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
 
     const labels = this.currentLabelFields();
-    const res = await this.productController.updateProductLabelUsingPUT(
+    const res = await this.productController.updateProductLabel(
       {
         ...this.currentLabel,
         fields: labels,
@@ -809,12 +809,12 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       data['labelId'] = this.currentLabel.id;
       data['id'] = this.pId;
 
-      const resC = await this.productController.updateProductLabelContentUsingPUT(data as ApiProductLabelContent).pipe(take(1)).toPromise();
+      const resC = await this.productController.updateProductLabelContent(data as ApiProductLabelContent).pipe(take(1)).toPromise();
       if (resC && resC.status === 'OK') { this.productForm.markAsPristine(); }
 
       const labelDocuments: ApiProductLabelCompanyDocument[] = this.mediaForm.get('video').value
           .concat(this.mediaForm.get('farmers').value, this.mediaForm.get('productionRecord').value);
-      const resLD = await this.productController.updateCompanyDocumentsForProductLabelUsingPUT(this.currentLabel.id, labelDocuments).pipe(take(1)).toPromise();
+      const resLD = await this.productController.updateCompanyDocumentsForProductLabel(this.currentLabel.id, labelDocuments).pipe(take(1)).toPromise();
       if (resLD && resLD.status === 'OK') {
         this.mediaForm.markAsPristine();
       }
@@ -848,7 +848,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       this.globalEventsManager.showLoading(true);
       const data = this.productForm.value;
       delete data['id'];
-      const res: ApiResponseApiBaseEntity = await this.productController.createProductUsingPOST(data).pipe(take(1)).toPromise();
+      const res: ApiResponseApiBaseEntity = await this.productController.createProduct(data).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.productForm.markAsPristine();
         this.goBack();
@@ -1225,7 +1225,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       return;
     }
 
-    const res = await this.productController.deleteProductLabelUsingDELETE(label.id).pipe(take(1)).toPromise();
+    const res = await this.productController.deleteProductLabel(label.id).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
       if (label.id === this.currentLabel.id) {
         this.labelSelect$.next({ position, preventEmit: false });
@@ -1297,7 +1297,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
   async initializeByLabel(label: ApiProductLabel) {
 
-    const media = await this.productController.getCompanyDocumentsForProductLabelUsingGET(label.id).pipe(take(1)).toPromise();
+    const media = await this.productController.getCompanyDocumentsForProductLabel(label.id).pipe(take(1)).toPromise();
     if (media && media.status === 'OK' && media.data) {
       this.availableMedia = media.data;
 
@@ -1321,7 +1321,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     }
 
     if (!this.currentLabel) { this.currentLabel = label; this.labelSelect$.next({ id: this.currentLabel.id, preventEmit: true }); }
-    const res = await this.productController.getProductLabelContentUsingGET(label.id).pipe(take(1)).toPromise();
+    const res = await this.productController.getProductLabelContent(label.id).pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data) {
       this.prepareForm(res.data).then();
     }
@@ -1394,7 +1394,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     if (!this.currentLabel || !this.currentLabel.status) { return; }
     const toBePublished = this.currentLabel.status === ApiProductLabel.StatusEnum.UNPUBLISHED;
     const action = toBePublished ? 'PUBLISH_LABEL' : 'UNPUBLISH_LABEL';
-    const res = await this.productController.executeAction(action as any, this.currentLabel).pipe(take(1)).toPromise();
+    const res = await this.productController.executeProductAction(action as any, this.currentLabel).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
       this.reloadLabel();
       this.reloadLabels(); // this is needed for label-card updating (maybe there is a better way of doing)
@@ -1424,7 +1424,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       dismissable: false
     });
     if (result !== 'ok') { return; }
-    const res = await this.productController.deleteProductUsingDELETE(productId).pipe(take(1)).toPromise();
+    const res = await this.productController.deleteProduct(productId).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
       this.globalEventsManager.push({
         action: 'success',
@@ -1483,7 +1483,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   downloadInstructions() {
     if (this.changed) { return; }
     if (this.currentLabel) {
-      const sub = this.productController.getProductLabelInstructionsUsingGET(this.currentLabel.id).subscribe(
+      const sub = this.productController.getProductLabelInstructions(this.currentLabel.id).subscribe(
         blob => {
           const a = document.createElement('a');
           const blobURL = URL.createObjectURL(blob);
@@ -1523,7 +1523,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     });
     const product = await modalRef.result;
     if (product) {
-      this.productController.getProductUsingGET(product.id).pipe(take(1))
+      this.productController.getProduct(product.id).pipe(take(1))
         .subscribe(resp => {
           if (resp.status === 'OK') {
             this.prefillFields(fromSocialResp, resp.data);
@@ -1561,7 +1561,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   }
 
   async initializeLabelsHelperLink() {
-    const resp = await this.commonController.getGlobalSettingsUsingGET(this.globalEventsManager.globalSettingsKeys('PRODUCT_LABELS_HELPER_LINK')).pipe(take(1)).toPromise();
+    const resp = await this.commonController.getGlobalSettings(this.globalEventsManager.globalSettingsKeys('PRODUCT_LABELS_HELPER_LINK')).pipe(take(1)).toPromise();
     if (resp && resp.data && resp.data.value) { this.editInfoLabelLink = resp.data.value; }
   }
 
@@ -1592,7 +1592,7 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
 
       const labels = this.currentLabelFields();
       const productId = this.pId;
-      const res = await this.productController.createProductLabelUsingPOST(
+      const res = await this.productController.createProductLabel(
         {
           productId,
           title: modalResult.title,
@@ -1602,14 +1602,14 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       ).pipe(take(1)).toPromise();
 
       if (res && res.status === 'OK') {
-        const resp = await this.productController.getProductLabelContentUsingGET(res.data.id).pipe(take(1)).toPromise();
+        const resp = await this.productController.getProductLabelContent(res.data.id).pipe(take(1)).toPromise();
         if (resp && resp.status === 'OK' && resp.data) {
           if (modalResult.lang !== 'EN') {
             const data = resp.data;
             data.settings.language = modalResult.lang;
             data['labelId'] = res.data.id;
             delete data['id'];
-            const resC = await this.productController.updateProductLabelContentUsingPUT(data as ApiProductLabelContent).pipe(take(1)).toPromise();
+            const resC = await this.productController.updateProductLabelContent(data as ApiProductLabelContent).pipe(take(1)).toPromise();
             if (resC && resC.status === 'OK') {
               this.fadeInProductOnRefresh();
               this.labelSelect$.next({ id: res.data.id, preventEmit: false });

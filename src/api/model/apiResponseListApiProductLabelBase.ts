@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -28,6 +28,14 @@ import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 
 export interface ApiResponseListApiProductLabelBase { 
     /**
+     * Response status. OK for successful reponses.
+     */
+    status: ApiResponseListApiProductLabelBase.StatusEnum;
+    /**
+     * Simple message to explain client developers the reason for error.
+     */
+    errorMessage?: string;
+    /**
      * Response body for successful responses.
      */
     data?: Array<ApiProductLabelBase>;
@@ -35,14 +43,6 @@ export interface ApiResponseListApiProductLabelBase {
      * Optional details for unexpected error responses.
      */
     errorDetails?: string;
-    /**
-     * Simple message to explain client developers the reason for error.
-     */
-    errorMessage?: string;
-    /**
-     * Response status. OK for successful reponses.
-     */
-    status: ApiResponseListApiProductLabelBase.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -55,6 +55,14 @@ export namespace ApiResponseListApiProductLabelBase {
      */
     export enum Properties {
         /**
+         * Response status. OK for successful reponses.
+         */
+        status = 'status',
+        /**
+         * Simple message to explain client developers the reason for error.
+         */
+        errorMessage = 'errorMessage',
+        /**
          * Response body for successful responses.
          */
         data = 'data',
@@ -62,14 +70,6 @@ export namespace ApiResponseListApiProductLabelBase {
          * Optional details for unexpected error responses.
          */
         errorDetails = 'errorDetails',
-        /**
-         * Simple message to explain client developers the reason for error.
-         */
-        errorMessage = 'errorMessage',
-        /**
-         * Response status. OK for successful reponses.
-         */
-        status = 'status',
         validationErrorDetails = 'validationErrorDetails'
     }
 
@@ -98,6 +98,29 @@ export namespace ApiResponseListApiProductLabelBase {
             classname: 'ApiResponseListApiProductLabelBase',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiResponseListApiProductLabelBase.StatusEnum',
+                    required: true,
+                    name: 'status',
+                    classname: 'ApiResponseListApiProductLabelBase',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'errorMessage',
+                    classname: 'ApiResponseListApiProductLabelBase',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiProductLabelBase.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -121,29 +144,6 @@ export namespace ApiResponseListApiProductLabelBase {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'errorMessage',
-                    classname: 'ApiResponseListApiProductLabelBase',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiResponseListApiProductLabelBase.StatusEnum',
-                    required: true,
-                    name: 'status',
-                    classname: 'ApiResponseListApiProductLabelBase',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiValidationErrorDetails.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -157,14 +157,14 @@ export namespace ApiResponseListApiProductLabelBase {
                 },
             ],
             validators: {
-                data: [
-                ],
-                errorDetails: [
+                status: [
+                        ['required'],
                 ],
                 errorMessage: [
                 ],
-                status: [
-                        ['required'],
+                data: [
+                ],
+                errorDetails: [
                 ],
                 validationErrorDetails: [
                 ],
@@ -175,16 +175,16 @@ export namespace ApiResponseListApiProductLabelBase {
   // export const ApiResponseListApiProductLabelBaseValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               data: {
-  //                   validators: []
-  //               },
-  //               errorDetails: {
+  //               status: {
   //                   validators: []
   //               },
   //               errorMessage: {
   //                   validators: []
   //               },
-  //               status: {
+  //               data: {
+  //                   validators: []
+  //               },
+  //               errorDetails: {
   //                   validators: []
   //               },
   //               validationErrorDetails: {

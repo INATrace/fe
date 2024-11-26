@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,17 +23,17 @@
 
 export interface ApiLogRequest { 
     /**
-     * log key to store (max 64 chars)
-     */
-    logKey?: string;
-    /**
      * request token
      */
     token?: string;
     /**
      * type
      */
-    type?: ApiLogRequest.TypeEnum;
+    type: ApiLogRequest.TypeEnum;
+    /**
+     * log key to store (max 64 chars)
+     */
+    logKey?: string;
     /**
      * value 1 (max 255 chars)
      */
@@ -53,10 +53,6 @@ export namespace ApiLogRequest {
      */
     export enum Properties {
         /**
-         * log key to store (max 64 chars)
-         */
-        logKey = 'logKey',
-        /**
          * request token
          */
         token = 'token',
@@ -64,6 +60,10 @@ export namespace ApiLogRequest {
          * type
          */
         type = 'type',
+        /**
+         * log key to store (max 64 chars)
+         */
+        logKey = 'logKey',
         /**
          * value 1 (max 255 chars)
          */
@@ -100,17 +100,6 @@ export namespace ApiLogRequest {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'logKey',
-                    classname: 'ApiLogRequest',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'token',
                     classname: 'ApiLogRequest',
                     dataType: 'string',
@@ -122,8 +111,19 @@ export namespace ApiLogRequest {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiLogRequest.TypeEnum',
-                    required: false,
+                    required: true,
                     name: 'type',
+                    classname: 'ApiLogRequest',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'logKey',
                     classname: 'ApiLogRequest',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -154,15 +154,22 @@ export namespace ApiLogRequest {
                 },
             ],
             validators: {
-                logKey: [
-                ],
                 token: [
                 ],
                 type: [
+                        ['required'],
+                ],
+                logKey: [
+                        ['minlength', 0],
+                        ['maxlength', 64],
                 ],
                 value1: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
                 value2: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
                 ],
             }
         }
@@ -171,13 +178,13 @@ export namespace ApiLogRequest {
   // export const ApiLogRequestValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               logKey: {
-  //                   validators: []
-  //               },
   //               token: {
   //                   validators: []
   //               },
   //               type: {
+  //                   validators: []
+  //               },
+  //               logKey: {
   //                   validators: []
   //               },
   //               value1: {

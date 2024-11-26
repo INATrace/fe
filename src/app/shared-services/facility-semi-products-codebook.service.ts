@@ -45,7 +45,7 @@ export class FacilitySemiProductsCodebookService extends GeneralSifrantService<A
   }
 
   public initializeCodebook() {
-    this.sifrant$ = this.sifrant$ || this.facilityController.getFacilityUsingGET(this.facilityId).pipe(
+    this.sifrant$ = this.sifrant$ || this.facilityController.getFacility(this.facilityId).pipe(
       map(x => this.pack(x.data.facilitySemiProductList))
     );
   }

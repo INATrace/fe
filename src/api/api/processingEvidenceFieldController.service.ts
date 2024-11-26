@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -39,43 +39,37 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createOrUpdateProcessingEvidenceFieldUsingPUT.
+ * Namespace for createOrUpdateProcessingEvidenceField.
  */
-export namespace CreateOrUpdateProcessingEvidenceFieldUsingPUT {
+export namespace CreateOrUpdateProcessingEvidenceField {
     /**
-     * Parameter map for createOrUpdateProcessingEvidenceFieldUsingPUT.
+     * Parameter map for createOrUpdateProcessingEvidenceField.
      */
     export interface PartialParamMap {
-      /**
-       * apiProcessingEvidenceField
-       */
       ApiProcessingEvidenceField: ApiProcessingEvidenceField;
     }
 
     /**
-     * Enumeration of all parameters for createOrUpdateProcessingEvidenceFieldUsingPUT.
+     * Enumeration of all parameters for createOrUpdateProcessingEvidenceField.
      */
     export enum Parameters {
-      /**
-       * apiProcessingEvidenceField
-       */
       ApiProcessingEvidenceField = 'ApiProcessingEvidenceField'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateProcessingEvidenceFieldUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateProcessingEvidenceField
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateOrUpdateProcessingEvidenceFieldUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateOrUpdateProcessingEvidenceField.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for deleteProcessingEvidenceFieldUsingDELETE.
+ * Namespace for deleteProcessingEvidenceField.
  */
-export namespace DeleteProcessingEvidenceFieldUsingDELETE {
+export namespace DeleteProcessingEvidenceField {
     /**
-     * Parameter map for deleteProcessingEvidenceFieldUsingDELETE.
+     * Parameter map for deleteProcessingEvidenceField.
      */
     export interface PartialParamMap {
       /**
@@ -85,7 +79,7 @@ export namespace DeleteProcessingEvidenceFieldUsingDELETE {
     }
 
     /**
-     * Enumeration of all parameters for deleteProcessingEvidenceFieldUsingDELETE.
+     * Enumeration of all parameters for deleteProcessingEvidenceField.
      */
     export enum Parameters {
       /**
@@ -95,10 +89,10 @@ export namespace DeleteProcessingEvidenceFieldUsingDELETE {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteProcessingEvidenceFieldUsingDELETE
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteProcessingEvidenceField
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof DeleteProcessingEvidenceFieldUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof DeleteProcessingEvidenceField.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -106,11 +100,50 @@ export namespace DeleteProcessingEvidenceFieldUsingDELETE {
 }
 
 /**
- * Namespace for getProcessingEvidenceFieldListUsingGET.
+ * Namespace for getProcessingEvidenceField.
  */
-export namespace GetProcessingEvidenceFieldListUsingGET {
+export namespace GetProcessingEvidenceField {
     /**
-     * Parameter map for getProcessingEvidenceFieldListUsingGET.
+     * Parameter map for getProcessingEvidenceField.
+     */
+    export interface PartialParamMap {
+      /**
+       * ProcessingEvidenceField ID
+       */
+      id: number;
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for getProcessingEvidenceField.
+     */
+    export enum Parameters {
+      /**
+       * ProcessingEvidenceField ID
+       */
+      id = 'id',
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingEvidenceField
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetProcessingEvidenceField.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
+ * Namespace for getProcessingEvidenceFieldList.
+ */
+export namespace GetProcessingEvidenceFieldList {
+    /**
+     * Parameter map for getProcessingEvidenceFieldList.
      */
     export interface PartialParamMap {
       /**
@@ -133,14 +166,11 @@ export namespace GetProcessingEvidenceFieldListUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getProcessingEvidenceFieldListUsingGET.
+     * Enumeration of all parameters for getProcessingEvidenceFieldList.
      */
     export enum Parameters {
       /**
@@ -163,22 +193,21 @@ export namespace GetProcessingEvidenceFieldListUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort = 'sort',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingEvidenceFieldListUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingEvidenceFieldList
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetProcessingEvidenceFieldListUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetProcessingEvidenceFieldList.PartialParamMap]?: [string, ValidatorFn][]} = {
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -190,56 +219,11 @@ export namespace GetProcessingEvidenceFieldListUsingGET {
 }
 
 /**
- * Namespace for getProcessingEvidenceFieldUsingGET.
+ * Namespace for listProcessingEvidenceFieldsByValueChain.
  */
-export namespace GetProcessingEvidenceFieldUsingGET {
+export namespace ListProcessingEvidenceFieldsByValueChain {
     /**
-     * Parameter map for getProcessingEvidenceFieldUsingGET.
-     */
-    export interface PartialParamMap {
-      /**
-       * ProcessingEvidenceField ID
-       */
-      id: number;
-      /**
-       * language
-       */
-      language?: 'EN' | 'DE' | 'RW' | 'ES';
-    }
-
-    /**
-     * Enumeration of all parameters for getProcessingEvidenceFieldUsingGET.
-     */
-    export enum Parameters {
-      /**
-       * ProcessingEvidenceField ID
-       */
-      id = 'id',
-      /**
-       * language
-       */
-      language = 'language'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingEvidenceFieldUsingGET
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof GetProcessingEvidenceFieldUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      id: [
-              ['required', Validators.required],
-      ],
-      language: [
-      ],
-    };
-}
-
-/**
- * Namespace for listProcessingEvidenceFieldsByValueChainUsingGET.
- */
-export namespace ListProcessingEvidenceFieldsByValueChainUsingGET {
-    /**
-     * Parameter map for listProcessingEvidenceFieldsByValueChainUsingGET.
+     * Parameter map for listProcessingEvidenceFieldsByValueChain.
      */
     export interface PartialParamMap {
       /**
@@ -266,14 +250,11 @@ export namespace ListProcessingEvidenceFieldsByValueChainUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for listProcessingEvidenceFieldsByValueChainUsingGET.
+     * Enumeration of all parameters for listProcessingEvidenceFieldsByValueChain.
      */
     export enum Parameters {
       /**
@@ -300,25 +281,24 @@ export namespace ListProcessingEvidenceFieldsByValueChainUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort = 'sort',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of listProcessingEvidenceFieldsByValueChainUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of listProcessingEvidenceFieldsByValueChain
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ListProcessingEvidenceFieldsByValueChainUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ListProcessingEvidenceFieldsByValueChain.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -330,11 +310,11 @@ export namespace ListProcessingEvidenceFieldsByValueChainUsingGET {
 }
 
 /**
- * Namespace for listProcessingEvidenceFieldsByValueChainsUsingGET.
+ * Namespace for listProcessingEvidenceFieldsByValueChains.
  */
-export namespace ListProcessingEvidenceFieldsByValueChainsUsingGET {
+export namespace ListProcessingEvidenceFieldsByValueChains {
     /**
-     * Parameter map for listProcessingEvidenceFieldsByValueChainsUsingGET.
+     * Parameter map for listProcessingEvidenceFieldsByValueChains.
      */
     export interface PartialParamMap {
       /**
@@ -361,14 +341,11 @@ export namespace ListProcessingEvidenceFieldsByValueChainsUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for listProcessingEvidenceFieldsByValueChainsUsingGET.
+     * Enumeration of all parameters for listProcessingEvidenceFieldsByValueChains.
      */
     export enum Parameters {
       /**
@@ -395,25 +372,24 @@ export namespace ListProcessingEvidenceFieldsByValueChainsUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort = 'sort',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of listProcessingEvidenceFieldsByValueChainsUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of listProcessingEvidenceFieldsByValueChains
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ListProcessingEvidenceFieldsByValueChainsUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ListProcessingEvidenceFieldsByValueChains.PartialParamMap]?: [string, ValidatorFn][]} = {
       valueChainIds: [
               ['required', Validators.required],
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -468,23 +444,23 @@ export class ProcessingEvidenceFieldControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createOrUpdateProcessingEvidenceFieldUsingPUTByMap(
-    map: CreateOrUpdateProcessingEvidenceFieldUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingEvidenceFieldByMap(
+    map: CreateOrUpdateProcessingEvidenceField.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public createOrUpdateProcessingEvidenceFieldUsingPUTByMap(
-    map: CreateOrUpdateProcessingEvidenceFieldUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingEvidenceFieldByMap(
+    map: CreateOrUpdateProcessingEvidenceField.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public createOrUpdateProcessingEvidenceFieldUsingPUTByMap(
-    map: CreateOrUpdateProcessingEvidenceFieldUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingEvidenceFieldByMap(
+    map: CreateOrUpdateProcessingEvidenceField.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public createOrUpdateProcessingEvidenceFieldUsingPUTByMap(
-    map: CreateOrUpdateProcessingEvidenceFieldUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingEvidenceFieldByMap(
+    map: CreateOrUpdateProcessingEvidenceField.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createOrUpdateProcessingEvidenceFieldUsingPUT(
+    return this.createOrUpdateProcessingEvidenceField(
       map.ApiProcessingEvidenceField,
       observe,
       reportProgress
@@ -495,23 +471,23 @@ export class ProcessingEvidenceFieldControllerService {
     /**
      * Create or update processing evidence field. If ID is provided, then the entity with the provided ID is updated.
      * 
-     * @param ApiProcessingEvidenceField apiProcessingEvidenceField
+     * @param ApiProcessingEvidenceField 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateProcessingEvidenceFieldUsingPUT(ApiProcessingEvidenceField: ApiProcessingEvidenceField, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public createOrUpdateProcessingEvidenceFieldUsingPUT(ApiProcessingEvidenceField: ApiProcessingEvidenceField, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public createOrUpdateProcessingEvidenceFieldUsingPUT(ApiProcessingEvidenceField: ApiProcessingEvidenceField, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public createOrUpdateProcessingEvidenceFieldUsingPUT(ApiProcessingEvidenceField: ApiProcessingEvidenceField, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createOrUpdateProcessingEvidenceField(ApiProcessingEvidenceField: ApiProcessingEvidenceField, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateProcessingEvidenceField(ApiProcessingEvidenceField: ApiProcessingEvidenceField, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateProcessingEvidenceField(ApiProcessingEvidenceField: ApiProcessingEvidenceField, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createOrUpdateProcessingEvidenceField(ApiProcessingEvidenceField: ApiProcessingEvidenceField, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProcessingEvidenceField === null || ApiProcessingEvidenceField === undefined) {
-            throw new Error('Required parameter ApiProcessingEvidenceField was null or undefined when calling createOrUpdateProcessingEvidenceFieldUsingPUT.');
+            throw new Error('Required parameter ApiProcessingEvidenceField was null or undefined when calling createOrUpdateProcessingEvidenceField.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -543,7 +519,7 @@ export class ProcessingEvidenceFieldControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateProcessingEvidenceFieldUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateProcessingEvidenceField')));
         }
         return handle;
     }
@@ -556,23 +532,23 @@ export class ProcessingEvidenceFieldControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public deleteProcessingEvidenceFieldUsingDELETEByMap(
-    map: DeleteProcessingEvidenceFieldUsingDELETE.PartialParamMap,
+  public deleteProcessingEvidenceFieldByMap(
+    map: DeleteProcessingEvidenceField.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public deleteProcessingEvidenceFieldUsingDELETEByMap(
-    map: DeleteProcessingEvidenceFieldUsingDELETE.PartialParamMap,
+  public deleteProcessingEvidenceFieldByMap(
+    map: DeleteProcessingEvidenceField.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public deleteProcessingEvidenceFieldUsingDELETEByMap(
-    map: DeleteProcessingEvidenceFieldUsingDELETE.PartialParamMap,
+  public deleteProcessingEvidenceFieldByMap(
+    map: DeleteProcessingEvidenceField.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public deleteProcessingEvidenceFieldUsingDELETEByMap(
-    map: DeleteProcessingEvidenceFieldUsingDELETE.PartialParamMap,
+  public deleteProcessingEvidenceFieldByMap(
+    map: DeleteProcessingEvidenceField.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.deleteProcessingEvidenceFieldUsingDELETE(
+    return this.deleteProcessingEvidenceField(
       map.id,
       observe,
       reportProgress
@@ -587,19 +563,19 @@ export class ProcessingEvidenceFieldControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteProcessingEvidenceFieldUsingDELETE(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public deleteProcessingEvidenceFieldUsingDELETE(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public deleteProcessingEvidenceFieldUsingDELETE(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public deleteProcessingEvidenceFieldUsingDELETE(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public deleteProcessingEvidenceField(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public deleteProcessingEvidenceField(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public deleteProcessingEvidenceField(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public deleteProcessingEvidenceField(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteProcessingEvidenceFieldUsingDELETE.');
+            throw new Error('Required parameter id was null or undefined when calling deleteProcessingEvidenceField.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -625,7 +601,94 @@ export class ProcessingEvidenceFieldControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteProcessingEvidenceFieldUsingDELETE')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteProcessingEvidenceField')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get a single processing evidence field with the provided ID. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getProcessingEvidenceFieldByMap(
+    map: GetProcessingEvidenceField.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiProcessingEvidenceField>;
+  public getProcessingEvidenceFieldByMap(
+    map: GetProcessingEvidenceField.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingEvidenceField>>;
+  public getProcessingEvidenceFieldByMap(
+    map: GetProcessingEvidenceField.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingEvidenceField>>;
+  public getProcessingEvidenceFieldByMap(
+    map: GetProcessingEvidenceField.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getProcessingEvidenceField(
+      map.id,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get a single processing evidence field with the provided ID.
+     * 
+     * @param id ProcessingEvidenceField ID
+     * @param language 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getProcessingEvidenceField(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingEvidenceField>;
+    public getProcessingEvidenceField(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingEvidenceField>>;
+    public getProcessingEvidenceField(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingEvidenceField>>;
+    public getProcessingEvidenceField(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getProcessingEvidenceField.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiProcessingEvidenceField>(`${this.configuration.basePath}/api/chain/processing-evidence-field/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingEvidenceField')));
         }
         return handle;
     }
@@ -638,23 +701,23 @@ export class ProcessingEvidenceFieldControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getProcessingEvidenceFieldListUsingGETByMap(
-    map: GetProcessingEvidenceFieldListUsingGET.PartialParamMap,
+  public getProcessingEvidenceFieldListByMap(
+    map: GetProcessingEvidenceFieldList.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiProcessingEvidenceField>;
-  public getProcessingEvidenceFieldListUsingGETByMap(
-    map: GetProcessingEvidenceFieldListUsingGET.PartialParamMap,
+  public getProcessingEvidenceFieldListByMap(
+    map: GetProcessingEvidenceFieldList.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiProcessingEvidenceField>>;
-  public getProcessingEvidenceFieldListUsingGETByMap(
-    map: GetProcessingEvidenceFieldListUsingGET.PartialParamMap,
+  public getProcessingEvidenceFieldListByMap(
+    map: GetProcessingEvidenceFieldList.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiProcessingEvidenceField>>;
-  public getProcessingEvidenceFieldListUsingGETByMap(
-    map: GetProcessingEvidenceFieldListUsingGET.PartialParamMap,
+  public getProcessingEvidenceFieldListByMap(
+    map: GetProcessingEvidenceFieldList.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getProcessingEvidenceFieldListUsingGET(
+    return this.getProcessingEvidenceFieldList(
       map.requestType,
       map.limit,
       map.offset,
@@ -675,14 +738,14 @@ export class ProcessingEvidenceFieldControllerService {
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProcessingEvidenceFieldListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingEvidenceField>;
-    public getProcessingEvidenceFieldListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingEvidenceField>>;
-    public getProcessingEvidenceFieldListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingEvidenceField>>;
-    public getProcessingEvidenceFieldListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProcessingEvidenceFieldList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingEvidenceField>;
+    public getProcessingEvidenceFieldList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingEvidenceField>>;
+    public getProcessingEvidenceFieldList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingEvidenceField>>;
+    public getProcessingEvidenceFieldList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -708,7 +771,7 @@ export class ProcessingEvidenceFieldControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -735,94 +798,7 @@ export class ProcessingEvidenceFieldControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingEvidenceFieldListUsingGET')));
-        }
-        return handle;
-    }
-
-
-  /**
-   * Get a single processing evidence field with the provided ID. by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getProcessingEvidenceFieldUsingGETByMap(
-    map: GetProcessingEvidenceFieldUsingGET.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiProcessingEvidenceField>;
-  public getProcessingEvidenceFieldUsingGETByMap(
-    map: GetProcessingEvidenceFieldUsingGET.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingEvidenceField>>;
-  public getProcessingEvidenceFieldUsingGETByMap(
-    map: GetProcessingEvidenceFieldUsingGET.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingEvidenceField>>;
-  public getProcessingEvidenceFieldUsingGETByMap(
-    map: GetProcessingEvidenceFieldUsingGET.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.getProcessingEvidenceFieldUsingGET(
-      map.id,
-      map.language,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * Get a single processing evidence field with the provided ID.
-     * 
-     * @param id ProcessingEvidenceField ID
-     * @param language language
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getProcessingEvidenceFieldUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingEvidenceField>;
-    public getProcessingEvidenceFieldUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingEvidenceField>>;
-    public getProcessingEvidenceFieldUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingEvidenceField>>;
-    public getProcessingEvidenceFieldUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getProcessingEvidenceFieldUsingGET.');
-        }
-
-        let headers = this.defaultHeaders;
-        if (language !== undefined && language !== null) {
-            headers = headers.set('language', String(language));
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponseApiProcessingEvidenceField>(`${this.configuration.basePath}/api/chain/processing-evidence-field/${encodeURIComponent(String(id))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingEvidenceFieldUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingEvidenceFieldList')));
         }
         return handle;
     }
@@ -835,23 +811,23 @@ export class ProcessingEvidenceFieldControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public listProcessingEvidenceFieldsByValueChainUsingGETByMap(
-    map: ListProcessingEvidenceFieldsByValueChainUsingGET.PartialParamMap,
+  public listProcessingEvidenceFieldsByValueChainByMap(
+    map: ListProcessingEvidenceFieldsByValueChain.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiProcessingEvidenceField>;
-  public listProcessingEvidenceFieldsByValueChainUsingGETByMap(
-    map: ListProcessingEvidenceFieldsByValueChainUsingGET.PartialParamMap,
+  public listProcessingEvidenceFieldsByValueChainByMap(
+    map: ListProcessingEvidenceFieldsByValueChain.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiProcessingEvidenceField>>;
-  public listProcessingEvidenceFieldsByValueChainUsingGETByMap(
-    map: ListProcessingEvidenceFieldsByValueChainUsingGET.PartialParamMap,
+  public listProcessingEvidenceFieldsByValueChainByMap(
+    map: ListProcessingEvidenceFieldsByValueChain.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiProcessingEvidenceField>>;
-  public listProcessingEvidenceFieldsByValueChainUsingGETByMap(
-    map: ListProcessingEvidenceFieldsByValueChainUsingGET.PartialParamMap,
+  public listProcessingEvidenceFieldsByValueChainByMap(
+    map: ListProcessingEvidenceFieldsByValueChain.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.listProcessingEvidenceFieldsByValueChainUsingGET(
+    return this.listProcessingEvidenceFieldsByValueChain(
       map.id,
       map.requestType,
       map.limit,
@@ -874,16 +850,16 @@ export class ProcessingEvidenceFieldControllerService {
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listProcessingEvidenceFieldsByValueChainUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingEvidenceField>;
-    public listProcessingEvidenceFieldsByValueChainUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingEvidenceField>>;
-    public listProcessingEvidenceFieldsByValueChainUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingEvidenceField>>;
-    public listProcessingEvidenceFieldsByValueChainUsingGET(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listProcessingEvidenceFieldsByValueChain(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingEvidenceField>;
+    public listProcessingEvidenceFieldsByValueChain(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingEvidenceField>>;
+    public listProcessingEvidenceFieldsByValueChain(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingEvidenceField>>;
+    public listProcessingEvidenceFieldsByValueChain(id: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling listProcessingEvidenceFieldsByValueChainUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling listProcessingEvidenceFieldsByValueChain.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -910,7 +886,7 @@ export class ProcessingEvidenceFieldControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -937,7 +913,7 @@ export class ProcessingEvidenceFieldControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listProcessingEvidenceFieldsByValueChainUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listProcessingEvidenceFieldsByValueChain')));
         }
         return handle;
     }
@@ -950,23 +926,23 @@ export class ProcessingEvidenceFieldControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public listProcessingEvidenceFieldsByValueChainsUsingGETByMap(
-    map: ListProcessingEvidenceFieldsByValueChainsUsingGET.PartialParamMap,
+  public listProcessingEvidenceFieldsByValueChainsByMap(
+    map: ListProcessingEvidenceFieldsByValueChains.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiProcessingEvidenceField>;
-  public listProcessingEvidenceFieldsByValueChainsUsingGETByMap(
-    map: ListProcessingEvidenceFieldsByValueChainsUsingGET.PartialParamMap,
+  public listProcessingEvidenceFieldsByValueChainsByMap(
+    map: ListProcessingEvidenceFieldsByValueChains.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiProcessingEvidenceField>>;
-  public listProcessingEvidenceFieldsByValueChainsUsingGETByMap(
-    map: ListProcessingEvidenceFieldsByValueChainsUsingGET.PartialParamMap,
+  public listProcessingEvidenceFieldsByValueChainsByMap(
+    map: ListProcessingEvidenceFieldsByValueChains.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiProcessingEvidenceField>>;
-  public listProcessingEvidenceFieldsByValueChainsUsingGETByMap(
-    map: ListProcessingEvidenceFieldsByValueChainsUsingGET.PartialParamMap,
+  public listProcessingEvidenceFieldsByValueChainsByMap(
+    map: ListProcessingEvidenceFieldsByValueChains.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.listProcessingEvidenceFieldsByValueChainsUsingGET(
+    return this.listProcessingEvidenceFieldsByValueChains(
       map.valueChainIds,
       map.requestType,
       map.limit,
@@ -989,16 +965,16 @@ export class ProcessingEvidenceFieldControllerService {
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listProcessingEvidenceFieldsByValueChainsUsingGET(valueChainIds: Array<number>, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingEvidenceField>;
-    public listProcessingEvidenceFieldsByValueChainsUsingGET(valueChainIds: Array<number>, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingEvidenceField>>;
-    public listProcessingEvidenceFieldsByValueChainsUsingGET(valueChainIds: Array<number>, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingEvidenceField>>;
-    public listProcessingEvidenceFieldsByValueChainsUsingGET(valueChainIds: Array<number>, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listProcessingEvidenceFieldsByValueChains(valueChainIds: Array<number>, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingEvidenceField>;
+    public listProcessingEvidenceFieldsByValueChains(valueChainIds: Array<number>, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingEvidenceField>>;
+    public listProcessingEvidenceFieldsByValueChains(valueChainIds: Array<number>, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingEvidenceField>>;
+    public listProcessingEvidenceFieldsByValueChains(valueChainIds: Array<number>, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (valueChainIds === null || valueChainIds === undefined) {
-            throw new Error('Required parameter valueChainIds was null or undefined when calling listProcessingEvidenceFieldsByValueChainsUsingGET.');
+            throw new Error('Required parameter valueChainIds was null or undefined when calling listProcessingEvidenceFieldsByValueChains.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -1030,7 +1006,7 @@ export class ProcessingEvidenceFieldControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1057,7 +1033,7 @@ export class ProcessingEvidenceFieldControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listProcessingEvidenceFieldsByValueChainsUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listProcessingEvidenceFieldsByValueChains')));
         }
         return handle;
     }

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -28,6 +28,14 @@ import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 
 export interface ApiResponseListApiCompanyUser { 
     /**
+     * Response status. OK for successful reponses.
+     */
+    status: ApiResponseListApiCompanyUser.StatusEnum;
+    /**
+     * Simple message to explain client developers the reason for error.
+     */
+    errorMessage?: string;
+    /**
      * Response body for successful responses.
      */
     data?: Array<ApiCompanyUser>;
@@ -35,14 +43,6 @@ export interface ApiResponseListApiCompanyUser {
      * Optional details for unexpected error responses.
      */
     errorDetails?: string;
-    /**
-     * Simple message to explain client developers the reason for error.
-     */
-    errorMessage?: string;
-    /**
-     * Response status. OK for successful reponses.
-     */
-    status: ApiResponseListApiCompanyUser.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -55,6 +55,14 @@ export namespace ApiResponseListApiCompanyUser {
      */
     export enum Properties {
         /**
+         * Response status. OK for successful reponses.
+         */
+        status = 'status',
+        /**
+         * Simple message to explain client developers the reason for error.
+         */
+        errorMessage = 'errorMessage',
+        /**
          * Response body for successful responses.
          */
         data = 'data',
@@ -62,14 +70,6 @@ export namespace ApiResponseListApiCompanyUser {
          * Optional details for unexpected error responses.
          */
         errorDetails = 'errorDetails',
-        /**
-         * Simple message to explain client developers the reason for error.
-         */
-        errorMessage = 'errorMessage',
-        /**
-         * Response status. OK for successful reponses.
-         */
-        status = 'status',
         validationErrorDetails = 'validationErrorDetails'
     }
 
@@ -98,6 +98,29 @@ export namespace ApiResponseListApiCompanyUser {
             classname: 'ApiResponseListApiCompanyUser',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiResponseListApiCompanyUser.StatusEnum',
+                    required: true,
+                    name: 'status',
+                    classname: 'ApiResponseListApiCompanyUser',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'errorMessage',
+                    classname: 'ApiResponseListApiCompanyUser',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiCompanyUser.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -121,29 +144,6 @@ export namespace ApiResponseListApiCompanyUser {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'errorMessage',
-                    classname: 'ApiResponseListApiCompanyUser',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiResponseListApiCompanyUser.StatusEnum',
-                    required: true,
-                    name: 'status',
-                    classname: 'ApiResponseListApiCompanyUser',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiValidationErrorDetails.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -157,14 +157,14 @@ export namespace ApiResponseListApiCompanyUser {
                 },
             ],
             validators: {
-                data: [
-                ],
-                errorDetails: [
+                status: [
+                        ['required'],
                 ],
                 errorMessage: [
                 ],
-                status: [
-                        ['required'],
+                data: [
+                ],
+                errorDetails: [
                 ],
                 validationErrorDetails: [
                 ],
@@ -175,16 +175,16 @@ export namespace ApiResponseListApiCompanyUser {
   // export const ApiResponseListApiCompanyUserValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               data: {
-  //                   validators: []
-  //               },
-  //               errorDetails: {
+  //               status: {
   //                   validators: []
   //               },
   //               errorMessage: {
   //                   validators: []
   //               },
-  //               status: {
+  //               data: {
+  //                   validators: []
+  //               },
+  //               errorDetails: {
   //                   validators: []
   //               },
   //               validationErrorDetails: {

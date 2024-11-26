@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -24,18 +24,21 @@ import { ApiStockOrderHistoryTimelineItem } from './apiStockOrderHistoryTimeline
 import { ApiTransaction } from './apiTransaction';
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiStockOrderHistory { 
     /**
      * Entity id
      */
     id?: number;
+    processingOrder?: ApiProcessingOrder;
+    stockOrder?: ApiStockOrder;
     /**
      * The Stock order output transactions
      */
     outputTransactions?: Array<ApiTransaction>;
-    processingOrder?: ApiProcessingOrder;
-    stockOrder?: ApiStockOrder;
     /**
      * List of history timeline items
      */
@@ -54,12 +57,12 @@ export namespace ApiStockOrderHistory {
          * Entity id
          */
         id = 'id',
+        processingOrder = 'processingOrder',
+        stockOrder = 'stockOrder',
         /**
          * The Stock order output transactions
          */
         outputTransactions = 'outputTransactions',
-        processingOrder = 'processingOrder',
-        stockOrder = 'stockOrder',
         /**
          * List of history timeline items
          */
@@ -82,18 +85,6 @@ export namespace ApiStockOrderHistory {
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
-                },
-                {
-                    metadata: ApiTransaction.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'outputTransactions',
-                    classname: 'ApiStockOrderHistory',
-                    dataType: 'Array&lt;ApiTransaction&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiTransaction'
                 },
                 {
                     metadata: ApiProcessingOrder.formMetadata,
@@ -120,6 +111,18 @@ export namespace ApiStockOrderHistory {
                     complexType: 'ApiStockOrder'
                 },
                 {
+                    metadata: ApiTransaction.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'outputTransactions',
+                    classname: 'ApiStockOrderHistory',
+                    dataType: 'Array&lt;ApiTransaction&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiTransaction'
+                },
+                {
                     metadata: ApiStockOrderHistoryTimelineItem.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -135,11 +138,11 @@ export namespace ApiStockOrderHistory {
             validators: {
                 id: [
                 ],
-                outputTransactions: [
-                ],
                 processingOrder: [
                 ],
                 stockOrder: [
+                ],
+                outputTransactions: [
                 ],
                 timelineItems: [
                 ],
@@ -153,13 +156,13 @@ export namespace ApiStockOrderHistory {
   //               id: {
   //                   validators: []
   //               },
-  //               outputTransactions: {
-  //                   validators: []
-  //               },
   //               processingOrder: {
   //                   validators: []
   //               },
   //               stockOrder: {
+  //                   validators: []
+  //               },
+  //               outputTransactions: {
   //                   validators: []
   //               },
   //               timelineItems: {

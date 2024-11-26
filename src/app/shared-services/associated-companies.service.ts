@@ -30,7 +30,7 @@ export class AssociatedCompaniesService extends GeneralSifrantService<ApiProduct
 
   public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiProductCompany>> {
     let limit = params && params.limit ? params.limit : this.limit()
-    let tmp = this.productController.getProductUsingGET(this.productId).pipe(
+    let tmp = this.productController.getProduct(this.productId).pipe(
       map(resp => {
         let data = resp.data
 

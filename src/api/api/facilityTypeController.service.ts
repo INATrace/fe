@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -39,43 +39,37 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createOrUpdateFacilityTypeUsingPUT.
+ * Namespace for createOrUpdateFacilityType.
  */
-export namespace CreateOrUpdateFacilityTypeUsingPUT {
+export namespace CreateOrUpdateFacilityType {
     /**
-     * Parameter map for createOrUpdateFacilityTypeUsingPUT.
+     * Parameter map for createOrUpdateFacilityType.
      */
     export interface PartialParamMap {
-      /**
-       * apiFacilityType
-       */
       ApiFacilityType: ApiFacilityType;
     }
 
     /**
-     * Enumeration of all parameters for createOrUpdateFacilityTypeUsingPUT.
+     * Enumeration of all parameters for createOrUpdateFacilityType.
      */
     export enum Parameters {
-      /**
-       * apiFacilityType
-       */
       ApiFacilityType = 'ApiFacilityType'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateFacilityTypeUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateFacilityType
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateOrUpdateFacilityType.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for deleteFacilityTypeUsingDELETE.
+ * Namespace for deleteFacilityType.
  */
-export namespace DeleteFacilityTypeUsingDELETE {
+export namespace DeleteFacilityType {
     /**
-     * Parameter map for deleteFacilityTypeUsingDELETE.
+     * Parameter map for deleteFacilityType.
      */
     export interface PartialParamMap {
       /**
@@ -85,7 +79,7 @@ export namespace DeleteFacilityTypeUsingDELETE {
     }
 
     /**
-     * Enumeration of all parameters for deleteFacilityTypeUsingDELETE.
+     * Enumeration of all parameters for deleteFacilityType.
      */
     export enum Parameters {
       /**
@@ -95,10 +89,10 @@ export namespace DeleteFacilityTypeUsingDELETE {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteFacilityTypeUsingDELETE
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteFacilityType
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof DeleteFacilityTypeUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof DeleteFacilityType.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -106,11 +100,46 @@ export namespace DeleteFacilityTypeUsingDELETE {
 }
 
 /**
- * Namespace for getFacilityTypeListUsingGET.
+ * Namespace for getFacilityType.
  */
-export namespace GetFacilityTypeListUsingGET {
+export namespace GetFacilityType {
     /**
-     * Parameter map for getFacilityTypeListUsingGET.
+     * Parameter map for getFacilityType.
+     */
+    export interface PartialParamMap {
+      /**
+       * Facility type ID
+       */
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getFacilityType.
+     */
+    export enum Parameters {
+      /**
+       * Facility type ID
+       */
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getFacilityType
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetFacilityType.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for getFacilityTypeList.
+ */
+export namespace GetFacilityTypeList {
+    /**
+     * Parameter map for getFacilityTypeList.
      */
     export interface PartialParamMap {
       /**
@@ -136,7 +165,7 @@ export namespace GetFacilityTypeListUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for getFacilityTypeListUsingGET.
+     * Enumeration of all parameters for getFacilityTypeList.
      */
     export enum Parameters {
       /**
@@ -162,54 +191,21 @@ export namespace GetFacilityTypeListUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getFacilityTypeListUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getFacilityTypeList
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetFacilityTypeListUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetFacilityTypeList.PartialParamMap]?: [string, ValidatorFn][]} = {
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
       sort: [
-      ],
-    };
-}
-
-/**
- * Namespace for getFacilityTypeUsingGET.
- */
-export namespace GetFacilityTypeUsingGET {
-    /**
-     * Parameter map for getFacilityTypeUsingGET.
-     */
-    export interface PartialParamMap {
-      /**
-       * Facility type ID
-       */
-      id: number;
-    }
-
-    /**
-     * Enumeration of all parameters for getFacilityTypeUsingGET.
-     */
-    export enum Parameters {
-      /**
-       * Facility type ID
-       */
-      id = 'id'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getFacilityTypeUsingGET
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof GetFacilityTypeUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      id: [
-              ['required', Validators.required],
       ],
     };
 }
@@ -258,23 +254,23 @@ export class FacilityTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createOrUpdateFacilityTypeUsingPUTByMap(
-    map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
+  public createOrUpdateFacilityTypeByMap(
+    map: CreateOrUpdateFacilityType.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public createOrUpdateFacilityTypeUsingPUTByMap(
-    map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
+  public createOrUpdateFacilityTypeByMap(
+    map: CreateOrUpdateFacilityType.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public createOrUpdateFacilityTypeUsingPUTByMap(
-    map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
+  public createOrUpdateFacilityTypeByMap(
+    map: CreateOrUpdateFacilityType.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public createOrUpdateFacilityTypeUsingPUTByMap(
-    map: CreateOrUpdateFacilityTypeUsingPUT.PartialParamMap,
+  public createOrUpdateFacilityTypeByMap(
+    map: CreateOrUpdateFacilityType.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createOrUpdateFacilityTypeUsingPUT(
+    return this.createOrUpdateFacilityType(
       map.ApiFacilityType,
       observe,
       reportProgress
@@ -285,23 +281,23 @@ export class FacilityTypeControllerService {
     /**
      * Create or update facility type. If ID is provided, the entity entity with the provided ID is updated.
      * 
-     * @param ApiFacilityType apiFacilityType
+     * @param ApiFacilityType 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public createOrUpdateFacilityTypeUsingPUT(ApiFacilityType: ApiFacilityType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createOrUpdateFacilityType(ApiFacilityType: ApiFacilityType, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateFacilityType(ApiFacilityType: ApiFacilityType, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateFacilityType(ApiFacilityType: ApiFacilityType, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createOrUpdateFacilityType(ApiFacilityType: ApiFacilityType, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiFacilityType === null || ApiFacilityType === undefined) {
-            throw new Error('Required parameter ApiFacilityType was null or undefined when calling createOrUpdateFacilityTypeUsingPUT.');
+            throw new Error('Required parameter ApiFacilityType was null or undefined when calling createOrUpdateFacilityType.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -333,7 +329,7 @@ export class FacilityTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateFacilityTypeUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateFacilityType')));
         }
         return handle;
     }
@@ -346,23 +342,23 @@ export class FacilityTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public deleteFacilityTypeUsingDELETEByMap(
-    map: DeleteFacilityTypeUsingDELETE.PartialParamMap,
+  public deleteFacilityTypeByMap(
+    map: DeleteFacilityType.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public deleteFacilityTypeUsingDELETEByMap(
-    map: DeleteFacilityTypeUsingDELETE.PartialParamMap,
+  public deleteFacilityTypeByMap(
+    map: DeleteFacilityType.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public deleteFacilityTypeUsingDELETEByMap(
-    map: DeleteFacilityTypeUsingDELETE.PartialParamMap,
+  public deleteFacilityTypeByMap(
+    map: DeleteFacilityType.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public deleteFacilityTypeUsingDELETEByMap(
-    map: DeleteFacilityTypeUsingDELETE.PartialParamMap,
+  public deleteFacilityTypeByMap(
+    map: DeleteFacilityType.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.deleteFacilityTypeUsingDELETE(
+    return this.deleteFacilityType(
       map.id,
       observe,
       reportProgress
@@ -377,19 +373,19 @@ export class FacilityTypeControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteFacilityTypeUsingDELETE(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public deleteFacilityTypeUsingDELETE(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public deleteFacilityTypeUsingDELETE(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public deleteFacilityTypeUsingDELETE(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public deleteFacilityType(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public deleteFacilityType(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public deleteFacilityType(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public deleteFacilityType(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteFacilityTypeUsingDELETE.');
+            throw new Error('Required parameter id was null or undefined when calling deleteFacilityType.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -415,7 +411,89 @@ export class FacilityTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteFacilityTypeUsingDELETE')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteFacilityType')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get a single facility type with the provided ID. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getFacilityTypeByMap(
+    map: GetFacilityType.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiFacilityType>;
+  public getFacilityTypeByMap(
+    map: GetFacilityType.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiFacilityType>>;
+  public getFacilityTypeByMap(
+    map: GetFacilityType.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiFacilityType>>;
+  public getFacilityTypeByMap(
+    map: GetFacilityType.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getFacilityType(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get a single facility type with the provided ID.
+     * 
+     * @param id Facility type ID
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getFacilityType(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiFacilityType>;
+    public getFacilityType(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiFacilityType>>;
+    public getFacilityType(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiFacilityType>>;
+    public getFacilityType(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getFacilityType.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiFacilityType>(`${this.configuration.basePath}/api/chain/facility-type/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getFacilityType')));
         }
         return handle;
     }
@@ -428,23 +506,23 @@ export class FacilityTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getFacilityTypeListUsingGETByMap(
-    map: GetFacilityTypeListUsingGET.PartialParamMap,
+  public getFacilityTypeListByMap(
+    map: GetFacilityTypeList.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiFacilityType>;
-  public getFacilityTypeListUsingGETByMap(
-    map: GetFacilityTypeListUsingGET.PartialParamMap,
+  public getFacilityTypeListByMap(
+    map: GetFacilityTypeList.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiFacilityType>>;
-  public getFacilityTypeListUsingGETByMap(
-    map: GetFacilityTypeListUsingGET.PartialParamMap,
+  public getFacilityTypeListByMap(
+    map: GetFacilityTypeList.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiFacilityType>>;
-  public getFacilityTypeListUsingGETByMap(
-    map: GetFacilityTypeListUsingGET.PartialParamMap,
+  public getFacilityTypeListByMap(
+    map: GetFacilityTypeList.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getFacilityTypeListUsingGET(
+    return this.getFacilityTypeList(
       map.requestType,
       map.limit,
       map.offset,
@@ -467,10 +545,10 @@ export class FacilityTypeControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getFacilityTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiFacilityType>;
-    public getFacilityTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiFacilityType>>;
-    public getFacilityTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiFacilityType>>;
-    public getFacilityTypeListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getFacilityTypeList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiFacilityType>;
+    public getFacilityTypeList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiFacilityType>>;
+    public getFacilityTypeList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiFacilityType>>;
+    public getFacilityTypeList(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (requestType !== undefined && requestType !== null) {
@@ -493,7 +571,7 @@ export class FacilityTypeControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -520,89 +598,7 @@ export class FacilityTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getFacilityTypeListUsingGET')));
-        }
-        return handle;
-    }
-
-
-  /**
-   * Get a single facility type with the provided ID. by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getFacilityTypeUsingGETByMap(
-    map: GetFacilityTypeUsingGET.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiFacilityType>;
-  public getFacilityTypeUsingGETByMap(
-    map: GetFacilityTypeUsingGET.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiFacilityType>>;
-  public getFacilityTypeUsingGETByMap(
-    map: GetFacilityTypeUsingGET.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiFacilityType>>;
-  public getFacilityTypeUsingGETByMap(
-    map: GetFacilityTypeUsingGET.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.getFacilityTypeUsingGET(
-      map.id,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * Get a single facility type with the provided ID.
-     * 
-     * @param id Facility type ID
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getFacilityTypeUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiFacilityType>;
-    public getFacilityTypeUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiFacilityType>>;
-    public getFacilityTypeUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiFacilityType>>;
-    public getFacilityTypeUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getFacilityTypeUsingGET.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponseApiFacilityType>(`${this.configuration.basePath}/api/chain/facility-type/${encodeURIComponent(String(id))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getFacilityTypeUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getFacilityTypeList')));
         }
         return handle;
     }

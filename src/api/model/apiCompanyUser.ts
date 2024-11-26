@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,40 +20,43 @@
 
 
 
+/**
+ * Company users
+ */
 
 export interface ApiCompanyUser { 
-    /**
-     * company role
-     */
-    companyRole?: ApiCompanyUser.CompanyRoleEnum;
-    /**
-     * Email/username
-     */
-    email?: string;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * language
+     * Email/username
      */
-    language?: ApiCompanyUser.LanguageEnum;
+    email?: string;
     /**
      * Name
      */
     name?: string;
     /**
-     * User role
+     * Surname
      */
-    role?: ApiCompanyUser.RoleEnum;
+    surname?: string;
     /**
      * Status
      */
     status?: ApiCompanyUser.StatusEnum;
     /**
-     * Surname
+     * User role
      */
-    surname?: string;
+    role?: ApiCompanyUser.RoleEnum;
+    /**
+     * language
+     */
+    language?: ApiCompanyUser.LanguageEnum;
+    /**
+     * company role
+     */
+    companyRole?: ApiCompanyUser.CompanyRoleEnum;
 }
 
 /**
@@ -65,47 +68,56 @@ export namespace ApiCompanyUser {
      */
     export enum Properties {
         /**
-         * company role
+         * Entity id
          */
-        companyRole = 'companyRole',
+        id = 'id',
         /**
          * Email/username
          */
         email = 'email',
         /**
-         * Entity id
-         */
-        id = 'id',
-        /**
-         * language
-         */
-        language = 'language',
-        /**
          * Name
          */
         name = 'name',
         /**
-         * User role
+         * Surname
          */
-        role = 'role',
+        surname = 'surname',
         /**
          * Status
          */
         status = 'status',
         /**
-         * Surname
+         * User role
          */
-        surname = 'surname'
+        role = 'role',
+        /**
+         * language
+         */
+        language = 'language',
+        /**
+         * company role
+         */
+        companyRole = 'companyRole'
     }
 
     /**
-     * All possible values of companyRole.
+     * All possible values of status.
      */
-    export enum CompanyRoleEnum {
-        COMPANYUSER = 'COMPANY_USER',
-        COMPANYADMIN = 'COMPANY_ADMIN',
-        MANAGER = 'MANAGER',
-        ACCOUNTANT = 'ACCOUNTANT'
+    export enum StatusEnum {
+        UNCONFIRMED = 'UNCONFIRMED',
+        CONFIRMEDEMAIL = 'CONFIRMED_EMAIL',
+        ACTIVE = 'ACTIVE',
+        DEACTIVATED = 'DEACTIVATED'
+    }
+
+    /**
+     * All possible values of role.
+     */
+    export enum RoleEnum {
+        USER = 'USER',
+        SYSTEMADMIN = 'SYSTEM_ADMIN',
+        REGIONALADMIN = 'REGIONAL_ADMIN'
     }
 
     /**
@@ -119,22 +131,13 @@ export namespace ApiCompanyUser {
     }
 
     /**
-     * All possible values of role.
+     * All possible values of companyRole.
      */
-    export enum RoleEnum {
-        USER = 'USER',
-        SYSTEMADMIN = 'SYSTEM_ADMIN',
-        REGIONALADMIN = 'REGIONAL_ADMIN'
-    }
-
-    /**
-     * All possible values of status.
-     */
-    export enum StatusEnum {
-        UNCONFIRMED = 'UNCONFIRMED',
-        CONFIRMEDEMAIL = 'CONFIRMED_EMAIL',
-        ACTIVE = 'ACTIVE',
-        DEACTIVATED = 'DEACTIVATED'
+    export enum CompanyRoleEnum {
+        COMPANYUSER = 'COMPANY_USER',
+        COMPANYADMIN = 'COMPANY_ADMIN',
+        MANAGER = 'MANAGER',
+        ACCOUNTANT = 'ACCOUNTANT'
     }
 
 
@@ -145,12 +148,11 @@ export namespace ApiCompanyUser {
             vars: [
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiCompanyUser.CompanyRoleEnum',
+                    isEnum: false,
                     required: false,
-                    name: 'companyRole',
+                    name: 'id',
                     classname: 'ApiCompanyUser',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -170,19 +172,7 @@ export namespace ApiCompanyUser {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
-                    classname: 'ApiCompanyUser',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiCompanyUser.LanguageEnum',
-                    required: false,
-                    name: 'language',
+                    name: 'name',
                     classname: 'ApiCompanyUser',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -193,7 +183,19 @@ export namespace ApiCompanyUser {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
+                    name: 'surname',
+                    classname: 'ApiCompanyUser',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiCompanyUser.StatusEnum',
+                    required: false,
+                    name: 'status',
                     classname: 'ApiCompanyUser',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -215,9 +217,9 @@ export namespace ApiCompanyUser {
                 {
                     isReadOnly: false,
                     isEnum: true,
-                    datatypeWithEnum: 'ApiCompanyUser.StatusEnum',
+                    datatypeWithEnum: 'ApiCompanyUser.LanguageEnum',
                     required: false,
-                    name: 'status',
+                    name: 'language',
                     classname: 'ApiCompanyUser',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -226,9 +228,10 @@ export namespace ApiCompanyUser {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiCompanyUser.CompanyRoleEnum',
                     required: false,
-                    name: 'surname',
+                    name: 'companyRole',
                     classname: 'ApiCompanyUser',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -237,21 +240,21 @@ export namespace ApiCompanyUser {
                 },
             ],
             validators: {
-                companyRole: [
+                id: [
                 ],
                 email: [
                 ],
-                id: [
-                ],
-                language: [
-                ],
                 name: [
                 ],
-                role: [
+                surname: [
                 ],
                 status: [
                 ],
-                surname: [
+                role: [
+                ],
+                language: [
+                ],
+                companyRole: [
                 ],
             }
         }
@@ -260,28 +263,28 @@ export namespace ApiCompanyUser {
   // export const ApiCompanyUserValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               companyRole: {
+  //               id: {
   //                   validators: []
   //               },
   //               email: {
   //                   validators: []
   //               },
-  //               id: {
-  //                   validators: []
-  //               },
-  //               language: {
-  //                   validators: []
-  //               },
   //               name: {
   //                   validators: []
   //               },
-  //               role: {
+  //               surname: {
   //                   validators: []
   //               },
   //               status: {
   //                   validators: []
   //               },
-  //               surname: {
+  //               role: {
+  //                   validators: []
+  //               },
+  //               language: {
+  //                   validators: []
+  //               },
+  //               companyRole: {
   //                   validators: []
   //               },
   //     }

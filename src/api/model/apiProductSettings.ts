@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,6 +21,9 @@
 import { ApiDocument } from './apiDocument';
 
 
+/**
+ * settings
+ */
 
 export interface ApiProductSettings { 
     /**
@@ -28,22 +31,22 @@ export interface ApiProductSettings {
      */
     costBreakdown?: boolean;
     /**
-     * GDPR text
+     * pricing transparency - string-number map
      */
-    gdprText?: string;
+    pricingTransparency?: { [key: string]: number; };
+    incomeIncreaseDocument?: ApiDocument;
     /**
      * increase in income - description
      */
     incomeIncreaseDescription?: string;
-    incomeIncreaseDocument?: ApiDocument;
     /**
      * language
      */
     language?: ApiProductSettings.LanguageEnum;
     /**
-     * pricing transparency - string-number map
+     * GDPR text
      */
-    pricingTransparency?: { [key: string]: number; };
+    gdprText?: string;
     /**
      * Privacy policy text
      */
@@ -67,22 +70,22 @@ export namespace ApiProductSettings {
          */
         costBreakdown = 'costBreakdown',
         /**
-         * GDPR text
+         * pricing transparency - string-number map
          */
-        gdprText = 'gdprText',
+        pricingTransparency = 'pricingTransparency',
+        incomeIncreaseDocument = 'incomeIncreaseDocument',
         /**
          * increase in income - description
          */
         incomeIncreaseDescription = 'incomeIncreaseDescription',
-        incomeIncreaseDocument = 'incomeIncreaseDocument',
         /**
          * language
          */
         language = 'language',
         /**
-         * pricing transparency - string-number map
+         * GDPR text
          */
-        pricingTransparency = 'pricingTransparency',
+        gdprText = 'gdprText',
         /**
          * Privacy policy text
          */
@@ -124,20 +127,9 @@ export namespace ApiProductSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'gdprText',
+                    name: 'pricingTransparency',
                     classname: 'ApiProductSettings',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'incomeIncreaseDescription',
-                    classname: 'ApiProductSettings',
-                    dataType: 'string',
+                    dataType: '{ [key: string]: number; }',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -156,6 +148,17 @@ export namespace ApiProductSettings {
                 },
                 {
                     isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'incomeIncreaseDescription',
+                    classname: 'ApiProductSettings',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiProductSettings.LanguageEnum',
                     required: false,
@@ -170,9 +173,9 @@ export namespace ApiProductSettings {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'pricingTransparency',
+                    name: 'gdprText',
                     classname: 'ApiProductSettings',
-                    dataType: '{ [key: string]: number; }',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -203,19 +206,27 @@ export namespace ApiProductSettings {
             validators: {
                 costBreakdown: [
                 ],
-                gdprText: [
-                ],
-                incomeIncreaseDescription: [
+                pricingTransparency: [
                 ],
                 incomeIncreaseDocument: [
                 ],
+                incomeIncreaseDescription: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
+                ],
                 language: [
                 ],
-                pricingTransparency: [
+                gdprText: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
                 ],
                 privacyPolicyText: [
+                        ['minlength', 0],
+                        ['maxlength', 50000],
                 ],
                 termsOfUseText: [
+                        ['minlength', 0],
+                        ['maxlength', 50000],
                 ],
             }
         }
@@ -227,19 +238,19 @@ export namespace ApiProductSettings {
   //               costBreakdown: {
   //                   validators: []
   //               },
-  //               gdprText: {
-  //                   validators: []
-  //               },
-  //               incomeIncreaseDescription: {
+  //               pricingTransparency: {
   //                   validators: []
   //               },
   //               incomeIncreaseDocument: {
   //                   validators: []
   //               },
+  //               incomeIncreaseDescription: {
+  //                   validators: []
+  //               },
   //               language: {
   //                   validators: []
   //               },
-  //               pricingTransparency: {
+  //               gdprText: {
   //                   validators: []
   //               },
   //               privacyPolicyText: {

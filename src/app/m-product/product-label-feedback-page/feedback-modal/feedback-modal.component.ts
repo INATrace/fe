@@ -77,7 +77,7 @@ export class FeedbackModalComponent implements OnInit {
     try {
       this.globalEventsManager.showLoading(true);
       const data = this.prepareData();
-      const res = await this.publicController.addProductLabelFeedbackUsingPOST(this.labelId, data).pipe(take(1)).toPromise();
+      const res = await this.publicController.addProductLabelFeedback(this.labelId, data).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         result = true;
       }

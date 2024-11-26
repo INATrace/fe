@@ -219,7 +219,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     const id = +this.route.snapshot.paramMap.get('id');
 
     this.sub = forkJoin([
-      this.companyController.getCompanyUsingGET(id).pipe(take(1))
+      this.companyController.getCompany(id).pipe(take(1))
     ]).subscribe({
       next: ([company]) => {
         this.company = company.data;
@@ -328,7 +328,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
       this.globalEventsManager.showLoading(true);
       const params = this.route.snapshot.params;
       const res: ApiResponseApiBaseEntity = await this.companyController
-          .updateCompanyUsingPUT({ ...params, ...this.companyDetailForm.value }).pipe(take(1)).toPromise();
+          .updateCompany({ ...params, ...this.companyDetailForm.value }).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.companyDetailForm.markAsPristine();
       }
@@ -356,7 +356,7 @@ export class CompanyDetailComponent extends CompanyDetailTabManagerComponent imp
     try {
       this.globalEventsManager.showLoading(true);
       const res: ApiResponseApiBaseEntity = await this.companyController
-          .createCompanyUsingPOST(this.companyDetailForm.value).pipe(take(1)).toPromise();
+          .createCompany(this.companyDetailForm.value).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.companyDetailForm.markAsPristine();
         this.goBack();

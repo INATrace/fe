@@ -171,30 +171,30 @@ export class TypeDetailModalComponent implements OnInit {
     let res = null;
 
     if (this.type === 'facility-types') {
-      res = await this.facilityTypeService.createOrUpdateFacilityTypeUsingPUT(data).pipe(take(1)).toPromise();
+      res = await this.facilityTypeService.createOrUpdateFacilityType(data).pipe(take(1)).toPromise();
     }
 
     if (this.type === 'measurement-unit-types') {
-      res = await this.measureUnitTypeService.createOrUpdateMeasurementUnitTypeUsingPUT(data).pipe(take(1)).toPromise();
+      res = await this.measureUnitTypeService.createOrUpdateMeasurementUnitType(data).pipe(take(1)).toPromise();
     }
 
     if (this.type === 'processing-evidence-types') {
-      res = await this.processingEvidenceTypeService.createOrUpdateProcessingEvidenceTypeUsingPUT(data).pipe(take(1)).toPromise();
+      res = await this.processingEvidenceTypeService.createOrUpdateProcessingEvidenceType(data).pipe(take(1)).toPromise();
     }
 
     if (this.type === 'processing-evidence-fields') {
-      res = await this.processingEvidenceFieldService.createOrUpdateProcessingEvidenceFieldUsingPUT(data).pipe(take(1)).toPromise();
+      res = await this.processingEvidenceFieldService.createOrUpdateProcessingEvidenceField(data).pipe(take(1)).toPromise();
     }
 
     if (this.type === 'semi-products') {
-      res = await this.semiProductService.createOrUpdateSemiProductUsingPUT(data).pipe(take(1)).toPromise();
+      res = await this.semiProductService.createOrUpdateSemiProduct(data).pipe(take(1)).toPromise();
     }
 
     if (this.type === 'product-types') {
       if (data.id) {
-        res = await this.productTypeService.updateProductTypeUsingPUT(data).pipe(take(1)).toPromise();
+        res = await this.productTypeService.updateProductType(data).pipe(take(1)).toPromise();
       } else {
-        res = await this.productTypeService.createProductTypeUsingPOST(data).pipe(take(1)).toPromise();
+        res = await this.productTypeService.createProductType(data).pipe(take(1)).toPromise();
       }
     }
 

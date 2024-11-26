@@ -211,7 +211,7 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
       case 'update':
         this.title = $localize`:@@collectorDetail.editCollector.title:Edit collector`;
         this.update = true;
-        const uc = await this.companyService.getUserCustomerUsingGET(this.route.snapshot.params.id).pipe(first()).toPromise();
+        const uc = await this.companyService.getUserCustomer(this.route.snapshot.params.id).pipe(first()).toPromise();
         if (uc && uc.status === 'OK') {
           this.collector = uc.data;
         }
@@ -286,9 +286,9 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
       this.globalEventsManager.showLoading(true);
       let res;
       if (!this.update) {
-        res = await this.companyService.addUserCustomerUsingPOST(this.companyId, data).toPromise();
+        res = await this.companyService.addUserCustomer(this.companyId, data).toPromise();
       } else {
-        res = await this.companyService.updateUserCustomerUsingPUT(data).toPromise();
+        res = await this.companyService.updateUserCustomer(data).toPromise();
       }
       if (res && res.status === 'OK') {
         this.dismiss();
@@ -323,7 +323,7 @@ export class CompanyCollectorsDetailsComponent implements OnInit {
 
   async listOfOrgAssociation() {
 
-    const res = await this.companyService.getAssociationsUsingGET(this.companyId).pipe(take(1)).toPromise();
+    const res = await this.companyService.getAssociations(this.companyId).pipe(take(1)).toPromise();
 
     if (res && res.status === 'OK' && res.data) {
       const companiesObj = {};

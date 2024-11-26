@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -37,43 +37,37 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for calculateProcessingPerformanceDataUsingPOST.
+ * Namespace for calculateProcessingPerformanceData.
  */
-export namespace CalculateProcessingPerformanceDataUsingPOST {
+export namespace CalculateProcessingPerformanceData {
     /**
-     * Parameter map for calculateProcessingPerformanceDataUsingPOST.
+     * Parameter map for calculateProcessingPerformanceData.
      */
     export interface PartialParamMap {
-      /**
-       * processingPerformanceRequest
-       */
       ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest;
     }
 
     /**
-     * Enumeration of all parameters for calculateProcessingPerformanceDataUsingPOST.
+     * Enumeration of all parameters for calculateProcessingPerformanceData.
      */
     export enum Parameters {
-      /**
-       * processingPerformanceRequest
-       */
       ApiProcessingPerformanceRequest = 'ApiProcessingPerformanceRequest'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of calculateProcessingPerformanceDataUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of calculateProcessingPerformanceData
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CalculateProcessingPerformanceDataUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CalculateProcessingPerformanceData.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for exportDeliveriesDataUsingGET.
+ * Namespace for exportDeliveriesData.
  */
-export namespace ExportDeliveriesDataUsingGET {
+export namespace ExportDeliveriesData {
     /**
-     * Parameter map for exportDeliveriesDataUsingGET.
+     * Parameter map for exportDeliveriesData.
      */
     export interface PartialParamMap {
       /**
@@ -124,14 +118,11 @@ export namespace ExportDeliveriesDataUsingGET {
        * Production date range end
        */
       productionDateEnd?: string;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for exportDeliveriesDataUsingGET.
+     * Enumeration of all parameters for exportDeliveriesData.
      */
     export enum Parameters {
       /**
@@ -182,17 +173,14 @@ export namespace ExportDeliveriesDataUsingGET {
        * Production date range end
        */
       productionDateEnd = 'productionDateEnd',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of exportDeliveriesDataUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of exportDeliveriesData
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ExportDeliveriesDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ExportDeliveriesData.PartialParamMap]?: [string, ValidatorFn][]} = {
       companyId: [
               ['required', Validators.required],
       ],
@@ -226,53 +214,41 @@ export namespace ExportDeliveriesDataUsingGET {
 }
 
 /**
- * Namespace for exportProcessingPerformanceDataUsingPOST.
+ * Namespace for exportProcessingPerformanceData.
  */
-export namespace ExportProcessingPerformanceDataUsingPOST {
+export namespace ExportProcessingPerformanceData {
     /**
-     * Parameter map for exportProcessingPerformanceDataUsingPOST.
+     * Parameter map for exportProcessingPerformanceData.
      */
     export interface PartialParamMap {
-      /**
-       * processingPerformanceRequest
-       */
       ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for exportProcessingPerformanceDataUsingPOST.
+     * Enumeration of all parameters for exportProcessingPerformanceData.
      */
     export enum Parameters {
-      /**
-       * processingPerformanceRequest
-       */
       ApiProcessingPerformanceRequest = 'ApiProcessingPerformanceRequest',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of exportProcessingPerformanceDataUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of exportProcessingPerformanceData
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ExportProcessingPerformanceDataUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ExportProcessingPerformanceData.PartialParamMap]?: [string, ValidatorFn][]} = {
       language: [
       ],
     };
 }
 
 /**
- * Namespace for getDeliveriesAggregatedDataUsingGET.
+ * Namespace for getDeliveriesAggregatedData.
  */
-export namespace GetDeliveriesAggregatedDataUsingGET {
+export namespace GetDeliveriesAggregatedData {
     /**
-     * Parameter map for getDeliveriesAggregatedDataUsingGET.
+     * Parameter map for getDeliveriesAggregatedData.
      */
     export interface PartialParamMap {
       /**
@@ -322,7 +298,7 @@ export namespace GetDeliveriesAggregatedDataUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for getDeliveriesAggregatedDataUsingGET.
+     * Enumeration of all parameters for getDeliveriesAggregatedData.
      */
     export enum Parameters {
       /**
@@ -372,10 +348,10 @@ export namespace GetDeliveriesAggregatedDataUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getDeliveriesAggregatedDataUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getDeliveriesAggregatedData
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetDeliveriesAggregatedDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetDeliveriesAggregatedData.PartialParamMap]?: [string, ValidatorFn][]} = {
       companyId: [
               ['required', Validators.required],
       ],
@@ -447,23 +423,23 @@ export class DashboardControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public calculateProcessingPerformanceDataUsingPOSTByMap(
-    map: CalculateProcessingPerformanceDataUsingPOST.PartialParamMap,
+  public calculateProcessingPerformanceDataByMap(
+    map: CalculateProcessingPerformanceData.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiProcessingPerformanceTotal>;
-  public calculateProcessingPerformanceDataUsingPOSTByMap(
-    map: CalculateProcessingPerformanceDataUsingPOST.PartialParamMap,
+  public calculateProcessingPerformanceDataByMap(
+    map: CalculateProcessingPerformanceData.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingPerformanceTotal>>;
-  public calculateProcessingPerformanceDataUsingPOSTByMap(
-    map: CalculateProcessingPerformanceDataUsingPOST.PartialParamMap,
+  public calculateProcessingPerformanceDataByMap(
+    map: CalculateProcessingPerformanceData.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingPerformanceTotal>>;
-  public calculateProcessingPerformanceDataUsingPOSTByMap(
-    map: CalculateProcessingPerformanceDataUsingPOST.PartialParamMap,
+  public calculateProcessingPerformanceDataByMap(
+    map: CalculateProcessingPerformanceData.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.calculateProcessingPerformanceDataUsingPOST(
+    return this.calculateProcessingPerformanceData(
       map.ApiProcessingPerformanceRequest,
       observe,
       reportProgress
@@ -474,23 +450,23 @@ export class DashboardControllerService {
     /**
      * Calculates processing performance data
      * 
-     * @param ApiProcessingPerformanceRequest processingPerformanceRequest
+     * @param ApiProcessingPerformanceRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public calculateProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingPerformanceTotal>;
-    public calculateProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingPerformanceTotal>>;
-    public calculateProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingPerformanceTotal>>;
-    public calculateProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public calculateProcessingPerformanceData(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingPerformanceTotal>;
+    public calculateProcessingPerformanceData(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingPerformanceTotal>>;
+    public calculateProcessingPerformanceData(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingPerformanceTotal>>;
+    public calculateProcessingPerformanceData(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProcessingPerformanceRequest === null || ApiProcessingPerformanceRequest === undefined) {
-            throw new Error('Required parameter ApiProcessingPerformanceRequest was null or undefined when calling calculateProcessingPerformanceDataUsingPOST.');
+            throw new Error('Required parameter ApiProcessingPerformanceRequest was null or undefined when calling calculateProcessingPerformanceData.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -522,36 +498,36 @@ export class DashboardControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'calculateProcessingPerformanceDataUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'calculateProcessingPerformanceData')));
         }
         return handle;
     }
 
 
   /**
-   * exportDeliveriesData by map.
+   *  by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public exportDeliveriesDataUsingGETByMap(
-    map: ExportDeliveriesDataUsingGET.PartialParamMap,
+  public exportDeliveriesDataByMap(
+    map: ExportDeliveriesData.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<Blob>;
-  public exportDeliveriesDataUsingGETByMap(
-    map: ExportDeliveriesDataUsingGET.PartialParamMap,
+  public exportDeliveriesDataByMap(
+    map: ExportDeliveriesData.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public exportDeliveriesDataUsingGETByMap(
-    map: ExportDeliveriesDataUsingGET.PartialParamMap,
+  public exportDeliveriesDataByMap(
+    map: ExportDeliveriesData.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public exportDeliveriesDataUsingGETByMap(
-    map: ExportDeliveriesDataUsingGET.PartialParamMap,
+  public exportDeliveriesDataByMap(
+    map: ExportDeliveriesData.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.exportDeliveriesDataUsingGET(
+    return this.exportDeliveriesData(
       map.companyId,
       map.aggregationType,
       map.exportType,
@@ -572,7 +548,7 @@ export class DashboardControllerService {
 
 
     /**
-     * exportDeliveriesData
+     * 
      * 
      * @param companyId Company ID
      * @param aggregationType Aggregation type
@@ -586,22 +562,22 @@ export class DashboardControllerService {
      * @param priceDeterminedLater Price determined later
      * @param productionDateStart Production date range start
      * @param productionDateEnd Production date range end
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public exportDeliveriesDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public exportDeliveriesData(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportDeliveriesData(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportDeliveriesData(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public exportDeliveriesData(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', exportType: 'EXCEL' | 'PDF' | 'CSV', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
-            throw new Error('Required parameter companyId was null or undefined when calling exportDeliveriesDataUsingGET.');
+            throw new Error('Required parameter companyId was null or undefined when calling exportDeliveriesData.');
         }
         if (aggregationType === null || aggregationType === undefined) {
-            throw new Error('Required parameter aggregationType was null or undefined when calling exportDeliveriesDataUsingGET.');
+            throw new Error('Required parameter aggregationType was null or undefined when calling exportDeliveriesData.');
         }
         if (exportType === null || exportType === undefined) {
-            throw new Error('Required parameter exportType was null or undefined when calling exportDeliveriesDataUsingGET.');
+            throw new Error('Required parameter exportType was null or undefined when calling exportDeliveriesData.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -651,7 +627,7 @@ export class DashboardControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -679,7 +655,7 @@ export class DashboardControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportDeliveriesDataUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportDeliveriesData')));
         }
         return handle;
     }
@@ -692,23 +668,23 @@ export class DashboardControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public exportProcessingPerformanceDataUsingPOSTByMap(
-    map: ExportProcessingPerformanceDataUsingPOST.PartialParamMap,
+  public exportProcessingPerformanceDataByMap(
+    map: ExportProcessingPerformanceData.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<Blob>;
-  public exportProcessingPerformanceDataUsingPOSTByMap(
-    map: ExportProcessingPerformanceDataUsingPOST.PartialParamMap,
+  public exportProcessingPerformanceDataByMap(
+    map: ExportProcessingPerformanceData.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public exportProcessingPerformanceDataUsingPOSTByMap(
-    map: ExportProcessingPerformanceDataUsingPOST.PartialParamMap,
+  public exportProcessingPerformanceDataByMap(
+    map: ExportProcessingPerformanceData.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public exportProcessingPerformanceDataUsingPOSTByMap(
-    map: ExportProcessingPerformanceDataUsingPOST.PartialParamMap,
+  public exportProcessingPerformanceDataByMap(
+    map: ExportProcessingPerformanceData.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.exportProcessingPerformanceDataUsingPOST(
+    return this.exportProcessingPerformanceData(
       map.ApiProcessingPerformanceRequest,
       map.language,
       observe,
@@ -720,17 +696,17 @@ export class DashboardControllerService {
     /**
      * Exports processing performance data to the requested format
      * 
-     * @param ApiProcessingPerformanceRequest processingPerformanceRequest
-     * @param language language
+     * @param ApiProcessingPerformanceRequest 
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public exportProcessingPerformanceDataUsingPOST(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public exportProcessingPerformanceData(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public exportProcessingPerformanceData(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public exportProcessingPerformanceData(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public exportProcessingPerformanceData(ApiProcessingPerformanceRequest: ApiProcessingPerformanceRequest, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProcessingPerformanceRequest === null || ApiProcessingPerformanceRequest === undefined) {
-            throw new Error('Required parameter ApiProcessingPerformanceRequest was null or undefined when calling exportProcessingPerformanceDataUsingPOST.');
+            throw new Error('Required parameter ApiProcessingPerformanceRequest was null or undefined when calling exportProcessingPerformanceData.');
         }
 
         let headers = this.defaultHeaders;
@@ -740,7 +716,7 @@ export class DashboardControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -773,36 +749,36 @@ export class DashboardControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportProcessingPerformanceDataUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'exportProcessingPerformanceData')));
         }
         return handle;
     }
 
 
   /**
-   * getDeliveriesAggregatedData by map.
+   *  by map.
    * 
    * @param map parameters map to set partial amount of parameters easily
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getDeliveriesAggregatedDataUsingGETByMap(
-    map: GetDeliveriesAggregatedDataUsingGET.PartialParamMap,
+  public getDeliveriesAggregatedDataByMap(
+    map: GetDeliveriesAggregatedData.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiDeliveriesTotal>;
-  public getDeliveriesAggregatedDataUsingGETByMap(
-    map: GetDeliveriesAggregatedDataUsingGET.PartialParamMap,
+  public getDeliveriesAggregatedDataByMap(
+    map: GetDeliveriesAggregatedData.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiDeliveriesTotal>>;
-  public getDeliveriesAggregatedDataUsingGETByMap(
-    map: GetDeliveriesAggregatedDataUsingGET.PartialParamMap,
+  public getDeliveriesAggregatedDataByMap(
+    map: GetDeliveriesAggregatedData.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiDeliveriesTotal>>;
-  public getDeliveriesAggregatedDataUsingGETByMap(
-    map: GetDeliveriesAggregatedDataUsingGET.PartialParamMap,
+  public getDeliveriesAggregatedDataByMap(
+    map: GetDeliveriesAggregatedData.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getDeliveriesAggregatedDataUsingGET(
+    return this.getDeliveriesAggregatedData(
       map.companyId,
       map.aggregationType,
       map.facilityIds,
@@ -821,7 +797,7 @@ export class DashboardControllerService {
 
 
     /**
-     * getDeliveriesAggregatedData
+     * 
      * 
      * @param companyId Company ID
      * @param aggregationType Aggregation type
@@ -837,15 +813,15 @@ export class DashboardControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getDeliveriesAggregatedDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiDeliveriesTotal>;
-    public getDeliveriesAggregatedDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiDeliveriesTotal>>;
-    public getDeliveriesAggregatedDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiDeliveriesTotal>>;
-    public getDeliveriesAggregatedDataUsingGET(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getDeliveriesAggregatedData(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiDeliveriesTotal>;
+    public getDeliveriesAggregatedData(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiDeliveriesTotal>>;
+    public getDeliveriesAggregatedData(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiDeliveriesTotal>>;
+    public getDeliveriesAggregatedData(companyId: number, aggregationType: 'DAY' | 'WEEK' | 'MONTH' | 'YEAR', facilityIds?: Array<number>, semiProductId?: number, farmerId?: number, collectorId?: number, isWomenShare?: boolean, organicOnly?: boolean, priceDeterminedLater?: boolean, productionDateStart?: string, productionDateEnd?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (companyId === null || companyId === undefined) {
-            throw new Error('Required parameter companyId was null or undefined when calling getDeliveriesAggregatedDataUsingGET.');
+            throw new Error('Required parameter companyId was null or undefined when calling getDeliveriesAggregatedData.');
         }
         if (aggregationType === null || aggregationType === undefined) {
-            throw new Error('Required parameter aggregationType was null or undefined when calling getDeliveriesAggregatedDataUsingGET.');
+            throw new Error('Required parameter aggregationType was null or undefined when calling getDeliveriesAggregatedData.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -889,7 +865,7 @@ export class DashboardControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -916,7 +892,7 @@ export class DashboardControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getDeliveriesAggregatedDataUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getDeliveriesAggregatedData')));
         }
         return handle;
     }

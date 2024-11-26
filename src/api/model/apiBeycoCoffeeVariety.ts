@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,16 +20,19 @@
 
 
 
+/**
+ * Varieties of coffee beans
+ */
 
 export interface ApiBeycoCoffeeVariety { 
-    /**
-     * Optional custom variety of coffee beans
-     */
-    customVariety?: string;
     /**
      * Variety of coffee beans
      */
     type?: ApiBeycoCoffeeVariety.TypeEnum;
+    /**
+     * Optional custom variety of coffee beans
+     */
+    customVariety?: string;
 }
 
 /**
@@ -41,13 +44,13 @@ export namespace ApiBeycoCoffeeVariety {
      */
     export enum Properties {
         /**
-         * Optional custom variety of coffee beans
-         */
-        customVariety = 'customVariety',
-        /**
          * Variety of coffee beans
          */
-        type = 'type'
+        type = 'type',
+        /**
+         * Optional custom variety of coffee beans
+         */
+        customVariety = 'customVariety'
     }
 
     /**
@@ -81,17 +84,6 @@ export namespace ApiBeycoCoffeeVariety {
             vars: [
                 {
                     isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'customVariety',
-                    classname: 'ApiBeycoCoffeeVariety',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiBeycoCoffeeVariety.TypeEnum',
                     required: false,
@@ -102,11 +94,22 @@ export namespace ApiBeycoCoffeeVariety {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'customVariety',
+                    classname: 'ApiBeycoCoffeeVariety',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                customVariety: [
-                ],
                 type: [
+                ],
+                customVariety: [
                 ],
             }
         }
@@ -115,10 +118,10 @@ export namespace ApiBeycoCoffeeVariety {
   // export const ApiBeycoCoffeeVarietyValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               customVariety: {
+  //               type: {
   //                   validators: []
   //               },
-  //               type: {
+  //               customVariety: {
   //                   validators: []
   //               },
   //     }

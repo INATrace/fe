@@ -1,8 +1,7 @@
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiFacility } from '../../api/model/apiFacility';
 import {
-  FacilityControllerService,
-  ListAvailableSellingFacilitiesForCompanyUsingGET
+  FacilityControllerService, ListAvailableSellingFacilitiesForCompany
 } from '../../api/api/facilityController.service';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
@@ -14,7 +13,7 @@ export class AvailableSellingFacilitiesForCompany extends GeneralSifrantService<
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as ListAvailableSellingFacilitiesForCompanyUsingGET.PartialParamMap;
+  } as ListAvailableSellingFacilitiesForCompany.PartialParamMap;
 
   constructor(
     private facilityControllerService: FacilityControllerService,
@@ -40,14 +39,14 @@ export class AvailableSellingFacilitiesForCompany extends GeneralSifrantService<
   makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiFacility>> {
 
     const limit = params && params.limit ? params.limit : this.limit();
-    const reqParams: ListAvailableSellingFacilitiesForCompanyUsingGET.PartialParamMap = {
+    const reqParams: ListAvailableSellingFacilitiesForCompany.PartialParamMap = {
       id: this.companyId,
       semiProductId: this.semiProductId,
       finalProductId: this.finalProductId,
       ...this.requestParams
     };
 
-    return this.facilityControllerService.listAvailableSellingFacilitiesForCompanyUsingGETByMap(reqParams)
+    return this.facilityControllerService.listAvailableSellingFacilitiesForCompanyByMap(reqParams)
       .pipe(
         map((res: ApiPaginatedResponseApiFacility) => {
           return {

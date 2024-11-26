@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,23 +21,24 @@
 import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 
 
-/**
- * Generic API response. See documentation for data type for specific type details.
- */
 
 export interface ApiDefaultResponse { 
     /**
-     * Optional details for unexpected error responses.
+     * Response status. OK for successful reponses.
      */
-    errorDetails?: string;
+    status: ApiDefaultResponse.StatusEnum;
     /**
      * Simple message to explain client developers the reason for error.
      */
     errorMessage?: string;
     /**
-     * Response status. OK for successful reponses.
+     * Response body for successful responses.
      */
-    status: ApiDefaultResponse.StatusEnum;
+    data?: any;
+    /**
+     * Optional details for unexpected error responses.
+     */
+    errorDetails?: string;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -50,17 +51,21 @@ export namespace ApiDefaultResponse {
      */
     export enum Properties {
         /**
-         * Optional details for unexpected error responses.
+         * Response status. OK for successful reponses.
          */
-        errorDetails = 'errorDetails',
+        status = 'status',
         /**
          * Simple message to explain client developers the reason for error.
          */
         errorMessage = 'errorMessage',
         /**
-         * Response status. OK for successful reponses.
+         * Response body for successful responses.
          */
-        status = 'status',
+        data = 'data',
+        /**
+         * Optional details for unexpected error responses.
+         */
+        errorDetails = 'errorDetails',
         validationErrorDetails = 'validationErrorDetails'
     }
 
@@ -90,9 +95,10 @@ export namespace ApiDefaultResponse {
             vars: [
                 {
                     isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'errorDetails',
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiDefaultResponse.StatusEnum',
+                    required: true,
+                    name: 'status',
                     classname: 'ApiDefaultResponse',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -112,10 +118,20 @@ export namespace ApiDefaultResponse {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiDefaultResponse.StatusEnum',
-                    required: true,
-                    name: 'status',
+                    isEnum: false,
+                    required: false,
+                    name: 'data',
+                    classname: 'ApiDefaultResponse',
+                    dataType: 'any',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'errorDetails',
                     classname: 'ApiDefaultResponse',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -136,12 +152,14 @@ export namespace ApiDefaultResponse {
                 },
             ],
             validators: {
-                errorDetails: [
+                status: [
+                        ['required'],
                 ],
                 errorMessage: [
                 ],
-                status: [
-                        ['required'],
+                data: [
+                ],
+                errorDetails: [
                 ],
                 validationErrorDetails: [
                 ],
@@ -152,13 +170,16 @@ export namespace ApiDefaultResponse {
   // export const ApiDefaultResponseValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               errorDetails: {
+  //               status: {
   //                   validators: []
   //               },
   //               errorMessage: {
   //                   validators: []
   //               },
-  //               status: {
+  //               data: {
+  //                   validators: []
+  //               },
+  //               errorDetails: {
   //                   validators: []
   //               },
   //               validationErrorDetails: {

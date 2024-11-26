@@ -241,12 +241,12 @@ export class CompanyDashboardComponent implements OnInit {
     this.facilityCodebook = new CompanyCollectingFacilitiesService(this.facilityController, this.companyId);
     this.companyFacilityCodebook = new CompanyFacilitiesService(this.facilityController, this.companyId);
 
-    this.companyControllerService.getCompanyUsingGET(this.companyId).subscribe(
+    this.companyControllerService.getCompany(this.companyId).subscribe(
       next => {
         this.companyValueChains = next.data.valueChains;
 
         this.companyValueChains.forEach(valueChain => {
-          this.valueChainController.getValueChainUsingGET(valueChain.id).subscribe(
+          this.valueChainController.getValueChain(valueChain.id).subscribe(
             vchain => {
               if (vchain?.data?.measureUnitTypes) {
                 vchain.data.measureUnitTypes.forEach(unitType => {
@@ -267,7 +267,7 @@ export class CompanyDashboardComponent implements OnInit {
     this.procActionsCodebook =
       new CompanyProcessingActionsByStatusService(this.procActionController, this.companyId, ['PROCESSING', 'FINAL_PROCESSING']);
 
-    this.procActionController.listProcessingActionsByCompanyUsingGETByMap({
+    this.procActionController.listProcessingActionsByCompanyByMap({
       limit: 1000,
       offset: 0,
       id: this.companyId
@@ -281,7 +281,7 @@ export class CompanyDashboardComponent implements OnInit {
       }
     });
 
-    this.facilityController.listCollectingFacilitiesByCompanyUsingGETByMap({
+    this.facilityController.listCollectingFacilitiesByCompanyByMap({
       limit: 1000,
       offset: 0,
       id: this.companyId
@@ -331,7 +331,7 @@ export class CompanyDashboardComponent implements OnInit {
     const productInDepositFilter = this.deliveriesForm.get('productInDeposit')?.value ? true : null;
     const facilityIds = this.facilities.map(facility => facility.id);
 
-    this.dashboardControllerService.getDeliveriesAggregatedDataUsingGETByMap({
+    this.dashboardControllerService.getDeliveriesAggregatedDataByMap({
           companyId: this.companyId,
           farmerId: this.deliveriesForm.get('farmer')?.value?.id,
           facilityIds,
@@ -405,7 +405,7 @@ export class CompanyDashboardComponent implements OnInit {
       }
     });
 
-    this.dashboardControllerService.calculateProcessingPerformanceDataUsingPOST({
+    this.dashboardControllerService.calculateProcessingPerformanceData({
       companyId: this.companyId,
       facilityId: this.processingPerformanceForm.get('facility')?.value?.id,
       processActionId: this.processingPerformanceForm.get('process')?.value?.id,
@@ -612,7 +612,7 @@ export class CompanyDashboardComponent implements OnInit {
     const facilityIds = this.facilities.map(facility => facility.id);
     const exportType = this.deliveriesForm.get('exportType')?.value;
 
-    this.dashboardControllerService.exportDeliveriesDataUsingGETByMap({
+    this.dashboardControllerService.exportDeliveriesDataByMap({
       companyId: this.companyId,
       farmerId: this.deliveriesForm.get('farmer')?.value?.id,
       facilityIds,
@@ -674,7 +674,7 @@ export class CompanyDashboardComponent implements OnInit {
     const exportType = this.processingPerformanceForm.get('exportType')?.value;
 
     this.dashboardControllerService
-      .exportProcessingPerformanceDataUsingPOST({
+      .exportProcessingPerformanceData({
           companyId: this.companyId,
           facilityId: this.processingPerformanceForm.get('facility')?.value?.id,
           processActionId: this.processingPerformanceForm.get('process')?.value?.id,

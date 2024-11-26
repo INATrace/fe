@@ -5,7 +5,7 @@ import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiProductType } from '../../api/model/apiProductType';
 import { ApiPaginatedResponseApiProductType } from '../../api/model/apiPaginatedResponseApiProductType';
-import { CompanyControllerService, GetCompanyProductTypesUsingGET } from '../../api/api/companyController.service';
+import { CompanyControllerService, GetCompanyProductTypes } from '../../api/api/companyController.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class CompanyProductTypesService extends GeneralSifrantService<ApiProduct
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetCompanyProductTypesUsingGET.PartialParamMap;
+  } as GetCompanyProductTypes.PartialParamMap;
 
   public identifier(el: ApiProductType) {
     return el.id;
@@ -40,7 +40,7 @@ export class CompanyProductTypesService extends GeneralSifrantService<ApiProduct
       id: this.companyId,
     };
 
-    return this.codebookService.getCompanyProductTypesUsingGETByMap(reqParams).pipe(
+    return this.codebookService.getCompanyProductTypesByMap(reqParams).pipe(
       map((res: ApiPaginatedResponseApiProductType) => {
         return {
           results: res.data.items,

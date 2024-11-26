@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,30 +23,33 @@ import { ApiStockOrder } from './apiStockOrder';
 import { ApiStockOrderEvidenceTypeValue } from './apiStockOrderEvidenceTypeValue';
 
 
+/**
+ * List of history timeline items
+ */
 
 export interface ApiStockOrderHistoryTimelineItem { 
-    /**
-     * Depth of aggregation history
-     */
-    depth?: number;
     /**
      * Entity id
      */
     id?: number;
+    processingOrder?: ApiProcessingOrder;
+    /**
+     * Processing evidence types stored values for this stock order
+     */
+    requiredEvidenceDocuments?: Array<ApiStockOrderEvidenceTypeValue>;
     /**
      * Other processing evidence documents - evidence types that can be provided but are not mandatory
      */
     otherEvidenceDocuments?: Array<ApiStockOrderEvidenceTypeValue>;
-    processingOrder?: ApiProcessingOrder;
+    stockOrder?: ApiStockOrder;
     /**
      * Aggregated Purchase orders
      */
     purchaseOrders?: Array<ApiStockOrder>;
     /**
-     * Processing evidence types stored values for this stock order
+     * Depth of aggregation history
      */
-    requiredEvidenceDocuments?: Array<ApiStockOrderEvidenceTypeValue>;
-    stockOrder?: ApiStockOrder;
+    depth?: number;
 }
 
 /**
@@ -58,27 +61,27 @@ export namespace ApiStockOrderHistoryTimelineItem {
      */
     export enum Properties {
         /**
-         * Depth of aggregation history
-         */
-        depth = 'depth',
-        /**
          * Entity id
          */
         id = 'id',
+        processingOrder = 'processingOrder',
+        /**
+         * Processing evidence types stored values for this stock order
+         */
+        requiredEvidenceDocuments = 'requiredEvidenceDocuments',
         /**
          * Other processing evidence documents - evidence types that can be provided but are not mandatory
          */
         otherEvidenceDocuments = 'otherEvidenceDocuments',
-        processingOrder = 'processingOrder',
+        stockOrder = 'stockOrder',
         /**
          * Aggregated Purchase orders
          */
         purchaseOrders = 'purchaseOrders',
         /**
-         * Processing evidence types stored values for this stock order
+         * Depth of aggregation history
          */
-        requiredEvidenceDocuments = 'requiredEvidenceDocuments',
-        stockOrder = 'stockOrder'
+        depth = 'depth'
     }
 
 
@@ -91,35 +94,12 @@ export namespace ApiStockOrderHistoryTimelineItem {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'depth',
-                    classname: 'ApiStockOrderHistoryTimelineItem',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'id',
                     classname: 'ApiStockOrderHistoryTimelineItem',
                     dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
-                },
-                {
-                    metadata: ApiStockOrderEvidenceTypeValue.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'otherEvidenceDocuments',
-                    classname: 'ApiStockOrderHistoryTimelineItem',
-                    dataType: 'Array&lt;ApiStockOrderEvidenceTypeValue&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiStockOrderEvidenceTypeValue'
                 },
                 {
                     metadata: ApiProcessingOrder.formMetadata,
@@ -134,23 +114,23 @@ export namespace ApiStockOrderHistoryTimelineItem {
                     complexType: 'ApiProcessingOrder'
                 },
                 {
-                    metadata: ApiStockOrder.formMetadata,
+                    metadata: ApiStockOrderEvidenceTypeValue.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'purchaseOrders',
+                    name: 'requiredEvidenceDocuments',
                     classname: 'ApiStockOrderHistoryTimelineItem',
-                    dataType: 'Array&lt;ApiStockOrder&gt;',
+                    dataType: 'Array&lt;ApiStockOrderEvidenceTypeValue&gt;',
                     isPrimitiveType: false,
                     isListContainer: true,
-                    complexType: 'ApiStockOrder'
+                    complexType: 'ApiStockOrderEvidenceTypeValue'
                 },
                 {
                     metadata: ApiStockOrderEvidenceTypeValue.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'requiredEvidenceDocuments',
+                    name: 'otherEvidenceDocuments',
                     classname: 'ApiStockOrderHistoryTimelineItem',
                     dataType: 'Array&lt;ApiStockOrderEvidenceTypeValue&gt;',
                     isPrimitiveType: false,
@@ -169,21 +149,44 @@ export namespace ApiStockOrderHistoryTimelineItem {
                     isListContainer: false,
                     complexType: 'ApiStockOrder'
                 },
+                {
+                    metadata: ApiStockOrder.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'purchaseOrders',
+                    classname: 'ApiStockOrderHistoryTimelineItem',
+                    dataType: 'Array&lt;ApiStockOrder&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiStockOrder'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'depth',
+                    classname: 'ApiStockOrderHistoryTimelineItem',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                depth: [
-                ],
                 id: [
-                ],
-                otherEvidenceDocuments: [
                 ],
                 processingOrder: [
                 ],
-                purchaseOrders: [
-                ],
                 requiredEvidenceDocuments: [
                 ],
+                otherEvidenceDocuments: [
+                ],
                 stockOrder: [
+                ],
+                purchaseOrders: [
+                ],
+                depth: [
                 ],
             }
         }
@@ -192,25 +195,25 @@ export namespace ApiStockOrderHistoryTimelineItem {
   // export const ApiStockOrderHistoryTimelineItemValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               depth: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               otherEvidenceDocuments: {
   //                   validators: []
   //               },
   //               processingOrder: {
   //                   validators: []
   //               },
-  //               purchaseOrders: {
-  //                   validators: []
-  //               },
   //               requiredEvidenceDocuments: {
   //                   validators: []
   //               },
+  //               otherEvidenceDocuments: {
+  //                   validators: []
+  //               },
   //               stockOrder: {
+  //                   validators: []
+  //               },
+  //               purchaseOrders: {
+  //                   validators: []
+  //               },
+  //               depth: {
   //                   validators: []
   //               },
   //     }

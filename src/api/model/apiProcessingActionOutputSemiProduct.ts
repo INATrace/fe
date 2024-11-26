@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,27 +22,30 @@ import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiSemiProductTranslation } from './apiSemiProductTranslation';
 
 
+/**
+ * List of supported output semi-products
+ */
 
 export interface ApiProcessingActionOutputSemiProduct { 
-    buyable?: boolean;
-    description?: string;
     /**
      * Entity id
      */
     id?: number;
-    /**
-     * Maximum output weight when repacked outputs
-     */
-    maxOutputWeight?: number;
-    measurementUnitType?: ApiMeasureUnitType;
     name?: string;
+    description?: string;
+    measurementUnitType?: ApiMeasureUnitType;
+    translations?: Array<ApiSemiProductTranslation>;
     /**
      * Repacked outputs of this output semi-product
      */
     repackedOutput?: boolean;
-    sku?: boolean;
+    /**
+     * Maximum output weight when repacked outputs
+     */
+    maxOutputWeight?: number;
     skuendCustomer?: boolean;
-    translations?: Array<ApiSemiProductTranslation>;
+    sku?: boolean;
+    buyable?: boolean;
 }
 
 /**
@@ -53,25 +56,25 @@ export namespace ApiProcessingActionOutputSemiProduct {
      * All properties of ApiProcessingActionOutputSemiProduct.
      */
     export enum Properties {
-        buyable = 'buyable',
-        description = 'description',
         /**
          * Entity id
          */
         id = 'id',
-        /**
-         * Maximum output weight when repacked outputs
-         */
-        maxOutputWeight = 'maxOutputWeight',
-        measurementUnitType = 'measurementUnitType',
         name = 'name',
+        description = 'description',
+        measurementUnitType = 'measurementUnitType',
+        translations = 'translations',
         /**
          * Repacked outputs of this output semi-product
          */
         repackedOutput = 'repackedOutput',
-        sku = 'sku',
+        /**
+         * Maximum output weight when repacked outputs
+         */
+        maxOutputWeight = 'maxOutputWeight',
         skuendCustomer = 'skuendCustomer',
-        translations = 'translations'
+        sku = 'sku',
+        buyable = 'buyable'
     }
 
 
@@ -80,28 +83,6 @@ export namespace ApiProcessingActionOutputSemiProduct {
             metadata: formMetadata,
             classname: 'ApiProcessingActionOutputSemiProduct',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'buyable',
-                    classname: 'ApiProcessingActionOutputSemiProduct',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'description',
-                    classname: 'ApiProcessingActionOutputSemiProduct',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -117,9 +98,20 @@ export namespace ApiProcessingActionOutputSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'maxOutputWeight',
+                    name: 'name',
                     classname: 'ApiProcessingActionOutputSemiProduct',
-                    dataType: 'number',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'description',
+                    classname: 'ApiProcessingActionOutputSemiProduct',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -137,12 +129,24 @@ export namespace ApiProcessingActionOutputSemiProduct {
                     complexType: 'ApiMeasureUnitType'
                 },
                 {
+                    metadata: ApiSemiProductTranslation.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
+                    name: 'translations',
                     classname: 'ApiProcessingActionOutputSemiProduct',
-                    dataType: 'string',
+                    dataType: 'Array&lt;ApiSemiProductTranslation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiSemiProductTranslation'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'repackedOutput',
+                    classname: 'ApiProcessingActionOutputSemiProduct',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -151,7 +155,18 @@ export namespace ApiProcessingActionOutputSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'repackedOutput',
+                    name: 'maxOutputWeight',
+                    classname: 'ApiProcessingActionOutputSemiProduct',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'skuendCustomer',
                     classname: 'ApiProcessingActionOutputSemiProduct',
                     dataType: 'boolean',
                     isPrimitiveType: true,
@@ -173,46 +188,34 @@ export namespace ApiProcessingActionOutputSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'skuendCustomer',
+                    name: 'buyable',
                     classname: 'ApiProcessingActionOutputSemiProduct',
                     dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    metadata: ApiSemiProductTranslation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'translations',
-                    classname: 'ApiProcessingActionOutputSemiProduct',
-                    dataType: 'Array&lt;ApiSemiProductTranslation&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiSemiProductTranslation'
-                },
             ],
             validators: {
-                buyable: [
-                ],
-                description: [
-                ],
                 id: [
-                ],
-                maxOutputWeight: [
-                ],
-                measurementUnitType: [
                 ],
                 name: [
                 ],
+                description: [
+                ],
+                measurementUnitType: [
+                ],
+                translations: [
+                ],
                 repackedOutput: [
                 ],
-                sku: [
+                maxOutputWeight: [
                 ],
                 skuendCustomer: [
                 ],
-                translations: [
+                sku: [
+                ],
+                buyable: [
                 ],
             }
         }
@@ -221,34 +224,34 @@ export namespace ApiProcessingActionOutputSemiProduct {
   // export const ApiProcessingActionOutputSemiProductValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               buyable: {
-  //                   validators: []
-  //               },
-  //               description: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               maxOutputWeight: {
-  //                   validators: []
-  //               },
-  //               measurementUnitType: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
+  //               description: {
+  //                   validators: []
+  //               },
+  //               measurementUnitType: {
+  //                   validators: []
+  //               },
+  //               translations: {
+  //                   validators: []
+  //               },
   //               repackedOutput: {
   //                   validators: []
   //               },
-  //               sku: {
+  //               maxOutputWeight: {
   //                   validators: []
   //               },
   //               skuendCustomer: {
   //                   validators: []
   //               },
-  //               translations: {
+  //               sku: {
+  //                   validators: []
+  //               },
+  //               buyable: {
   //                   validators: []
   //               },
   //     }

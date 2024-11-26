@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,16 +20,19 @@
 
 
 
+/**
+ * List of facility translations
+ */
 
 export interface ApiFacilityTranslation { 
-    /**
-     * Facility language
-     */
-    language?: ApiFacilityTranslation.LanguageEnum;
     /**
      * Facility name
      */
     name?: string;
+    /**
+     * Facility language
+     */
+    language?: ApiFacilityTranslation.LanguageEnum;
 }
 
 /**
@@ -41,13 +44,13 @@ export namespace ApiFacilityTranslation {
      */
     export enum Properties {
         /**
-         * Facility language
-         */
-        language = 'language',
-        /**
          * Facility name
          */
-        name = 'name'
+        name = 'name',
+        /**
+         * Facility language
+         */
+        language = 'language'
     }
 
     /**
@@ -68,6 +71,17 @@ export namespace ApiFacilityTranslation {
             vars: [
                 {
                     isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
+                    classname: 'ApiFacilityTranslation',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiFacilityTranslation.LanguageEnum',
                     required: false,
@@ -78,22 +92,11 @@ export namespace ApiFacilityTranslation {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiFacilityTranslation',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                language: [
-                ],
                 name: [
+                ],
+                language: [
                 ],
             }
         }
@@ -102,10 +105,10 @@ export namespace ApiFacilityTranslation {
   // export const ApiFacilityTranslationValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               language: {
+  //               name: {
   //                   validators: []
   //               },
-  //               name: {
+  //               language: {
   //                   validators: []
   //               },
   //     }

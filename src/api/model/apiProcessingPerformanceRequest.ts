@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,14 +23,14 @@ import { ApiProcessingPerformanceRequestEvidenceField } from './apiProcessingPer
 
 
 export interface ApiProcessingPerformanceRequest { 
-    aggregationType?: ApiProcessingPerformanceRequest.AggregationTypeEnum;
     companyId?: number;
-    dateEnd?: string;
-    dateStart?: string;
-    evidenceFields?: Array<ApiProcessingPerformanceRequestEvidenceField>;
-    exportType?: ApiProcessingPerformanceRequest.ExportTypeEnum;
     facilityId?: number;
     processActionId?: number;
+    dateStart?: string;
+    dateEnd?: string;
+    evidenceFields?: Array<ApiProcessingPerformanceRequestEvidenceField>;
+    aggregationType?: ApiProcessingPerformanceRequest.AggregationTypeEnum;
+    exportType?: ApiProcessingPerformanceRequest.ExportTypeEnum;
 }
 
 /**
@@ -41,14 +41,14 @@ export namespace ApiProcessingPerformanceRequest {
      * All properties of ApiProcessingPerformanceRequest.
      */
     export enum Properties {
-        aggregationType = 'aggregationType',
         companyId = 'companyId',
-        dateEnd = 'dateEnd',
-        dateStart = 'dateStart',
-        evidenceFields = 'evidenceFields',
-        exportType = 'exportType',
         facilityId = 'facilityId',
-        processActionId = 'processActionId'
+        processActionId = 'processActionId',
+        dateStart = 'dateStart',
+        dateEnd = 'dateEnd',
+        evidenceFields = 'evidenceFields',
+        aggregationType = 'aggregationType',
+        exportType = 'exportType'
     }
 
     /**
@@ -78,69 +78,11 @@ export namespace ApiProcessingPerformanceRequest {
             vars: [
                 {
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProcessingPerformanceRequest.AggregationTypeEnum',
-                    required: false,
-                    name: 'aggregationType',
-                    classname: 'ApiProcessingPerformanceRequest',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'companyId',
                     classname: 'ApiProcessingPerformanceRequest',
                     dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'dateEnd',
-                    classname: 'ApiProcessingPerformanceRequest',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'dateStart',
-                    classname: 'ApiProcessingPerformanceRequest',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiProcessingPerformanceRequestEvidenceField.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'evidenceFields',
-                    classname: 'ApiProcessingPerformanceRequest',
-                    dataType: 'Array&lt;ApiProcessingPerformanceRequestEvidenceField&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProcessingPerformanceRequestEvidenceField'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProcessingPerformanceRequest.ExportTypeEnum',
-                    required: false,
-                    name: 'exportType',
-                    classname: 'ApiProcessingPerformanceRequest',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -167,23 +109,81 @@ export namespace ApiProcessingPerformanceRequest {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dateStart',
+                    classname: 'ApiProcessingPerformanceRequest',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dateEnd',
+                    classname: 'ApiProcessingPerformanceRequest',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiProcessingPerformanceRequestEvidenceField.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'evidenceFields',
+                    classname: 'ApiProcessingPerformanceRequest',
+                    dataType: 'Array&lt;ApiProcessingPerformanceRequestEvidenceField&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProcessingPerformanceRequestEvidenceField'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProcessingPerformanceRequest.AggregationTypeEnum',
+                    required: false,
+                    name: 'aggregationType',
+                    classname: 'ApiProcessingPerformanceRequest',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProcessingPerformanceRequest.ExportTypeEnum',
+                    required: false,
+                    name: 'exportType',
+                    classname: 'ApiProcessingPerformanceRequest',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                aggregationType: [
-                ],
                 companyId: [
-                ],
-                dateEnd: [
-                ],
-                dateStart: [
-                ],
-                evidenceFields: [
-                ],
-                exportType: [
                 ],
                 facilityId: [
                 ],
                 processActionId: [
+                ],
+                dateStart: [
+                ],
+                dateEnd: [
+                ],
+                evidenceFields: [
+                ],
+                aggregationType: [
+                ],
+                exportType: [
                 ],
             }
         }
@@ -192,28 +192,28 @@ export namespace ApiProcessingPerformanceRequest {
   // export const ApiProcessingPerformanceRequestValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               aggregationType: {
-  //                   validators: []
-  //               },
   //               companyId: {
-  //                   validators: []
-  //               },
-  //               dateEnd: {
-  //                   validators: []
-  //               },
-  //               dateStart: {
-  //                   validators: []
-  //               },
-  //               evidenceFields: {
-  //                   validators: []
-  //               },
-  //               exportType: {
   //                   validators: []
   //               },
   //               facilityId: {
   //                   validators: []
   //               },
   //               processActionId: {
+  //                   validators: []
+  //               },
+  //               dateStart: {
+  //                   validators: []
+  //               },
+  //               dateEnd: {
+  //                   validators: []
+  //               },
+  //               evidenceFields: {
+  //                   validators: []
+  //               },
+  //               aggregationType: {
+  //                   validators: []
+  //               },
+  //               exportType: {
   //                   validators: []
   //               },
   //     }

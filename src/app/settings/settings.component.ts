@@ -137,7 +137,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
   async save() {
     try {
       this.globalEventsManager.showLoading(true);
-      const res = await this.commonController.updateGlobalSettingsUsingPOST(
+      const res = await this.commonController.updateGlobalSettings(
         this.globalEventsManager.globalSettingsKeys('UNPUBLISHED_PRODUCT_LABEL_TEXT'),
         { value: this.unpublishedProductLabelText.value, isPublic: true })
         .pipe(take(1)).toPromise();
@@ -151,7 +151,7 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
     }
     try {
       this.globalEventsManager.showLoading(true);
-      const res = await this.commonController.updateGlobalSettingsUsingPOST(
+      const res = await this.commonController.updateGlobalSettings(
         this.globalEventsManager.globalSettingsKeys('PRODUCT_LABELS_HELPER_LINK'),
         { value: this.labelsHelperLink.value, isPublic: false })
         .pipe(take(1)).toPromise();
@@ -167,10 +167,10 @@ export class SettingsComponent extends ComponentCanDeactivate implements OnInit,
 
   async initializeLabelsHelperLink() {
 
-    const resp0 = await this.commonController.getGlobalSettingsUsingGET(this.globalEventsManager.globalSettingsKeys('PRODUCT_LABELS_HELPER_LINK')).pipe(take(1)).toPromise();
+    const resp0 = await this.commonController.getGlobalSettings(this.globalEventsManager.globalSettingsKeys('PRODUCT_LABELS_HELPER_LINK')).pipe(take(1)).toPromise();
     if (resp0 && resp0.data && resp0.data.value) { this.labelsHelperLink.setValue(resp0.data.value); }
 
-    const resp1 = await this.commonController.getGlobalSettingsUsingGET(this.globalEventsManager.globalSettingsKeys('UNPUBLISHED_PRODUCT_LABEL_TEXT')).pipe(take(1)).toPromise();
+    const resp1 = await this.commonController.getGlobalSettings(this.globalEventsManager.globalSettingsKeys('UNPUBLISHED_PRODUCT_LABEL_TEXT')).pipe(take(1)).toPromise();
     if (resp1 && resp1.data && resp1.data.value) { this.unpublishedProductLabelText.setValue(resp1.data.value); }
   }
 

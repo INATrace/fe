@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,9 +22,9 @@
 
 
 export interface ApiDeliveriesTotalItem { 
-    totalQuantity?: number;
     unit?: string;
     year?: number;
+    totalQuantity?: number;
 }
 
 /**
@@ -35,9 +35,9 @@ export namespace ApiDeliveriesTotalItem {
      * All properties of ApiDeliveriesTotalItem.
      */
     export enum Properties {
-        totalQuantity = 'totalQuantity',
         unit = 'unit',
-        year = 'year'
+        year = 'year',
+        totalQuantity = 'totalQuantity'
     }
 
 
@@ -46,17 +46,6 @@ export namespace ApiDeliveriesTotalItem {
             metadata: formMetadata,
             classname: 'ApiDeliveriesTotalItem',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'totalQuantity',
-                    classname: 'ApiDeliveriesTotalItem',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -79,13 +68,24 @@ export namespace ApiDeliveriesTotalItem {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'totalQuantity',
+                    classname: 'ApiDeliveriesTotalItem',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                totalQuantity: [
-                ],
                 unit: [
                 ],
                 year: [
+                ],
+                totalQuantity: [
                 ],
             }
         }
@@ -94,13 +94,13 @@ export namespace ApiDeliveriesTotalItem {
   // export const ApiDeliveriesTotalItemValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               totalQuantity: {
-  //                   validators: []
-  //               },
   //               unit: {
   //                   validators: []
   //               },
   //               year: {
+  //                   validators: []
+  //               },
+  //               totalQuantity: {
   //                   validators: []
   //               },
   //     }

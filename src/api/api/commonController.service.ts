@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -39,13 +39,17 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for getCountriesUsingGET.
+ * Namespace for getCountries.
  */
-export namespace GetCountriesUsingGET {
+export namespace GetCountries {
     /**
-     * Parameter map for getCountriesUsingGET.
+     * Parameter map for getCountries.
      */
     export interface PartialParamMap {
+      /**
+       * Generic query string for (a part of) name, email etc.
+       */
+      queryString?: string;
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -66,16 +70,16 @@ export namespace GetCountriesUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
-      /**
-       * Generic query string for (a part of) name, email etc.
-       */
-      queryString?: string;
     }
 
     /**
-     * Enumeration of all parameters for getCountriesUsingGET.
+     * Enumeration of all parameters for getCountries.
      */
     export enum Parameters {
+      /**
+       * Generic query string for (a part of) name, email etc.
+       */
+      queryString = 'queryString',
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -95,62 +99,54 @@ export namespace GetCountriesUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort',
-      /**
-       * Generic query string for (a part of) name, email etc.
-       */
-      queryString = 'queryString'
+      sort = 'sort'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getCountriesUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getCountries
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetCountriesUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetCountries.PartialParamMap]?: [string, ValidatorFn][]} = {
+      queryString: [
+      ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
       sort: [
       ],
-      queryString: [
-      ],
     };
 }
 
 /**
- * Namespace for getDocumentUsingGET.
+ * Namespace for getDocument.
  */
-export namespace GetDocumentUsingGET {
+export namespace GetDocument {
     /**
-     * Parameter map for getDocumentUsingGET.
+     * Parameter map for getDocument.
      */
     export interface PartialParamMap {
-      /**
-       * storageKey
-       */
       storageKey: string;
     }
 
     /**
-     * Enumeration of all parameters for getDocumentUsingGET.
+     * Enumeration of all parameters for getDocument.
      */
     export enum Parameters {
-      /**
-       * storageKey
-       */
       storageKey = 'storageKey'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getDocumentUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getDocument
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetDocumentUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetDocument.PartialParamMap]?: [string, ValidatorFn][]} = {
       storageKey: [
               ['required', Validators.required],
       ],
@@ -158,34 +154,28 @@ export namespace GetDocumentUsingGET {
 }
 
 /**
- * Namespace for getGlobalSettingsUsingGET.
+ * Namespace for getGlobalSettings.
  */
-export namespace GetGlobalSettingsUsingGET {
+export namespace GetGlobalSettings {
     /**
-     * Parameter map for getGlobalSettingsUsingGET.
+     * Parameter map for getGlobalSettings.
      */
     export interface PartialParamMap {
-      /**
-       * name
-       */
       name: string;
     }
 
     /**
-     * Enumeration of all parameters for getGlobalSettingsUsingGET.
+     * Enumeration of all parameters for getGlobalSettings.
      */
     export enum Parameters {
-      /**
-       * name
-       */
       name = 'name'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getGlobalSettingsUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getGlobalSettings
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetGlobalSettingsUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetGlobalSettings.PartialParamMap]?: [string, ValidatorFn][]} = {
       name: [
               ['required', Validators.required],
       ],
@@ -193,34 +183,28 @@ export namespace GetGlobalSettingsUsingGET {
 }
 
 /**
- * Namespace for getImageUsingGET.
+ * Namespace for getImage.
  */
-export namespace GetImageUsingGET {
+export namespace GetImage {
     /**
-     * Parameter map for getImageUsingGET.
+     * Parameter map for getImage.
      */
     export interface PartialParamMap {
-      /**
-       * storageKey
-       */
       storageKey: string;
     }
 
     /**
-     * Enumeration of all parameters for getImageUsingGET.
+     * Enumeration of all parameters for getImage.
      */
     export enum Parameters {
-      /**
-       * storageKey
-       */
       storageKey = 'storageKey'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getImageUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getImage
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetImageUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetImage.PartialParamMap]?: [string, ValidatorFn][]} = {
       storageKey: [
               ['required', Validators.required],
       ],
@@ -228,42 +212,30 @@ export namespace GetImageUsingGET {
 }
 
 /**
- * Namespace for getResizedImageUsingGET.
+ * Namespace for getResizedImage.
  */
-export namespace GetResizedImageUsingGET {
+export namespace GetResizedImage {
     /**
-     * Parameter map for getResizedImageUsingGET.
+     * Parameter map for getResizedImage.
      */
     export interface PartialParamMap {
-      /**
-       * storageKey
-       */
       storageKey: string;
-      /**
-       * size
-       */
       size: string;
     }
 
     /**
-     * Enumeration of all parameters for getResizedImageUsingGET.
+     * Enumeration of all parameters for getResizedImage.
      */
     export enum Parameters {
-      /**
-       * storageKey
-       */
       storageKey = 'storageKey',
-      /**
-       * size
-       */
       size = 'size'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getResizedImageUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getResizedImage
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetResizedImageUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetResizedImage.PartialParamMap]?: [string, ValidatorFn][]} = {
       storageKey: [
               ['required', Validators.required],
       ],
@@ -274,42 +246,30 @@ export namespace GetResizedImageUsingGET {
 }
 
 /**
- * Namespace for updateGlobalSettingsUsingPOST.
+ * Namespace for updateGlobalSettings.
  */
-export namespace UpdateGlobalSettingsUsingPOST {
+export namespace UpdateGlobalSettings {
     /**
-     * Parameter map for updateGlobalSettingsUsingPOST.
+     * Parameter map for updateGlobalSettings.
      */
     export interface PartialParamMap {
-      /**
-       * name
-       */
       name: string;
-      /**
-       * request
-       */
       ApiGlobalSettingsValue: ApiGlobalSettingsValue;
     }
 
     /**
-     * Enumeration of all parameters for updateGlobalSettingsUsingPOST.
+     * Enumeration of all parameters for updateGlobalSettings.
      */
     export enum Parameters {
-      /**
-       * name
-       */
       name = 'name',
-      /**
-       * request
-       */
       ApiGlobalSettingsValue = 'ApiGlobalSettingsValue'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of updateGlobalSettingsUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of updateGlobalSettings
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof UpdateGlobalSettingsUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof UpdateGlobalSettings.PartialParamMap]?: [string, ValidatorFn][]} = {
       name: [
               ['required', Validators.required],
       ],
@@ -317,37 +277,31 @@ export namespace UpdateGlobalSettingsUsingPOST {
 }
 
 /**
- * Namespace for uploadDocumentUsingPOST.
+ * Namespace for uploadDocument.
  */
-export namespace UploadDocumentUsingPOST {
+export namespace UploadDocument {
     /**
-     * Parameter map for uploadDocumentUsingPOST.
+     * Parameter map for uploadDocument.
      */
     export interface PartialParamMap {
-      body: Blob;
-      /**
-       * type
-       */
+      file: Blob;
       type?: 'GENERAL' | 'IMAGE';
     }
 
     /**
-     * Enumeration of all parameters for uploadDocumentUsingPOST.
+     * Enumeration of all parameters for uploadDocument.
      */
     export enum Parameters {
-      body = 'body',
-      /**
-       * type
-       */
+      file = 'file',
       type = 'type'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of uploadDocumentUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of uploadDocument
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof UploadDocumentUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
-      body: [
+    export const ParamValidators: {[K in keyof UploadDocument.PartialParamMap]?: [string, ValidatorFn][]} = {
+      file: [
               ['required', Validators.required],
       ],
       type: [
@@ -356,37 +310,31 @@ export namespace UploadDocumentUsingPOST {
 }
 
 /**
- * Namespace for uploadImageUsingPOST.
+ * Namespace for uploadImage.
  */
-export namespace UploadImageUsingPOST {
+export namespace UploadImage {
     /**
-     * Parameter map for uploadImageUsingPOST.
+     * Parameter map for uploadImage.
      */
     export interface PartialParamMap {
-      body: Blob;
-      /**
-       * resize
-       */
+      file: Blob;
       resize?: boolean;
     }
 
     /**
-     * Enumeration of all parameters for uploadImageUsingPOST.
+     * Enumeration of all parameters for uploadImage.
      */
     export enum Parameters {
-      body = 'body',
-      /**
-       * resize
-       */
+      file = 'file',
       resize = 'resize'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of uploadImageUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of uploadImage
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof UploadImageUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
-      body: [
+    export const ParamValidators: {[K in keyof UploadImage.PartialParamMap]?: [string, ValidatorFn][]} = {
+      file: [
               ['required', Validators.required],
       ],
       resize: [
@@ -438,29 +386,29 @@ export class CommonControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getCountriesUsingGETByMap(
-    map: GetCountriesUsingGET.PartialParamMap,
+  public getCountriesByMap(
+    map: GetCountries.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiCountry>;
-  public getCountriesUsingGETByMap(
-    map: GetCountriesUsingGET.PartialParamMap,
+  public getCountriesByMap(
+    map: GetCountries.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiCountry>>;
-  public getCountriesUsingGETByMap(
-    map: GetCountriesUsingGET.PartialParamMap,
+  public getCountriesByMap(
+    map: GetCountries.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiCountry>>;
-  public getCountriesUsingGETByMap(
-    map: GetCountriesUsingGET.PartialParamMap,
+  public getCountriesByMap(
+    map: GetCountries.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getCountriesUsingGET(
+    return this.getCountries(
+      map.queryString,
       map.requestType,
       map.limit,
       map.offset,
       map.sortBy,
       map.sort,
-      map.queryString,
       observe,
       reportProgress
     );
@@ -470,21 +418,24 @@ export class CommonControllerService {
     /**
      * List countries
      * 
+     * @param queryString Generic query string for (a part of) name, email etc.
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
-     * @param queryString Generic query string for (a part of) name, email etc.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCountriesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', queryString?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiCountry>;
-    public getCountriesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', queryString?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiCountry>>;
-    public getCountriesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', queryString?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiCountry>>;
-    public getCountriesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', queryString?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getCountries(queryString?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiCountry>;
+    public getCountries(queryString?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiCountry>>;
+    public getCountries(queryString?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiCountry>>;
+    public getCountries(queryString?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (queryString !== undefined && queryString !== null) {
+            queryParameters = queryParameters.set('queryString', <any>queryString);
+        }
         if (requestType !== undefined && requestType !== null) {
             queryParameters = queryParameters.set('requestType', <any>requestType);
         }
@@ -500,15 +451,12 @@ export class CommonControllerService {
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
         }
-        if (queryString !== undefined && queryString !== null) {
-            queryParameters = queryParameters.set('queryString', <any>queryString);
-        }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -535,7 +483,7 @@ export class CommonControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCountriesUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCountries')));
         }
         return handle;
     }
@@ -548,23 +496,23 @@ export class CommonControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getDocumentUsingGETByMap(
-    map: GetDocumentUsingGET.PartialParamMap,
+  public getDocumentByMap(
+    map: GetDocument.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<Blob>;
-  public getDocumentUsingGETByMap(
-    map: GetDocumentUsingGET.PartialParamMap,
+  public getDocumentByMap(
+    map: GetDocument.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public getDocumentUsingGETByMap(
-    map: GetDocumentUsingGET.PartialParamMap,
+  public getDocumentByMap(
+    map: GetDocument.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public getDocumentUsingGETByMap(
-    map: GetDocumentUsingGET.PartialParamMap,
+  public getDocumentByMap(
+    map: GetDocument.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getDocumentUsingGET(
+    return this.getDocument(
       map.storageKey,
       observe,
       reportProgress
@@ -575,23 +523,23 @@ export class CommonControllerService {
     /**
      * Returns file contents for given storage key
      * 
-     * @param storageKey storageKey
+     * @param storageKey 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getDocumentUsingGET(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public getDocumentUsingGET(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public getDocumentUsingGET(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public getDocumentUsingGET(storageKey: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getDocument(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public getDocument(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public getDocument(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public getDocument(storageKey: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (storageKey === null || storageKey === undefined) {
-            throw new Error('Required parameter storageKey was null or undefined when calling getDocumentUsingGET.');
+            throw new Error('Required parameter storageKey was null or undefined when calling getDocument.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -618,7 +566,7 @@ export class CommonControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getDocumentUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getDocument')));
         }
         return handle;
     }
@@ -631,23 +579,23 @@ export class CommonControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getGlobalSettingsUsingGETByMap(
-    map: GetGlobalSettingsUsingGET.PartialParamMap,
+  public getGlobalSettingsByMap(
+    map: GetGlobalSettings.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiGlobalSettingsValue>;
-  public getGlobalSettingsUsingGETByMap(
-    map: GetGlobalSettingsUsingGET.PartialParamMap,
+  public getGlobalSettingsByMap(
+    map: GetGlobalSettings.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiGlobalSettingsValue>>;
-  public getGlobalSettingsUsingGETByMap(
-    map: GetGlobalSettingsUsingGET.PartialParamMap,
+  public getGlobalSettingsByMap(
+    map: GetGlobalSettings.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiGlobalSettingsValue>>;
-  public getGlobalSettingsUsingGETByMap(
-    map: GetGlobalSettingsUsingGET.PartialParamMap,
+  public getGlobalSettingsByMap(
+    map: GetGlobalSettings.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getGlobalSettingsUsingGET(
+    return this.getGlobalSettings(
       map.name,
       observe,
       reportProgress
@@ -658,23 +606,23 @@ export class CommonControllerService {
     /**
      * Returns &#39;global settings&#39; value
      * 
-     * @param name name
+     * @param name 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getGlobalSettingsUsingGET(name: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiGlobalSettingsValue>;
-    public getGlobalSettingsUsingGET(name: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiGlobalSettingsValue>>;
-    public getGlobalSettingsUsingGET(name: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiGlobalSettingsValue>>;
-    public getGlobalSettingsUsingGET(name: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getGlobalSettings(name: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiGlobalSettingsValue>;
+    public getGlobalSettings(name: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiGlobalSettingsValue>>;
+    public getGlobalSettings(name: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiGlobalSettingsValue>>;
+    public getGlobalSettings(name: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (name === null || name === undefined) {
-            throw new Error('Required parameter name was null or undefined when calling getGlobalSettingsUsingGET.');
+            throw new Error('Required parameter name was null or undefined when calling getGlobalSettings.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -700,7 +648,7 @@ export class CommonControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getGlobalSettingsUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getGlobalSettings')));
         }
         return handle;
     }
@@ -713,23 +661,23 @@ export class CommonControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getImageUsingGETByMap(
-    map: GetImageUsingGET.PartialParamMap,
+  public getImageByMap(
+    map: GetImage.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<Blob>;
-  public getImageUsingGETByMap(
-    map: GetImageUsingGET.PartialParamMap,
+  public getImageByMap(
+    map: GetImage.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public getImageUsingGETByMap(
-    map: GetImageUsingGET.PartialParamMap,
+  public getImageByMap(
+    map: GetImage.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public getImageUsingGETByMap(
-    map: GetImageUsingGET.PartialParamMap,
+  public getImageByMap(
+    map: GetImage.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getImageUsingGET(
+    return this.getImage(
       map.storageKey,
       observe,
       reportProgress
@@ -740,23 +688,23 @@ export class CommonControllerService {
     /**
      * Returns image contents for given storage key
      * 
-     * @param storageKey storageKey
+     * @param storageKey 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getImageUsingGET(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public getImageUsingGET(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public getImageUsingGET(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public getImageUsingGET(storageKey: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getImage(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public getImage(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public getImage(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public getImage(storageKey: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (storageKey === null || storageKey === undefined) {
-            throw new Error('Required parameter storageKey was null or undefined when calling getImageUsingGET.');
+            throw new Error('Required parameter storageKey was null or undefined when calling getImage.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -783,7 +731,7 @@ export class CommonControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getImageUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getImage')));
         }
         return handle;
     }
@@ -796,23 +744,23 @@ export class CommonControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getResizedImageUsingGETByMap(
-    map: GetResizedImageUsingGET.PartialParamMap,
+  public getResizedImageByMap(
+    map: GetResizedImage.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<Blob>;
-  public getResizedImageUsingGETByMap(
-    map: GetResizedImageUsingGET.PartialParamMap,
+  public getResizedImageByMap(
+    map: GetResizedImage.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public getResizedImageUsingGETByMap(
-    map: GetResizedImageUsingGET.PartialParamMap,
+  public getResizedImageByMap(
+    map: GetResizedImage.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public getResizedImageUsingGETByMap(
-    map: GetResizedImageUsingGET.PartialParamMap,
+  public getResizedImageByMap(
+    map: GetResizedImage.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getResizedImageUsingGET(
+    return this.getResizedImage(
       map.storageKey,
       map.size,
       observe,
@@ -824,27 +772,27 @@ export class CommonControllerService {
     /**
      * Returns image contents for given storage key
      * 
-     * @param storageKey storageKey
-     * @param size size
+     * @param storageKey 
+     * @param size 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getResizedImageUsingGET(storageKey: string, size: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public getResizedImageUsingGET(storageKey: string, size: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public getResizedImageUsingGET(storageKey: string, size: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public getResizedImageUsingGET(storageKey: string, size: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getResizedImage(storageKey: string, size: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public getResizedImage(storageKey: string, size: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public getResizedImage(storageKey: string, size: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public getResizedImage(storageKey: string, size: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (storageKey === null || storageKey === undefined) {
-            throw new Error('Required parameter storageKey was null or undefined when calling getResizedImageUsingGET.');
+            throw new Error('Required parameter storageKey was null or undefined when calling getResizedImage.');
         }
         if (size === null || size === undefined) {
-            throw new Error('Required parameter size was null or undefined when calling getResizedImageUsingGET.');
+            throw new Error('Required parameter size was null or undefined when calling getResizedImage.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -871,7 +819,7 @@ export class CommonControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getResizedImageUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getResizedImage')));
         }
         return handle;
     }
@@ -884,23 +832,23 @@ export class CommonControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public updateGlobalSettingsUsingPOSTByMap(
-    map: UpdateGlobalSettingsUsingPOST.PartialParamMap,
+  public updateGlobalSettingsByMap(
+    map: UpdateGlobalSettings.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public updateGlobalSettingsUsingPOSTByMap(
-    map: UpdateGlobalSettingsUsingPOST.PartialParamMap,
+  public updateGlobalSettingsByMap(
+    map: UpdateGlobalSettings.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public updateGlobalSettingsUsingPOSTByMap(
-    map: UpdateGlobalSettingsUsingPOST.PartialParamMap,
+  public updateGlobalSettingsByMap(
+    map: UpdateGlobalSettings.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public updateGlobalSettingsUsingPOSTByMap(
-    map: UpdateGlobalSettingsUsingPOST.PartialParamMap,
+  public updateGlobalSettingsByMap(
+    map: UpdateGlobalSettings.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.updateGlobalSettingsUsingPOST(
+    return this.updateGlobalSettings(
       map.name,
       map.ApiGlobalSettingsValue,
       observe,
@@ -912,27 +860,27 @@ export class CommonControllerService {
     /**
      * Updates or creates &#39;global settings&#39;
      * 
-     * @param name name
-     * @param ApiGlobalSettingsValue request
+     * @param name 
+     * @param ApiGlobalSettingsValue 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateGlobalSettingsUsingPOST(name: string, ApiGlobalSettingsValue: ApiGlobalSettingsValue, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public updateGlobalSettingsUsingPOST(name: string, ApiGlobalSettingsValue: ApiGlobalSettingsValue, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public updateGlobalSettingsUsingPOST(name: string, ApiGlobalSettingsValue: ApiGlobalSettingsValue, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public updateGlobalSettingsUsingPOST(name: string, ApiGlobalSettingsValue: ApiGlobalSettingsValue, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public updateGlobalSettings(name: string, ApiGlobalSettingsValue: ApiGlobalSettingsValue, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public updateGlobalSettings(name: string, ApiGlobalSettingsValue: ApiGlobalSettingsValue, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public updateGlobalSettings(name: string, ApiGlobalSettingsValue: ApiGlobalSettingsValue, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public updateGlobalSettings(name: string, ApiGlobalSettingsValue: ApiGlobalSettingsValue, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (name === null || name === undefined) {
-            throw new Error('Required parameter name was null or undefined when calling updateGlobalSettingsUsingPOST.');
+            throw new Error('Required parameter name was null or undefined when calling updateGlobalSettings.');
         }
         if (ApiGlobalSettingsValue === null || ApiGlobalSettingsValue === undefined) {
-            throw new Error('Required parameter ApiGlobalSettingsValue was null or undefined when calling updateGlobalSettingsUsingPOST.');
+            throw new Error('Required parameter ApiGlobalSettingsValue was null or undefined when calling updateGlobalSettings.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -964,7 +912,7 @@ export class CommonControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'updateGlobalSettingsUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'updateGlobalSettings')));
         }
         return handle;
     }
@@ -977,24 +925,24 @@ export class CommonControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public uploadDocumentUsingPOSTByMap(
-    map: UploadDocumentUsingPOST.PartialParamMap,
+  public uploadDocumentByMap(
+    map: UploadDocument.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiDocument>;
-  public uploadDocumentUsingPOSTByMap(
-    map: UploadDocumentUsingPOST.PartialParamMap,
+  public uploadDocumentByMap(
+    map: UploadDocument.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiDocument>>;
-  public uploadDocumentUsingPOSTByMap(
-    map: UploadDocumentUsingPOST.PartialParamMap,
+  public uploadDocumentByMap(
+    map: UploadDocument.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiDocument>>;
-  public uploadDocumentUsingPOSTByMap(
-    map: UploadDocumentUsingPOST.PartialParamMap,
+  public uploadDocumentByMap(
+    map: UploadDocument.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.uploadDocumentUsingPOST(
-      map.body,
+    return this.uploadDocument(
+      map.file,
       map.type,
       observe,
       reportProgress
@@ -1005,17 +953,17 @@ export class CommonControllerService {
     /**
      * Uploads a document
      * 
-     * @param body 
-     * @param type type
+     * @param file 
+     * @param type 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public uploadDocumentUsingPOST(body: Blob, type?: 'GENERAL' | 'IMAGE', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiDocument>;
-    public uploadDocumentUsingPOST(body: Blob, type?: 'GENERAL' | 'IMAGE', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiDocument>>;
-    public uploadDocumentUsingPOST(body: Blob, type?: 'GENERAL' | 'IMAGE', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiDocument>>;
-    public uploadDocumentUsingPOST(body: Blob, type?: 'GENERAL' | 'IMAGE', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling uploadDocumentUsingPOST.');
+    public uploadDocument(file: Blob, type?: 'GENERAL' | 'IMAGE', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiDocument>;
+    public uploadDocument(file: Blob, type?: 'GENERAL' | 'IMAGE', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiDocument>>;
+    public uploadDocument(file: Blob, type?: 'GENERAL' | 'IMAGE', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiDocument>>;
+    public uploadDocument(file: Blob, type?: 'GENERAL' | 'IMAGE', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (file === null || file === undefined) {
+            throw new Error('Required parameter file was null or undefined when calling uploadDocument.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -1027,7 +975,7 @@ export class CommonControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1036,11 +984,25 @@ export class CommonControllerService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/octet-stream'
+            'multipart/form-data'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any; };
+        let useForm = false;
+        let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        }
+
+        if (file !== undefined) {
+            formParams = formParams.append('file', <any>file) || formParams;
         }
 
             if (additionalHeaders) {
@@ -1050,7 +1012,7 @@ export class CommonControllerService {
             }
 
         const handle = this.httpClient.post<ApiResponseApiDocument>(`${this.configuration.basePath}/api/common/document`,
-            body,
+            convertFormParamsToString ? formParams.toString() : formParams,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1060,7 +1022,7 @@ export class CommonControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'uploadDocumentUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'uploadDocument')));
         }
         return handle;
     }
@@ -1073,24 +1035,24 @@ export class CommonControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public uploadImageUsingPOSTByMap(
-    map: UploadImageUsingPOST.PartialParamMap,
+  public uploadImageByMap(
+    map: UploadImage.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiDocument>;
-  public uploadImageUsingPOSTByMap(
-    map: UploadImageUsingPOST.PartialParamMap,
+  public uploadImageByMap(
+    map: UploadImage.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiDocument>>;
-  public uploadImageUsingPOSTByMap(
-    map: UploadImageUsingPOST.PartialParamMap,
+  public uploadImageByMap(
+    map: UploadImage.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiDocument>>;
-  public uploadImageUsingPOSTByMap(
-    map: UploadImageUsingPOST.PartialParamMap,
+  public uploadImageByMap(
+    map: UploadImage.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.uploadImageUsingPOST(
-      map.body,
+    return this.uploadImage(
+      map.file,
       map.resize,
       observe,
       reportProgress
@@ -1101,17 +1063,17 @@ export class CommonControllerService {
     /**
      * Uploads an image
      * 
-     * @param body 
-     * @param resize resize
+     * @param file 
+     * @param resize 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public uploadImageUsingPOST(body: Blob, resize?: boolean, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiDocument>;
-    public uploadImageUsingPOST(body: Blob, resize?: boolean, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiDocument>>;
-    public uploadImageUsingPOST(body: Blob, resize?: boolean, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiDocument>>;
-    public uploadImageUsingPOST(body: Blob, resize?: boolean, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling uploadImageUsingPOST.');
+    public uploadImage(file: Blob, resize?: boolean, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiDocument>;
+    public uploadImage(file: Blob, resize?: boolean, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiDocument>>;
+    public uploadImage(file: Blob, resize?: boolean, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiDocument>>;
+    public uploadImage(file: Blob, resize?: boolean, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (file === null || file === undefined) {
+            throw new Error('Required parameter file was null or undefined when calling uploadImage.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -1123,7 +1085,7 @@ export class CommonControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1132,11 +1094,25 @@ export class CommonControllerService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/octet-stream'
+            'multipart/form-data'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let formParams: { append(param: string, value: any): any; };
+        let useForm = false;
+        let convertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        useForm = canConsumeForm;
+        if (useForm) {
+            formParams = new FormData();
+        } else {
+            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        }
+
+        if (file !== undefined) {
+            formParams = formParams.append('file', <any>file) || formParams;
         }
 
             if (additionalHeaders) {
@@ -1146,7 +1122,7 @@ export class CommonControllerService {
             }
 
         const handle = this.httpClient.post<ApiResponseApiDocument>(`${this.configuration.basePath}/api/common/image`,
-            body,
+            convertFormParamsToString ? formParams.toString() : formParams,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -1156,7 +1132,7 @@ export class CommonControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'uploadImageUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'uploadImage')));
         }
         return handle;
     }

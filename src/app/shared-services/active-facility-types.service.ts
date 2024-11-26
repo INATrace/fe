@@ -5,7 +5,7 @@ import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { CodebookTranslations } from './codebook-translations';
 import { GeneralSifrantService } from './general-sifrant.service';
 import { ApiFacilityType } from '../../api/model/apiFacilityType';
-import { FacilityTypeControllerService, GetFacilityTypeListUsingGET } from '../../api/api/facilityTypeController.service';
+import { FacilityTypeControllerService, GetFacilityTypeList } from '../../api/api/facilityTypeController.service';
 import { ApiPaginatedResponseApiFacilityType } from '../../api/model/apiPaginatedResponseApiFacilityType';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class ActiveFacilityTypeService extends GeneralSifrantService<ApiFacility
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetFacilityTypeListUsingGET.PartialParamMap;
+  } as GetFacilityTypeList.PartialParamMap;
 
   public identifier(el: ApiFacilityType) {
     return el.id;
@@ -40,7 +40,7 @@ export class ActiveFacilityTypeService extends GeneralSifrantService<ApiFacility
       ...this.requestParams
     };
 
-    return this.codebookService.getFacilityTypeListUsingGETByMap(reqPars).pipe(
+    return this.codebookService.getFacilityTypeListByMap(reqPars).pipe(
         map((res: ApiPaginatedResponseApiFacilityType) => {
           return {
             results: res.data.items,

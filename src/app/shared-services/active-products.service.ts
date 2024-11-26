@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
-import { ProductControllerService, ListProductsUsingGET } from 'src/api/api/productController.service';
+import { ListProducts, ProductControllerService } from 'src/api/api/productController.service';
 import { ApiProductListResponse } from 'src/api/model/apiProductListResponse';
 import { ApiPaginatedResponseApiProductListResponse } from 'src/api/model/apiPaginatedResponseApiProductListResponse';
 
@@ -32,7 +32,7 @@ export class ActiveProductsService extends GeneralSifrantService<ApiProductListR
     limit: 1000,
     offset: 0,
     status: 'ACTIVE',
-  } as ListProductsUsingGET.PartialParamMap
+  } as ListProducts.PartialParamMap;
 
   public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiProductListResponse>> {
     // console.log("MAKE Q")
@@ -42,7 +42,7 @@ export class ActiveProductsService extends GeneralSifrantService<ApiProductListR
       ...this.requestParams,
       name: key
     }
-    let tmp = this.producController.listProductsUsingGETByMap(reqPars).pipe(
+    let tmp = this.producController.listProductsByMap(reqPars).pipe(
       map((res: ApiPaginatedResponseApiProductListResponse) => {
         return {
           results: res.data.items,

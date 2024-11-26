@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,13 +23,13 @@
 
 export interface ApiLoginRequest { 
     /**
-     * Password.
-     */
-    password: string;
-    /**
      * Email (username).
      */
     username: string;
+    /**
+     * Password.
+     */
+    password?: string;
 }
 
 /**
@@ -41,13 +41,13 @@ export namespace ApiLoginRequest {
      */
     export enum Properties {
         /**
-         * Password.
-         */
-        password = 'password',
-        /**
          * Email (username).
          */
-        username = 'username'
+        username = 'username',
+        /**
+         * Password.
+         */
+        password = 'password'
     }
 
 
@@ -60,7 +60,7 @@ export namespace ApiLoginRequest {
                     isReadOnly: false,
                     isEnum: false,
                     required: true,
-                    name: 'password',
+                    name: 'username',
                     classname: 'ApiLoginRequest',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -70,8 +70,8 @@ export namespace ApiLoginRequest {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: true,
-                    name: 'username',
+                    required: false,
+                    name: 'password',
                     classname: 'ApiLoginRequest',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -80,11 +80,10 @@ export namespace ApiLoginRequest {
                 },
             ],
             validators: {
-                password: [
-                        ['required'],
-                ],
                 username: [
                         ['required'],
+                ],
+                password: [
                 ],
             }
         }
@@ -93,10 +92,10 @@ export namespace ApiLoginRequest {
   // export const ApiLoginRequestValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               password: {
+  //               username: {
   //                   validators: []
   //               },
-  //               username: {
+  //               password: {
   //                   validators: []
   //               },
   //     }

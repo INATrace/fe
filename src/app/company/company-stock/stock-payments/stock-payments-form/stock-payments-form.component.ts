@@ -266,7 +266,7 @@ export class StockPaymentsFormComponent implements OnInit, OnDestroy {
 
   async setCompany(event) {
     if (event) {
-      const companyResp = await this.companyControllerService.getCompanyUsingGET(event.company.id)
+      const companyResp = await this.companyControllerService.getCompany(event.company.id)
           .pipe(take(1))
           .toPromise();
       if (companyResp && companyResp.status === 'OK' && companyResp.data) {

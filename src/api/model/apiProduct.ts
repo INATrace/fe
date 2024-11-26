@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -36,42 +36,42 @@ import { ApiValueChain } from './apiValueChain';
 
 export interface ApiProduct { 
     /**
+     * Entity id
+     */
+    id?: number;
+    /**
+     * product name
+     */
+    name: string;
+    /**
+     * product description
+     */
+    description?: string;
+    origin?: ApiProductOrigin;
+    photo?: ApiDocument;
+    process?: ApiProcess;
+    responsibility?: ApiResponsibility;
+    sustainability?: ApiSustainability;
+    settings?: ApiProductSettings;
+    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
+    company?: ApiCompany;
+    /**
      * associated companies
      */
     associatedCompanies?: Array<ApiProductCompany>;
-    businessToCustomerSettings?: ApiBusinessToCustomerSettings;
-    company?: ApiCompany;
+    /**
+     * labels
+     */
+    labels?: Array<ApiProductLabelValues>;
+    valueChain?: ApiValueChain;
     /**
      * Data sharing agreements
      */
     dataSharingAgreements?: Array<ApiProductDataSharingAgreement>;
     /**
-     * product description
-     */
-    description?: string;
-    /**
-     * Entity id
-     */
-    id?: number;
-    /**
      * Product journey path
      */
     journeyMarkers?: Array<ApiProductJourneyMarker>;
-    /**
-     * labels
-     */
-    labels?: Array<ApiProductLabelValues>;
-    /**
-     * product name
-     */
-    name?: string;
-    origin?: ApiProductOrigin;
-    photo?: ApiDocument;
-    process?: ApiProcess;
-    responsibility?: ApiResponsibility;
-    settings?: ApiProductSettings;
-    sustainability?: ApiSustainability;
-    valueChain?: ApiValueChain;
 }
 
 /**
@@ -83,42 +83,42 @@ export namespace ApiProduct {
      */
     export enum Properties {
         /**
+         * Entity id
+         */
+        id = 'id',
+        /**
+         * product name
+         */
+        name = 'name',
+        /**
+         * product description
+         */
+        description = 'description',
+        origin = 'origin',
+        photo = 'photo',
+        process = 'process',
+        responsibility = 'responsibility',
+        sustainability = 'sustainability',
+        settings = 'settings',
+        businessToCustomerSettings = 'businessToCustomerSettings',
+        company = 'company',
+        /**
          * associated companies
          */
         associatedCompanies = 'associatedCompanies',
-        businessToCustomerSettings = 'businessToCustomerSettings',
-        company = 'company',
+        /**
+         * labels
+         */
+        labels = 'labels',
+        valueChain = 'valueChain',
         /**
          * Data sharing agreements
          */
         dataSharingAgreements = 'dataSharingAgreements',
         /**
-         * product description
-         */
-        description = 'description',
-        /**
-         * Entity id
-         */
-        id = 'id',
-        /**
          * Product journey path
          */
-        journeyMarkers = 'journeyMarkers',
-        /**
-         * labels
-         */
-        labels = 'labels',
-        /**
-         * product name
-         */
-        name = 'name',
-        origin = 'origin',
-        photo = 'photo',
-        process = 'process',
-        responsibility = 'responsibility',
-        settings = 'settings',
-        sustainability = 'sustainability',
-        valueChain = 'valueChain'
+        journeyMarkers = 'journeyMarkers'
     }
 
 
@@ -127,65 +127,6 @@ export namespace ApiProduct {
             metadata: formMetadata,
             classname: 'ApiProduct',
             vars: [
-                {
-                    metadata: ApiProductCompany.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'associatedCompanies',
-                    classname: 'ApiProduct',
-                    dataType: 'Array&lt;ApiProductCompany&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProductCompany'
-                },
-                {
-                    metadata: ApiBusinessToCustomerSettings.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'businessToCustomerSettings',
-                    classname: 'ApiProduct',
-                    dataType: 'ApiBusinessToCustomerSettings',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiBusinessToCustomerSettings'
-                },
-                {
-                    metadata: ApiCompany.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'company',
-                    classname: 'ApiProduct',
-                    dataType: 'ApiCompany',
-                    isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiCompany'
-                },
-                {
-                    metadata: ApiProductDataSharingAgreement.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'dataSharingAgreements',
-                    classname: 'ApiProduct',
-                    dataType: 'Array&lt;ApiProductDataSharingAgreement&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProductDataSharingAgreement'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'description',
-                    classname: 'ApiProduct',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -198,34 +139,21 @@ export namespace ApiProduct {
                     complexType: ''
                 },
                 {
-                    metadata: ApiProductJourneyMarker.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
-                    required: false,
-                    name: 'journeyMarkers',
-                    classname: 'ApiProduct',
-                    dataType: 'Array&lt;ApiProductJourneyMarker&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProductJourneyMarker'
-                },
-                {
-                    metadata: ApiProductLabelValues.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'labels',
-                    classname: 'ApiProduct',
-                    dataType: 'Array&lt;ApiProductLabelValues&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProductLabelValues'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
+                    required: true,
                     name: 'name',
+                    classname: 'ApiProduct',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'description',
                     classname: 'ApiProduct',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -281,6 +209,18 @@ export namespace ApiProduct {
                     complexType: 'ApiResponsibility'
                 },
                 {
+                    metadata: ApiSustainability.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'sustainability',
+                    classname: 'ApiProduct',
+                    dataType: 'ApiSustainability',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiSustainability'
+                },
+                {
                     metadata: ApiProductSettings.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -293,16 +233,52 @@ export namespace ApiProduct {
                     complexType: 'ApiProductSettings'
                 },
                 {
-                    metadata: ApiSustainability.formMetadata,
+                    metadata: ApiBusinessToCustomerSettings.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'sustainability',
+                    name: 'businessToCustomerSettings',
                     classname: 'ApiProduct',
-                    dataType: 'ApiSustainability',
+                    dataType: 'ApiBusinessToCustomerSettings',
                     isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: 'ApiSustainability'
+                    complexType: 'ApiBusinessToCustomerSettings'
+                },
+                {
+                    metadata: ApiCompany.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'company',
+                    classname: 'ApiProduct',
+                    dataType: 'ApiCompany',
+                    isPrimitiveType: false,
+                    isListContainer: false,
+                    complexType: 'ApiCompany'
+                },
+                {
+                    metadata: ApiProductCompany.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'associatedCompanies',
+                    classname: 'ApiProduct',
+                    dataType: 'Array&lt;ApiProductCompany&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductCompany'
+                },
+                {
+                    metadata: ApiProductLabelValues.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'labels',
+                    classname: 'ApiProduct',
+                    dataType: 'Array&lt;ApiProductLabelValues&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductLabelValues'
                 },
                 {
                     metadata: ApiValueChain.formMetadata,
@@ -316,25 +292,42 @@ export namespace ApiProduct {
                     isListContainer: false,
                     complexType: 'ApiValueChain'
                 },
+                {
+                    metadata: ApiProductDataSharingAgreement.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'dataSharingAgreements',
+                    classname: 'ApiProduct',
+                    dataType: 'Array&lt;ApiProductDataSharingAgreement&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductDataSharingAgreement'
+                },
+                {
+                    metadata: ApiProductJourneyMarker.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'journeyMarkers',
+                    classname: 'ApiProduct',
+                    dataType: 'Array&lt;ApiProductJourneyMarker&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductJourneyMarker'
+                },
             ],
             validators: {
-                associatedCompanies: [
-                ],
-                businessToCustomerSettings: [
-                ],
-                company: [
-                ],
-                dataSharingAgreements: [
-                ],
-                description: [
-                ],
                 id: [
                 ],
-                journeyMarkers: [
-                ],
-                labels: [
-                ],
                 name: [
+                        ['required'],
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                description: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
                 ],
                 origin: [
                 ],
@@ -344,11 +337,23 @@ export namespace ApiProduct {
                 ],
                 responsibility: [
                 ],
-                settings: [
-                ],
                 sustainability: [
                 ],
+                settings: [
+                ],
+                businessToCustomerSettings: [
+                ],
+                company: [
+                ],
+                associatedCompanies: [
+                ],
+                labels: [
+                ],
                 valueChain: [
+                ],
+                dataSharingAgreements: [
+                ],
+                journeyMarkers: [
                 ],
             }
         }
@@ -357,31 +362,13 @@ export namespace ApiProduct {
   // export const ApiProductValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               associatedCompanies: {
-  //                   validators: []
-  //               },
-  //               businessToCustomerSettings: {
-  //                   validators: []
-  //               },
-  //               company: {
-  //                   validators: []
-  //               },
-  //               dataSharingAgreements: {
-  //                   validators: []
-  //               },
-  //               description: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
-  //               journeyMarkers: {
-  //                   validators: []
-  //               },
-  //               labels: {
-  //                   validators: []
-  //               },
   //               name: {
+  //                   validators: []
+  //               },
+  //               description: {
   //                   validators: []
   //               },
   //               origin: {
@@ -396,13 +383,31 @@ export namespace ApiProduct {
   //               responsibility: {
   //                   validators: []
   //               },
-  //               settings: {
-  //                   validators: []
-  //               },
   //               sustainability: {
   //                   validators: []
   //               },
+  //               settings: {
+  //                   validators: []
+  //               },
+  //               businessToCustomerSettings: {
+  //                   validators: []
+  //               },
+  //               company: {
+  //                   validators: []
+  //               },
+  //               associatedCompanies: {
+  //                   validators: []
+  //               },
+  //               labels: {
+  //                   validators: []
+  //               },
   //               valueChain: {
+  //                   validators: []
+  //               },
+  //               dataSharingAgreements: {
+  //                   validators: []
+  //               },
+  //               journeyMarkers: {
   //                   validators: []
   //               },
   //     }

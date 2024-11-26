@@ -260,7 +260,7 @@ export class StockBulkDeliveryDetailsComponent implements OnInit, OnDestroy {
       this.title = this.newTitle();
       const facilityId = this.route.snapshot.params.facilityId;
 
-      const response = await this.facilityControllerService.getFacilityUsingGET(facilityId).pipe(take(1)).toPromise();
+      const response = await this.facilityControllerService.getFacility(facilityId).pipe(take(1)).toPromise();
       if (response && response.status === StatusEnum.OK && response.data) {
         this.facility = response.data;
         for (const item of this.facility.facilitySemiProductList) {
@@ -379,7 +379,7 @@ export class StockBulkDeliveryDetailsComponent implements OnInit, OnDestroy {
     // Create the purchase order
     try {
 
-      const res = await this.stockOrderControllerService.createPurchaseOrderBulkUsingPOST(data).pipe(take(1)).toPromise();
+      const res = await this.stockOrderControllerService.createPurchaseOrderBulk(data).pipe(take(1)).toPromise();
 
       if (res && res.status === 'OK') {
         if (close) {
@@ -479,7 +479,7 @@ export class StockBulkDeliveryDetailsComponent implements OnInit, OnDestroy {
       this.measureUnitArray.push('-');
     }
 
-    const res = await this.semiProductControllerService.getSemiProductUsingGET(semiProdId).pipe(take(1)).toPromise();
+    const res = await this.semiProductControllerService.getSemiProduct(semiProdId).pipe(take(1)).toPromise();
     if (res && res.status === StatusEnum.OK && res.data) {
       this.measureUnitArray[idx] = res.data.measurementUnitType.label;
     } else {
@@ -761,7 +761,7 @@ export class StockBulkDeliveryDetailsComponent implements OnInit, OnDestroy {
 
     await Promise.all(this.farmersFormArray.controls.map(async (control) => {
         const farmerResponse = await this.companyControllerService
-          .getUserCustomerUsingGET(control.get('producerUserCustomer').value?.id).pipe(take(1)).toPromise();
+          .getUserCustomer(control.get('producerUserCustomer').value?.id).pipe(take(1)).toPromise();
 
         if (farmerResponse && farmerResponse.status === StatusEnum.OK && farmerResponse.data) {
           const identifier = 'PT-' + farmerResponse.data.surname + '-' + this.purchaseOrderBulkForm.get('productionDate').value;

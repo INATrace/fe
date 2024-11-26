@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
 import {ApiProductType} from '../../../../api/model/apiProductType';
 import {CompanyProductTypesService} from '../../../shared-services/company-product-types.service';
@@ -13,6 +13,7 @@ import {NgbModalImproved} from '../../../core/ngb-modal-improved/ngb-modal-impro
 import {
   OpenPlotDetailsExternallyModalComponent
 } from '../../company-farmers/open-plot-details-externally-modal/open-plot-details-externally-modal.component';
+import { MapComponent } from "../../../shared/map/map.component";
 
 @Component({
   selector: 'app-plots-form',
@@ -20,6 +21,20 @@ import {
   styleUrls: ['./plots-form.component.scss']
 })
 export class PlotsFormComponent implements OnInit {
+
+  plotCoordinates: Array<ApiPlotCoordinate> = [];
+
+  plots: Array<ApiPlot> = [];
+  productTypes: Array<ApiProductType> = [];
+  plotCoordinatesManager: PlotCoordinatesManagerService = new PlotCoordinatesManagerService();
+
+  pin: ApiPlotCoordinate;
+  plotsListManager: any;
+
+  drawPlotSubject = new Subject<boolean>();
+
+  initialLat: number;
+  initialLng: number;
 
   @Input()
   productTypesCodebook: CompanyProductTypesService;
@@ -39,16 +54,14 @@ export class PlotsFormComponent implements OnInit {
   @Output()
   exportGeoData = new EventEmitter<void>();
 
-  plotCoordinates: Array<ApiPlotCoordinate> = [];
+  @Output()
+  savePlot = new EventEmitter<void>();
 
-  plots: Array<ApiPlot> = [];
-  productTypes: Array<ApiProductType> = [];
-  plotCoordinatesManager: PlotCoordinatesManagerService = new PlotCoordinatesManagerService();
+  @Output()
+  deletePlot = new EventEmitter<void>();
 
-  pin: ApiPlotCoordinate;
-  plotsListManager: any;
-
-  drawPlotSubject = new Subject<boolean>();
+  @ViewChild('map', { static: false })
+  map: MapComponent;
 
   static ApiPlotCreateEmptyObject(): ApiPlot {
     const obj = ApiPlot.formMetadata();
@@ -65,6 +78,7 @@ export class PlotsFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.plots = this.form.get('plots').value;
 
     this.pin = {
@@ -72,11 +86,15 @@ export class PlotsFormComponent implements OnInit {
       longitude: this.form.get('location').value.latitude,
     };
 
+    this.initialLat = this.form.get('location')?.get('address')?.get('country')?.value?.latitude;
+    this.initialLng = this.form.get('location')?.get('address')?.get('country')?.value?.longitude;
+
     this.initializeListManager();
     this.initializeMarker();
   }
 
   initializeMarker() {
+
     if (!this.form.get('latitude') || !this.form.get('longitude')) {
       return;
     }
@@ -98,6 +116,12 @@ export class PlotsFormComponent implements OnInit {
       PlotsFormComponent.ApiPlotEmptyObjectFormFactory(),
       ApiPlotValidationScheme
     );
+  }
+
+  public updatePlots(): void {
+
+    this.plots = this.form.get('plots').value;
+    this.map.updateMap(this.plots);
   }
 
   updateLonLat(coordinates: Array<ApiPlotCoordinate>) {

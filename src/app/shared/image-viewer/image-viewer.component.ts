@@ -58,7 +58,7 @@ export class ImageViewerComponent implements OnInit, OnDestroy {
     )
 
     private loadImage(fileInfo: ApiDocument): Observable<any> {
-        return this.fileService.getDocumentUsingGET(fileInfo.storageKey).pipe(
+        return this.fileService.getDocument(fileInfo.storageKey).pipe(
             map(x => this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(x)))
         );
     }

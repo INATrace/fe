@@ -176,7 +176,7 @@ export class AddCustomerOrderComponent implements OnInit {
     });
 
     // Create new Product order
-    this.productOrderController.createProductOrderUsingPOST(productOrder)
+    this.productOrderController.createProductOrder(productOrder)
       .pipe(
         tap(() => this.globalEventsManager.showLoading(true)),
         finalize(() => this.globalEventsManager.showLoading(false))

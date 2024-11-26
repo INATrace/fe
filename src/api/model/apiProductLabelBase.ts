@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -27,10 +27,6 @@ export interface ApiProductLabelBase {
      */
     id?: number;
     /**
-     * Label language
-     */
-    language?: ApiProductLabelBase.LanguageEnum;
-    /**
      * Product id
      */
     productId?: number;
@@ -39,13 +35,17 @@ export interface ApiProductLabelBase {
      */
     status?: ApiProductLabelBase.StatusEnum;
     /**
+     * Product label uuid (for url)
+     */
+    uuid?: string;
+    /**
      * label title
      */
     title?: string;
     /**
-     * Product label uuid (for url)
+     * Label language
      */
-    uuid?: string;
+    language?: ApiProductLabelBase.LanguageEnum;
 }
 
 /**
@@ -61,10 +61,6 @@ export namespace ApiProductLabelBase {
          */
         id = 'id',
         /**
-         * Label language
-         */
-        language = 'language',
-        /**
          * Product id
          */
         productId = 'productId',
@@ -73,13 +69,25 @@ export namespace ApiProductLabelBase {
          */
         status = 'status',
         /**
+         * Product label uuid (for url)
+         */
+        uuid = 'uuid',
+        /**
          * label title
          */
         title = 'title',
         /**
-         * Product label uuid (for url)
+         * Label language
          */
-        uuid = 'uuid'
+        language = 'language'
+    }
+
+    /**
+     * All possible values of status.
+     */
+    export enum StatusEnum {
+        UNPUBLISHED = 'UNPUBLISHED',
+        PUBLISHED = 'PUBLISHED'
     }
 
     /**
@@ -90,14 +98,6 @@ export namespace ApiProductLabelBase {
         DE = 'DE',
         RW = 'RW',
         ES = 'ES'
-    }
-
-    /**
-     * All possible values of status.
-     */
-    export enum StatusEnum {
-        UNPUBLISHED = 'UNPUBLISHED',
-        PUBLISHED = 'PUBLISHED'
     }
 
 
@@ -113,18 +113,6 @@ export namespace ApiProductLabelBase {
                     name: 'id',
                     classname: 'ApiProductLabelBase',
                     dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProductLabelBase.LanguageEnum',
-                    required: false,
-                    name: 'language',
-                    classname: 'ApiProductLabelBase',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -156,7 +144,7 @@ export namespace ApiProductLabelBase {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'title',
+                    name: 'uuid',
                     classname: 'ApiProductLabelBase',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -167,7 +155,19 @@ export namespace ApiProductLabelBase {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'uuid',
+                    name: 'title',
+                    classname: 'ApiProductLabelBase',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelBase.LanguageEnum',
+                    required: false,
+                    name: 'language',
                     classname: 'ApiProductLabelBase',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -178,15 +178,17 @@ export namespace ApiProductLabelBase {
             validators: {
                 id: [
                 ],
-                language: [
-                ],
                 productId: [
                 ],
                 status: [
                 ],
-                title: [
-                ],
                 uuid: [
+                ],
+                title: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                language: [
                 ],
             }
         }
@@ -198,19 +200,19 @@ export namespace ApiProductLabelBase {
   //               id: {
   //                   validators: []
   //               },
-  //               language: {
-  //                   validators: []
-  //               },
   //               productId: {
   //                   validators: []
   //               },
   //               status: {
   //                   validators: []
   //               },
+  //               uuid: {
+  //                   validators: []
+  //               },
   //               title: {
   //                   validators: []
   //               },
-  //               uuid: {
+  //               language: {
   //                   validators: []
   //               },
   //     }

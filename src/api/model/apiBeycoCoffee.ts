@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -24,76 +24,79 @@ import { ApiBeycoCoffeeQuality } from './apiBeycoCoffeeQuality';
 import { ApiBeycoCoffeeVariety } from './apiBeycoCoffeeVariety';
 
 
+/**
+ * Coffee description fields
+ */
 
 export interface ApiBeycoCoffee { 
-    /**
-     * Additional grade, if selected 'Other' in grades
-     */
-    additionalQualityDescriptors?: string;
-    /**
-     * Certificates of coffee beans
-     */
-    certificates?: Array<ApiBeycoCoffeeCertificate>;
-    /**
-     * Country of coffee beans
-     */
-    country?: string;
-    /**
-     * Cupping score
-     */
-    cuppingScore?: number;
-    /**
-     * Grades of coffee beans
-     */
-    grades?: Array<ApiBeycoCoffeeGrade>;
-    /**
-     * Harvest date
-     */
-    harvestAt?: Date;
-    /**
-     * Is bulk
-     */
-    isBulk?: boolean;
-    /**
-     * Maximum screen size
-     */
-    maxScreenSize?: number;
-    /**
-     * Minimal screen size
-     */
-    minScreenSize?: number;
     /**
      * Internal LOT number or name of coffee
      */
     name?: string;
     /**
-     * Coffee process
-     */
-    process?: ApiBeycoCoffee.ProcessEnum;
-    /**
-     * Quality of coffee beans
-     */
-    qualitySegments?: Array<ApiBeycoCoffeeQuality>;
-    /**
-     * Quantity of beans
-     */
-    quantity?: number;
-    /**
      * Region of coffee beans
      */
     region?: string;
+    /**
+     * Country of coffee beans
+     */
+    country?: string;
+    /**
+     * Harvest date
+     */
+    harvestAt?: Date;
     /**
      * Coffee species
      */
     species?: ApiBeycoCoffee.SpeciesEnum;
     /**
-     * Unit of order
+     * Coffee process
      */
-    unit?: ApiBeycoCoffee.UnitEnum;
+    process?: ApiBeycoCoffee.ProcessEnum;
+    /**
+     * Minimal screen size
+     */
+    minScreenSize?: number;
+    /**
+     * Maximum screen size
+     */
+    maxScreenSize?: number;
+    /**
+     * Cupping score
+     */
+    cuppingScore?: number;
     /**
      * Varieties of coffee beans
      */
     varieties?: Array<ApiBeycoCoffeeVariety>;
+    /**
+     * Quality of coffee beans
+     */
+    qualitySegments?: Array<ApiBeycoCoffeeQuality>;
+    /**
+     * Grades of coffee beans
+     */
+    grades?: Array<ApiBeycoCoffeeGrade>;
+    /**
+     * Additional grade, if selected 'Other' in grades
+     */
+    additionalQualityDescriptors?: string;
+    /**
+     * Is bulk
+     */
+    isBulk?: boolean;
+    /**
+     * Certificates of coffee beans
+     */
+    certificates?: Array<ApiBeycoCoffeeCertificate>;
+    /**
+     * Quantity of beans
+     */
+    quantity?: number;
+    /**
+     * Unit of order
+     */
+    unit?: ApiBeycoCoffee.UnitEnum;
 }
 
 /**
@@ -105,73 +108,81 @@ export namespace ApiBeycoCoffee {
      */
     export enum Properties {
         /**
-         * Additional grade, if selected 'Other' in grades
-         */
-        additionalQualityDescriptors = 'additionalQualityDescriptors',
-        /**
-         * Certificates of coffee beans
-         */
-        certificates = 'certificates',
-        /**
-         * Country of coffee beans
-         */
-        country = 'country',
-        /**
-         * Cupping score
-         */
-        cuppingScore = 'cuppingScore',
-        /**
-         * Grades of coffee beans
-         */
-        grades = 'grades',
-        /**
-         * Harvest date
-         */
-        harvestAt = 'harvestAt',
-        /**
-         * Is bulk
-         */
-        isBulk = 'isBulk',
-        /**
-         * Maximum screen size
-         */
-        maxScreenSize = 'maxScreenSize',
-        /**
-         * Minimal screen size
-         */
-        minScreenSize = 'minScreenSize',
-        /**
          * Internal LOT number or name of coffee
          */
         name = 'name',
-        /**
-         * Coffee process
-         */
-        process = 'process',
-        /**
-         * Quality of coffee beans
-         */
-        qualitySegments = 'qualitySegments',
-        /**
-         * Quantity of beans
-         */
-        quantity = 'quantity',
         /**
          * Region of coffee beans
          */
         region = 'region',
         /**
+         * Country of coffee beans
+         */
+        country = 'country',
+        /**
+         * Harvest date
+         */
+        harvestAt = 'harvestAt',
+        /**
          * Coffee species
          */
         species = 'species',
         /**
-         * Unit of order
+         * Coffee process
          */
-        unit = 'unit',
+        process = 'process',
+        /**
+         * Minimal screen size
+         */
+        minScreenSize = 'minScreenSize',
+        /**
+         * Maximum screen size
+         */
+        maxScreenSize = 'maxScreenSize',
+        /**
+         * Cupping score
+         */
+        cuppingScore = 'cuppingScore',
         /**
          * Varieties of coffee beans
          */
-        varieties = 'varieties'
+        varieties = 'varieties',
+        /**
+         * Quality of coffee beans
+         */
+        qualitySegments = 'qualitySegments',
+        /**
+         * Grades of coffee beans
+         */
+        grades = 'grades',
+        /**
+         * Additional grade, if selected 'Other' in grades
+         */
+        additionalQualityDescriptors = 'additionalQualityDescriptors',
+        /**
+         * Is bulk
+         */
+        isBulk = 'isBulk',
+        /**
+         * Certificates of coffee beans
+         */
+        certificates = 'certificates',
+        /**
+         * Quantity of beans
+         */
+        quantity = 'quantity',
+        /**
+         * Unit of order
+         */
+        unit = 'unit'
+    }
+
+    /**
+     * All possible values of species.
+     */
+    export enum SpeciesEnum {
+        Arabica = 'Arabica',
+        Robusta = 'Robusta'
     }
 
     /**
@@ -182,14 +193,6 @@ export namespace ApiBeycoCoffee {
         SemiWashedHoney = 'SemiWashedHoney',
         Natural = 'Natural',
         Other = 'Other'
-    }
-
-    /**
-     * All possible values of species.
-     */
-    export enum SpeciesEnum {
-        Arabica = 'Arabica',
-        Robusta = 'Robusta'
     }
 
     /**
@@ -220,9 +223,157 @@ export namespace ApiBeycoCoffee {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'name',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'region',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'country',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'harvestAt',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiBeycoCoffee.SpeciesEnum',
+                    required: false,
+                    name: 'species',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiBeycoCoffee.ProcessEnum',
+                    required: false,
+                    name: 'process',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'minScreenSize',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'maxScreenSize',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'cuppingScore',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiBeycoCoffeeVariety.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'varieties',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'Array&lt;ApiBeycoCoffeeVariety&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiBeycoCoffeeVariety'
+                },
+                {
+                    metadata: ApiBeycoCoffeeQuality.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'qualitySegments',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'Array&lt;ApiBeycoCoffeeQuality&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiBeycoCoffeeQuality'
+                },
+                {
+                    metadata: ApiBeycoCoffeeGrade.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'grades',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'Array&lt;ApiBeycoCoffeeGrade&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiBeycoCoffeeGrade'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'additionalQualityDescriptors',
                     classname: 'ApiBeycoCoffee',
                     dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'isBulk',
+                    classname: 'ApiBeycoCoffee',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -243,145 +394,9 @@ export namespace ApiBeycoCoffee {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'country',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'cuppingScore',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiBeycoCoffeeGrade.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'grades',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'Array&lt;ApiBeycoCoffeeGrade&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiBeycoCoffeeGrade'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'harvestAt',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'isBulk',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'maxScreenSize',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'minScreenSize',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiBeycoCoffee.ProcessEnum',
-                    required: false,
-                    name: 'process',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiBeycoCoffeeQuality.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'qualitySegments',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'Array&lt;ApiBeycoCoffeeQuality&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiBeycoCoffeeQuality'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'quantity',
                     classname: 'ApiBeycoCoffee',
                     dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'region',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiBeycoCoffee.SpeciesEnum',
-                    required: false,
-                    name: 'species',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -398,53 +413,53 @@ export namespace ApiBeycoCoffee {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    metadata: ApiBeycoCoffeeVariety.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'varieties',
-                    classname: 'ApiBeycoCoffee',
-                    dataType: 'Array&lt;ApiBeycoCoffeeVariety&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiBeycoCoffeeVariety'
-                },
             ],
             validators: {
-                additionalQualityDescriptors: [
-                ],
-                certificates: [
-                ],
-                country: [
-                ],
-                cuppingScore: [
-                ],
-                grades: [
-                ],
-                harvestAt: [
-                ],
-                isBulk: [
-                ],
-                maxScreenSize: [
-                ],
-                minScreenSize: [
-                ],
                 name: [
-                ],
-                process: [
-                ],
-                qualitySegments: [
-                ],
-                quantity: [
+                        ['minlength', 1],
+                        ['maxlength', 2147483647],
                 ],
                 region: [
                 ],
+                country: [
+                        ['minlength', 1],
+                        ['maxlength', 2147483647],
+                ],
+                harvestAt: [
+                ],
                 species: [
                 ],
-                unit: [
+                process: [
+                ],
+                minScreenSize: [
+                        ['min', 8],
+                        ['max', 20],
+                ],
+                maxScreenSize: [
+                        ['min', 8],
+                        ['max', 20],
+                ],
+                cuppingScore: [
+                        ['min', 8],
+                        ['max', 20],
                 ],
                 varieties: [
+                ],
+                qualitySegments: [
+                ],
+                grades: [
+                ],
+                additionalQualityDescriptors: [
+                ],
+                isBulk: [
+                ],
+                certificates: [
+                ],
+                quantity: [
+                        ['min', 0],
+                        ['max', 999999999999999999],
+                ],
+                unit: [
                 ],
             }
         }
@@ -453,55 +468,55 @@ export namespace ApiBeycoCoffee {
   // export const ApiBeycoCoffeeValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               additionalQualityDescriptors: {
-  //                   validators: []
-  //               },
-  //               certificates: {
-  //                   validators: []
-  //               },
-  //               country: {
-  //                   validators: []
-  //               },
-  //               cuppingScore: {
-  //                   validators: []
-  //               },
-  //               grades: {
-  //                   validators: []
-  //               },
-  //               harvestAt: {
-  //                   validators: []
-  //               },
-  //               isBulk: {
-  //                   validators: []
-  //               },
-  //               maxScreenSize: {
-  //                   validators: []
-  //               },
-  //               minScreenSize: {
-  //                   validators: []
-  //               },
   //               name: {
-  //                   validators: []
-  //               },
-  //               process: {
-  //                   validators: []
-  //               },
-  //               qualitySegments: {
-  //                   validators: []
-  //               },
-  //               quantity: {
   //                   validators: []
   //               },
   //               region: {
   //                   validators: []
   //               },
+  //               country: {
+  //                   validators: []
+  //               },
+  //               harvestAt: {
+  //                   validators: []
+  //               },
   //               species: {
   //                   validators: []
   //               },
-  //               unit: {
+  //               process: {
+  //                   validators: []
+  //               },
+  //               minScreenSize: {
+  //                   validators: []
+  //               },
+  //               maxScreenSize: {
+  //                   validators: []
+  //               },
+  //               cuppingScore: {
   //                   validators: []
   //               },
   //               varieties: {
+  //                   validators: []
+  //               },
+  //               qualitySegments: {
+  //                   validators: []
+  //               },
+  //               grades: {
+  //                   validators: []
+  //               },
+  //               additionalQualityDescriptors: {
+  //                   validators: []
+  //               },
+  //               isBulk: {
+  //                   validators: []
+  //               },
+  //               certificates: {
+  //                   validators: []
+  //               },
+  //               quantity: {
+  //                   validators: []
+  //               },
+  //               unit: {
   //                   validators: []
   //               },
   //     }

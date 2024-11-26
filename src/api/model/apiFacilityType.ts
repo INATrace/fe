@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,20 +20,23 @@
 
 
 
+/**
+ * list of supported facility types
+ */
 
 export interface ApiFacilityType { 
-    /**
-     * code
-     */
-    code?: string;
     /**
      * Entity id
      */
     id?: number;
     /**
+     * code
+     */
+    code: string;
+    /**
      * label
      */
-    label?: string;
+    label: string;
 }
 
 /**
@@ -45,13 +48,13 @@ export namespace ApiFacilityType {
      */
     export enum Properties {
         /**
-         * code
-         */
-        code = 'code',
-        /**
          * Entity id
          */
         id = 'id',
+        /**
+         * code
+         */
+        code = 'code',
         /**
          * label
          */
@@ -68,17 +71,6 @@ export namespace ApiFacilityType {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'code',
-                    classname: 'ApiFacilityType',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'id',
                     classname: 'ApiFacilityType',
                     dataType: 'number',
@@ -89,7 +81,18 @@ export namespace ApiFacilityType {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: false,
+                    required: true,
+                    name: 'code',
+                    classname: 'ApiFacilityType',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: true,
                     name: 'label',
                     classname: 'ApiFacilityType',
                     dataType: 'string',
@@ -99,11 +102,13 @@ export namespace ApiFacilityType {
                 },
             ],
             validators: {
-                code: [
-                ],
                 id: [
                 ],
+                code: [
+                        ['required'],
+                ],
                 label: [
+                        ['required'],
                 ],
             }
         }
@@ -112,10 +117,10 @@ export namespace ApiFacilityType {
   // export const ApiFacilityTypeValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               code: {
+  //               id: {
   //                   validators: []
   //               },
-  //               id: {
+  //               code: {
   //                   validators: []
   //               },
   //               label: {

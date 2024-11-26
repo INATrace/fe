@@ -85,7 +85,7 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
       }).pipe(
       tap(() => this.globalEventsManager.showLoading(true)),
       switchMap(params => {
-        return this.processingActionControllerService.listProcessingActionsByCompanyUsingGETByMap({
+        return this.processingActionControllerService.listProcessingActionsByCompanyByMap({
           ...params,
           id: this.organizationId
         });
@@ -141,7 +141,7 @@ export class CompanyDetailProcessingActionsListComponent implements OnInit {
       // => Cancel
       return;
     }
-    const resp = await this.processingActionControllerService.deleteProcessingActionUsingDELETE(pa.id)
+    const resp = await this.processingActionControllerService.deleteProcessingAction(pa.id)
         .pipe(take(1))
         .toPromise();
     if (resp && resp.status === 'OK') {

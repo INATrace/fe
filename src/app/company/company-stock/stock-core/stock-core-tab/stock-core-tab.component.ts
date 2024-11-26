@@ -217,7 +217,7 @@ export class StockCoreTabComponent implements OnInit, AfterViewInit {
 
     const userProfile = await this.authService.userProfile$.pipe(take(1)).toPromise();
 
-    const companyUsersRes = await this.companyController.getCompanyUsersUsingGET(this.companyId).pipe(take(1)).toPromise();
+    const companyUsersRes = await this.companyController.getCompanyUsers(this.companyId).pipe(take(1)).toPromise();
     if (companyUsersRes && companyUsersRes.status === StatusEnum.OK) {
       const companyUsers = companyUsersRes.data;
       const user = companyUsers.find(cu => cu.id === userProfile.id);

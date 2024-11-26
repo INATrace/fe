@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -36,34 +36,28 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for disableCurrencyUsingPUT.
+ * Namespace for disableCurrency.
  */
-export namespace DisableCurrencyUsingPUT {
+export namespace DisableCurrency {
     /**
-     * Parameter map for disableCurrencyUsingPUT.
+     * Parameter map for disableCurrency.
      */
     export interface PartialParamMap {
-      /**
-       * id
-       */
       id: number;
     }
 
     /**
-     * Enumeration of all parameters for disableCurrencyUsingPUT.
+     * Enumeration of all parameters for disableCurrency.
      */
     export enum Parameters {
-      /**
-       * id
-       */
       id = 'id'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of disableCurrencyUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of disableCurrency
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof DisableCurrencyUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof DisableCurrency.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -71,34 +65,28 @@ export namespace DisableCurrencyUsingPUT {
 }
 
 /**
- * Namespace for enableCurrencyUsingPUT.
+ * Namespace for enableCurrency.
  */
-export namespace EnableCurrencyUsingPUT {
+export namespace EnableCurrency {
     /**
-     * Parameter map for enableCurrencyUsingPUT.
+     * Parameter map for enableCurrency.
      */
     export interface PartialParamMap {
-      /**
-       * id
-       */
       id: number;
     }
 
     /**
-     * Enumeration of all parameters for enableCurrencyUsingPUT.
+     * Enumeration of all parameters for enableCurrency.
      */
     export enum Parameters {
-      /**
-       * id
-       */
       id = 'id'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of enableCurrencyUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of enableCurrency
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof EnableCurrencyUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof EnableCurrency.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -106,13 +94,14 @@ export namespace EnableCurrencyUsingPUT {
 }
 
 /**
- * Namespace for getCurrencyTypesUsingGET.
+ * Namespace for getCurrencyTypes.
  */
-export namespace GetCurrencyTypesUsingGET {
+export namespace GetCurrencyTypes {
     /**
-     * Parameter map for getCurrencyTypesUsingGET.
+     * Parameter map for getCurrencyTypes.
      */
     export interface PartialParamMap {
+      query?: string;
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -133,13 +122,13 @@ export namespace GetCurrencyTypesUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
-      query?: string;
     }
 
     /**
-     * Enumeration of all parameters for getCurrencyTypesUsingGET.
+     * Enumeration of all parameters for getCurrencyTypes.
      */
     export enum Parameters {
+      query = 'query',
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -159,38 +148,40 @@ export namespace GetCurrencyTypesUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort',
-      query = 'query'
+      sort = 'sort'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getCurrencyTypesUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getCurrencyTypes
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetCurrencyTypesUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetCurrencyTypes.PartialParamMap]?: [string, ValidatorFn][]} = {
+      query: [
+      ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
       sort: [
-      ],
-      query: [
       ],
     };
 }
 
 /**
- * Namespace for getDisabledCurrencyTypesUsingGET.
+ * Namespace for getDisabledCurrencyTypes.
  */
-export namespace GetDisabledCurrencyTypesUsingGET {
+export namespace GetDisabledCurrencyTypes {
     /**
-     * Parameter map for getDisabledCurrencyTypesUsingGET.
+     * Parameter map for getDisabledCurrencyTypes.
      */
     export interface PartialParamMap {
+      query?: string;
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -211,13 +202,13 @@ export namespace GetDisabledCurrencyTypesUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
-      query?: string;
     }
 
     /**
-     * Enumeration of all parameters for getDisabledCurrencyTypesUsingGET.
+     * Enumeration of all parameters for getDisabledCurrencyTypes.
      */
     export enum Parameters {
+      query = 'query',
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -237,38 +228,40 @@ export namespace GetDisabledCurrencyTypesUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort',
-      query = 'query'
+      sort = 'sort'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getDisabledCurrencyTypesUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getDisabledCurrencyTypes
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetDisabledCurrencyTypesUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetDisabledCurrencyTypes.PartialParamMap]?: [string, ValidatorFn][]} = {
+      query: [
+      ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
       sort: [
-      ],
-      query: [
       ],
     };
 }
 
 /**
- * Namespace for getEnabledCurrencyTypesUsingGET.
+ * Namespace for getEnabledCurrencyTypes.
  */
-export namespace GetEnabledCurrencyTypesUsingGET {
+export namespace GetEnabledCurrencyTypes {
     /**
-     * Parameter map for getEnabledCurrencyTypesUsingGET.
+     * Parameter map for getEnabledCurrencyTypes.
      */
     export interface PartialParamMap {
+      query?: string;
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -289,13 +282,13 @@ export namespace GetEnabledCurrencyTypesUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
-      query?: string;
     }
 
     /**
-     * Enumeration of all parameters for getEnabledCurrencyTypesUsingGET.
+     * Enumeration of all parameters for getEnabledCurrencyTypes.
      */
     export enum Parameters {
+      query = 'query',
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -315,26 +308,27 @@ export namespace GetEnabledCurrencyTypesUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort',
-      query = 'query'
+      sort = 'sort'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getEnabledCurrencyTypesUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getEnabledCurrencyTypes
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetEnabledCurrencyTypesUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetEnabledCurrencyTypes.PartialParamMap]?: [string, ValidatorFn][]} = {
+      query: [
+      ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
       sort: [
-      ],
-      query: [
       ],
     };
 }
@@ -383,23 +377,23 @@ export class CurrencyTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public disableCurrencyUsingPUTByMap(
-    map: DisableCurrencyUsingPUT.PartialParamMap,
+  public disableCurrencyByMap(
+    map: DisableCurrency.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public disableCurrencyUsingPUTByMap(
-    map: DisableCurrencyUsingPUT.PartialParamMap,
+  public disableCurrencyByMap(
+    map: DisableCurrency.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public disableCurrencyUsingPUTByMap(
-    map: DisableCurrencyUsingPUT.PartialParamMap,
+  public disableCurrencyByMap(
+    map: DisableCurrency.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public disableCurrencyUsingPUTByMap(
-    map: DisableCurrencyUsingPUT.PartialParamMap,
+  public disableCurrencyByMap(
+    map: DisableCurrency.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.disableCurrencyUsingPUT(
+    return this.disableCurrency(
       map.id,
       observe,
       reportProgress
@@ -410,23 +404,23 @@ export class CurrencyTypeControllerService {
     /**
      * Disable currency with the specified ID
      * 
-     * @param id id
+     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public disableCurrencyUsingPUT(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public disableCurrencyUsingPUT(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public disableCurrencyUsingPUT(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public disableCurrencyUsingPUT(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public disableCurrency(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public disableCurrency(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public disableCurrency(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public disableCurrency(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling disableCurrencyUsingPUT.');
+            throw new Error('Required parameter id was null or undefined when calling disableCurrency.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -453,7 +447,7 @@ export class CurrencyTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'disableCurrencyUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'disableCurrency')));
         }
         return handle;
     }
@@ -466,23 +460,23 @@ export class CurrencyTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public enableCurrencyUsingPUTByMap(
-    map: EnableCurrencyUsingPUT.PartialParamMap,
+  public enableCurrencyByMap(
+    map: EnableCurrency.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public enableCurrencyUsingPUTByMap(
-    map: EnableCurrencyUsingPUT.PartialParamMap,
+  public enableCurrencyByMap(
+    map: EnableCurrency.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public enableCurrencyUsingPUTByMap(
-    map: EnableCurrencyUsingPUT.PartialParamMap,
+  public enableCurrencyByMap(
+    map: EnableCurrency.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public enableCurrencyUsingPUTByMap(
-    map: EnableCurrencyUsingPUT.PartialParamMap,
+  public enableCurrencyByMap(
+    map: EnableCurrency.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.enableCurrencyUsingPUT(
+    return this.enableCurrency(
       map.id,
       observe,
       reportProgress
@@ -493,23 +487,23 @@ export class CurrencyTypeControllerService {
     /**
      * Enable currency with the specified ID
      * 
-     * @param id id
+     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public enableCurrencyUsingPUT(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public enableCurrencyUsingPUT(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public enableCurrencyUsingPUT(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public enableCurrencyUsingPUT(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public enableCurrency(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public enableCurrency(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public enableCurrency(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public enableCurrency(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling enableCurrencyUsingPUT.');
+            throw new Error('Required parameter id was null or undefined when calling enableCurrency.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -536,7 +530,7 @@ export class CurrencyTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'enableCurrencyUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'enableCurrency')));
         }
         return handle;
     }
@@ -549,29 +543,29 @@ export class CurrencyTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getCurrencyTypesUsingGETByMap(
-    map: GetCurrencyTypesUsingGET.PartialParamMap,
+  public getCurrencyTypesByMap(
+    map: GetCurrencyTypes.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiCurrencyType>;
-  public getCurrencyTypesUsingGETByMap(
-    map: GetCurrencyTypesUsingGET.PartialParamMap,
+  public getCurrencyTypesByMap(
+    map: GetCurrencyTypes.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiCurrencyType>>;
-  public getCurrencyTypesUsingGETByMap(
-    map: GetCurrencyTypesUsingGET.PartialParamMap,
+  public getCurrencyTypesByMap(
+    map: GetCurrencyTypes.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiCurrencyType>>;
-  public getCurrencyTypesUsingGETByMap(
-    map: GetCurrencyTypesUsingGET.PartialParamMap,
+  public getCurrencyTypesByMap(
+    map: GetCurrencyTypes.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getCurrencyTypesUsingGET(
+    return this.getCurrencyTypes(
+      map.query,
       map.requestType,
       map.limit,
       map.offset,
       map.sortBy,
       map.sort,
-      map.query,
       observe,
       reportProgress
     );
@@ -581,21 +575,24 @@ export class CurrencyTypeControllerService {
     /**
      * Get list of enabled and disables supported currencies
      * 
+     * @param query 
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
-     * @param query 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiCurrencyType>;
-    public getCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiCurrencyType>>;
-    public getCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiCurrencyType>>;
-    public getCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiCurrencyType>;
+    public getCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiCurrencyType>>;
+    public getCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiCurrencyType>>;
+    public getCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (query !== undefined && query !== null) {
+            queryParameters = queryParameters.set('query', <any>query);
+        }
         if (requestType !== undefined && requestType !== null) {
             queryParameters = queryParameters.set('requestType', <any>requestType);
         }
@@ -611,15 +608,12 @@ export class CurrencyTypeControllerService {
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
         }
-        if (query !== undefined && query !== null) {
-            queryParameters = queryParameters.set('query', <any>query);
-        }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -646,7 +640,7 @@ export class CurrencyTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCurrencyTypesUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCurrencyTypes')));
         }
         return handle;
     }
@@ -659,29 +653,29 @@ export class CurrencyTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getDisabledCurrencyTypesUsingGETByMap(
-    map: GetDisabledCurrencyTypesUsingGET.PartialParamMap,
+  public getDisabledCurrencyTypesByMap(
+    map: GetDisabledCurrencyTypes.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiCurrencyType>;
-  public getDisabledCurrencyTypesUsingGETByMap(
-    map: GetDisabledCurrencyTypesUsingGET.PartialParamMap,
+  public getDisabledCurrencyTypesByMap(
+    map: GetDisabledCurrencyTypes.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiCurrencyType>>;
-  public getDisabledCurrencyTypesUsingGETByMap(
-    map: GetDisabledCurrencyTypesUsingGET.PartialParamMap,
+  public getDisabledCurrencyTypesByMap(
+    map: GetDisabledCurrencyTypes.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiCurrencyType>>;
-  public getDisabledCurrencyTypesUsingGETByMap(
-    map: GetDisabledCurrencyTypesUsingGET.PartialParamMap,
+  public getDisabledCurrencyTypesByMap(
+    map: GetDisabledCurrencyTypes.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getDisabledCurrencyTypesUsingGET(
+    return this.getDisabledCurrencyTypes(
+      map.query,
       map.requestType,
       map.limit,
       map.offset,
       map.sortBy,
       map.sort,
-      map.query,
       observe,
       reportProgress
     );
@@ -691,21 +685,24 @@ export class CurrencyTypeControllerService {
     /**
      * Get list of disabled supported currencies
      * 
+     * @param query 
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
-     * @param query 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getDisabledCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiCurrencyType>;
-    public getDisabledCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiCurrencyType>>;
-    public getDisabledCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiCurrencyType>>;
-    public getDisabledCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getDisabledCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiCurrencyType>;
+    public getDisabledCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiCurrencyType>>;
+    public getDisabledCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiCurrencyType>>;
+    public getDisabledCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (query !== undefined && query !== null) {
+            queryParameters = queryParameters.set('query', <any>query);
+        }
         if (requestType !== undefined && requestType !== null) {
             queryParameters = queryParameters.set('requestType', <any>requestType);
         }
@@ -721,15 +718,12 @@ export class CurrencyTypeControllerService {
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
         }
-        if (query !== undefined && query !== null) {
-            queryParameters = queryParameters.set('query', <any>query);
-        }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -756,7 +750,7 @@ export class CurrencyTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getDisabledCurrencyTypesUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getDisabledCurrencyTypes')));
         }
         return handle;
     }
@@ -769,29 +763,29 @@ export class CurrencyTypeControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getEnabledCurrencyTypesUsingGETByMap(
-    map: GetEnabledCurrencyTypesUsingGET.PartialParamMap,
+  public getEnabledCurrencyTypesByMap(
+    map: GetEnabledCurrencyTypes.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiCurrencyType>;
-  public getEnabledCurrencyTypesUsingGETByMap(
-    map: GetEnabledCurrencyTypesUsingGET.PartialParamMap,
+  public getEnabledCurrencyTypesByMap(
+    map: GetEnabledCurrencyTypes.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiCurrencyType>>;
-  public getEnabledCurrencyTypesUsingGETByMap(
-    map: GetEnabledCurrencyTypesUsingGET.PartialParamMap,
+  public getEnabledCurrencyTypesByMap(
+    map: GetEnabledCurrencyTypes.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiCurrencyType>>;
-  public getEnabledCurrencyTypesUsingGETByMap(
-    map: GetEnabledCurrencyTypesUsingGET.PartialParamMap,
+  public getEnabledCurrencyTypesByMap(
+    map: GetEnabledCurrencyTypes.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getEnabledCurrencyTypesUsingGET(
+    return this.getEnabledCurrencyTypes(
+      map.query,
       map.requestType,
       map.limit,
       map.offset,
       map.sortBy,
       map.sort,
-      map.query,
       observe,
       reportProgress
     );
@@ -801,21 +795,24 @@ export class CurrencyTypeControllerService {
     /**
      * Get list of enabled supported currencies
      * 
+     * @param query 
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
-     * @param query 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getEnabledCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiCurrencyType>;
-    public getEnabledCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiCurrencyType>>;
-    public getEnabledCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiCurrencyType>>;
-    public getEnabledCurrencyTypesUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getEnabledCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiCurrencyType>;
+    public getEnabledCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiCurrencyType>>;
+    public getEnabledCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiCurrencyType>>;
+    public getEnabledCurrencyTypes(query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (query !== undefined && query !== null) {
+            queryParameters = queryParameters.set('query', <any>query);
+        }
         if (requestType !== undefined && requestType !== null) {
             queryParameters = queryParameters.set('requestType', <any>requestType);
         }
@@ -831,15 +828,12 @@ export class CurrencyTypeControllerService {
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
         }
-        if (query !== undefined && query !== null) {
-            queryParameters = queryParameters.set('query', <any>query);
-        }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -866,7 +860,7 @@ export class CurrencyTypeControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getEnabledCurrencyTypesUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getEnabledCurrencyTypes')));
         }
         return handle;
     }

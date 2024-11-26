@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,49 +22,52 @@ import { ApiPlotCoordinate } from './apiPlotCoordinate';
 import { ApiProductType } from './apiProductType';
 
 
+/**
+ * Plots in possession of the user customer (only applicable for type FARMER)
+ */
 
 export interface ApiPlot { 
-    /**
-     * The list of coordinates of the plot
-     */
-    coordinates?: Array<ApiPlotCoordinate>;
-    crop?: ApiProductType;
-    /**
-     * Date of last update
-     */
-    farmerId?: number;
-    /**
-     * The Geoid of the plot
-     */
-    geoId?: string;
     /**
      * Entity id
      */
     id?: number;
     /**
-     * Date of last update
+     * Plot name
      */
-    lastUpdated?: Date;
+    plotName?: string;
+    crop?: ApiProductType;
     /**
      * Number of plants
      */
     numberOfPlants?: number;
     /**
-     * Date of transitioning into organic production
+     * The unit in which the size of the plot is expressed
      */
-    organicStartOfTransition?: Date;
-    /**
-     * Plot name
-     */
-    plotName?: string;
+    unit?: string;
     /**
      * The total size of the plot
      */
     size?: number;
     /**
-     * The unit in which the size of the plot is expressed
+     * The Geoid of the plot
      */
-    unit?: string;
+    geoId?: string;
+    /**
+     * Date of transitioning into organic production
+     */
+    organicStartOfTransition?: Date;
+    /**
+     * The list of coordinates of the plot
+     */
+    coordinates?: Array<ApiPlotCoordinate>;
+    /**
+     * Date of last update
+     */
+    lastUpdated?: Date;
+    /**
+     * Date of last update
+     */
+    farmerId?: number;
 }
 
 /**
@@ -76,46 +79,46 @@ export namespace ApiPlot {
      */
     export enum Properties {
         /**
-         * The list of coordinates of the plot
-         */
-        coordinates = 'coordinates',
-        crop = 'crop',
-        /**
-         * Date of last update
-         */
-        farmerId = 'farmerId',
-        /**
-         * The Geoid of the plot
-         */
-        geoId = 'geoId',
-        /**
          * Entity id
          */
         id = 'id',
         /**
-         * Date of last update
+         * Plot name
          */
-        lastUpdated = 'lastUpdated',
+        plotName = 'plotName',
+        crop = 'crop',
         /**
          * Number of plants
          */
         numberOfPlants = 'numberOfPlants',
         /**
-         * Date of transitioning into organic production
+         * The unit in which the size of the plot is expressed
          */
-        organicStartOfTransition = 'organicStartOfTransition',
-        /**
-         * Plot name
-         */
-        plotName = 'plotName',
+        unit = 'unit',
         /**
          * The total size of the plot
          */
         size = 'size',
         /**
-         * The unit in which the size of the plot is expressed
+         * The Geoid of the plot
          */
-        unit = 'unit'
+        geoId = 'geoId',
+        /**
+         * Date of transitioning into organic production
+         */
+        organicStartOfTransition = 'organicStartOfTransition',
+        /**
+         * The list of coordinates of the plot
+         */
+        coordinates = 'coordinates',
+        /**
+         * Date of last update
+         */
+        lastUpdated = 'lastUpdated',
+        /**
+         * Date of last update
+         */
+        farmerId = 'farmerId'
     }
 
 
@@ -125,16 +128,26 @@ export namespace ApiPlot {
             classname: 'ApiPlot',
             vars: [
                 {
-                    metadata: ApiPlotCoordinate.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'coordinates',
+                    name: 'id',
                     classname: 'ApiPlot',
-                    dataType: 'Array&lt;ApiPlotCoordinate&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiPlotCoordinate'
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'plotName',
+                    classname: 'ApiPlot',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
                 },
                 {
                     metadata: ApiProductType.formMetadata,
@@ -152,50 +165,6 @@ export namespace ApiPlot {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'farmerId',
-                    classname: 'ApiPlot',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'geoId',
-                    classname: 'ApiPlot',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiPlot',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'lastUpdated',
-                    classname: 'ApiPlot',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'numberOfPlants',
                     classname: 'ApiPlot',
                     dataType: 'number',
@@ -207,18 +176,7 @@ export namespace ApiPlot {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'organicStartOfTransition',
-                    classname: 'ApiPlot',
-                    dataType: 'Date',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'plotName',
+                    name: 'unit',
                     classname: 'ApiPlot',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -240,36 +198,81 @@ export namespace ApiPlot {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'unit',
+                    name: 'geoId',
                     classname: 'ApiPlot',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'organicStartOfTransition',
+                    classname: 'ApiPlot',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiPlotCoordinate.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'coordinates',
+                    classname: 'ApiPlot',
+                    dataType: 'Array&lt;ApiPlotCoordinate&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiPlotCoordinate'
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'lastUpdated',
+                    classname: 'ApiPlot',
+                    dataType: 'Date',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'farmerId',
+                    classname: 'ApiPlot',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                coordinates: [
-                ],
-                crop: [
-                ],
-                farmerId: [
-                ],
-                geoId: [
-                ],
                 id: [
-                ],
-                lastUpdated: [
-                ],
-                numberOfPlants: [
-                ],
-                organicStartOfTransition: [
                 ],
                 plotName: [
                 ],
-                size: [
+                crop: [
+                ],
+                numberOfPlants: [
                 ],
                 unit: [
+                ],
+                size: [
+                ],
+                geoId: [
+                ],
+                organicStartOfTransition: [
+                ],
+                coordinates: [
+                ],
+                lastUpdated: [
+                ],
+                farmerId: [
                 ],
             }
         }
@@ -278,37 +281,37 @@ export namespace ApiPlot {
   // export const ApiPlotValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               coordinates: {
-  //                   validators: []
-  //               },
-  //               crop: {
-  //                   validators: []
-  //               },
-  //               farmerId: {
-  //                   validators: []
-  //               },
-  //               geoId: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               lastUpdated: {
-  //                   validators: []
-  //               },
-  //               numberOfPlants: {
-  //                   validators: []
-  //               },
-  //               organicStartOfTransition: {
   //                   validators: []
   //               },
   //               plotName: {
   //                   validators: []
   //               },
-  //               size: {
+  //               crop: {
+  //                   validators: []
+  //               },
+  //               numberOfPlants: {
   //                   validators: []
   //               },
   //               unit: {
+  //                   validators: []
+  //               },
+  //               size: {
+  //                   validators: []
+  //               },
+  //               geoId: {
+  //                   validators: []
+  //               },
+  //               organicStartOfTransition: {
+  //                   validators: []
+  //               },
+  //               coordinates: {
+  //                   validators: []
+  //               },
+  //               lastUpdated: {
+  //                   validators: []
+  //               },
+  //               farmerId: {
   //                   validators: []
   //               },
   //     }

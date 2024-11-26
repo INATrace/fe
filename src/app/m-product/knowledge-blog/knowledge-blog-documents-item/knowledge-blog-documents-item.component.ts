@@ -54,7 +54,7 @@ export class KnowledgeBlogDocumentsItemComponent extends GenericEditableItemComp
   onDownload() {
     let apiDoc = this.form.value as ApiDocument
     if (apiDoc && apiDoc.storageKey) {
-      let sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
+      let sub = this.commonController.getDocument(apiDoc.storageKey).subscribe(res => {
         this.fileSaverService.save(res, apiDoc.name);
         sub.unsubscribe()
       })

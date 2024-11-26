@@ -29,7 +29,7 @@ export class ConnectedCompaniesForCompanyService extends GeneralSifrantService<A
   public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiCompanyListResponse>> {
 
     const limit = params && params.limit ? params.limit : this.limit();
-    return this.companyController.getConnectedCompaniesUsingGET(this.companyId).pipe(
+    return this.companyController.getConnectedCompanies(this.companyId).pipe(
       map(resp => {
         return {
           results: resp.data.items,

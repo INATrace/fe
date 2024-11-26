@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -46,42 +46,30 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for activateUserUsingPOST.
+ * Namespace for activateUser.
  */
-export namespace ActivateUserUsingPOST {
+export namespace ActivateUser {
     /**
-     * Parameter map for activateUserUsingPOST.
+     * Parameter map for activateUser.
      */
     export interface PartialParamMap {
-      /**
-       * action
-       */
       action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN';
-      /**
-       * request
-       */
       ApiUserRole: ApiUserRole;
     }
 
     /**
-     * Enumeration of all parameters for activateUserUsingPOST.
+     * Enumeration of all parameters for activateUser.
      */
     export enum Parameters {
-      /**
-       * action
-       */
       action = 'action',
-      /**
-       * request
-       */
       ApiUserRole = 'ApiUserRole'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of activateUserUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of activateUser
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ActivateUserUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ActivateUser.PartialParamMap]?: [string, ValidatorFn][]} = {
       action: [
               ['required', Validators.required],
       ],
@@ -89,33 +77,13 @@ export namespace ActivateUserUsingPOST {
 }
 
 /**
- * Namespace for adminListUsersUsingGET.
+ * Namespace for adminListUsers.
  */
-export namespace AdminListUsersUsingGET {
+export namespace AdminListUsers {
     /**
-     * Parameter map for adminListUsersUsingGET.
+     * Parameter map for adminListUsers.
      */
     export interface PartialParamMap {
-      /**
-       * Only count, only fetch, or return both values (if null)
-       */
-      requestType?: 'COUNT' | 'FETCH';
-      /**
-       * Number of records to return. Min: 1, default: 100
-       */
-      limit?: number;
-      /**
-       * Number of records to skip before returning. Default: 0, min: 0
-       */
-      offset?: number;
-      /**
-       * Column name to be sorted by, varies for each endpoint, default is id
-       */
-      sortBy?: string;
-      /**
-       * Direction of sorting (ASC or DESC). Default DESC.
-       */
-      sort?: 'ASC' | 'DESC';
       /**
        * Status
        */
@@ -136,32 +104,32 @@ export namespace AdminListUsersUsingGET {
        * Name, surname or email
        */
       query?: string;
-    }
-
-    /**
-     * Enumeration of all parameters for adminListUsersUsingGET.
-     */
-    export enum Parameters {
       /**
        * Only count, only fetch, or return both values (if null)
        */
-      requestType = 'requestType',
+      requestType?: 'COUNT' | 'FETCH';
       /**
        * Number of records to return. Min: 1, default: 100
        */
-      limit = 'limit',
+      limit?: number;
       /**
        * Number of records to skip before returning. Default: 0, min: 0
        */
-      offset = 'offset',
+      offset?: number;
       /**
        * Column name to be sorted by, varies for each endpoint, default is id
        */
-      sortBy = 'sortBy',
+      sortBy?: string;
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort',
+      sort?: 'ASC' | 'DESC';
+    }
+
+    /**
+     * Enumeration of all parameters for adminListUsers.
+     */
+    export enum Parameters {
       /**
        * Status
        */
@@ -181,24 +149,34 @@ export namespace AdminListUsersUsingGET {
       /**
        * Name, surname or email
        */
-      query = 'query'
+      query = 'query',
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType = 'requestType',
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit = 'limit',
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset = 'offset',
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy = 'sortBy',
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort = 'sort'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of adminListUsersUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of adminListUsers
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof AdminListUsersUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      requestType: [
-      ],
-      limit: [
-      ],
-      offset: [
-      ],
-      sortBy: [
-      ],
-      sort: [
-      ],
+    export const ParamValidators: {[K in keyof AdminListUsers.PartialParamMap]?: [string, ValidatorFn][]} = {
       status: [
       ],
       role: [
@@ -209,134 +187,122 @@ export namespace AdminListUsersUsingGET {
       ],
       query: [
       ],
+      requestType: [
+      ],
+      limit: [
+              ['min', Validators.min(1)],
+      ],
+      offset: [
+              ['min', Validators.min(0)],
+      ],
+      sortBy: [
+      ],
+      sort: [
+      ],
     };
 }
 
 /**
- * Namespace for adminUpdateProfileUsingPUT.
+ * Namespace for adminUpdateProfile.
  */
-export namespace AdminUpdateProfileUsingPUT {
+export namespace AdminUpdateProfile {
     /**
-     * Parameter map for adminUpdateProfileUsingPUT.
+     * Parameter map for adminUpdateProfile.
      */
     export interface PartialParamMap {
-      /**
-       * request
-       */
       ApiAdminUserUpdate: ApiAdminUserUpdate;
     }
 
     /**
-     * Enumeration of all parameters for adminUpdateProfileUsingPUT.
+     * Enumeration of all parameters for adminUpdateProfile.
      */
     export enum Parameters {
-      /**
-       * request
-       */
       ApiAdminUserUpdate = 'ApiAdminUserUpdate'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of adminUpdateProfileUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of adminUpdateProfile
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof AdminUpdateProfileUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof AdminUpdateProfile.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for confirmEmailUsingPOST.
+ * Namespace for confirmEmail.
  */
-export namespace ConfirmEmailUsingPOST {
+export namespace ConfirmEmail {
     /**
-     * Parameter map for confirmEmailUsingPOST.
+     * Parameter map for confirmEmail.
      */
     export interface PartialParamMap {
-      /**
-       * request
-       */
       ApiToken: ApiToken;
     }
 
     /**
-     * Enumeration of all parameters for confirmEmailUsingPOST.
+     * Enumeration of all parameters for confirmEmail.
      */
     export enum Parameters {
-      /**
-       * request
-       */
       ApiToken = 'ApiToken'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of confirmEmailUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of confirmEmail
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ConfirmEmailUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ConfirmEmail.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for createUserUsingPOST.
+ * Namespace for createUser.
  */
-export namespace CreateUserUsingPOST {
+export namespace CreateUser {
     /**
-     * Parameter map for createUserUsingPOST.
+     * Parameter map for createUser.
      */
     export interface PartialParamMap {
-      /**
-       * request
-       */
       ApiCreateUserRequest: ApiCreateUserRequest;
     }
 
     /**
-     * Enumeration of all parameters for createUserUsingPOST.
+     * Enumeration of all parameters for createUser.
      */
     export enum Parameters {
-      /**
-       * request
-       */
       ApiCreateUserRequest = 'ApiCreateUserRequest'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createUserUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createUser
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateUserUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateUser.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for getProfileForAdminUsingGET.
+ * Namespace for getProfileForAdmin.
  */
-export namespace GetProfileForAdminUsingGET {
+export namespace GetProfileForAdmin {
     /**
-     * Parameter map for getProfileForAdminUsingGET.
+     * Parameter map for getProfileForAdmin.
      */
     export interface PartialParamMap {
-      /**
-       * id
-       */
       id: number;
     }
 
     /**
-     * Enumeration of all parameters for getProfileForAdminUsingGET.
+     * Enumeration of all parameters for getProfileForAdmin.
      */
     export enum Parameters {
-      /**
-       * id
-       */
       id = 'id'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getProfileForAdminUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getProfileForAdmin
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetProfileForAdminUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetProfileForAdmin.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -344,57 +310,37 @@ export namespace GetProfileForAdminUsingGET {
 }
 
 /**
- * Namespace for getProfileForUserUsingGET.
+ * Namespace for getProfileForUser.
  */
-export namespace GetProfileForUserUsingGET {
+export namespace GetProfileForUser {
     /**
-     * Parameter map for getProfileForUserUsingGET.
+     * Parameter map for getProfileForUser.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for getProfileForUserUsingGET.
+     * Enumeration of all parameters for getProfileForUser.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getProfileForUserUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getProfileForUser
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetProfileForUserUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetProfileForUser.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for listUsersUsingGET.
+ * Namespace for listUsers.
  */
-export namespace ListUsersUsingGET {
+export namespace ListUsers {
     /**
-     * Parameter map for listUsersUsingGET.
+     * Parameter map for listUsers.
      */
     export interface PartialParamMap {
-      /**
-       * Only count, only fetch, or return both values (if null)
-       */
-      requestType?: 'COUNT' | 'FETCH';
-      /**
-       * Number of records to return. Min: 1, default: 100
-       */
-      limit?: number;
-      /**
-       * Number of records to skip before returning. Default: 0, min: 0
-       */
-      offset?: number;
-      /**
-       * Column name to be sorted by, varies for each endpoint, default is id
-       */
-      sortBy?: string;
-      /**
-       * Direction of sorting (ASC or DESC). Default DESC.
-       */
-      sort?: 'ASC' | 'DESC';
       /**
        * Status
        */
@@ -415,32 +361,32 @@ export namespace ListUsersUsingGET {
        * Name, surname or email
        */
       query?: string;
-    }
-
-    /**
-     * Enumeration of all parameters for listUsersUsingGET.
-     */
-    export enum Parameters {
       /**
        * Only count, only fetch, or return both values (if null)
        */
-      requestType = 'requestType',
+      requestType?: 'COUNT' | 'FETCH';
       /**
        * Number of records to return. Min: 1, default: 100
        */
-      limit = 'limit',
+      limit?: number;
       /**
        * Number of records to skip before returning. Default: 0, min: 0
        */
-      offset = 'offset',
+      offset?: number;
       /**
        * Column name to be sorted by, varies for each endpoint, default is id
        */
-      sortBy = 'sortBy',
+      sortBy?: string;
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort',
+      sort?: 'ASC' | 'DESC';
+    }
+
+    /**
+     * Enumeration of all parameters for listUsers.
+     */
+    export enum Parameters {
       /**
        * Status
        */
@@ -460,24 +406,34 @@ export namespace ListUsersUsingGET {
       /**
        * Name, surname or email
        */
-      query = 'query'
+      query = 'query',
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType = 'requestType',
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit = 'limit',
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset = 'offset',
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy = 'sortBy',
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort = 'sort'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of listUsersUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of listUsers
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ListUsersUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      requestType: [
-      ],
-      limit: [
-      ],
-      offset: [
-      ],
-      sortBy: [
-      ],
-      sort: [
-      ],
+    export const ParamValidators: {[K in keyof ListUsers.PartialParamMap]?: [string, ValidatorFn][]} = {
       status: [
       ],
       role: [
@@ -488,117 +444,103 @@ export namespace ListUsersUsingGET {
       ],
       query: [
       ],
+      requestType: [
+      ],
+      limit: [
+              ['min', Validators.min(1)],
+      ],
+      offset: [
+              ['min', Validators.min(0)],
+      ],
+      sortBy: [
+      ],
+      sort: [
+      ],
     };
 }
 
 /**
- * Namespace for loginUsingPOST.
+ * Namespace for login.
  */
-export namespace LoginUsingPOST {
+export namespace Login {
     /**
-     * Parameter map for loginUsingPOST.
+     * Parameter map for login.
      */
     export interface PartialParamMap {
-      /**
-       * request
-       */
       ApiLoginRequest: ApiLoginRequest;
     }
 
     /**
-     * Enumeration of all parameters for loginUsingPOST.
+     * Enumeration of all parameters for login.
      */
     export enum Parameters {
-      /**
-       * request
-       */
       ApiLoginRequest = 'ApiLoginRequest'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of loginUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of login
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof LoginUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof Login.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for logoutUsingPOST.
+ * Namespace for logout.
  */
-export namespace LogoutUsingPOST {
+export namespace Logout {
     /**
-     * Parameter map for logoutUsingPOST.
+     * Parameter map for logout.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for logoutUsingPOST.
+     * Enumeration of all parameters for logout.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of logoutUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of logout
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof LogoutUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof Logout.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for refreshAuthenticationUsingPOST.
+ * Namespace for refreshAuthentication.
  */
-export namespace RefreshAuthenticationUsingPOST {
+export namespace RefreshAuthentication {
     /**
-     * Parameter map for refreshAuthenticationUsingPOST.
+     * Parameter map for refreshAuthentication.
      */
     export interface PartialParamMap {
     }
 
     /**
-     * Enumeration of all parameters for refreshAuthenticationUsingPOST.
+     * Enumeration of all parameters for refreshAuthentication.
      */
     export enum Parameters {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of refreshAuthenticationUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of refreshAuthentication
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof RefreshAuthenticationUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof RefreshAuthentication.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for regionalAdminListUsersUsingGET.
+ * Namespace for regionalAdminListUsers.
  */
-export namespace RegionalAdminListUsersUsingGET {
+export namespace RegionalAdminListUsers {
     /**
-     * Parameter map for regionalAdminListUsersUsingGET.
+     * Parameter map for regionalAdminListUsers.
      */
     export interface PartialParamMap {
-      /**
-       * Only count, only fetch, or return both values (if null)
-       */
-      requestType?: 'COUNT' | 'FETCH';
-      /**
-       * Number of records to return. Min: 1, default: 100
-       */
-      limit?: number;
-      /**
-       * Number of records to skip before returning. Default: 0, min: 0
-       */
-      offset?: number;
-      /**
-       * Column name to be sorted by, varies for each endpoint, default is id
-       */
-      sortBy?: string;
-      /**
-       * Direction of sorting (ASC or DESC). Default DESC.
-       */
-      sort?: 'ASC' | 'DESC';
       /**
        * Status
        */
@@ -619,32 +561,32 @@ export namespace RegionalAdminListUsersUsingGET {
        * Name, surname or email
        */
       query?: string;
-    }
-
-    /**
-     * Enumeration of all parameters for regionalAdminListUsersUsingGET.
-     */
-    export enum Parameters {
       /**
        * Only count, only fetch, or return both values (if null)
        */
-      requestType = 'requestType',
+      requestType?: 'COUNT' | 'FETCH';
       /**
        * Number of records to return. Min: 1, default: 100
        */
-      limit = 'limit',
+      limit?: number;
       /**
        * Number of records to skip before returning. Default: 0, min: 0
        */
-      offset = 'offset',
+      offset?: number;
       /**
        * Column name to be sorted by, varies for each endpoint, default is id
        */
-      sortBy = 'sortBy',
+      sortBy?: string;
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort',
+      sort?: 'ASC' | 'DESC';
+    }
+
+    /**
+     * Enumeration of all parameters for regionalAdminListUsers.
+     */
+    export enum Parameters {
       /**
        * Status
        */
@@ -664,24 +606,34 @@ export namespace RegionalAdminListUsersUsingGET {
       /**
        * Name, surname or email
        */
-      query = 'query'
+      query = 'query',
+      /**
+       * Only count, only fetch, or return both values (if null)
+       */
+      requestType = 'requestType',
+      /**
+       * Number of records to return. Min: 1, default: 100
+       */
+      limit = 'limit',
+      /**
+       * Number of records to skip before returning. Default: 0, min: 0
+       */
+      offset = 'offset',
+      /**
+       * Column name to be sorted by, varies for each endpoint, default is id
+       */
+      sortBy = 'sortBy',
+      /**
+       * Direction of sorting (ASC or DESC). Default DESC.
+       */
+      sort = 'sort'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of regionalAdminListUsersUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of regionalAdminListUsers
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof RegionalAdminListUsersUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      requestType: [
-      ],
-      limit: [
-      ],
-      offset: [
-      ],
-      sortBy: [
-      ],
-      sort: [
-      ],
+    export const ParamValidators: {[K in keyof RegionalAdminListUsers.PartialParamMap]?: [string, ValidatorFn][]} = {
       status: [
       ],
       role: [
@@ -692,102 +644,96 @@ export namespace RegionalAdminListUsersUsingGET {
       ],
       query: [
       ],
+      requestType: [
+      ],
+      limit: [
+              ['min', Validators.min(1)],
+      ],
+      offset: [
+              ['min', Validators.min(0)],
+      ],
+      sortBy: [
+      ],
+      sort: [
+      ],
     };
 }
 
 /**
- * Namespace for requestResetPasswordUsingPOST.
+ * Namespace for requestResetPassword.
  */
-export namespace RequestResetPasswordUsingPOST {
+export namespace RequestResetPassword {
     /**
-     * Parameter map for requestResetPasswordUsingPOST.
+     * Parameter map for requestResetPassword.
      */
     export interface PartialParamMap {
-      /**
-       * request
-       */
       ApiEmail: ApiEmail;
     }
 
     /**
-     * Enumeration of all parameters for requestResetPasswordUsingPOST.
+     * Enumeration of all parameters for requestResetPassword.
      */
     export enum Parameters {
-      /**
-       * request
-       */
       ApiEmail = 'ApiEmail'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of requestResetPasswordUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of requestResetPassword
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof RequestResetPasswordUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof RequestResetPassword.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for resetPasswordUsingPOST.
+ * Namespace for resetPassword.
  */
-export namespace ResetPasswordUsingPOST {
+export namespace ResetPassword {
     /**
-     * Parameter map for resetPasswordUsingPOST.
+     * Parameter map for resetPassword.
      */
     export interface PartialParamMap {
-      /**
-       * request
-       */
       ApiResetPasswordRequest: ApiResetPasswordRequest;
     }
 
     /**
-     * Enumeration of all parameters for resetPasswordUsingPOST.
+     * Enumeration of all parameters for resetPassword.
      */
     export enum Parameters {
-      /**
-       * request
-       */
       ApiResetPasswordRequest = 'ApiResetPasswordRequest'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of resetPasswordUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of resetPassword
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ResetPasswordUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ResetPassword.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for updateProfileUsingPUT.
+ * Namespace for updateProfile.
  */
-export namespace UpdateProfileUsingPUT {
+export namespace UpdateProfile {
     /**
-     * Parameter map for updateProfileUsingPUT.
+     * Parameter map for updateProfile.
      */
     export interface PartialParamMap {
-      /**
-       * request
-       */
       ApiUserUpdate: ApiUserUpdate;
     }
 
     /**
-     * Enumeration of all parameters for updateProfileUsingPUT.
+     * Enumeration of all parameters for updateProfile.
      */
     export enum Parameters {
-      /**
-       * request
-       */
       ApiUserUpdate = 'ApiUserUpdate'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of updateProfileUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of updateProfile
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof UpdateProfileUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof UpdateProfile.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
@@ -835,23 +781,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public activateUserUsingPOSTByMap(
-    map: ActivateUserUsingPOST.PartialParamMap,
+  public activateUserByMap(
+    map: ActivateUser.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public activateUserUsingPOSTByMap(
-    map: ActivateUserUsingPOST.PartialParamMap,
+  public activateUserByMap(
+    map: ActivateUser.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public activateUserUsingPOSTByMap(
-    map: ActivateUserUsingPOST.PartialParamMap,
+  public activateUserByMap(
+    map: ActivateUser.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public activateUserUsingPOSTByMap(
-    map: ActivateUserUsingPOST.PartialParamMap,
+  public activateUserByMap(
+    map: ActivateUser.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.activateUserUsingPOST(
+    return this.activateUser(
       map.action,
       map.ApiUserRole,
       observe,
@@ -863,27 +809,27 @@ export class UserControllerService {
     /**
      * Execute user (status, role) action. Must be a System admin or Regional admin (Regional admin has limited actions available)
      * 
-     * @param action action
-     * @param ApiUserRole request
+     * @param action 
+     * @param ApiUserRole 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN', ApiUserRole: ApiUserRole, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN', ApiUserRole: ApiUserRole, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN', ApiUserRole: ApiUserRole, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public activateUserUsingPOST(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN', ApiUserRole: ApiUserRole, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public activateUser(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN', ApiUserRole: ApiUserRole, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public activateUser(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN', ApiUserRole: ApiUserRole, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public activateUser(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN', ApiUserRole: ApiUserRole, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public activateUser(action: 'VIEW_USER_PROFILE' | 'CREATE_COMPANY' | 'UPDATE_USER_PROFILE' | 'ACTIVATE_USER' | 'CONFIRM_USER_EMAIL' | 'DEACTIVATE_USER' | 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN', ApiUserRole: ApiUserRole, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (action === null || action === undefined) {
-            throw new Error('Required parameter action was null or undefined when calling activateUserUsingPOST.');
+            throw new Error('Required parameter action was null or undefined when calling activateUser.');
         }
         if (ApiUserRole === null || ApiUserRole === undefined) {
-            throw new Error('Required parameter ApiUserRole was null or undefined when calling activateUserUsingPOST.');
+            throw new Error('Required parameter ApiUserRole was null or undefined when calling activateUser.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -915,7 +861,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'activateUserUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'activateUser')));
         }
         return handle;
     }
@@ -928,33 +874,33 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public adminListUsersUsingGETByMap(
-    map: AdminListUsersUsingGET.PartialParamMap,
+  public adminListUsersByMap(
+    map: AdminListUsers.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiUserBase>;
-  public adminListUsersUsingGETByMap(
-    map: AdminListUsersUsingGET.PartialParamMap,
+  public adminListUsersByMap(
+    map: AdminListUsers.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
-  public adminListUsersUsingGETByMap(
-    map: AdminListUsersUsingGET.PartialParamMap,
+  public adminListUsersByMap(
+    map: AdminListUsers.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
-  public adminListUsersUsingGETByMap(
-    map: AdminListUsersUsingGET.PartialParamMap,
+  public adminListUsersByMap(
+    map: AdminListUsers.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.adminListUsersUsingGET(
-      map.requestType,
-      map.limit,
-      map.offset,
-      map.sortBy,
-      map.sort,
+    return this.adminListUsers(
       map.status,
       map.role,
       map.email,
       map.surname,
       map.query,
+      map.requestType,
+      map.limit,
+      map.offset,
+      map.sortBy,
+      map.sort,
       observe,
       reportProgress
     );
@@ -964,40 +910,25 @@ export class UserControllerService {
     /**
      * Lists all users. Must be an administrator. Sorting: email, surname or default
      * 
-     * @param requestType Only count, only fetch, or return both values (if null)
-     * @param limit Number of records to return. Min: 1, default: 100
-     * @param offset Number of records to skip before returning. Default: 0, min: 0
-     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
-     * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param status Status
      * @param role User role
      * @param email Email
      * @param surname Surname
      * @param query Name, surname or email
+     * @param requestType Only count, only fetch, or return both values (if null)
+     * @param limit Number of records to return. Min: 1, default: 100
+     * @param offset Number of records to skip before returning. Default: 0, min: 0
+     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
+     * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
-    public adminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public adminListUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
+    public adminListUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
+    public adminListUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
+    public adminListUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (requestType !== undefined && requestType !== null) {
-            queryParameters = queryParameters.set('requestType', <any>requestType);
-        }
-        if (limit !== undefined && limit !== null) {
-            queryParameters = queryParameters.set('limit', <any>limit);
-        }
-        if (offset !== undefined && offset !== null) {
-            queryParameters = queryParameters.set('offset', <any>offset);
-        }
-        if (sortBy !== undefined && sortBy !== null) {
-            queryParameters = queryParameters.set('sortBy', <any>sortBy);
-        }
-        if (sort !== undefined && sort !== null) {
-            queryParameters = queryParameters.set('sort', <any>sort);
-        }
         if (status !== undefined && status !== null) {
             queryParameters = queryParameters.set('status', <any>status);
         }
@@ -1013,12 +944,27 @@ export class UserControllerService {
         if (query !== undefined && query !== null) {
             queryParameters = queryParameters.set('query', <any>query);
         }
+        if (requestType !== undefined && requestType !== null) {
+            queryParameters = queryParameters.set('requestType', <any>requestType);
+        }
+        if (limit !== undefined && limit !== null) {
+            queryParameters = queryParameters.set('limit', <any>limit);
+        }
+        if (offset !== undefined && offset !== null) {
+            queryParameters = queryParameters.set('offset', <any>offset);
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+            queryParameters = queryParameters.set('sortBy', <any>sortBy);
+        }
+        if (sort !== undefined && sort !== null) {
+            queryParameters = queryParameters.set('sort', <any>sort);
+        }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1045,7 +991,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'adminListUsersUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'adminListUsers')));
         }
         return handle;
     }
@@ -1058,23 +1004,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public adminUpdateProfileUsingPUTByMap(
-    map: AdminUpdateProfileUsingPUT.PartialParamMap,
+  public adminUpdateProfileByMap(
+    map: AdminUpdateProfile.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public adminUpdateProfileUsingPUTByMap(
-    map: AdminUpdateProfileUsingPUT.PartialParamMap,
+  public adminUpdateProfileByMap(
+    map: AdminUpdateProfile.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public adminUpdateProfileUsingPUTByMap(
-    map: AdminUpdateProfileUsingPUT.PartialParamMap,
+  public adminUpdateProfileByMap(
+    map: AdminUpdateProfile.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public adminUpdateProfileUsingPUTByMap(
-    map: AdminUpdateProfileUsingPUT.PartialParamMap,
+  public adminUpdateProfileByMap(
+    map: AdminUpdateProfile.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.adminUpdateProfileUsingPUT(
+    return this.adminUpdateProfile(
       map.ApiAdminUserUpdate,
       observe,
       reportProgress
@@ -1085,23 +1031,23 @@ export class UserControllerService {
     /**
      * Update profile of a user. Must be admin
      * 
-     * @param ApiAdminUserUpdate request
+     * @param ApiAdminUserUpdate 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public adminUpdateProfileUsingPUT(ApiAdminUserUpdate: ApiAdminUserUpdate, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public adminUpdateProfileUsingPUT(ApiAdminUserUpdate: ApiAdminUserUpdate, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public adminUpdateProfileUsingPUT(ApiAdminUserUpdate: ApiAdminUserUpdate, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public adminUpdateProfileUsingPUT(ApiAdminUserUpdate: ApiAdminUserUpdate, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public adminUpdateProfile(ApiAdminUserUpdate: ApiAdminUserUpdate, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public adminUpdateProfile(ApiAdminUserUpdate: ApiAdminUserUpdate, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public adminUpdateProfile(ApiAdminUserUpdate: ApiAdminUserUpdate, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public adminUpdateProfile(ApiAdminUserUpdate: ApiAdminUserUpdate, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiAdminUserUpdate === null || ApiAdminUserUpdate === undefined) {
-            throw new Error('Required parameter ApiAdminUserUpdate was null or undefined when calling adminUpdateProfileUsingPUT.');
+            throw new Error('Required parameter ApiAdminUserUpdate was null or undefined when calling adminUpdateProfile.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1133,7 +1079,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'adminUpdateProfileUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'adminUpdateProfile')));
         }
         return handle;
     }
@@ -1146,23 +1092,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public confirmEmailUsingPOSTByMap(
-    map: ConfirmEmailUsingPOST.PartialParamMap,
+  public confirmEmailByMap(
+    map: ConfirmEmail.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public confirmEmailUsingPOSTByMap(
-    map: ConfirmEmailUsingPOST.PartialParamMap,
+  public confirmEmailByMap(
+    map: ConfirmEmail.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public confirmEmailUsingPOSTByMap(
-    map: ConfirmEmailUsingPOST.PartialParamMap,
+  public confirmEmailByMap(
+    map: ConfirmEmail.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public confirmEmailUsingPOSTByMap(
-    map: ConfirmEmailUsingPOST.PartialParamMap,
+  public confirmEmailByMap(
+    map: ConfirmEmail.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.confirmEmailUsingPOST(
+    return this.confirmEmail(
       map.ApiToken,
       observe,
       reportProgress
@@ -1173,23 +1119,23 @@ export class UserControllerService {
     /**
      * Confirms email with a token and logs-in the user
      * 
-     * @param ApiToken request
+     * @param ApiToken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public confirmEmailUsingPOST(ApiToken: ApiToken, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public confirmEmailUsingPOST(ApiToken: ApiToken, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public confirmEmailUsingPOST(ApiToken: ApiToken, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public confirmEmailUsingPOST(ApiToken: ApiToken, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public confirmEmail(ApiToken: ApiToken, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public confirmEmail(ApiToken: ApiToken, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public confirmEmail(ApiToken: ApiToken, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public confirmEmail(ApiToken: ApiToken, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiToken === null || ApiToken === undefined) {
-            throw new Error('Required parameter ApiToken was null or undefined when calling confirmEmailUsingPOST.');
+            throw new Error('Required parameter ApiToken was null or undefined when calling confirmEmail.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1221,7 +1167,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'confirmEmailUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'confirmEmail')));
         }
         return handle;
     }
@@ -1234,23 +1180,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createUserUsingPOSTByMap(
-    map: CreateUserUsingPOST.PartialParamMap,
+  public createUserByMap(
+    map: CreateUser.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public createUserUsingPOSTByMap(
-    map: CreateUserUsingPOST.PartialParamMap,
+  public createUserByMap(
+    map: CreateUser.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public createUserUsingPOSTByMap(
-    map: CreateUserUsingPOST.PartialParamMap,
+  public createUserByMap(
+    map: CreateUser.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public createUserUsingPOSTByMap(
-    map: CreateUserUsingPOST.PartialParamMap,
+  public createUserByMap(
+    map: CreateUser.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createUserUsingPOST(
+    return this.createUser(
       map.ApiCreateUserRequest,
       observe,
       reportProgress
@@ -1261,23 +1207,23 @@ export class UserControllerService {
     /**
      * Create a new user (not activated)
      * 
-     * @param ApiCreateUserRequest request
+     * @param ApiCreateUserRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createUserUsingPOST(ApiCreateUserRequest: ApiCreateUserRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public createUserUsingPOST(ApiCreateUserRequest: ApiCreateUserRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public createUserUsingPOST(ApiCreateUserRequest: ApiCreateUserRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public createUserUsingPOST(ApiCreateUserRequest: ApiCreateUserRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createUser(ApiCreateUserRequest: ApiCreateUserRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public createUser(ApiCreateUserRequest: ApiCreateUserRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public createUser(ApiCreateUserRequest: ApiCreateUserRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public createUser(ApiCreateUserRequest: ApiCreateUserRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiCreateUserRequest === null || ApiCreateUserRequest === undefined) {
-            throw new Error('Required parameter ApiCreateUserRequest was null or undefined when calling createUserUsingPOST.');
+            throw new Error('Required parameter ApiCreateUserRequest was null or undefined when calling createUser.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1309,7 +1255,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createUserUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createUser')));
         }
         return handle;
     }
@@ -1322,23 +1268,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getProfileForAdminUsingGETByMap(
-    map: GetProfileForAdminUsingGET.PartialParamMap,
+  public getProfileForAdminByMap(
+    map: GetProfileForAdmin.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiUser>;
-  public getProfileForAdminUsingGETByMap(
-    map: GetProfileForAdminUsingGET.PartialParamMap,
+  public getProfileForAdminByMap(
+    map: GetProfileForAdmin.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiUser>>;
-  public getProfileForAdminUsingGETByMap(
-    map: GetProfileForAdminUsingGET.PartialParamMap,
+  public getProfileForAdminByMap(
+    map: GetProfileForAdmin.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiUser>>;
-  public getProfileForAdminUsingGETByMap(
-    map: GetProfileForAdminUsingGET.PartialParamMap,
+  public getProfileForAdminByMap(
+    map: GetProfileForAdmin.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getProfileForAdminUsingGET(
+    return this.getProfileForAdmin(
       map.id,
       observe,
       reportProgress
@@ -1349,23 +1295,23 @@ export class UserControllerService {
     /**
      * Get profile of a user. Must be an administrator
      * 
-     * @param id id
+     * @param id 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProfileForAdminUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUser>;
-    public getProfileForAdminUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUser>>;
-    public getProfileForAdminUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUser>>;
-    public getProfileForAdminUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProfileForAdmin(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUser>;
+    public getProfileForAdmin(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUser>>;
+    public getProfileForAdmin(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUser>>;
+    public getProfileForAdmin(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getProfileForAdminUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling getProfileForAdmin.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1391,7 +1337,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProfileForAdminUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProfileForAdmin')));
         }
         return handle;
     }
@@ -1404,23 +1350,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getProfileForUserUsingGETByMap(
-    map: GetProfileForUserUsingGET.PartialParamMap,
+  public getProfileForUserByMap(
+    map: GetProfileForUser.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiUserGet>;
-  public getProfileForUserUsingGETByMap(
-    map: GetProfileForUserUsingGET.PartialParamMap,
+  public getProfileForUserByMap(
+    map: GetProfileForUser.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiUserGet>>;
-  public getProfileForUserUsingGETByMap(
-    map: GetProfileForUserUsingGET.PartialParamMap,
+  public getProfileForUserByMap(
+    map: GetProfileForUser.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiUserGet>>;
-  public getProfileForUserUsingGETByMap(
-    map: GetProfileForUserUsingGET.PartialParamMap,
+  public getProfileForUserByMap(
+    map: GetProfileForUser.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getProfileForUserUsingGET(
+    return this.getProfileForUser(
       observe,
       reportProgress
     );
@@ -1433,16 +1379,16 @@ export class UserControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProfileForUserUsingGET(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUserGet>;
-    public getProfileForUserUsingGET(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUserGet>>;
-    public getProfileForUserUsingGET(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUserGet>>;
-    public getProfileForUserUsingGET(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProfileForUser(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiUserGet>;
+    public getProfileForUser(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiUserGet>>;
+    public getProfileForUser(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiUserGet>>;
+    public getProfileForUser(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1468,7 +1414,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProfileForUserUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProfileForUser')));
         }
         return handle;
     }
@@ -1481,33 +1427,33 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public listUsersUsingGETByMap(
-    map: ListUsersUsingGET.PartialParamMap,
+  public listUsersByMap(
+    map: ListUsers.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiUserBase>;
-  public listUsersUsingGETByMap(
-    map: ListUsersUsingGET.PartialParamMap,
+  public listUsersByMap(
+    map: ListUsers.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
-  public listUsersUsingGETByMap(
-    map: ListUsersUsingGET.PartialParamMap,
+  public listUsersByMap(
+    map: ListUsers.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
-  public listUsersUsingGETByMap(
-    map: ListUsersUsingGET.PartialParamMap,
+  public listUsersByMap(
+    map: ListUsers.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.listUsersUsingGET(
-      map.requestType,
-      map.limit,
-      map.offset,
-      map.sortBy,
-      map.sort,
+    return this.listUsers(
       map.status,
       map.role,
       map.email,
       map.surname,
       map.query,
+      map.requestType,
+      map.limit,
+      map.offset,
+      map.sortBy,
+      map.sort,
       observe,
       reportProgress
     );
@@ -1517,40 +1463,25 @@ export class UserControllerService {
     /**
      * Lists all users in the logged-in user&#39;s companies
      * 
-     * @param requestType Only count, only fetch, or return both values (if null)
-     * @param limit Number of records to return. Min: 1, default: 100
-     * @param offset Number of records to skip before returning. Default: 0, min: 0
-     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
-     * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param status Status
      * @param role User role
      * @param email Email
      * @param surname Surname
      * @param query Name, surname or email
+     * @param requestType Only count, only fetch, or return both values (if null)
+     * @param limit Number of records to return. Min: 1, default: 100
+     * @param offset Number of records to skip before returning. Default: 0, min: 0
+     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
+     * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
-    public listUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
+    public listUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
+    public listUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
+    public listUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (requestType !== undefined && requestType !== null) {
-            queryParameters = queryParameters.set('requestType', <any>requestType);
-        }
-        if (limit !== undefined && limit !== null) {
-            queryParameters = queryParameters.set('limit', <any>limit);
-        }
-        if (offset !== undefined && offset !== null) {
-            queryParameters = queryParameters.set('offset', <any>offset);
-        }
-        if (sortBy !== undefined && sortBy !== null) {
-            queryParameters = queryParameters.set('sortBy', <any>sortBy);
-        }
-        if (sort !== undefined && sort !== null) {
-            queryParameters = queryParameters.set('sort', <any>sort);
-        }
         if (status !== undefined && status !== null) {
             queryParameters = queryParameters.set('status', <any>status);
         }
@@ -1566,12 +1497,27 @@ export class UserControllerService {
         if (query !== undefined && query !== null) {
             queryParameters = queryParameters.set('query', <any>query);
         }
+        if (requestType !== undefined && requestType !== null) {
+            queryParameters = queryParameters.set('requestType', <any>requestType);
+        }
+        if (limit !== undefined && limit !== null) {
+            queryParameters = queryParameters.set('limit', <any>limit);
+        }
+        if (offset !== undefined && offset !== null) {
+            queryParameters = queryParameters.set('offset', <any>offset);
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+            queryParameters = queryParameters.set('sortBy', <any>sortBy);
+        }
+        if (sort !== undefined && sort !== null) {
+            queryParameters = queryParameters.set('sort', <any>sort);
+        }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1598,7 +1544,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listUsersUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listUsers')));
         }
         return handle;
     }
@@ -1611,23 +1557,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public loginUsingPOSTByMap(
-    map: LoginUsingPOST.PartialParamMap,
+  public loginByMap(
+    map: Login.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public loginUsingPOSTByMap(
-    map: LoginUsingPOST.PartialParamMap,
+  public loginByMap(
+    map: Login.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public loginUsingPOSTByMap(
-    map: LoginUsingPOST.PartialParamMap,
+  public loginByMap(
+    map: Login.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public loginUsingPOSTByMap(
-    map: LoginUsingPOST.PartialParamMap,
+  public loginByMap(
+    map: Login.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.loginUsingPOST(
+    return this.login(
       map.ApiLoginRequest,
       observe,
       reportProgress
@@ -1638,23 +1584,23 @@ export class UserControllerService {
     /**
      * Logs in a user
      * 
-     * @param ApiLoginRequest request
+     * @param ApiLoginRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public loginUsingPOST(ApiLoginRequest: ApiLoginRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public loginUsingPOST(ApiLoginRequest: ApiLoginRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public loginUsingPOST(ApiLoginRequest: ApiLoginRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public loginUsingPOST(ApiLoginRequest: ApiLoginRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public login(ApiLoginRequest: ApiLoginRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public login(ApiLoginRequest: ApiLoginRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public login(ApiLoginRequest: ApiLoginRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public login(ApiLoginRequest: ApiLoginRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiLoginRequest === null || ApiLoginRequest === undefined) {
-            throw new Error('Required parameter ApiLoginRequest was null or undefined when calling loginUsingPOST.');
+            throw new Error('Required parameter ApiLoginRequest was null or undefined when calling login.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1686,7 +1632,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'loginUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'login')));
         }
         return handle;
     }
@@ -1699,23 +1645,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public logoutUsingPOSTByMap(
-    map: LogoutUsingPOST.PartialParamMap,
+  public logoutByMap(
+    map: Logout.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public logoutUsingPOSTByMap(
-    map: LogoutUsingPOST.PartialParamMap,
+  public logoutByMap(
+    map: Logout.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public logoutUsingPOSTByMap(
-    map: LogoutUsingPOST.PartialParamMap,
+  public logoutByMap(
+    map: Logout.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public logoutUsingPOSTByMap(
-    map: LogoutUsingPOST.PartialParamMap,
+  public logoutByMap(
+    map: Logout.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.logoutUsingPOST(
+    return this.logout(
       observe,
       reportProgress
     );
@@ -1728,16 +1674,16 @@ export class UserControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public logoutUsingPOST(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public logoutUsingPOST(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public logoutUsingPOST(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public logoutUsingPOST(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public logout(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public logout(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public logout(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public logout(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1764,7 +1710,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'logoutUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'logout')));
         }
         return handle;
     }
@@ -1777,23 +1723,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public refreshAuthenticationUsingPOSTByMap(
-    map: RefreshAuthenticationUsingPOST.PartialParamMap,
+  public refreshAuthenticationByMap(
+    map: RefreshAuthentication.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public refreshAuthenticationUsingPOSTByMap(
-    map: RefreshAuthenticationUsingPOST.PartialParamMap,
+  public refreshAuthenticationByMap(
+    map: RefreshAuthentication.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public refreshAuthenticationUsingPOSTByMap(
-    map: RefreshAuthenticationUsingPOST.PartialParamMap,
+  public refreshAuthenticationByMap(
+    map: RefreshAuthentication.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public refreshAuthenticationUsingPOSTByMap(
-    map: RefreshAuthenticationUsingPOST.PartialParamMap,
+  public refreshAuthenticationByMap(
+    map: RefreshAuthentication.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.refreshAuthenticationUsingPOST(
+    return this.refreshAuthentication(
       observe,
       reportProgress
     );
@@ -1806,16 +1752,16 @@ export class UserControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public refreshAuthenticationUsingPOST(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public refreshAuthenticationUsingPOST(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public refreshAuthenticationUsingPOST(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public refreshAuthenticationUsingPOST(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public refreshAuthentication(observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public refreshAuthentication(observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public refreshAuthentication(observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public refreshAuthentication(observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1842,7 +1788,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'refreshAuthenticationUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'refreshAuthentication')));
         }
         return handle;
     }
@@ -1855,33 +1801,33 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public regionalAdminListUsersUsingGETByMap(
-    map: RegionalAdminListUsersUsingGET.PartialParamMap,
+  public regionalAdminListUsersByMap(
+    map: RegionalAdminListUsers.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiUserBase>;
-  public regionalAdminListUsersUsingGETByMap(
-    map: RegionalAdminListUsersUsingGET.PartialParamMap,
+  public regionalAdminListUsersByMap(
+    map: RegionalAdminListUsers.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
-  public regionalAdminListUsersUsingGETByMap(
-    map: RegionalAdminListUsersUsingGET.PartialParamMap,
+  public regionalAdminListUsersByMap(
+    map: RegionalAdminListUsers.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
-  public regionalAdminListUsersUsingGETByMap(
-    map: RegionalAdminListUsersUsingGET.PartialParamMap,
+  public regionalAdminListUsersByMap(
+    map: RegionalAdminListUsers.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.regionalAdminListUsersUsingGET(
-      map.requestType,
-      map.limit,
-      map.offset,
-      map.sortBy,
-      map.sort,
+    return this.regionalAdminListUsers(
       map.status,
       map.role,
       map.email,
       map.surname,
       map.query,
+      map.requestType,
+      map.limit,
+      map.offset,
+      map.sortBy,
+      map.sort,
       observe,
       reportProgress
     );
@@ -1891,40 +1837,25 @@ export class UserControllerService {
     /**
      * Lists all available users for the requesting Regional admin. It also contains all users that are not yet part of any company.
      * 
-     * @param requestType Only count, only fetch, or return both values (if null)
-     * @param limit Number of records to return. Min: 1, default: 100
-     * @param offset Number of records to skip before returning. Default: 0, min: 0
-     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
-     * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param status Status
      * @param role User role
      * @param email Email
      * @param surname Surname
      * @param query Name, surname or email
+     * @param requestType Only count, only fetch, or return both values (if null)
+     * @param limit Number of records to return. Min: 1, default: 100
+     * @param offset Number of records to skip before returning. Default: 0, min: 0
+     * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
+     * @param sort Direction of sorting (ASC or DESC). Default DESC.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public regionalAdminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
-    public regionalAdminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
-    public regionalAdminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
-    public regionalAdminListUsersUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public regionalAdminListUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiUserBase>;
+    public regionalAdminListUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiUserBase>>;
+    public regionalAdminListUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiUserBase>>;
+    public regionalAdminListUsers(status?: 'UNCONFIRMED' | 'CONFIRMED_EMAIL' | 'ACTIVE' | 'DEACTIVATED', role?: 'USER' | 'SYSTEM_ADMIN' | 'REGIONAL_ADMIN', email?: string, surname?: string, query?: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (requestType !== undefined && requestType !== null) {
-            queryParameters = queryParameters.set('requestType', <any>requestType);
-        }
-        if (limit !== undefined && limit !== null) {
-            queryParameters = queryParameters.set('limit', <any>limit);
-        }
-        if (offset !== undefined && offset !== null) {
-            queryParameters = queryParameters.set('offset', <any>offset);
-        }
-        if (sortBy !== undefined && sortBy !== null) {
-            queryParameters = queryParameters.set('sortBy', <any>sortBy);
-        }
-        if (sort !== undefined && sort !== null) {
-            queryParameters = queryParameters.set('sort', <any>sort);
-        }
         if (status !== undefined && status !== null) {
             queryParameters = queryParameters.set('status', <any>status);
         }
@@ -1940,12 +1871,27 @@ export class UserControllerService {
         if (query !== undefined && query !== null) {
             queryParameters = queryParameters.set('query', <any>query);
         }
+        if (requestType !== undefined && requestType !== null) {
+            queryParameters = queryParameters.set('requestType', <any>requestType);
+        }
+        if (limit !== undefined && limit !== null) {
+            queryParameters = queryParameters.set('limit', <any>limit);
+        }
+        if (offset !== undefined && offset !== null) {
+            queryParameters = queryParameters.set('offset', <any>offset);
+        }
+        if (sortBy !== undefined && sortBy !== null) {
+            queryParameters = queryParameters.set('sortBy', <any>sortBy);
+        }
+        if (sort !== undefined && sort !== null) {
+            queryParameters = queryParameters.set('sort', <any>sort);
+        }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1972,7 +1918,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'regionalAdminListUsersUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'regionalAdminListUsers')));
         }
         return handle;
     }
@@ -1985,23 +1931,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public requestResetPasswordUsingPOSTByMap(
-    map: RequestResetPasswordUsingPOST.PartialParamMap,
+  public requestResetPasswordByMap(
+    map: RequestResetPassword.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public requestResetPasswordUsingPOSTByMap(
-    map: RequestResetPasswordUsingPOST.PartialParamMap,
+  public requestResetPasswordByMap(
+    map: RequestResetPassword.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public requestResetPasswordUsingPOSTByMap(
-    map: RequestResetPasswordUsingPOST.PartialParamMap,
+  public requestResetPasswordByMap(
+    map: RequestResetPassword.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public requestResetPasswordUsingPOSTByMap(
-    map: RequestResetPasswordUsingPOST.PartialParamMap,
+  public requestResetPasswordByMap(
+    map: RequestResetPassword.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.requestResetPasswordUsingPOST(
+    return this.requestResetPassword(
       map.ApiEmail,
       observe,
       reportProgress
@@ -2012,23 +1958,23 @@ export class UserControllerService {
     /**
      * Request reset password (sends mail with reset link)
      * 
-     * @param ApiEmail request
+     * @param ApiEmail 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public requestResetPasswordUsingPOST(ApiEmail: ApiEmail, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public requestResetPasswordUsingPOST(ApiEmail: ApiEmail, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public requestResetPasswordUsingPOST(ApiEmail: ApiEmail, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public requestResetPasswordUsingPOST(ApiEmail: ApiEmail, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public requestResetPassword(ApiEmail: ApiEmail, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public requestResetPassword(ApiEmail: ApiEmail, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public requestResetPassword(ApiEmail: ApiEmail, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public requestResetPassword(ApiEmail: ApiEmail, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiEmail === null || ApiEmail === undefined) {
-            throw new Error('Required parameter ApiEmail was null or undefined when calling requestResetPasswordUsingPOST.');
+            throw new Error('Required parameter ApiEmail was null or undefined when calling requestResetPassword.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -2060,7 +2006,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'requestResetPasswordUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'requestResetPassword')));
         }
         return handle;
     }
@@ -2073,23 +2019,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public resetPasswordUsingPOSTByMap(
-    map: ResetPasswordUsingPOST.PartialParamMap,
+  public resetPasswordByMap(
+    map: ResetPassword.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public resetPasswordUsingPOSTByMap(
-    map: ResetPasswordUsingPOST.PartialParamMap,
+  public resetPasswordByMap(
+    map: ResetPassword.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public resetPasswordUsingPOSTByMap(
-    map: ResetPasswordUsingPOST.PartialParamMap,
+  public resetPasswordByMap(
+    map: ResetPassword.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public resetPasswordUsingPOSTByMap(
-    map: ResetPasswordUsingPOST.PartialParamMap,
+  public resetPasswordByMap(
+    map: ResetPassword.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.resetPasswordUsingPOST(
+    return this.resetPassword(
       map.ApiResetPasswordRequest,
       observe,
       reportProgress
@@ -2100,23 +2046,23 @@ export class UserControllerService {
     /**
      * Reset password using token and new password
      * 
-     * @param ApiResetPasswordRequest request
+     * @param ApiResetPasswordRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public resetPasswordUsingPOST(ApiResetPasswordRequest: ApiResetPasswordRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public resetPasswordUsingPOST(ApiResetPasswordRequest: ApiResetPasswordRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public resetPasswordUsingPOST(ApiResetPasswordRequest: ApiResetPasswordRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public resetPasswordUsingPOST(ApiResetPasswordRequest: ApiResetPasswordRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public resetPassword(ApiResetPasswordRequest: ApiResetPasswordRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public resetPassword(ApiResetPasswordRequest: ApiResetPasswordRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public resetPassword(ApiResetPasswordRequest: ApiResetPasswordRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public resetPassword(ApiResetPasswordRequest: ApiResetPasswordRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiResetPasswordRequest === null || ApiResetPasswordRequest === undefined) {
-            throw new Error('Required parameter ApiResetPasswordRequest was null or undefined when calling resetPasswordUsingPOST.');
+            throw new Error('Required parameter ApiResetPasswordRequest was null or undefined when calling resetPassword.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -2148,7 +2094,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'resetPasswordUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'resetPassword')));
         }
         return handle;
     }
@@ -2161,23 +2107,23 @@ export class UserControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public updateProfileUsingPUTByMap(
-    map: UpdateProfileUsingPUT.PartialParamMap,
+  public updateProfileByMap(
+    map: UpdateProfile.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public updateProfileUsingPUTByMap(
-    map: UpdateProfileUsingPUT.PartialParamMap,
+  public updateProfileByMap(
+    map: UpdateProfile.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public updateProfileUsingPUTByMap(
-    map: UpdateProfileUsingPUT.PartialParamMap,
+  public updateProfileByMap(
+    map: UpdateProfile.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public updateProfileUsingPUTByMap(
-    map: UpdateProfileUsingPUT.PartialParamMap,
+  public updateProfileByMap(
+    map: UpdateProfile.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.updateProfileUsingPUT(
+    return this.updateProfile(
       map.ApiUserUpdate,
       observe,
       reportProgress
@@ -2188,23 +2134,23 @@ export class UserControllerService {
     /**
      * Update profile of the currently logged in user
      * 
-     * @param ApiUserUpdate request
+     * @param ApiUserUpdate 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateProfileUsingPUT(ApiUserUpdate: ApiUserUpdate, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public updateProfileUsingPUT(ApiUserUpdate: ApiUserUpdate, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public updateProfileUsingPUT(ApiUserUpdate: ApiUserUpdate, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public updateProfileUsingPUT(ApiUserUpdate: ApiUserUpdate, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public updateProfile(ApiUserUpdate: ApiUserUpdate, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public updateProfile(ApiUserUpdate: ApiUserUpdate, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public updateProfile(ApiUserUpdate: ApiUserUpdate, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public updateProfile(ApiUserUpdate: ApiUserUpdate, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiUserUpdate === null || ApiUserUpdate === undefined) {
-            throw new Error('Required parameter ApiUserUpdate was null or undefined when calling updateProfileUsingPUT.');
+            throw new Error('Required parameter ApiUserUpdate was null or undefined when calling updateProfile.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -2236,7 +2182,7 @@ export class UserControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'updateProfileUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'updateProfile')));
         }
         return handle;
     }

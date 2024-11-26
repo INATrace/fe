@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { SortOption, SortOrder } from '../../../shared/result-sorter/result-sorter-types';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
-import { CompanyControllerService, GetUserCustomersForCompanyAndTypeUsingGET } from '../../../../api/api/companyController.service';
+import { CompanyControllerService, GetUserCustomersForCompanyAndType } from '../../../../api/api/companyController.service';
 import { Router } from '@angular/router';
 import { map, shareReplay, switchMap, take, tap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
@@ -16,6 +16,7 @@ import {
   OpenPlotDetailsExternallyModalComponent
 } from '../open-plot-details-externally-modal/open-plot-details-externally-modal.component';
 import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
+import { ApiCompany } from "../../../../api/model/apiCompany";
 
 @Component({
   selector: 'app-company-farmers-list',
@@ -25,6 +26,7 @@ import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-imp
 export class CompanyFarmersListComponent implements OnInit {
 
   organizationId;
+  selectedCompany: ApiCompany;
   page = 1;
   pageSize = 10;
 
@@ -187,6 +189,7 @@ export class CompanyFarmersListComponent implements OnInit {
       if (cp) {
 
         this.organizationId = cp.id;
+        this.selectedCompany = cp;
 
         this.showRwanda = cp.headquarters &&
             cp.headquarters.country &&
@@ -208,7 +211,7 @@ export class CompanyFarmersListComponent implements OnInit {
     this.farmers$ = combineLatest([this.sorting$, this.query$, this.search$, this.pagination$, this.ping$])
         .pipe(
             map(([sort, queryString, search, page, ping]) => {
-              const params: GetUserCustomersForCompanyAndTypeUsingGET.PartialParamMap = {
+              const params: GetUserCustomersForCompanyAndType.PartialParamMap = {
                 companyId: this.organizationId,
                 type: 'FARMER',
                 sort: sort.sortOrder,
@@ -221,7 +224,7 @@ export class CompanyFarmersListComponent implements OnInit {
               return params;
             }),
             tap(() => this.globalEventsManager.showLoading(true)),
-            switchMap(params => this.companyController.getUserCustomersForCompanyAndTypeUsingGETByMap(params)),
+            switchMap(params => this.companyController.getUserCustomersForCompanyAndTypeByMap(params)),
             map(response => {
               if (response) {
                 this.farmerCount = response.data.count;
@@ -234,7 +237,7 @@ export class CompanyFarmersListComponent implements OnInit {
             shareReplay(1)
         );
 
-    this.plots$ = this.companyController.getUserCustomersPlotsForCompanyUsingGET(this.organizationId)
+    this.plots$ = this.companyController.getUserCustomersPlotsForCompany(this.organizationId)
         .pipe(
             map(response => response.data)
         );
@@ -252,7 +255,7 @@ export class CompanyFarmersListComponent implements OnInit {
 
     this.globalEventsManager.showLoading(true);
     try {
-      const res = await this.companyController.exportFarmerDataByCompanyUsingGET(this.organizationId)
+      const res = await this.companyController.exportFarmerDataByCompany(this.organizationId)
           .pipe(take(1))
           .toPromise();
 
@@ -273,7 +276,7 @@ export class CompanyFarmersListComponent implements OnInit {
     if (result !== 'ok') {
       return;
     }
-    const res = await this.companyController.deleteUserCustomerUsingDELETE(id).pipe(take(1)).toPromise();
+    const res = await this.companyController.deleteUserCustomer(id).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
       this.ping$.next(null);
     }

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -28,6 +28,14 @@ import { ApiValidationErrorDetails } from './apiValidationErrorDetails';
 
 export interface ApiResponseListApiPlot { 
     /**
+     * Response status. OK for successful reponses.
+     */
+    status: ApiResponseListApiPlot.StatusEnum;
+    /**
+     * Simple message to explain client developers the reason for error.
+     */
+    errorMessage?: string;
+    /**
      * Response body for successful responses.
      */
     data?: Array<ApiPlot>;
@@ -35,14 +43,6 @@ export interface ApiResponseListApiPlot {
      * Optional details for unexpected error responses.
      */
     errorDetails?: string;
-    /**
-     * Simple message to explain client developers the reason for error.
-     */
-    errorMessage?: string;
-    /**
-     * Response status. OK for successful reponses.
-     */
-    status: ApiResponseListApiPlot.StatusEnum;
     validationErrorDetails?: ApiValidationErrorDetails;
 }
 
@@ -55,6 +55,14 @@ export namespace ApiResponseListApiPlot {
      */
     export enum Properties {
         /**
+         * Response status. OK for successful reponses.
+         */
+        status = 'status',
+        /**
+         * Simple message to explain client developers the reason for error.
+         */
+        errorMessage = 'errorMessage',
+        /**
          * Response body for successful responses.
          */
         data = 'data',
@@ -62,14 +70,6 @@ export namespace ApiResponseListApiPlot {
          * Optional details for unexpected error responses.
          */
         errorDetails = 'errorDetails',
-        /**
-         * Simple message to explain client developers the reason for error.
-         */
-        errorMessage = 'errorMessage',
-        /**
-         * Response status. OK for successful reponses.
-         */
-        status = 'status',
         validationErrorDetails = 'validationErrorDetails'
     }
 
@@ -98,6 +98,29 @@ export namespace ApiResponseListApiPlot {
             classname: 'ApiResponseListApiPlot',
             vars: [
                 {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiResponseListApiPlot.StatusEnum',
+                    required: true,
+                    name: 'status',
+                    classname: 'ApiResponseListApiPlot',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'errorMessage',
+                    classname: 'ApiResponseListApiPlot',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiPlot.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -121,29 +144,6 @@ export namespace ApiResponseListApiPlot {
                     complexType: ''
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'errorMessage',
-                    classname: 'ApiResponseListApiPlot',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiResponseListApiPlot.StatusEnum',
-                    required: true,
-                    name: 'status',
-                    classname: 'ApiResponseListApiPlot',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiValidationErrorDetails.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -157,14 +157,14 @@ export namespace ApiResponseListApiPlot {
                 },
             ],
             validators: {
-                data: [
-                ],
-                errorDetails: [
+                status: [
+                        ['required'],
                 ],
                 errorMessage: [
                 ],
-                status: [
-                        ['required'],
+                data: [
+                ],
+                errorDetails: [
                 ],
                 validationErrorDetails: [
                 ],
@@ -175,16 +175,16 @@ export namespace ApiResponseListApiPlot {
   // export const ApiResponseListApiPlotValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               data: {
-  //                   validators: []
-  //               },
-  //               errorDetails: {
+  //               status: {
   //                   validators: []
   //               },
   //               errorMessage: {
   //                   validators: []
   //               },
-  //               status: {
+  //               data: {
+  //                   validators: []
+  //               },
+  //               errorDetails: {
   //                   validators: []
   //               },
   //               validationErrorDetails: {

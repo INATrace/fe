@@ -121,7 +121,7 @@ export class StockPaymentsBulkListComponent implements OnInit {
   }
 
   loadBulkPayments(params): Observable<ApiPaginatedResponseApiBulkPayment> {
-    return this.paymentControllerService.listBulkPaymentsByCompanyUsingGETByMap({
+    return this.paymentControllerService.listBulkPaymentsByCompanyByMap({
       ...params,
       id: this.companyId
     });

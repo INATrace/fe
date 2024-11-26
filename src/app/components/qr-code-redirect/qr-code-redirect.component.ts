@@ -33,7 +33,7 @@ export class QrCodeRedirectComponent implements OnInit {
     }
 
     this.publicController
-      .logPublicRequestUsingPOST({ token: environment.tokenForPublicLogRoute, type: ApiLogRequest.TypeEnum.VISITQR, logKey: labelId })
+      .logPublicRequest({ token: environment.tokenForPublicLogRoute, type: ApiLogRequest.TypeEnum.VISITQR, logKey: labelId })
       .pipe(take(1))
       .toPromise().then();
   }

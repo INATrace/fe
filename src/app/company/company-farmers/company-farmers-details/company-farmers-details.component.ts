@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -36,6 +36,7 @@ import {ApiFarmPlantInformation} from '../../../../api/model/apiFarmPlantInforma
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 import { FileSaverService } from "ngx-filesaver";
 import { HttpClient } from "@angular/common/http";
+import { PlotsFormComponent } from "../../company-common/plots-form/plots-form.component";
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -154,6 +155,9 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     }
   ];
 
+  @ViewChild('plotsForm', { static: false })
+  plotsForm: PlotsFormComponent;
+
   public areaTranslations = {
     totalCultivatedLabel: $localize`:@@collectorDetail.textinput.totalCultivatedArea.label:Total cultivated area`,
     totalCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.totalCultivatedArea.placeholder:Enter total cultivated area`,
@@ -243,7 +247,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         this.title = $localize`:@@collectorDetail.newFarmer.title:New farmer`;
         this.update = false;
         // this code sets the default product type, when only 1 is available
-        const defaultProdTypeCheck = await this.companyService.getCompanyProductTypesUsingGET(this.companyId).pipe(take(1)).toPromise();
+        const defaultProdTypeCheck = await this.companyService.getCompanyProductTypes(this.companyId).pipe(take(1)).toPromise();
         if (defaultProdTypeCheck && defaultProdTypeCheck.status === 'OK') {
           if (defaultProdTypeCheck.data.count === 1) {
             this.productTypes = defaultProdTypeCheck.data.items;
@@ -253,7 +257,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       case 'update':
         this.title = $localize`:@@collectorDetail.editFarmer.title:Edit farmer`;
         this.update = true;
-        const uc = await this.companyService.getUserCustomerUsingGET(this.route.snapshot.params.id).pipe(first()).toPromise();
+        const uc = await this.companyService.getUserCustomer(this.route.snapshot.params.id).pipe(first()).toPromise();
         if (uc && uc.status === 'OK') {
           this.farmer = uc.data;
           this.productTypes = uc.data.productTypes;
@@ -444,10 +448,10 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
     this.globalEventsManager.showLoading(true);
     try {
-      const res = await this.companyService.exportUserCustomerGeoDataUsingGET(this.farmer.id)
+      const res = await this.companyService.exportUserCustomerGeoData(this.farmer.id)
           .pipe(take(1))
           .toPromise();
-      this.fileSaverService.save(res, 'farmer_geo_data.json');
+      this.fileSaverService.save(res, `${this.farmer.name}_${this.farmer.surname}_geo_data.json`);
     } finally {
       this.globalEventsManager.showLoading(false);
     }
@@ -539,13 +543,14 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
     return result === 'ok';
   }
 
-  async save() {
+  async save(stayOnPage: boolean = false) {
+
     this.submitted = true;
 
     if (this.farmerForm.invalid) {
       return;
     }
-    if (this.checkNullEmpty(this.areaUnit) && this.checkAreaFieldsRequired()){
+    if (this.checkNullEmpty(this.areaUnit) && this.checkAreaFieldsRequired()) {
       this.updateAreaUnitValidators();
       return;
     }
@@ -556,12 +561,16 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       this.globalEventsManager.showLoading(true);
       let res;
       if (!this.update) {
-        res = await this.companyService.addUserCustomerUsingPOST(this.companyId, data).toPromise();
+        res = await this.companyService.addUserCustomer(this.companyId, data).toPromise();
       } else {
-        res = await this.companyService.updateUserCustomerUsingPUT(data).toPromise();
+        res = await this.companyService.updateUserCustomer(data).toPromise();
       }
       if (res && res.status === 'OK') {
-        this.dismiss();
+        if (!stayOnPage) {
+          this.dismiss();
+        } else {
+          this.plotsForm.updatePlots();
+        }
       }
     } finally {
       this.globalEventsManager.showLoading(false);
@@ -593,7 +602,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   async listOfOrgAssociation() {
 
-    const res = await this.companyService.getAssociationsUsingGET(this.companyId).pipe(take(1)).toPromise();
+    const res = await this.companyService.getAssociations(this.companyId).pipe(take(1)).toPromise();
 
     if (res && res.status === 'OK' && res.data) {
       const companiesObj = {};

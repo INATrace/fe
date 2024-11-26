@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,6 +23,18 @@
 
 export interface ApiProductLabelFeedback { 
     /**
+     * Entity id
+     */
+    id?: number;
+    /**
+     * Label id
+     */
+    labelId?: number;
+    /**
+     * Feedback type
+     */
+    type?: ApiProductLabelFeedback.TypeEnum;
+    /**
      * Email
      */
     email?: string;
@@ -35,33 +47,21 @@ export interface ApiProductLabelFeedback {
      */
     gdprConsent?: boolean;
     /**
-     * Entity id
-     */
-    id?: number;
-    /**
-     * Label id
-     */
-    labelId?: number;
-    /**
      * Privacy policy consent
      */
     privacyPolicyConsent?: boolean;
-    /**
-     * The product name of label for which the feedback was provided
-     */
-    productName?: string;
-    /**
-     * questionnaire answers - key-answer map
-     */
-    questionnaireAnswers?: { [key: string]: string; };
     /**
      * Terms of use consent
      */
     termsOfUseConsent?: boolean;
     /**
-     * Feedback type
+     * questionnaire answers - key-answer map
      */
-    type?: ApiProductLabelFeedback.TypeEnum;
+    questionnaireAnswers?: { [key: string]: string; };
+    /**
+     * The product name of label for which the feedback was provided
+     */
+    productName?: string;
 }
 
 /**
@@ -72,6 +72,18 @@ export namespace ApiProductLabelFeedback {
      * All properties of ApiProductLabelFeedback.
      */
     export enum Properties {
+        /**
+         * Entity id
+         */
+        id = 'id',
+        /**
+         * Label id
+         */
+        labelId = 'labelId',
+        /**
+         * Feedback type
+         */
+        type = 'type',
         /**
          * Email
          */
@@ -85,33 +97,21 @@ export namespace ApiProductLabelFeedback {
          */
         gdprConsent = 'gdprConsent',
         /**
-         * Entity id
-         */
-        id = 'id',
-        /**
-         * Label id
-         */
-        labelId = 'labelId',
-        /**
          * Privacy policy consent
          */
         privacyPolicyConsent = 'privacyPolicyConsent',
-        /**
-         * The product name of label for which the feedback was provided
-         */
-        productName = 'productName',
-        /**
-         * questionnaire answers - key-answer map
-         */
-        questionnaireAnswers = 'questionnaireAnswers',
         /**
          * Terms of use consent
          */
         termsOfUseConsent = 'termsOfUseConsent',
         /**
-         * Feedback type
+         * questionnaire answers - key-answer map
          */
-        type = 'type'
+        questionnaireAnswers = 'questionnaireAnswers',
+        /**
+         * The product name of label for which the feedback was provided
+         */
+        productName = 'productName'
     }
 
     /**
@@ -129,6 +129,40 @@ export namespace ApiProductLabelFeedback {
             metadata: formMetadata,
             classname: 'ApiProductLabelFeedback',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'id',
+                    classname: 'ApiProductLabelFeedback',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'labelId',
+                    classname: 'ApiProductLabelFeedback',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelFeedback.TypeEnum',
+                    required: false,
+                    name: 'type',
+                    classname: 'ApiProductLabelFeedback',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -166,28 +200,6 @@ export namespace ApiProductLabelFeedback {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
-                    classname: 'ApiProductLabelFeedback',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'labelId',
-                    classname: 'ApiProductLabelFeedback',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
                     name: 'privacyPolicyConsent',
                     classname: 'ApiProductLabelFeedback',
                     dataType: 'boolean',
@@ -199,9 +211,9 @@ export namespace ApiProductLabelFeedback {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'productName',
+                    name: 'termsOfUseConsent',
                     classname: 'ApiProductLabelFeedback',
-                    dataType: 'string',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -221,19 +233,7 @@ export namespace ApiProductLabelFeedback {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'termsOfUseConsent',
-                    classname: 'ApiProductLabelFeedback',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProductLabelFeedback.TypeEnum',
-                    required: false,
-                    name: 'type',
+                    name: 'productName',
                     classname: 'ApiProductLabelFeedback',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -242,25 +242,29 @@ export namespace ApiProductLabelFeedback {
                 },
             ],
             validators: {
-                email: [
-                ],
-                feedback: [
-                ],
-                gdprConsent: [
-                ],
                 id: [
                 ],
                 labelId: [
                 ],
+                type: [
+                ],
+                email: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                feedback: [
+                        ['minlength', 0],
+                        ['maxlength', 2000],
+                ],
+                gdprConsent: [
+                ],
                 privacyPolicyConsent: [
-                ],
-                productName: [
-                ],
-                questionnaireAnswers: [
                 ],
                 termsOfUseConsent: [
                 ],
-                type: [
+                questionnaireAnswers: [
+                ],
+                productName: [
                 ],
             }
         }
@@ -269,6 +273,15 @@ export namespace ApiProductLabelFeedback {
   // export const ApiProductLabelFeedbackValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               id: {
+  //                   validators: []
+  //               },
+  //               labelId: {
+  //                   validators: []
+  //               },
+  //               type: {
+  //                   validators: []
+  //               },
   //               email: {
   //                   validators: []
   //               },
@@ -278,25 +291,16 @@ export namespace ApiProductLabelFeedback {
   //               gdprConsent: {
   //                   validators: []
   //               },
-  //               id: {
-  //                   validators: []
-  //               },
-  //               labelId: {
-  //                   validators: []
-  //               },
   //               privacyPolicyConsent: {
-  //                   validators: []
-  //               },
-  //               productName: {
-  //                   validators: []
-  //               },
-  //               questionnaireAnswers: {
   //                   validators: []
   //               },
   //               termsOfUseConsent: {
   //                   validators: []
   //               },
-  //               type: {
+  //               questionnaireAnswers: {
+  //                   validators: []
+  //               },
+  //               productName: {
   //                   validators: []
   //               },
   //     }

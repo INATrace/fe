@@ -37,7 +37,7 @@ export class CurrencyCodesService extends GeneralCodesService<string> {
     }
 
     public initializeCodebook() {
-        this.sifrant$ = this.sifrant$ || this.currencyService.getEnabledCurrencyTypesUsingGET()
+        this.sifrant$ = this.sifrant$ || this.currencyService.getEnabledCurrencyTypes()
           .pipe(
             map(resp => resp.data.items.map(currency => currency.code)),
             map(currencyCodes => this.pack(currencyCodes))

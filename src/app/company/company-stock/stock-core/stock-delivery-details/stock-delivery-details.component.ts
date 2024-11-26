@@ -313,7 +313,7 @@ export class StockDeliveryDetailsComponent implements OnInit, OnDestroy {
       this.title = this.newTitle(this.orderType);
       const facilityId = this.route.snapshot.params.facilityId;
 
-      const response = await this.facilityControllerService.getFacilityUsingGET(facilityId).pipe(take(1)).toPromise();
+      const response = await this.facilityControllerService.getFacility(facilityId).pipe(take(1)).toPromise();
       if (response && response.status === StatusEnum.OK && response.data) {
         this.facility = response.data;
         for (const item of this.facility.facilitySemiProductList) {
@@ -329,7 +329,7 @@ export class StockDeliveryDetailsComponent implements OnInit, OnDestroy {
 
       this.update = true;
 
-      const stockOrderResponse = await this.stockOrderControllerService.getStockOrderUsingGET(this.purchaseOrderId).pipe(take(1)).toPromise();
+      const stockOrderResponse = await this.stockOrderControllerService.getStockOrder(this.purchaseOrderId).pipe(take(1)).toPromise();
       if (stockOrderResponse && stockOrderResponse.status === StatusEnum.OK && stockOrderResponse.data) {
 
         this.order = stockOrderResponse.data;
@@ -477,7 +477,7 @@ export class StockDeliveryDetailsComponent implements OnInit, OnDestroy {
     // Create the purchase order
     try {
 
-      const res = await this.stockOrderControllerService.createOrUpdateStockOrderUsingPUT(data).pipe(take(1)).toPromise();
+      const res = await this.stockOrderControllerService.createOrUpdateStockOrder(data).pipe(take(1)).toPromise();
 
       if (res && res.status === 'OK') {
         if (close) {
@@ -565,7 +565,7 @@ export class StockDeliveryDetailsComponent implements OnInit, OnDestroy {
 
   async setMeasureUnit(semiProdId: number) {
 
-    const res = await this.semiProductControllerService.getSemiProductUsingGET(semiProdId).pipe(take(1)).toPromise();
+    const res = await this.semiProductControllerService.getSemiProduct(semiProdId).pipe(take(1)).toPromise();
     if (res && res.status === StatusEnum.OK && res.data) {
       this.measureUnit = res.data.measurementUnitType.label;
     } else {
@@ -802,7 +802,7 @@ export class StockDeliveryDetailsComponent implements OnInit, OnDestroy {
   private async setIdentifier() {
 
     const farmerResponse = await this.companyControllerService
-      .getUserCustomerUsingGET(this.stockOrderForm.get('producerUserCustomer').value?.id).pipe(take(1)).toPromise();
+      .getUserCustomer(this.stockOrderForm.get('producerUserCustomer').value?.id).pipe(take(1)).toPromise();
 
     if (farmerResponse && farmerResponse.status === StatusEnum.OK && farmerResponse.data) {
       const identifier = 'PT-' + farmerResponse.data.surname + '-' + this.stockOrderForm.get('productionDate').value;

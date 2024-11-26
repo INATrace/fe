@@ -53,7 +53,7 @@ export class StockProcessingFacilityListComponent implements OnInit {
     this.facilities$ = combineLatest([this.reloadPingList$])
       .pipe(
         tap(() => this.globalEventsManager.showLoading(true)),
-        switchMap(() => this.processingActionControllerService.listProcessingActionsByCompanyUsingGET(this.companyId)),
+        switchMap(() => this.processingActionControllerService.listProcessingActionsByCompany(this.companyId)),
         tap((res: ApiPaginatedResponseApiProcessingAction) => {
           if (res) {
             this.processingActions = res.data.items;
@@ -83,7 +83,7 @@ export class StockProcessingFacilityListComponent implements OnInit {
   }
 
   loadEntityList(): Observable<ApiPaginatedResponseApiFacility> {
-    return this.facilityControllerService.listFacilitiesByCompanyUsingGETByMap({ id: this.companyId });
+    return this.facilityControllerService.listFacilitiesByCompanyByMap({ id: this.companyId });
   }
 
   arrangeFacilities(facilities: ApiFacility[]) {

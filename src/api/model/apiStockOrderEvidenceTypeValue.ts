@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,25 +21,28 @@
 import { ApiDocument } from './apiDocument';
 
 
+/**
+ * Other processing evidence documents - evidence types that can be provided but are not mandatory
+ */
 
 export interface ApiStockOrderEvidenceTypeValue { 
-    /**
-     * The date of the document upload
-     */
-    date?: Date;
-    document?: ApiDocument;
-    /**
-     * The field code of the Processing evidence type from the codebook
-     */
-    evidenceTypeCode?: string;
     /**
      * The id of the Processing evidence type from the codebook
      */
     evidenceTypeId?: number;
     /**
+     * The field code of the Processing evidence type from the codebook
+     */
+    evidenceTypeCode?: string;
+    /**
      * The field label of the Processing evidence type from the codebook
      */
     evidenceTypeLabel?: string;
+    /**
+     * The date of the document upload
+     */
+    date?: Date;
+    document?: ApiDocument;
 }
 
 /**
@@ -51,22 +54,22 @@ export namespace ApiStockOrderEvidenceTypeValue {
      */
     export enum Properties {
         /**
-         * The date of the document upload
+         * The id of the Processing evidence type from the codebook
          */
-        date = 'date',
-        document = 'document',
+        evidenceTypeId = 'evidenceTypeId',
         /**
          * The field code of the Processing evidence type from the codebook
          */
         evidenceTypeCode = 'evidenceTypeCode',
         /**
-         * The id of the Processing evidence type from the codebook
-         */
-        evidenceTypeId = 'evidenceTypeId',
-        /**
          * The field label of the Processing evidence type from the codebook
          */
-        evidenceTypeLabel = 'evidenceTypeLabel'
+        evidenceTypeLabel = 'evidenceTypeLabel',
+        /**
+         * The date of the document upload
+         */
+        date = 'date',
+        document = 'document'
     }
 
 
@@ -75,6 +78,39 @@ export namespace ApiStockOrderEvidenceTypeValue {
             metadata: formMetadata,
             classname: 'ApiStockOrderEvidenceTypeValue',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'evidenceTypeId',
+                    classname: 'ApiStockOrderEvidenceTypeValue',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'evidenceTypeCode',
+                    classname: 'ApiStockOrderEvidenceTypeValue',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'evidenceTypeLabel',
+                    classname: 'ApiStockOrderEvidenceTypeValue',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -98,50 +134,17 @@ export namespace ApiStockOrderEvidenceTypeValue {
                     isListContainer: false,
                     complexType: 'ApiDocument'
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'evidenceTypeCode',
-                    classname: 'ApiStockOrderEvidenceTypeValue',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'evidenceTypeId',
-                    classname: 'ApiStockOrderEvidenceTypeValue',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'evidenceTypeLabel',
-                    classname: 'ApiStockOrderEvidenceTypeValue',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                date: [
-                ],
-                document: [
+                evidenceTypeId: [
                 ],
                 evidenceTypeCode: [
                 ],
-                evidenceTypeId: [
-                ],
                 evidenceTypeLabel: [
+                ],
+                date: [
+                ],
+                document: [
                 ],
             }
         }
@@ -150,19 +153,19 @@ export namespace ApiStockOrderEvidenceTypeValue {
   // export const ApiStockOrderEvidenceTypeValueValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               date: {
-  //                   validators: []
-  //               },
-  //               document: {
+  //               evidenceTypeId: {
   //                   validators: []
   //               },
   //               evidenceTypeCode: {
   //                   validators: []
   //               },
-  //               evidenceTypeId: {
+  //               evidenceTypeLabel: {
   //                   validators: []
   //               },
-  //               evidenceTypeLabel: {
+  //               date: {
+  //                   validators: []
+  //               },
+  //               document: {
   //                   validators: []
   //               },
   //     }

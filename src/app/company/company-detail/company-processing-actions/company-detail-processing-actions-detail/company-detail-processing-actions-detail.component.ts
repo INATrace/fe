@@ -316,7 +316,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       this.title = $localize`:@@companyDetailProcessingActions.title.new:New processing action`;
       this.editMode = false;
 
-      const defaultValChainCheck = await this.companyController.getCompanyValueChainsUsingGET(this.companyId).pipe(take(1)).toPromise();
+      const defaultValChainCheck = await this.companyController.getCompanyValueChains(this.companyId).pipe(take(1)).toPromise();
       if (defaultValChainCheck && defaultValChainCheck.status === 'OK') {
         if (defaultValChainCheck.data.count === 1) {
           this.valueChains = defaultValChainCheck.data.items;
@@ -329,7 +329,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
       this.editMode = true;
       const paId = this.route.snapshot.params.paId;
       const resp = await this.processingActionControllerService
-          .getProcessingActionDetailUsingGET(paId)
+          .getProcessingActionDetail(paId)
           .pipe(take(1))
           .toPromise();
 
@@ -619,7 +619,7 @@ export class CompanyDetailProcessingActionsDetailComponent extends CompanyDetail
     try {
       this.globalEventsManager.showLoading(true);
       const res = await this.processingActionControllerService
-          .createOrUpdateProcessingActionUsingPUT(data)
+          .createOrUpdateProcessingAction(data)
           .pipe(take(1))
           .toPromise();
 

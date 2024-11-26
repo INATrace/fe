@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -26,45 +26,48 @@ import { ApiProductType } from './apiProductType';
 import { ApiSemiProduct } from './apiSemiProduct';
 
 
+/**
+ * company value chains
+ */
 
 export interface ApiValueChain { 
-    /**
-     * description of the value chain
-     */
-    description?: string;
-    /**
-     * list of supported facility types
-     */
-    facilityTypes?: Array<ApiFacilityType>;
     /**
      * Entity id
      */
     id?: number;
     /**
+     * name of the value chain
+     */
+    name?: string;
+    /**
+     * description of the value chain
+     */
+    description?: string;
+    /**
+     * value chain status
+     */
+    valueChainStatus?: ApiValueChain.ValueChainStatusEnum;
+    /**
+     * list of supported facility types
+     */
+    facilityTypes?: Array<ApiFacilityType>;
+    /**
      * list of supported measuring unit types
      */
     measureUnitTypes?: Array<ApiMeasureUnitType>;
     /**
-     * name of the value chain
+     * list of supported processing evidence types
      */
-    name?: string;
+    processingEvidenceTypes?: Array<ApiProcessingEvidenceType>;
     /**
      * list of supported processing evidence fields
      */
     processingEvidenceFields?: Array<ApiProcessingEvidenceField>;
     /**
-     * list of supported processing evidence types
-     */
-    processingEvidenceTypes?: Array<ApiProcessingEvidenceType>;
-    productType?: ApiProductType;
-    /**
      * list of supported semi-products
      */
     semiProducts?: Array<ApiSemiProduct>;
-    /**
-     * value chain status
-     */
-    valueChainStatus?: ApiValueChain.ValueChainStatusEnum;
+    productType?: ApiProductType;
 }
 
 /**
@@ -76,42 +79,42 @@ export namespace ApiValueChain {
      */
     export enum Properties {
         /**
-         * description of the value chain
-         */
-        description = 'description',
-        /**
-         * list of supported facility types
-         */
-        facilityTypes = 'facilityTypes',
-        /**
          * Entity id
          */
         id = 'id',
-        /**
-         * list of supported measuring unit types
-         */
-        measureUnitTypes = 'measureUnitTypes',
         /**
          * name of the value chain
          */
         name = 'name',
         /**
-         * list of supported processing evidence fields
+         * description of the value chain
          */
-        processingEvidenceFields = 'processingEvidenceFields',
+        description = 'description',
+        /**
+         * value chain status
+         */
+        valueChainStatus = 'valueChainStatus',
+        /**
+         * list of supported facility types
+         */
+        facilityTypes = 'facilityTypes',
+        /**
+         * list of supported measuring unit types
+         */
+        measureUnitTypes = 'measureUnitTypes',
         /**
          * list of supported processing evidence types
          */
         processingEvidenceTypes = 'processingEvidenceTypes',
-        productType = 'productType',
+        /**
+         * list of supported processing evidence fields
+         */
+        processingEvidenceFields = 'processingEvidenceFields',
         /**
          * list of supported semi-products
          */
         semiProducts = 'semiProducts',
-        /**
-         * value chain status
-         */
-        valueChainStatus = 'valueChainStatus'
+        productType = 'productType'
     }
 
     /**
@@ -132,7 +135,41 @@ export namespace ApiValueChain {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
+                    name: 'id',
+                    classname: 'ApiValueChain',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
+                    classname: 'ApiValueChain',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
                     name: 'description',
+                    classname: 'ApiValueChain',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiValueChain.ValueChainStatusEnum',
+                    required: false,
+                    name: 'valueChainStatus',
                     classname: 'ApiValueChain',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -152,17 +189,6 @@ export namespace ApiValueChain {
                     complexType: 'ApiFacilityType'
                 },
                 {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'id',
-                    classname: 'ApiValueChain',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
                     metadata: ApiMeasureUnitType.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -173,29 +199,6 @@ export namespace ApiValueChain {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiMeasureUnitType'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiValueChain',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    metadata: ApiProcessingEvidenceField.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'processingEvidenceFields',
-                    classname: 'ApiValueChain',
-                    dataType: 'Array&lt;ApiProcessingEvidenceField&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProcessingEvidenceField'
                 },
                 {
                     metadata: ApiProcessingEvidenceType.formMetadata,
@@ -210,16 +213,16 @@ export namespace ApiValueChain {
                     complexType: 'ApiProcessingEvidenceType'
                 },
                 {
-                    metadata: ApiProductType.formMetadata,
+                    metadata: ApiProcessingEvidenceField.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'productType',
+                    name: 'processingEvidenceFields',
                     classname: 'ApiValueChain',
-                    dataType: 'ApiProductType',
+                    dataType: 'Array&lt;ApiProcessingEvidenceField&gt;',
                     isPrimitiveType: false,
-                    isListContainer: false,
-                    complexType: 'ApiProductType'
+                    isListContainer: true,
+                    complexType: 'ApiProcessingEvidenceField'
                 },
                 {
                     metadata: ApiSemiProduct.formMetadata,
@@ -234,38 +237,38 @@ export namespace ApiValueChain {
                     complexType: 'ApiSemiProduct'
                 },
                 {
+                    metadata: ApiProductType.formMetadata,
                     isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiValueChain.ValueChainStatusEnum',
+                    isEnum: false,
                     required: false,
-                    name: 'valueChainStatus',
+                    name: 'productType',
                     classname: 'ApiValueChain',
-                    dataType: 'string',
-                    isPrimitiveType: true,
+                    dataType: 'ApiProductType',
+                    isPrimitiveType: false,
                     isListContainer: false,
-                    complexType: ''
+                    complexType: 'ApiProductType'
                 },
             ],
             validators: {
-                description: [
-                ],
-                facilityTypes: [
-                ],
                 id: [
-                ],
-                measureUnitTypes: [
                 ],
                 name: [
                 ],
-                processingEvidenceFields: [
+                description: [
+                ],
+                valueChainStatus: [
+                ],
+                facilityTypes: [
+                ],
+                measureUnitTypes: [
                 ],
                 processingEvidenceTypes: [
                 ],
-                productType: [
+                processingEvidenceFields: [
                 ],
                 semiProducts: [
                 ],
-                valueChainStatus: [
+                productType: [
                 ],
             }
         }
@@ -274,34 +277,34 @@ export namespace ApiValueChain {
   // export const ApiValueChainValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               description: {
-  //                   validators: []
-  //               },
-  //               facilityTypes: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               measureUnitTypes: {
   //                   validators: []
   //               },
   //               name: {
   //                   validators: []
   //               },
-  //               processingEvidenceFields: {
+  //               description: {
+  //                   validators: []
+  //               },
+  //               valueChainStatus: {
+  //                   validators: []
+  //               },
+  //               facilityTypes: {
+  //                   validators: []
+  //               },
+  //               measureUnitTypes: {
   //                   validators: []
   //               },
   //               processingEvidenceTypes: {
   //                   validators: []
   //               },
-  //               productType: {
+  //               processingEvidenceFields: {
   //                   validators: []
   //               },
   //               semiProducts: {
   //                   validators: []
   //               },
-  //               valueChainStatus: {
+  //               productType: {
   //                   validators: []
   //               },
   //     }

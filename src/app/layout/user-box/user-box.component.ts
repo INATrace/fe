@@ -125,7 +125,7 @@ export class UserBoxComponent implements OnInit, OnDestroy {
       dismissable: false
     });
     if (result !== 'ok') { return; }
-    const res = await this.productController.deleteProductUsingDELETE(productId).pipe(take(1)).toPromise();
+    const res = await this.productController.deleteProduct(productId).pipe(take(1)).toPromise();
     if (res && res.status === 'OK') {
       this.globalEventManager.push({
         action: 'success',

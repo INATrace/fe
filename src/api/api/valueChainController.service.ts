@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -39,43 +39,37 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createOrUpdateValueChainUsingPUT.
+ * Namespace for createOrUpdateValueChain.
  */
-export namespace CreateOrUpdateValueChainUsingPUT {
+export namespace CreateOrUpdateValueChain {
     /**
-     * Parameter map for createOrUpdateValueChainUsingPUT.
+     * Parameter map for createOrUpdateValueChain.
      */
     export interface PartialParamMap {
-      /**
-       * apiValueChain
-       */
       ApiValueChain: ApiValueChain;
     }
 
     /**
-     * Enumeration of all parameters for createOrUpdateValueChainUsingPUT.
+     * Enumeration of all parameters for createOrUpdateValueChain.
      */
     export enum Parameters {
-      /**
-       * apiValueChain
-       */
       ApiValueChain = 'ApiValueChain'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateValueChainUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateValueChain
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateOrUpdateValueChainUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateOrUpdateValueChain.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for deleteValueChainUsingDELETE.
+ * Namespace for deleteValueChain.
  */
-export namespace DeleteValueChainUsingDELETE {
+export namespace DeleteValueChain {
     /**
-     * Parameter map for deleteValueChainUsingDELETE.
+     * Parameter map for deleteValueChain.
      */
     export interface PartialParamMap {
       /**
@@ -85,7 +79,7 @@ export namespace DeleteValueChainUsingDELETE {
     }
 
     /**
-     * Enumeration of all parameters for deleteValueChainUsingDELETE.
+     * Enumeration of all parameters for deleteValueChain.
      */
     export enum Parameters {
       /**
@@ -95,10 +89,10 @@ export namespace DeleteValueChainUsingDELETE {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteValueChainUsingDELETE
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteValueChain
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof DeleteValueChainUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof DeleteValueChain.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -106,11 +100,11 @@ export namespace DeleteValueChainUsingDELETE {
 }
 
 /**
- * Namespace for disableValueChainUsingPOST.
+ * Namespace for disableValueChain.
  */
-export namespace DisableValueChainUsingPOST {
+export namespace DisableValueChain {
     /**
-     * Parameter map for disableValueChainUsingPOST.
+     * Parameter map for disableValueChain.
      */
     export interface PartialParamMap {
       /**
@@ -120,7 +114,7 @@ export namespace DisableValueChainUsingPOST {
     }
 
     /**
-     * Enumeration of all parameters for disableValueChainUsingPOST.
+     * Enumeration of all parameters for disableValueChain.
      */
     export enum Parameters {
       /**
@@ -130,10 +124,10 @@ export namespace DisableValueChainUsingPOST {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of disableValueChainUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of disableValueChain
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof DisableValueChainUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof DisableValueChain.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -141,11 +135,11 @@ export namespace DisableValueChainUsingPOST {
 }
 
 /**
- * Namespace for enableValueChainUsingPOST.
+ * Namespace for enableValueChain.
  */
-export namespace EnableValueChainUsingPOST {
+export namespace EnableValueChain {
     /**
-     * Parameter map for enableValueChainUsingPOST.
+     * Parameter map for enableValueChain.
      */
     export interface PartialParamMap {
       /**
@@ -155,7 +149,7 @@ export namespace EnableValueChainUsingPOST {
     }
 
     /**
-     * Enumeration of all parameters for enableValueChainUsingPOST.
+     * Enumeration of all parameters for enableValueChain.
      */
     export enum Parameters {
       /**
@@ -165,10 +159,10 @@ export namespace EnableValueChainUsingPOST {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of enableValueChainUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of enableValueChain
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof EnableValueChainUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof EnableValueChain.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -176,13 +170,64 @@ export namespace EnableValueChainUsingPOST {
 }
 
 /**
- * Namespace for getValueChainListUsingGET.
+ * Namespace for getValueChain.
  */
-export namespace GetValueChainListUsingGET {
+export namespace GetValueChain {
     /**
-     * Parameter map for getValueChainListUsingGET.
+     * Parameter map for getValueChain.
      */
     export interface PartialParamMap {
+      /**
+       * Value chain ID
+       */
+      id: number;
+      language?: 'EN' | 'DE' | 'RW' | 'ES';
+    }
+
+    /**
+     * Enumeration of all parameters for getValueChain.
+     */
+    export enum Parameters {
+      /**
+       * Value chain ID
+       */
+      id = 'id',
+      language = 'language'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getValueChain
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetValueChain.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+      language: [
+      ],
+    };
+}
+
+/**
+ * Namespace for getValueChainList.
+ */
+export namespace GetValueChainList {
+    /**
+     * Parameter map for getValueChainList.
+     */
+    export interface PartialParamMap {
+      /**
+       * Value chain name
+       */
+      name?: string;
+      /**
+       * Value chain status
+       */
+      valueChainStatus?: 'ENABLED' | 'DISABLED';
+      /**
+       * Value chain product type ID
+       */
+      productTypeId?: number;
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -203,24 +248,24 @@ export namespace GetValueChainListUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
-      /**
-       * Value chain name
-       */
-      name?: string;
-      /**
-       * Value chain status
-       */
-      valueChainStatus?: 'ENABLED' | 'DISABLED';
-      /**
-       * Value chain product type ID
-       */
-      productTypeId?: number;
     }
 
     /**
-     * Enumeration of all parameters for getValueChainListUsingGET.
+     * Enumeration of all parameters for getValueChainList.
      */
     export enum Parameters {
+      /**
+       * Value chain name
+       */
+      name = 'name',
+      /**
+       * Value chain status
+       */
+      valueChainStatus = 'valueChainStatus',
+      /**
+       * Value chain product type ID
+       */
+      productTypeId = 'productTypeId',
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -240,86 +285,31 @@ export namespace GetValueChainListUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort',
-      /**
-       * Value chain name
-       */
-      name = 'name',
-      /**
-       * Value chain status
-       */
-      valueChainStatus = 'valueChainStatus',
-      /**
-       * Value chain product type ID
-       */
-      productTypeId = 'productTypeId'
+      sort = 'sort'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getValueChainListUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getValueChainList
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetValueChainListUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      requestType: [
-      ],
-      limit: [
-      ],
-      offset: [
-      ],
-      sortBy: [
-      ],
-      sort: [
-      ],
+    export const ParamValidators: {[K in keyof GetValueChainList.PartialParamMap]?: [string, ValidatorFn][]} = {
       name: [
       ],
       valueChainStatus: [
       ],
       productTypeId: [
       ],
-    };
-}
-
-/**
- * Namespace for getValueChainUsingGET.
- */
-export namespace GetValueChainUsingGET {
-    /**
-     * Parameter map for getValueChainUsingGET.
-     */
-    export interface PartialParamMap {
-      /**
-       * Value chain ID
-       */
-      id: number;
-      /**
-       * language
-       */
-      language?: 'EN' | 'DE' | 'RW' | 'ES';
-    }
-
-    /**
-     * Enumeration of all parameters for getValueChainUsingGET.
-     */
-    export enum Parameters {
-      /**
-       * Value chain ID
-       */
-      id = 'id',
-      /**
-       * language
-       */
-      language = 'language'
-    }
-
-    /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getValueChainUsingGET
-     * that does not have an own model.
-     */
-    export const ParamValidators: {[K in keyof GetValueChainUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
-      id: [
-              ['required', Validators.required],
+      requestType: [
       ],
-      language: [
+      limit: [
+              ['min', Validators.min(1)],
+      ],
+      offset: [
+              ['min', Validators.min(0)],
+      ],
+      sortBy: [
+      ],
+      sort: [
       ],
     };
 }
@@ -368,23 +358,23 @@ export class ValueChainControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createOrUpdateValueChainUsingPUTByMap(
-    map: CreateOrUpdateValueChainUsingPUT.PartialParamMap,
+  public createOrUpdateValueChainByMap(
+    map: CreateOrUpdateValueChain.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public createOrUpdateValueChainUsingPUTByMap(
-    map: CreateOrUpdateValueChainUsingPUT.PartialParamMap,
+  public createOrUpdateValueChainByMap(
+    map: CreateOrUpdateValueChain.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public createOrUpdateValueChainUsingPUTByMap(
-    map: CreateOrUpdateValueChainUsingPUT.PartialParamMap,
+  public createOrUpdateValueChainByMap(
+    map: CreateOrUpdateValueChain.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public createOrUpdateValueChainUsingPUTByMap(
-    map: CreateOrUpdateValueChainUsingPUT.PartialParamMap,
+  public createOrUpdateValueChainByMap(
+    map: CreateOrUpdateValueChain.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createOrUpdateValueChainUsingPUT(
+    return this.createOrUpdateValueChain(
       map.ApiValueChain,
       observe,
       reportProgress
@@ -395,23 +385,23 @@ export class ValueChainControllerService {
     /**
      * Create or update value chain. If ID is provided, the entity with the provided ID is updated.
      * 
-     * @param ApiValueChain apiValueChain
+     * @param ApiValueChain 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateValueChainUsingPUT(ApiValueChain: ApiValueChain, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public createOrUpdateValueChainUsingPUT(ApiValueChain: ApiValueChain, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public createOrUpdateValueChainUsingPUT(ApiValueChain: ApiValueChain, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public createOrUpdateValueChainUsingPUT(ApiValueChain: ApiValueChain, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createOrUpdateValueChain(ApiValueChain: ApiValueChain, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateValueChain(ApiValueChain: ApiValueChain, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateValueChain(ApiValueChain: ApiValueChain, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createOrUpdateValueChain(ApiValueChain: ApiValueChain, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiValueChain === null || ApiValueChain === undefined) {
-            throw new Error('Required parameter ApiValueChain was null or undefined when calling createOrUpdateValueChainUsingPUT.');
+            throw new Error('Required parameter ApiValueChain was null or undefined when calling createOrUpdateValueChain.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -443,7 +433,7 @@ export class ValueChainControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateValueChainUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateValueChain')));
         }
         return handle;
     }
@@ -456,23 +446,23 @@ export class ValueChainControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public deleteValueChainUsingDELETEByMap(
-    map: DeleteValueChainUsingDELETE.PartialParamMap,
+  public deleteValueChainByMap(
+    map: DeleteValueChain.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public deleteValueChainUsingDELETEByMap(
-    map: DeleteValueChainUsingDELETE.PartialParamMap,
+  public deleteValueChainByMap(
+    map: DeleteValueChain.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public deleteValueChainUsingDELETEByMap(
-    map: DeleteValueChainUsingDELETE.PartialParamMap,
+  public deleteValueChainByMap(
+    map: DeleteValueChain.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public deleteValueChainUsingDELETEByMap(
-    map: DeleteValueChainUsingDELETE.PartialParamMap,
+  public deleteValueChainByMap(
+    map: DeleteValueChain.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.deleteValueChainUsingDELETE(
+    return this.deleteValueChain(
       map.id,
       observe,
       reportProgress
@@ -487,19 +477,19 @@ export class ValueChainControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteValueChainUsingDELETE(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public deleteValueChainUsingDELETE(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public deleteValueChainUsingDELETE(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public deleteValueChainUsingDELETE(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public deleteValueChain(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public deleteValueChain(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public deleteValueChain(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public deleteValueChain(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteValueChainUsingDELETE.');
+            throw new Error('Required parameter id was null or undefined when calling deleteValueChain.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -525,7 +515,7 @@ export class ValueChainControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteValueChainUsingDELETE')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteValueChain')));
         }
         return handle;
     }
@@ -538,23 +528,23 @@ export class ValueChainControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public disableValueChainUsingPOSTByMap(
-    map: DisableValueChainUsingPOST.PartialParamMap,
+  public disableValueChainByMap(
+    map: DisableValueChain.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public disableValueChainUsingPOSTByMap(
-    map: DisableValueChainUsingPOST.PartialParamMap,
+  public disableValueChainByMap(
+    map: DisableValueChain.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public disableValueChainUsingPOSTByMap(
-    map: DisableValueChainUsingPOST.PartialParamMap,
+  public disableValueChainByMap(
+    map: DisableValueChain.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public disableValueChainUsingPOSTByMap(
-    map: DisableValueChainUsingPOST.PartialParamMap,
+  public disableValueChainByMap(
+    map: DisableValueChain.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.disableValueChainUsingPOST(
+    return this.disableValueChain(
       map.id,
       observe,
       reportProgress
@@ -569,19 +559,19 @@ export class ValueChainControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public disableValueChainUsingPOST(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public disableValueChainUsingPOST(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public disableValueChainUsingPOST(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public disableValueChainUsingPOST(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public disableValueChain(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public disableValueChain(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public disableValueChain(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public disableValueChain(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling disableValueChainUsingPOST.');
+            throw new Error('Required parameter id was null or undefined when calling disableValueChain.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -608,7 +598,7 @@ export class ValueChainControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'disableValueChainUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'disableValueChain')));
         }
         return handle;
     }
@@ -621,23 +611,23 @@ export class ValueChainControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public enableValueChainUsingPOSTByMap(
-    map: EnableValueChainUsingPOST.PartialParamMap,
+  public enableValueChainByMap(
+    map: EnableValueChain.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public enableValueChainUsingPOSTByMap(
-    map: EnableValueChainUsingPOST.PartialParamMap,
+  public enableValueChainByMap(
+    map: EnableValueChain.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public enableValueChainUsingPOSTByMap(
-    map: EnableValueChainUsingPOST.PartialParamMap,
+  public enableValueChainByMap(
+    map: EnableValueChain.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public enableValueChainUsingPOSTByMap(
-    map: EnableValueChainUsingPOST.PartialParamMap,
+  public enableValueChainByMap(
+    map: EnableValueChain.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.enableValueChainUsingPOST(
+    return this.enableValueChain(
       map.id,
       observe,
       reportProgress
@@ -652,19 +642,19 @@ export class ValueChainControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public enableValueChainUsingPOST(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public enableValueChainUsingPOST(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public enableValueChainUsingPOST(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public enableValueChainUsingPOST(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public enableValueChain(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public enableValueChain(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public enableValueChain(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public enableValueChain(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling enableValueChainUsingPOST.');
+            throw new Error('Required parameter id was null or undefined when calling enableValueChain.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -691,7 +681,94 @@ export class ValueChainControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'enableValueChainUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'enableValueChain')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get a single value chain with the provided ID. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getValueChainByMap(
+    map: GetValueChain.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiValueChain>;
+  public getValueChainByMap(
+    map: GetValueChain.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiValueChain>>;
+  public getValueChainByMap(
+    map: GetValueChain.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiValueChain>>;
+  public getValueChainByMap(
+    map: GetValueChain.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getValueChain(
+      map.id,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get a single value chain with the provided ID.
+     * 
+     * @param id Value chain ID
+     * @param language 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getValueChain(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiValueChain>;
+    public getValueChain(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiValueChain>>;
+    public getValueChain(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiValueChain>>;
+    public getValueChain(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getValueChain.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiValueChain>(`${this.configuration.basePath}/api/chain/value-chain/${encodeURIComponent(String(id))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getValueChain')));
         }
         return handle;
     }
@@ -704,31 +781,31 @@ export class ValueChainControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getValueChainListUsingGETByMap(
-    map: GetValueChainListUsingGET.PartialParamMap,
+  public getValueChainListByMap(
+    map: GetValueChainList.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiValueChain>;
-  public getValueChainListUsingGETByMap(
-    map: GetValueChainListUsingGET.PartialParamMap,
+  public getValueChainListByMap(
+    map: GetValueChainList.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiValueChain>>;
-  public getValueChainListUsingGETByMap(
-    map: GetValueChainListUsingGET.PartialParamMap,
+  public getValueChainListByMap(
+    map: GetValueChainList.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiValueChain>>;
-  public getValueChainListUsingGETByMap(
-    map: GetValueChainListUsingGET.PartialParamMap,
+  public getValueChainListByMap(
+    map: GetValueChainList.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getValueChainListUsingGET(
+    return this.getValueChainList(
+      map.name,
+      map.valueChainStatus,
+      map.productTypeId,
       map.requestType,
       map.limit,
       map.offset,
       map.sortBy,
       map.sort,
-      map.name,
-      map.valueChainStatus,
-      map.productTypeId,
       observe,
       reportProgress
     );
@@ -738,23 +815,32 @@ export class ValueChainControllerService {
     /**
      * Get a list of value chains defined in the system.
      * 
+     * @param name Value chain name
+     * @param valueChainStatus Value chain status
+     * @param productTypeId Value chain product type ID
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
-     * @param name Value chain name
-     * @param valueChainStatus Value chain status
-     * @param productTypeId Value chain product type ID
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiValueChain>;
-    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiValueChain>>;
-    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiValueChain>>;
-    public getValueChainListUsingGET(requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getValueChainList(name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiValueChain>;
+    public getValueChainList(name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiValueChain>>;
+    public getValueChainList(name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiValueChain>>;
+    public getValueChainList(name?: string, valueChainStatus?: 'ENABLED' | 'DISABLED', productTypeId?: number, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (name !== undefined && name !== null) {
+            queryParameters = queryParameters.set('name', <any>name);
+        }
+        if (valueChainStatus !== undefined && valueChainStatus !== null) {
+            queryParameters = queryParameters.set('valueChainStatus', <any>valueChainStatus);
+        }
+        if (productTypeId !== undefined && productTypeId !== null) {
+            queryParameters = queryParameters.set('productTypeId', <any>productTypeId);
+        }
         if (requestType !== undefined && requestType !== null) {
             queryParameters = queryParameters.set('requestType', <any>requestType);
         }
@@ -770,21 +856,12 @@ export class ValueChainControllerService {
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
         }
-        if (name !== undefined && name !== null) {
-            queryParameters = queryParameters.set('name', <any>name);
-        }
-        if (valueChainStatus !== undefined && valueChainStatus !== null) {
-            queryParameters = queryParameters.set('valueChainStatus', <any>valueChainStatus);
-        }
-        if (productTypeId !== undefined && productTypeId !== null) {
-            queryParameters = queryParameters.set('productTypeId', <any>productTypeId);
-        }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -811,94 +888,7 @@ export class ValueChainControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getValueChainListUsingGET')));
-        }
-        return handle;
-    }
-
-
-  /**
-   * Get a single value chain with the provided ID. by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getValueChainUsingGETByMap(
-    map: GetValueChainUsingGET.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiValueChain>;
-  public getValueChainUsingGETByMap(
-    map: GetValueChainUsingGET.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiValueChain>>;
-  public getValueChainUsingGETByMap(
-    map: GetValueChainUsingGET.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiValueChain>>;
-  public getValueChainUsingGETByMap(
-    map: GetValueChainUsingGET.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.getValueChainUsingGET(
-      map.id,
-      map.language,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * Get a single value chain with the provided ID.
-     * 
-     * @param id Value chain ID
-     * @param language language
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getValueChainUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiValueChain>;
-    public getValueChainUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiValueChain>>;
-    public getValueChainUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiValueChain>>;
-    public getValueChainUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getValueChainUsingGET.');
-        }
-
-        let headers = this.defaultHeaders;
-        if (language !== undefined && language !== null) {
-            headers = headers.set('language', String(language));
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponseApiValueChain>(`${this.configuration.basePath}/api/chain/value-chain/${encodeURIComponent(String(id))}`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getValueChainUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getValueChainList')));
         }
         return handle;
     }

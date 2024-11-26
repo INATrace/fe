@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -32,6 +32,8 @@ import { catchError }                                        from 'rxjs/operator
 import { ApiDefaultResponse } from '../model/apiDefaultResponse';
 import { ApiLogRequest } from '../model/apiLogRequest';
 import { ApiPaginatedResponseApiProductLabelFeedback } from '../model/apiPaginatedResponseApiProductLabelFeedback';
+import { ApiProductLabelBatchCheckAuthenticity } from '../model/apiProductLabelBatchCheckAuthenticity';
+import { ApiProductLabelBatchCheckOrigin } from '../model/apiProductLabelBatchCheckOrigin';
 import { ApiProductLabelFeedback } from '../model/apiProductLabelFeedback';
 import { ApiResponseApiGlobalSettingsValue } from '../model/apiResponseApiGlobalSettingsValue';
 import { ApiResponseApiKnowledgeBlog } from '../model/apiResponseApiKnowledgeBlog';
@@ -45,42 +47,36 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for addProductLabelFeedbackUsingPOST.
+ * Namespace for addProductLabelFeedback.
  */
-export namespace AddProductLabelFeedbackUsingPOST {
+export namespace AddProductLabelFeedback {
     /**
-     * Parameter map for addProductLabelFeedbackUsingPOST.
+     * Parameter map for addProductLabelFeedback.
      */
     export interface PartialParamMap {
       /**
        * Label id
        */
       labelUid: string;
-      /**
-       * request
-       */
       ApiProductLabelFeedback: ApiProductLabelFeedback;
     }
 
     /**
-     * Enumeration of all parameters for addProductLabelFeedbackUsingPOST.
+     * Enumeration of all parameters for addProductLabelFeedback.
      */
     export enum Parameters {
       /**
        * Label id
        */
       labelUid = 'labelUid',
-      /**
-       * request
-       */
       ApiProductLabelFeedback = 'ApiProductLabelFeedback'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of addProductLabelFeedbackUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of addProductLabelFeedback
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof AddProductLabelFeedbackUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof AddProductLabelFeedback.PartialParamMap]?: [string, ValidatorFn][]} = {
       labelUid: [
               ['required', Validators.required],
       ],
@@ -88,164 +84,108 @@ export namespace AddProductLabelFeedbackUsingPOST {
 }
 
 /**
- * Namespace for checkPublicProductLabelBatchAuthenticityUsingGET.
+ * Namespace for checkPublicProductLabelBatchAuthenticity.
  */
-export namespace CheckPublicProductLabelBatchAuthenticityUsingGET {
+export namespace CheckPublicProductLabelBatchAuthenticity {
     /**
-     * Parameter map for checkPublicProductLabelBatchAuthenticityUsingGET.
+     * Parameter map for checkPublicProductLabelBatchAuthenticity.
      */
     export interface PartialParamMap {
       /**
        * Label uid
        */
       uid: string;
-      /**
-       * Entity id
-       */
-      id?: number;
-      /**
-       * Batch number
-       */
-      number?: string;
-      /**
-       * Production date
-       */
-      productionDate?: string;
-      /**
-       * Expiry date
-       */
-      expiryDate?: string;
+      request: ApiProductLabelBatchCheckAuthenticity;
     }
 
     /**
-     * Enumeration of all parameters for checkPublicProductLabelBatchAuthenticityUsingGET.
+     * Enumeration of all parameters for checkPublicProductLabelBatchAuthenticity.
      */
     export enum Parameters {
       /**
        * Label uid
        */
       uid = 'uid',
-      /**
-       * Entity id
-       */
-      id = 'id',
-      /**
-       * Batch number
-       */
-      number = 'number',
-      /**
-       * Production date
-       */
-      productionDate = 'productionDate',
-      /**
-       * Expiry date
-       */
-      expiryDate = 'expiryDate'
+      request = 'request'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of checkPublicProductLabelBatchAuthenticityUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of checkPublicProductLabelBatchAuthenticity
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CheckPublicProductLabelBatchAuthenticityUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CheckPublicProductLabelBatchAuthenticity.PartialParamMap]?: [string, ValidatorFn][]} = {
       uid: [
               ['required', Validators.required],
       ],
-      id: [
-      ],
-      number: [
-      ],
-      productionDate: [
-      ],
-      expiryDate: [
+      request: [
+              ['required', Validators.required],
       ],
     };
 }
 
 /**
- * Namespace for checkPublicProductLabelBatchOriginUsingGET.
+ * Namespace for checkPublicProductLabelBatchOrigin.
  */
-export namespace CheckPublicProductLabelBatchOriginUsingGET {
+export namespace CheckPublicProductLabelBatchOrigin {
     /**
-     * Parameter map for checkPublicProductLabelBatchOriginUsingGET.
+     * Parameter map for checkPublicProductLabelBatchOrigin.
      */
     export interface PartialParamMap {
       /**
        * Label uid
        */
       uid: string;
-      /**
-       * Entity id
-       */
-      id?: number;
-      /**
-       * Batch number
-       */
-      number?: string;
+      request: ApiProductLabelBatchCheckOrigin;
     }
 
     /**
-     * Enumeration of all parameters for checkPublicProductLabelBatchOriginUsingGET.
+     * Enumeration of all parameters for checkPublicProductLabelBatchOrigin.
      */
     export enum Parameters {
       /**
        * Label uid
        */
       uid = 'uid',
-      /**
-       * Entity id
-       */
-      id = 'id',
-      /**
-       * Batch number
-       */
-      number = 'number'
+      request = 'request'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of checkPublicProductLabelBatchOriginUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of checkPublicProductLabelBatchOrigin
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CheckPublicProductLabelBatchOriginUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CheckPublicProductLabelBatchOrigin.PartialParamMap]?: [string, ValidatorFn][]} = {
       uid: [
               ['required', Validators.required],
       ],
-      id: [
-      ],
-      number: [
+      request: [
+              ['required', Validators.required],
       ],
     };
 }
 
 /**
- * Namespace for getPublicDocumentUsingGET.
+ * Namespace for getPublicDocument.
  */
-export namespace GetPublicDocumentUsingGET {
+export namespace GetPublicDocument {
     /**
-     * Parameter map for getPublicDocumentUsingGET.
+     * Parameter map for getPublicDocument.
      */
     export interface PartialParamMap {
-      /**
-       * storageKey
-       */
       storageKey: string;
     }
 
     /**
-     * Enumeration of all parameters for getPublicDocumentUsingGET.
+     * Enumeration of all parameters for getPublicDocument.
      */
     export enum Parameters {
-      /**
-       * storageKey
-       */
       storageKey = 'storageKey'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicDocumentUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicDocument
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetPublicDocumentUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetPublicDocument.PartialParamMap]?: [string, ValidatorFn][]} = {
       storageKey: [
               ['required', Validators.required],
       ],
@@ -253,34 +193,28 @@ export namespace GetPublicDocumentUsingGET {
 }
 
 /**
- * Namespace for getPublicGlobalSettingsUsingGET.
+ * Namespace for getPublicGlobalSettings.
  */
-export namespace GetPublicGlobalSettingsUsingGET {
+export namespace GetPublicGlobalSettings {
     /**
-     * Parameter map for getPublicGlobalSettingsUsingGET.
+     * Parameter map for getPublicGlobalSettings.
      */
     export interface PartialParamMap {
-      /**
-       * name
-       */
       name: string;
     }
 
     /**
-     * Enumeration of all parameters for getPublicGlobalSettingsUsingGET.
+     * Enumeration of all parameters for getPublicGlobalSettings.
      */
     export enum Parameters {
-      /**
-       * name
-       */
       name = 'name'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicGlobalSettingsUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicGlobalSettings
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetPublicGlobalSettingsUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetPublicGlobalSettings.PartialParamMap]?: [string, ValidatorFn][]} = {
       name: [
               ['required', Validators.required],
       ],
@@ -288,34 +222,28 @@ export namespace GetPublicGlobalSettingsUsingGET {
 }
 
 /**
- * Namespace for getPublicImageUsingGET.
+ * Namespace for getPublicImage.
  */
-export namespace GetPublicImageUsingGET {
+export namespace GetPublicImage {
     /**
-     * Parameter map for getPublicImageUsingGET.
+     * Parameter map for getPublicImage.
      */
     export interface PartialParamMap {
-      /**
-       * storageKey
-       */
       storageKey: string;
     }
 
     /**
-     * Enumeration of all parameters for getPublicImageUsingGET.
+     * Enumeration of all parameters for getPublicImage.
      */
     export enum Parameters {
-      /**
-       * storageKey
-       */
       storageKey = 'storageKey'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicImageUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicImage
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetPublicImageUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetPublicImage.PartialParamMap]?: [string, ValidatorFn][]} = {
       storageKey: [
               ['required', Validators.required],
       ],
@@ -323,11 +251,11 @@ export namespace GetPublicImageUsingGET {
 }
 
 /**
- * Namespace for getPublicProductKnowledgeBlogUsingGET.
+ * Namespace for getPublicProductKnowledgeBlog.
  */
-export namespace GetPublicProductKnowledgeBlogUsingGET {
+export namespace GetPublicProductKnowledgeBlog {
     /**
-     * Parameter map for getPublicProductKnowledgeBlogUsingGET.
+     * Parameter map for getPublicProductKnowledgeBlog.
      */
     export interface PartialParamMap {
       /**
@@ -337,7 +265,7 @@ export namespace GetPublicProductKnowledgeBlogUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for getPublicProductKnowledgeBlogUsingGET.
+     * Enumeration of all parameters for getPublicProductKnowledgeBlog.
      */
     export enum Parameters {
       /**
@@ -347,10 +275,10 @@ export namespace GetPublicProductKnowledgeBlogUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicProductKnowledgeBlogUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicProductKnowledgeBlog
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetPublicProductKnowledgeBlogUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetPublicProductKnowledgeBlog.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -358,11 +286,11 @@ export namespace GetPublicProductKnowledgeBlogUsingGET {
 }
 
 /**
- * Namespace for getPublicProductLabelBatchUsingGET.
+ * Namespace for getPublicProductLabelBatch.
  */
-export namespace GetPublicProductLabelBatchUsingGET {
+export namespace GetPublicProductLabelBatch {
     /**
-     * Parameter map for getPublicProductLabelBatchUsingGET.
+     * Parameter map for getPublicProductLabelBatch.
      */
     export interface PartialParamMap {
       /**
@@ -376,7 +304,7 @@ export namespace GetPublicProductLabelBatchUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for getPublicProductLabelBatchUsingGET.
+     * Enumeration of all parameters for getPublicProductLabelBatch.
      */
     export enum Parameters {
       /**
@@ -390,10 +318,10 @@ export namespace GetPublicProductLabelBatchUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicProductLabelBatchUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicProductLabelBatch
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetPublicProductLabelBatchUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetPublicProductLabelBatch.PartialParamMap]?: [string, ValidatorFn][]} = {
       uid: [
               ['required', Validators.required],
       ],
@@ -404,11 +332,11 @@ export namespace GetPublicProductLabelBatchUsingGET {
 }
 
 /**
- * Namespace for getPublicProductLabelValuesUsingGET.
+ * Namespace for getPublicProductLabelValues.
  */
-export namespace GetPublicProductLabelValuesUsingGET {
+export namespace GetPublicProductLabelValues {
     /**
-     * Parameter map for getPublicProductLabelValuesUsingGET.
+     * Parameter map for getPublicProductLabelValues.
      */
     export interface PartialParamMap {
       /**
@@ -418,7 +346,7 @@ export namespace GetPublicProductLabelValuesUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for getPublicProductLabelValuesUsingGET.
+     * Enumeration of all parameters for getPublicProductLabelValues.
      */
     export enum Parameters {
       /**
@@ -428,10 +356,10 @@ export namespace GetPublicProductLabelValuesUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicProductLabelValuesUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicProductLabelValues
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetPublicProductLabelValuesUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetPublicProductLabelValues.PartialParamMap]?: [string, ValidatorFn][]} = {
       uid: [
               ['required', Validators.required],
       ],
@@ -439,42 +367,30 @@ export namespace GetPublicProductLabelValuesUsingGET {
 }
 
 /**
- * Namespace for getPublicResizedImageUsingGET.
+ * Namespace for getPublicResizedImage.
  */
-export namespace GetPublicResizedImageUsingGET {
+export namespace GetPublicResizedImage {
     /**
-     * Parameter map for getPublicResizedImageUsingGET.
+     * Parameter map for getPublicResizedImage.
      */
     export interface PartialParamMap {
-      /**
-       * storageKey
-       */
       storageKey: string;
-      /**
-       * size
-       */
       size: string;
     }
 
     /**
-     * Enumeration of all parameters for getPublicResizedImageUsingGET.
+     * Enumeration of all parameters for getPublicResizedImage.
      */
     export enum Parameters {
-      /**
-       * storageKey
-       */
       storageKey = 'storageKey',
-      /**
-       * size
-       */
       size = 'size'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicResizedImageUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getPublicResizedImage
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetPublicResizedImageUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetPublicResizedImage.PartialParamMap]?: [string, ValidatorFn][]} = {
       storageKey: [
               ['required', Validators.required],
       ],
@@ -485,11 +401,11 @@ export namespace GetPublicResizedImageUsingGET {
 }
 
 /**
- * Namespace for getQRTagPublicDataUsingGET.
+ * Namespace for getQRTagPublicData.
  */
-export namespace GetQRTagPublicDataUsingGET {
+export namespace GetQRTagPublicData {
     /**
-     * Parameter map for getQRTagPublicDataUsingGET.
+     * Parameter map for getQRTagPublicData.
      */
     export interface PartialParamMap {
       /**
@@ -500,14 +416,11 @@ export namespace GetQRTagPublicDataUsingGET {
        * Return aggregated history
        */
       withHistory?: boolean;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getQRTagPublicDataUsingGET.
+     * Enumeration of all parameters for getQRTagPublicData.
      */
     export enum Parameters {
       /**
@@ -518,17 +431,14 @@ export namespace GetQRTagPublicDataUsingGET {
        * Return aggregated history
        */
       withHistory = 'withHistory',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getQRTagPublicDataUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getQRTagPublicData
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetQRTagPublicDataUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetQRTagPublicData.PartialParamMap]?: [string, ValidatorFn][]} = {
       qrTag: [
               ['required', Validators.required],
       ],
@@ -540,17 +450,21 @@ export namespace GetQRTagPublicDataUsingGET {
 }
 
 /**
- * Namespace for listProductLabelFeedbacksUsingGET.
+ * Namespace for listProductLabelFeedbacks.
  */
-export namespace ListProductLabelFeedbacksUsingGET {
+export namespace ListProductLabelFeedbacks {
     /**
-     * Parameter map for listProductLabelFeedbacksUsingGET.
+     * Parameter map for listProductLabelFeedbacks.
      */
     export interface PartialParamMap {
       /**
        * Label id
        */
       labelUid: string;
+      /**
+       * feedback type
+       */
+      type?: 'PRAISE' | 'PROPOSAL' | 'COMPLAINT';
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -571,20 +485,20 @@ export namespace ListProductLabelFeedbacksUsingGET {
        * Direction of sorting (ASC or DESC). Default DESC.
        */
       sort?: 'ASC' | 'DESC';
-      /**
-       * feedback type
-       */
-      type?: 'PRAISE' | 'PROPOSAL' | 'COMPLAINT';
     }
 
     /**
-     * Enumeration of all parameters for listProductLabelFeedbacksUsingGET.
+     * Enumeration of all parameters for listProductLabelFeedbacks.
      */
     export enum Parameters {
       /**
        * Label id
        */
       labelUid = 'labelUid',
+      /**
+       * feedback type
+       */
+      type = 'type',
       /**
        * Only count, only fetch, or return both values (if null)
        */
@@ -604,65 +518,57 @@ export namespace ListProductLabelFeedbacksUsingGET {
       /**
        * Direction of sorting (ASC or DESC). Default DESC.
        */
-      sort = 'sort',
-      /**
-       * feedback type
-       */
-      type = 'type'
+      sort = 'sort'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of listProductLabelFeedbacksUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of listProductLabelFeedbacks
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ListProductLabelFeedbacksUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ListProductLabelFeedbacks.PartialParamMap]?: [string, ValidatorFn][]} = {
       labelUid: [
               ['required', Validators.required],
+      ],
+      type: [
       ],
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
       sort: [
       ],
-      type: [
-      ],
     };
 }
 
 /**
- * Namespace for logPublicRequestUsingPOST.
+ * Namespace for logPublicRequest.
  */
-export namespace LogPublicRequestUsingPOST {
+export namespace LogPublicRequest {
     /**
-     * Parameter map for logPublicRequestUsingPOST.
+     * Parameter map for logPublicRequest.
      */
     export interface PartialParamMap {
-      /**
-       * request
-       */
       ApiLogRequest: ApiLogRequest;
     }
 
     /**
-     * Enumeration of all parameters for logPublicRequestUsingPOST.
+     * Enumeration of all parameters for logPublicRequest.
      */
     export enum Parameters {
-      /**
-       * request
-       */
       ApiLogRequest = 'ApiLogRequest'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of logPublicRequestUsingPOST
+     * A map of tuples with error name and `ValidatorFn` for each parameter of logPublicRequest
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof LogPublicRequestUsingPOST.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof LogPublicRequest.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
@@ -710,23 +616,23 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public addProductLabelFeedbackUsingPOSTByMap(
-    map: AddProductLabelFeedbackUsingPOST.PartialParamMap,
+  public addProductLabelFeedbackByMap(
+    map: AddProductLabelFeedback.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public addProductLabelFeedbackUsingPOSTByMap(
-    map: AddProductLabelFeedbackUsingPOST.PartialParamMap,
+  public addProductLabelFeedbackByMap(
+    map: AddProductLabelFeedback.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public addProductLabelFeedbackUsingPOSTByMap(
-    map: AddProductLabelFeedbackUsingPOST.PartialParamMap,
+  public addProductLabelFeedbackByMap(
+    map: AddProductLabelFeedback.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public addProductLabelFeedbackUsingPOSTByMap(
-    map: AddProductLabelFeedbackUsingPOST.PartialParamMap,
+  public addProductLabelFeedbackByMap(
+    map: AddProductLabelFeedback.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.addProductLabelFeedbackUsingPOST(
+    return this.addProductLabelFeedback(
       map.labelUid,
       map.ApiProductLabelFeedback,
       observe,
@@ -739,26 +645,26 @@ export class PublicControllerService {
      * Add a feedback to a label with a label uid
      * 
      * @param labelUid Label id
-     * @param ApiProductLabelFeedback request
+     * @param ApiProductLabelFeedback 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addProductLabelFeedbackUsingPOST(labelUid: string, ApiProductLabelFeedback: ApiProductLabelFeedback, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public addProductLabelFeedbackUsingPOST(labelUid: string, ApiProductLabelFeedback: ApiProductLabelFeedback, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public addProductLabelFeedbackUsingPOST(labelUid: string, ApiProductLabelFeedback: ApiProductLabelFeedback, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public addProductLabelFeedbackUsingPOST(labelUid: string, ApiProductLabelFeedback: ApiProductLabelFeedback, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public addProductLabelFeedback(labelUid: string, ApiProductLabelFeedback: ApiProductLabelFeedback, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public addProductLabelFeedback(labelUid: string, ApiProductLabelFeedback: ApiProductLabelFeedback, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public addProductLabelFeedback(labelUid: string, ApiProductLabelFeedback: ApiProductLabelFeedback, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public addProductLabelFeedback(labelUid: string, ApiProductLabelFeedback: ApiProductLabelFeedback, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (labelUid === null || labelUid === undefined) {
-            throw new Error('Required parameter labelUid was null or undefined when calling addProductLabelFeedbackUsingPOST.');
+            throw new Error('Required parameter labelUid was null or undefined when calling addProductLabelFeedback.');
         }
         if (ApiProductLabelFeedback === null || ApiProductLabelFeedback === undefined) {
-            throw new Error('Required parameter ApiProductLabelFeedback was null or undefined when calling addProductLabelFeedbackUsingPOST.');
+            throw new Error('Required parameter ApiProductLabelFeedback was null or undefined when calling addProductLabelFeedback.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -790,7 +696,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'addProductLabelFeedbackUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'addProductLabelFeedback')));
         }
         return handle;
     }
@@ -803,28 +709,25 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public checkPublicProductLabelBatchAuthenticityUsingGETByMap(
-    map: CheckPublicProductLabelBatchAuthenticityUsingGET.PartialParamMap,
+  public checkPublicProductLabelBatchAuthenticityByMap(
+    map: CheckPublicProductLabelBatchAuthenticity.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseBoolean>;
-  public checkPublicProductLabelBatchAuthenticityUsingGETByMap(
-    map: CheckPublicProductLabelBatchAuthenticityUsingGET.PartialParamMap,
+  public checkPublicProductLabelBatchAuthenticityByMap(
+    map: CheckPublicProductLabelBatchAuthenticity.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseBoolean>>;
-  public checkPublicProductLabelBatchAuthenticityUsingGETByMap(
-    map: CheckPublicProductLabelBatchAuthenticityUsingGET.PartialParamMap,
+  public checkPublicProductLabelBatchAuthenticityByMap(
+    map: CheckPublicProductLabelBatchAuthenticity.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseBoolean>>;
-  public checkPublicProductLabelBatchAuthenticityUsingGETByMap(
-    map: CheckPublicProductLabelBatchAuthenticityUsingGET.PartialParamMap,
+  public checkPublicProductLabelBatchAuthenticityByMap(
+    map: CheckPublicProductLabelBatchAuthenticity.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.checkPublicProductLabelBatchAuthenticityUsingGET(
+    return this.checkPublicProductLabelBatchAuthenticity(
       map.uid,
-      map.id,
-      map.number,
-      map.productionDate,
-      map.expiryDate,
+      map.request,
       observe,
       reportProgress
     );
@@ -835,40 +738,31 @@ export class PublicControllerService {
      * Check batch by number and given date(s)
      * 
      * @param uid Label uid
-     * @param id Entity id
-     * @param number Batch number
-     * @param productionDate Production date
-     * @param expiryDate Expiry date
+     * @param request 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkPublicProductLabelBatchAuthenticityUsingGET(uid: string, id?: number, number?: string, productionDate?: string, expiryDate?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseBoolean>;
-    public checkPublicProductLabelBatchAuthenticityUsingGET(uid: string, id?: number, number?: string, productionDate?: string, expiryDate?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseBoolean>>;
-    public checkPublicProductLabelBatchAuthenticityUsingGET(uid: string, id?: number, number?: string, productionDate?: string, expiryDate?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseBoolean>>;
-    public checkPublicProductLabelBatchAuthenticityUsingGET(uid: string, id?: number, number?: string, productionDate?: string, expiryDate?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public checkPublicProductLabelBatchAuthenticity(uid: string, request: ApiProductLabelBatchCheckAuthenticity, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseBoolean>;
+    public checkPublicProductLabelBatchAuthenticity(uid: string, request: ApiProductLabelBatchCheckAuthenticity, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseBoolean>>;
+    public checkPublicProductLabelBatchAuthenticity(uid: string, request: ApiProductLabelBatchCheckAuthenticity, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseBoolean>>;
+    public checkPublicProductLabelBatchAuthenticity(uid: string, request: ApiProductLabelBatchCheckAuthenticity, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (uid === null || uid === undefined) {
-            throw new Error('Required parameter uid was null or undefined when calling checkPublicProductLabelBatchAuthenticityUsingGET.');
+            throw new Error('Required parameter uid was null or undefined when calling checkPublicProductLabelBatchAuthenticity.');
+        }
+        if (request === null || request === undefined) {
+            throw new Error('Required parameter request was null or undefined when calling checkPublicProductLabelBatchAuthenticity.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (id !== undefined && id !== null) {
-            queryParameters = queryParameters.set('id', <any>id);
-        }
-        if (number !== undefined && number !== null) {
-            queryParameters = queryParameters.set('number', <any>number);
-        }
-        if (productionDate !== undefined && productionDate !== null) {
-            queryParameters = queryParameters.set('productionDate', <any>productionDate);
-        }
-        if (expiryDate !== undefined && expiryDate !== null) {
-            queryParameters = queryParameters.set('expiryDate', <any>expiryDate);
+        if (request !== undefined && request !== null) {
+            queryParameters = queryParameters.set('request', <any>request);
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -895,7 +789,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'checkPublicProductLabelBatchAuthenticityUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'checkPublicProductLabelBatchAuthenticity')));
         }
         return handle;
     }
@@ -908,26 +802,25 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public checkPublicProductLabelBatchOriginUsingGETByMap(
-    map: CheckPublicProductLabelBatchOriginUsingGET.PartialParamMap,
+  public checkPublicProductLabelBatchOriginByMap(
+    map: CheckPublicProductLabelBatchOrigin.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseListApiLocation>;
-  public checkPublicProductLabelBatchOriginUsingGETByMap(
-    map: CheckPublicProductLabelBatchOriginUsingGET.PartialParamMap,
+  public checkPublicProductLabelBatchOriginByMap(
+    map: CheckPublicProductLabelBatchOrigin.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseListApiLocation>>;
-  public checkPublicProductLabelBatchOriginUsingGETByMap(
-    map: CheckPublicProductLabelBatchOriginUsingGET.PartialParamMap,
+  public checkPublicProductLabelBatchOriginByMap(
+    map: CheckPublicProductLabelBatchOrigin.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseListApiLocation>>;
-  public checkPublicProductLabelBatchOriginUsingGETByMap(
-    map: CheckPublicProductLabelBatchOriginUsingGET.PartialParamMap,
+  public checkPublicProductLabelBatchOriginByMap(
+    map: CheckPublicProductLabelBatchOrigin.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.checkPublicProductLabelBatchOriginUsingGET(
+    return this.checkPublicProductLabelBatchOrigin(
       map.uid,
-      map.id,
-      map.number,
+      map.request,
       observe,
       reportProgress
     );
@@ -938,32 +831,31 @@ export class PublicControllerService {
      * Get batch by label and number
      * 
      * @param uid Label uid
-     * @param id Entity id
-     * @param number Batch number
+     * @param request 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkPublicProductLabelBatchOriginUsingGET(uid: string, id?: number, number?: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseListApiLocation>;
-    public checkPublicProductLabelBatchOriginUsingGET(uid: string, id?: number, number?: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseListApiLocation>>;
-    public checkPublicProductLabelBatchOriginUsingGET(uid: string, id?: number, number?: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseListApiLocation>>;
-    public checkPublicProductLabelBatchOriginUsingGET(uid: string, id?: number, number?: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public checkPublicProductLabelBatchOrigin(uid: string, request: ApiProductLabelBatchCheckOrigin, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseListApiLocation>;
+    public checkPublicProductLabelBatchOrigin(uid: string, request: ApiProductLabelBatchCheckOrigin, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseListApiLocation>>;
+    public checkPublicProductLabelBatchOrigin(uid: string, request: ApiProductLabelBatchCheckOrigin, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseListApiLocation>>;
+    public checkPublicProductLabelBatchOrigin(uid: string, request: ApiProductLabelBatchCheckOrigin, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (uid === null || uid === undefined) {
-            throw new Error('Required parameter uid was null or undefined when calling checkPublicProductLabelBatchOriginUsingGET.');
+            throw new Error('Required parameter uid was null or undefined when calling checkPublicProductLabelBatchOrigin.');
+        }
+        if (request === null || request === undefined) {
+            throw new Error('Required parameter request was null or undefined when calling checkPublicProductLabelBatchOrigin.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (id !== undefined && id !== null) {
-            queryParameters = queryParameters.set('id', <any>id);
-        }
-        if (number !== undefined && number !== null) {
-            queryParameters = queryParameters.set('number', <any>number);
+        if (request !== undefined && request !== null) {
+            queryParameters = queryParameters.set('request', <any>request);
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -990,7 +882,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'checkPublicProductLabelBatchOriginUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'checkPublicProductLabelBatchOrigin')));
         }
         return handle;
     }
@@ -1003,23 +895,23 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getPublicDocumentUsingGETByMap(
-    map: GetPublicDocumentUsingGET.PartialParamMap,
+  public getPublicDocumentByMap(
+    map: GetPublicDocument.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<Blob>;
-  public getPublicDocumentUsingGETByMap(
-    map: GetPublicDocumentUsingGET.PartialParamMap,
+  public getPublicDocumentByMap(
+    map: GetPublicDocument.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public getPublicDocumentUsingGETByMap(
-    map: GetPublicDocumentUsingGET.PartialParamMap,
+  public getPublicDocumentByMap(
+    map: GetPublicDocument.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public getPublicDocumentUsingGETByMap(
-    map: GetPublicDocumentUsingGET.PartialParamMap,
+  public getPublicDocumentByMap(
+    map: GetPublicDocument.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getPublicDocumentUsingGET(
+    return this.getPublicDocument(
       map.storageKey,
       observe,
       reportProgress
@@ -1030,23 +922,23 @@ export class PublicControllerService {
     /**
      * Returns file contents for given storage key
      * 
-     * @param storageKey storageKey
+     * @param storageKey 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPublicDocumentUsingGET(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public getPublicDocumentUsingGET(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public getPublicDocumentUsingGET(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public getPublicDocumentUsingGET(storageKey: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getPublicDocument(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public getPublicDocument(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public getPublicDocument(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public getPublicDocument(storageKey: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (storageKey === null || storageKey === undefined) {
-            throw new Error('Required parameter storageKey was null or undefined when calling getPublicDocumentUsingGET.');
+            throw new Error('Required parameter storageKey was null or undefined when calling getPublicDocument.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1073,7 +965,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicDocumentUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicDocument')));
         }
         return handle;
     }
@@ -1086,23 +978,23 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getPublicGlobalSettingsUsingGETByMap(
-    map: GetPublicGlobalSettingsUsingGET.PartialParamMap,
+  public getPublicGlobalSettingsByMap(
+    map: GetPublicGlobalSettings.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiGlobalSettingsValue>;
-  public getPublicGlobalSettingsUsingGETByMap(
-    map: GetPublicGlobalSettingsUsingGET.PartialParamMap,
+  public getPublicGlobalSettingsByMap(
+    map: GetPublicGlobalSettings.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiGlobalSettingsValue>>;
-  public getPublicGlobalSettingsUsingGETByMap(
-    map: GetPublicGlobalSettingsUsingGET.PartialParamMap,
+  public getPublicGlobalSettingsByMap(
+    map: GetPublicGlobalSettings.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiGlobalSettingsValue>>;
-  public getPublicGlobalSettingsUsingGETByMap(
-    map: GetPublicGlobalSettingsUsingGET.PartialParamMap,
+  public getPublicGlobalSettingsByMap(
+    map: GetPublicGlobalSettings.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getPublicGlobalSettingsUsingGET(
+    return this.getPublicGlobalSettings(
       map.name,
       observe,
       reportProgress
@@ -1113,23 +1005,23 @@ export class PublicControllerService {
     /**
      * Returns &#39;global settings&#39; value
      * 
-     * @param name name
+     * @param name 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPublicGlobalSettingsUsingGET(name: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiGlobalSettingsValue>;
-    public getPublicGlobalSettingsUsingGET(name: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiGlobalSettingsValue>>;
-    public getPublicGlobalSettingsUsingGET(name: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiGlobalSettingsValue>>;
-    public getPublicGlobalSettingsUsingGET(name: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getPublicGlobalSettings(name: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiGlobalSettingsValue>;
+    public getPublicGlobalSettings(name: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiGlobalSettingsValue>>;
+    public getPublicGlobalSettings(name: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiGlobalSettingsValue>>;
+    public getPublicGlobalSettings(name: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (name === null || name === undefined) {
-            throw new Error('Required parameter name was null or undefined when calling getPublicGlobalSettingsUsingGET.');
+            throw new Error('Required parameter name was null or undefined when calling getPublicGlobalSettings.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1155,7 +1047,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicGlobalSettingsUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicGlobalSettings')));
         }
         return handle;
     }
@@ -1168,23 +1060,23 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getPublicImageUsingGETByMap(
-    map: GetPublicImageUsingGET.PartialParamMap,
+  public getPublicImageByMap(
+    map: GetPublicImage.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<Blob>;
-  public getPublicImageUsingGETByMap(
-    map: GetPublicImageUsingGET.PartialParamMap,
+  public getPublicImageByMap(
+    map: GetPublicImage.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public getPublicImageUsingGETByMap(
-    map: GetPublicImageUsingGET.PartialParamMap,
+  public getPublicImageByMap(
+    map: GetPublicImage.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public getPublicImageUsingGETByMap(
-    map: GetPublicImageUsingGET.PartialParamMap,
+  public getPublicImageByMap(
+    map: GetPublicImage.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getPublicImageUsingGET(
+    return this.getPublicImage(
       map.storageKey,
       observe,
       reportProgress
@@ -1195,23 +1087,23 @@ export class PublicControllerService {
     /**
      * Returns image contents for given storage key
      * 
-     * @param storageKey storageKey
+     * @param storageKey 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPublicImageUsingGET(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public getPublicImageUsingGET(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public getPublicImageUsingGET(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public getPublicImageUsingGET(storageKey: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getPublicImage(storageKey: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public getPublicImage(storageKey: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public getPublicImage(storageKey: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public getPublicImage(storageKey: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (storageKey === null || storageKey === undefined) {
-            throw new Error('Required parameter storageKey was null or undefined when calling getPublicImageUsingGET.');
+            throw new Error('Required parameter storageKey was null or undefined when calling getPublicImage.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1238,7 +1130,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicImageUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicImage')));
         }
         return handle;
     }
@@ -1251,23 +1143,23 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getPublicProductKnowledgeBlogUsingGETByMap(
-    map: GetPublicProductKnowledgeBlogUsingGET.PartialParamMap,
+  public getPublicProductKnowledgeBlogByMap(
+    map: GetPublicProductKnowledgeBlog.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiKnowledgeBlog>;
-  public getPublicProductKnowledgeBlogUsingGETByMap(
-    map: GetPublicProductKnowledgeBlogUsingGET.PartialParamMap,
+  public getPublicProductKnowledgeBlogByMap(
+    map: GetPublicProductKnowledgeBlog.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiKnowledgeBlog>>;
-  public getPublicProductKnowledgeBlogUsingGETByMap(
-    map: GetPublicProductKnowledgeBlogUsingGET.PartialParamMap,
+  public getPublicProductKnowledgeBlogByMap(
+    map: GetPublicProductKnowledgeBlog.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiKnowledgeBlog>>;
-  public getPublicProductKnowledgeBlogUsingGETByMap(
-    map: GetPublicProductKnowledgeBlogUsingGET.PartialParamMap,
+  public getPublicProductKnowledgeBlogByMap(
+    map: GetPublicProductKnowledgeBlog.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getPublicProductKnowledgeBlogUsingGET(
+    return this.getPublicProductKnowledgeBlog(
       map.id,
       observe,
       reportProgress
@@ -1282,19 +1174,19 @@ export class PublicControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPublicProductKnowledgeBlogUsingGET(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiKnowledgeBlog>;
-    public getPublicProductKnowledgeBlogUsingGET(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiKnowledgeBlog>>;
-    public getPublicProductKnowledgeBlogUsingGET(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiKnowledgeBlog>>;
-    public getPublicProductKnowledgeBlogUsingGET(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getPublicProductKnowledgeBlog(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiKnowledgeBlog>;
+    public getPublicProductKnowledgeBlog(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiKnowledgeBlog>>;
+    public getPublicProductKnowledgeBlog(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiKnowledgeBlog>>;
+    public getPublicProductKnowledgeBlog(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getPublicProductKnowledgeBlogUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling getPublicProductKnowledgeBlog.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1320,7 +1212,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicProductKnowledgeBlogUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicProductKnowledgeBlog')));
         }
         return handle;
     }
@@ -1333,23 +1225,23 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getPublicProductLabelBatchUsingGETByMap(
-    map: GetPublicProductLabelBatchUsingGET.PartialParamMap,
+  public getPublicProductLabelBatchByMap(
+    map: GetPublicProductLabelBatch.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiProductLabelBatch>;
-  public getPublicProductLabelBatchUsingGETByMap(
-    map: GetPublicProductLabelBatchUsingGET.PartialParamMap,
+  public getPublicProductLabelBatchByMap(
+    map: GetPublicProductLabelBatch.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProductLabelBatch>>;
-  public getPublicProductLabelBatchUsingGETByMap(
-    map: GetPublicProductLabelBatchUsingGET.PartialParamMap,
+  public getPublicProductLabelBatchByMap(
+    map: GetPublicProductLabelBatch.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProductLabelBatch>>;
-  public getPublicProductLabelBatchUsingGETByMap(
-    map: GetPublicProductLabelBatchUsingGET.PartialParamMap,
+  public getPublicProductLabelBatchByMap(
+    map: GetPublicProductLabelBatch.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getPublicProductLabelBatchUsingGET(
+    return this.getPublicProductLabelBatch(
       map.uid,
       map.number,
       observe,
@@ -1366,22 +1258,22 @@ export class PublicControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPublicProductLabelBatchUsingGET(uid: string, number: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProductLabelBatch>;
-    public getPublicProductLabelBatchUsingGET(uid: string, number: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProductLabelBatch>>;
-    public getPublicProductLabelBatchUsingGET(uid: string, number: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProductLabelBatch>>;
-    public getPublicProductLabelBatchUsingGET(uid: string, number: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getPublicProductLabelBatch(uid: string, number: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProductLabelBatch>;
+    public getPublicProductLabelBatch(uid: string, number: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProductLabelBatch>>;
+    public getPublicProductLabelBatch(uid: string, number: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProductLabelBatch>>;
+    public getPublicProductLabelBatch(uid: string, number: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (uid === null || uid === undefined) {
-            throw new Error('Required parameter uid was null or undefined when calling getPublicProductLabelBatchUsingGET.');
+            throw new Error('Required parameter uid was null or undefined when calling getPublicProductLabelBatch.');
         }
         if (number === null || number === undefined) {
-            throw new Error('Required parameter number was null or undefined when calling getPublicProductLabelBatchUsingGET.');
+            throw new Error('Required parameter number was null or undefined when calling getPublicProductLabelBatch.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1407,7 +1299,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicProductLabelBatchUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicProductLabelBatch')));
         }
         return handle;
     }
@@ -1420,23 +1312,23 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getPublicProductLabelValuesUsingGETByMap(
-    map: GetPublicProductLabelValuesUsingGET.PartialParamMap,
+  public getPublicProductLabelValuesByMap(
+    map: GetPublicProductLabelValues.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiProductLabelValuesExtended>;
-  public getPublicProductLabelValuesUsingGETByMap(
-    map: GetPublicProductLabelValuesUsingGET.PartialParamMap,
+  public getPublicProductLabelValuesByMap(
+    map: GetPublicProductLabelValues.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProductLabelValuesExtended>>;
-  public getPublicProductLabelValuesUsingGETByMap(
-    map: GetPublicProductLabelValuesUsingGET.PartialParamMap,
+  public getPublicProductLabelValuesByMap(
+    map: GetPublicProductLabelValues.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProductLabelValuesExtended>>;
-  public getPublicProductLabelValuesUsingGETByMap(
-    map: GetPublicProductLabelValuesUsingGET.PartialParamMap,
+  public getPublicProductLabelValuesByMap(
+    map: GetPublicProductLabelValues.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getPublicProductLabelValuesUsingGET(
+    return this.getPublicProductLabelValues(
       map.uid,
       observe,
       reportProgress
@@ -1451,19 +1343,19 @@ export class PublicControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPublicProductLabelValuesUsingGET(uid: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProductLabelValuesExtended>;
-    public getPublicProductLabelValuesUsingGET(uid: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProductLabelValuesExtended>>;
-    public getPublicProductLabelValuesUsingGET(uid: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProductLabelValuesExtended>>;
-    public getPublicProductLabelValuesUsingGET(uid: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getPublicProductLabelValues(uid: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProductLabelValuesExtended>;
+    public getPublicProductLabelValues(uid: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProductLabelValuesExtended>>;
+    public getPublicProductLabelValues(uid: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProductLabelValuesExtended>>;
+    public getPublicProductLabelValues(uid: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (uid === null || uid === undefined) {
-            throw new Error('Required parameter uid was null or undefined when calling getPublicProductLabelValuesUsingGET.');
+            throw new Error('Required parameter uid was null or undefined when calling getPublicProductLabelValues.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1489,7 +1381,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicProductLabelValuesUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicProductLabelValues')));
         }
         return handle;
     }
@@ -1502,23 +1394,23 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getPublicResizedImageUsingGETByMap(
-    map: GetPublicResizedImageUsingGET.PartialParamMap,
+  public getPublicResizedImageByMap(
+    map: GetPublicResizedImage.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<Blob>;
-  public getPublicResizedImageUsingGETByMap(
-    map: GetPublicResizedImageUsingGET.PartialParamMap,
+  public getPublicResizedImageByMap(
+    map: GetPublicResizedImage.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<Blob>>;
-  public getPublicResizedImageUsingGETByMap(
-    map: GetPublicResizedImageUsingGET.PartialParamMap,
+  public getPublicResizedImageByMap(
+    map: GetPublicResizedImage.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<Blob>>;
-  public getPublicResizedImageUsingGETByMap(
-    map: GetPublicResizedImageUsingGET.PartialParamMap,
+  public getPublicResizedImageByMap(
+    map: GetPublicResizedImage.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getPublicResizedImageUsingGET(
+    return this.getPublicResizedImage(
       map.storageKey,
       map.size,
       observe,
@@ -1530,27 +1422,27 @@ export class PublicControllerService {
     /**
      * Returns image contents for given storage key
      * 
-     * @param storageKey storageKey
-     * @param size size
+     * @param storageKey 
+     * @param size 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPublicResizedImageUsingGET(storageKey: string, size: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
-    public getPublicResizedImageUsingGET(storageKey: string, size: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
-    public getPublicResizedImageUsingGET(storageKey: string, size: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
-    public getPublicResizedImageUsingGET(storageKey: string, size: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getPublicResizedImage(storageKey: string, size: string, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<Blob>;
+    public getPublicResizedImage(storageKey: string, size: string, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<Blob>>;
+    public getPublicResizedImage(storageKey: string, size: string, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<Blob>>;
+    public getPublicResizedImage(storageKey: string, size: string, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (storageKey === null || storageKey === undefined) {
-            throw new Error('Required parameter storageKey was null or undefined when calling getPublicResizedImageUsingGET.');
+            throw new Error('Required parameter storageKey was null or undefined when calling getPublicResizedImage.');
         }
         if (size === null || size === undefined) {
-            throw new Error('Required parameter size was null or undefined when calling getPublicResizedImageUsingGET.');
+            throw new Error('Required parameter size was null or undefined when calling getPublicResizedImage.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/octet-stream'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1577,7 +1469,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicResizedImageUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getPublicResizedImage')));
         }
         return handle;
     }
@@ -1590,23 +1482,23 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getQRTagPublicDataUsingGETByMap(
-    map: GetQRTagPublicDataUsingGET.PartialParamMap,
+  public getQRTagPublicDataByMap(
+    map: GetQRTagPublicData.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiQRTagPublic>;
-  public getQRTagPublicDataUsingGETByMap(
-    map: GetQRTagPublicDataUsingGET.PartialParamMap,
+  public getQRTagPublicDataByMap(
+    map: GetQRTagPublicData.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiQRTagPublic>>;
-  public getQRTagPublicDataUsingGETByMap(
-    map: GetQRTagPublicDataUsingGET.PartialParamMap,
+  public getQRTagPublicDataByMap(
+    map: GetQRTagPublicData.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiQRTagPublic>>;
-  public getQRTagPublicDataUsingGETByMap(
-    map: GetQRTagPublicDataUsingGET.PartialParamMap,
+  public getQRTagPublicDataByMap(
+    map: GetQRTagPublicData.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getQRTagPublicDataUsingGET(
+    return this.getQRTagPublicData(
       map.qrTag,
       map.withHistory,
       map.language,
@@ -1621,16 +1513,16 @@ export class PublicControllerService {
      * 
      * @param qrTag QR code tag
      * @param withHistory Return aggregated history
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getQRTagPublicDataUsingGET(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiQRTagPublic>;
-    public getQRTagPublicDataUsingGET(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiQRTagPublic>>;
-    public getQRTagPublicDataUsingGET(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiQRTagPublic>>;
-    public getQRTagPublicDataUsingGET(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getQRTagPublicData(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiQRTagPublic>;
+    public getQRTagPublicData(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiQRTagPublic>>;
+    public getQRTagPublicData(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiQRTagPublic>>;
+    public getQRTagPublicData(qrTag: string, withHistory?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (qrTag === null || qrTag === undefined) {
-            throw new Error('Required parameter qrTag was null or undefined when calling getQRTagPublicDataUsingGET.');
+            throw new Error('Required parameter qrTag was null or undefined when calling getQRTagPublicData.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -1645,7 +1537,7 @@ export class PublicControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1672,7 +1564,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getQRTagPublicDataUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getQRTagPublicData')));
         }
         return handle;
     }
@@ -1685,30 +1577,30 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public listProductLabelFeedbacksUsingGETByMap(
-    map: ListProductLabelFeedbacksUsingGET.PartialParamMap,
+  public listProductLabelFeedbacksByMap(
+    map: ListProductLabelFeedbacks.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiProductLabelFeedback>;
-  public listProductLabelFeedbacksUsingGETByMap(
-    map: ListProductLabelFeedbacksUsingGET.PartialParamMap,
+  public listProductLabelFeedbacksByMap(
+    map: ListProductLabelFeedbacks.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiProductLabelFeedback>>;
-  public listProductLabelFeedbacksUsingGETByMap(
-    map: ListProductLabelFeedbacksUsingGET.PartialParamMap,
+  public listProductLabelFeedbacksByMap(
+    map: ListProductLabelFeedbacks.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiProductLabelFeedback>>;
-  public listProductLabelFeedbacksUsingGETByMap(
-    map: ListProductLabelFeedbacksUsingGET.PartialParamMap,
+  public listProductLabelFeedbacksByMap(
+    map: ListProductLabelFeedbacks.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.listProductLabelFeedbacksUsingGET(
+    return this.listProductLabelFeedbacks(
       map.labelUid,
+      map.type,
       map.requestType,
       map.limit,
       map.offset,
       map.sortBy,
       map.sort,
-      map.type,
       observe,
       reportProgress
     );
@@ -1719,24 +1611,27 @@ export class PublicControllerService {
      * List feedback for a label uid
      * 
      * @param labelUid Label id
+     * @param type feedback type
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
      * @param sortBy Column name to be sorted by, varies for each endpoint, default is id
      * @param sort Direction of sorting (ASC or DESC). Default DESC.
-     * @param type feedback type
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listProductLabelFeedbacksUsingGET(labelUid: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', type?: 'PRAISE' | 'PROPOSAL' | 'COMPLAINT', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProductLabelFeedback>;
-    public listProductLabelFeedbacksUsingGET(labelUid: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', type?: 'PRAISE' | 'PROPOSAL' | 'COMPLAINT', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProductLabelFeedback>>;
-    public listProductLabelFeedbacksUsingGET(labelUid: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', type?: 'PRAISE' | 'PROPOSAL' | 'COMPLAINT', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProductLabelFeedback>>;
-    public listProductLabelFeedbacksUsingGET(labelUid: string, requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', type?: 'PRAISE' | 'PROPOSAL' | 'COMPLAINT', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listProductLabelFeedbacks(labelUid: string, type?: 'PRAISE' | 'PROPOSAL' | 'COMPLAINT', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProductLabelFeedback>;
+    public listProductLabelFeedbacks(labelUid: string, type?: 'PRAISE' | 'PROPOSAL' | 'COMPLAINT', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProductLabelFeedback>>;
+    public listProductLabelFeedbacks(labelUid: string, type?: 'PRAISE' | 'PROPOSAL' | 'COMPLAINT', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProductLabelFeedback>>;
+    public listProductLabelFeedbacks(labelUid: string, type?: 'PRAISE' | 'PROPOSAL' | 'COMPLAINT', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (labelUid === null || labelUid === undefined) {
-            throw new Error('Required parameter labelUid was null or undefined when calling listProductLabelFeedbacksUsingGET.');
+            throw new Error('Required parameter labelUid was null or undefined when calling listProductLabelFeedbacks.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (type !== undefined && type !== null) {
+            queryParameters = queryParameters.set('type', <any>type);
+        }
         if (requestType !== undefined && requestType !== null) {
             queryParameters = queryParameters.set('requestType', <any>requestType);
         }
@@ -1752,15 +1647,12 @@ export class PublicControllerService {
         if (sort !== undefined && sort !== null) {
             queryParameters = queryParameters.set('sort', <any>sort);
         }
-        if (type !== undefined && type !== null) {
-            queryParameters = queryParameters.set('type', <any>type);
-        }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1787,7 +1679,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listProductLabelFeedbacksUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listProductLabelFeedbacks')));
         }
         return handle;
     }
@@ -1800,23 +1692,23 @@ export class PublicControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public logPublicRequestUsingPOSTByMap(
-    map: LogPublicRequestUsingPOST.PartialParamMap,
+  public logPublicRequestByMap(
+    map: LogPublicRequest.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public logPublicRequestUsingPOSTByMap(
-    map: LogPublicRequestUsingPOST.PartialParamMap,
+  public logPublicRequestByMap(
+    map: LogPublicRequest.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public logPublicRequestUsingPOSTByMap(
-    map: LogPublicRequestUsingPOST.PartialParamMap,
+  public logPublicRequestByMap(
+    map: LogPublicRequest.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public logPublicRequestUsingPOSTByMap(
-    map: LogPublicRequestUsingPOST.PartialParamMap,
+  public logPublicRequestByMap(
+    map: LogPublicRequest.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.logPublicRequestUsingPOST(
+    return this.logPublicRequest(
       map.ApiLogRequest,
       observe,
       reportProgress
@@ -1827,23 +1719,23 @@ export class PublicControllerService {
     /**
      * Write data to request log for analytics
      * 
-     * @param ApiLogRequest request
+     * @param ApiLogRequest 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public logPublicRequestUsingPOST(ApiLogRequest: ApiLogRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public logPublicRequestUsingPOST(ApiLogRequest: ApiLogRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public logPublicRequestUsingPOST(ApiLogRequest: ApiLogRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public logPublicRequestUsingPOST(ApiLogRequest: ApiLogRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public logPublicRequest(ApiLogRequest: ApiLogRequest, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public logPublicRequest(ApiLogRequest: ApiLogRequest, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public logPublicRequest(ApiLogRequest: ApiLogRequest, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public logPublicRequest(ApiLogRequest: ApiLogRequest, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiLogRequest === null || ApiLogRequest === undefined) {
-            throw new Error('Required parameter ApiLogRequest was null or undefined when calling logPublicRequestUsingPOST.');
+            throw new Error('Required parameter ApiLogRequest was null or undefined when calling logPublicRequest.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -1875,7 +1767,7 @@ export class PublicControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'logPublicRequestUsingPOST')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'logPublicRequest')));
         }
         return handle;
     }

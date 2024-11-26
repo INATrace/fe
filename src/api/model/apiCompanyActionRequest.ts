@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -25,19 +25,19 @@ export interface ApiCompanyActionRequest {
     /**
      * Company id
      */
-    companyId?: number;
+    companyId: number;
     /**
-     * Company user role
+     * User id
      */
-    companyUserRole?: ApiCompanyActionRequest.CompanyUserRoleEnum;
+    userId?: number;
     /**
      * Other company id
      */
     otherCompanyId?: number;
     /**
-     * User id
+     * Company user role
      */
-    userId?: number;
+    companyUserRole?: ApiCompanyActionRequest.CompanyUserRoleEnum;
 }
 
 /**
@@ -53,17 +53,17 @@ export namespace ApiCompanyActionRequest {
          */
         companyId = 'companyId',
         /**
-         * Company user role
+         * User id
          */
-        companyUserRole = 'companyUserRole',
+        userId = 'userId',
         /**
          * Other company id
          */
         otherCompanyId = 'otherCompanyId',
         /**
-         * User id
+         * Company user role
          */
-        userId = 'userId'
+        companyUserRole = 'companyUserRole'
     }
 
     /**
@@ -85,8 +85,30 @@ export namespace ApiCompanyActionRequest {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: false,
+                    required: true,
                     name: 'companyId',
+                    classname: 'ApiCompanyActionRequest',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'userId',
+                    classname: 'ApiCompanyActionRequest',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'otherCompanyId',
                     classname: 'ApiCompanyActionRequest',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -105,37 +127,16 @@ export namespace ApiCompanyActionRequest {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'otherCompanyId',
-                    classname: 'ApiCompanyActionRequest',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'userId',
-                    classname: 'ApiCompanyActionRequest',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
                 companyId: [
+                        ['required'],
                 ],
-                companyUserRole: [
+                userId: [
                 ],
                 otherCompanyId: [
                 ],
-                userId: [
+                companyUserRole: [
                 ],
             }
         }
@@ -147,13 +148,13 @@ export namespace ApiCompanyActionRequest {
   //               companyId: {
   //                   validators: []
   //               },
-  //               companyUserRole: {
+  //               userId: {
   //                   validators: []
   //               },
   //               otherCompanyId: {
   //                   validators: []
   //               },
-  //               userId: {
+  //               companyUserRole: {
   //                   validators: []
   //               },
   //     }

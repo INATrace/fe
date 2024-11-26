@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,20 +21,15 @@
 import { ApiProductLabelFieldValue } from './apiProductLabelFieldValue';
 
 
+/**
+ * labels
+ */
 
 export interface ApiProductLabelValues { 
-    /**
-     * Fields
-     */
-    fields?: Array<ApiProductLabelFieldValue>;
     /**
      * Entity id
      */
     id?: number;
-    /**
-     * Label language
-     */
-    language?: ApiProductLabelValues.LanguageEnum;
     /**
      * Product id
      */
@@ -44,13 +39,21 @@ export interface ApiProductLabelValues {
      */
     status?: ApiProductLabelValues.StatusEnum;
     /**
+     * Product label uuid (for url)
+     */
+    uuid?: string;
+    /**
      * label title
      */
     title?: string;
     /**
-     * Product label uuid (for url)
+     * Label language
      */
-    uuid?: string;
+    language?: ApiProductLabelValues.LanguageEnum;
+    /**
+     * Fields
+     */
+    fields?: Array<ApiProductLabelFieldValue>;
 }
 
 /**
@@ -62,17 +65,9 @@ export namespace ApiProductLabelValues {
      */
     export enum Properties {
         /**
-         * Fields
-         */
-        fields = 'fields',
-        /**
          * Entity id
          */
         id = 'id',
-        /**
-         * Label language
-         */
-        language = 'language',
         /**
          * Product id
          */
@@ -82,13 +77,29 @@ export namespace ApiProductLabelValues {
          */
         status = 'status',
         /**
+         * Product label uuid (for url)
+         */
+        uuid = 'uuid',
+        /**
          * label title
          */
         title = 'title',
         /**
-         * Product label uuid (for url)
+         * Label language
          */
-        uuid = 'uuid'
+        language = 'language',
+        /**
+         * Fields
+         */
+        fields = 'fields'
+    }
+
+    /**
+     * All possible values of status.
+     */
+    export enum StatusEnum {
+        UNPUBLISHED = 'UNPUBLISHED',
+        PUBLISHED = 'PUBLISHED'
     }
 
     /**
@@ -101,14 +112,6 @@ export namespace ApiProductLabelValues {
         ES = 'ES'
     }
 
-    /**
-     * All possible values of status.
-     */
-    export enum StatusEnum {
-        UNPUBLISHED = 'UNPUBLISHED',
-        PUBLISHED = 'PUBLISHED'
-    }
-
 
     export function formMetadata() {
         return  {
@@ -116,36 +119,12 @@ export namespace ApiProductLabelValues {
             classname: 'ApiProductLabelValues',
             vars: [
                 {
-                    metadata: ApiProductLabelFieldValue.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'fields',
-                    classname: 'ApiProductLabelValues',
-                    dataType: 'Array&lt;ApiProductLabelFieldValue&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProductLabelFieldValue'
-                },
-                {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
                     name: 'id',
                     classname: 'ApiProductLabelValues',
                     dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProductLabelValues.LanguageEnum',
-                    required: false,
-                    name: 'language',
-                    classname: 'ApiProductLabelValues',
-                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -177,7 +156,7 @@ export namespace ApiProductLabelValues {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'title',
+                    name: 'uuid',
                     classname: 'ApiProductLabelValues',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -188,28 +167,54 @@ export namespace ApiProductLabelValues {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'uuid',
+                    name: 'title',
                     classname: 'ApiProductLabelValues',
                     dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProductLabelValues.LanguageEnum',
+                    required: false,
+                    name: 'language',
+                    classname: 'ApiProductLabelValues',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    metadata: ApiProductLabelFieldValue.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'fields',
+                    classname: 'ApiProductLabelValues',
+                    dataType: 'Array&lt;ApiProductLabelFieldValue&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProductLabelFieldValue'
+                },
             ],
             validators: {
-                fields: [
-                ],
                 id: [
-                ],
-                language: [
                 ],
                 productId: [
                 ],
                 status: [
                 ],
-                title: [
-                ],
                 uuid: [
+                ],
+                title: [
+                        ['minlength', 0],
+                        ['maxlength', 255],
+                ],
+                language: [
+                ],
+                fields: [
                 ],
             }
         }
@@ -218,13 +223,7 @@ export namespace ApiProductLabelValues {
   // export const ApiProductLabelValuesValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               fields: {
-  //                   validators: []
-  //               },
   //               id: {
-  //                   validators: []
-  //               },
-  //               language: {
   //                   validators: []
   //               },
   //               productId: {
@@ -233,10 +232,16 @@ export namespace ApiProductLabelValues {
   //               status: {
   //                   validators: []
   //               },
+  //               uuid: {
+  //                   validators: []
+  //               },
   //               title: {
   //                   validators: []
   //               },
-  //               uuid: {
+  //               language: {
+  //                   validators: []
+  //               },
+  //               fields: {
   //                   validators: []
   //               },
   //     }

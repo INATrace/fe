@@ -55,7 +55,7 @@ export class LabelSelectorCardComponent implements OnInit {
 
   async setQRCode() {
     if (this.label) {
-      const res = await this.productController.getProductLabelContentUsingGET(this.label.id).pipe(take(1)).toPromise();
+      const res = await this.productController.getProductLabelContent(this.label.id).pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data) {
         this.qrCodeLink = `${environment.appBaseUrl}/${res.data.settings.language.toLowerCase()}/${environment.qrCodeBasePath}/${this.label.uuid}`;
       }

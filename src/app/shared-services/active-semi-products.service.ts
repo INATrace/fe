@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { PagedSearchResults } from 'src/interfaces/CodebookHelperService';
 import { GeneralSifrantService } from './general-sifrant.service';
 import { CodebookTranslations } from './codebook-translations';
-import { GetSemiProductListUsingGET, SemiProductControllerService } from '../../api/api/semiProductController.service';
+import { GetSemiProductList, SemiProductControllerService } from '../../api/api/semiProductController.service';
 import { ApiSemiProduct } from '../../api/model/apiSemiProduct';
 import { ApiPaginatedResponseApiSemiProduct } from '../../api/model/apiPaginatedResponseApiSemiProduct';
 
@@ -23,7 +23,7 @@ export class ActiveSemiProductsService extends GeneralSifrantService<ApiSemiProd
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetSemiProductListUsingGET.PartialParamMap;
+  } as GetSemiProductList.PartialParamMap;
 
   public identifier(el: ApiSemiProduct) {
     return el.id;
@@ -35,7 +35,7 @@ export class ActiveSemiProductsService extends GeneralSifrantService<ApiSemiProd
 
   public makeQuery(key: string, params?: any): Observable<PagedSearchResults<ApiSemiProduct>> {
     const limit = params && params.limit ? params.limit : this.limit();
-    return this.codebookService.getSemiProductListUsingGETByMap(this.requestParams).pipe(
+    return this.codebookService.getSemiProductListByMap(this.requestParams).pipe(
       map((res: ApiPaginatedResponseApiSemiProduct) => {
         return {
           results: res.data.items,

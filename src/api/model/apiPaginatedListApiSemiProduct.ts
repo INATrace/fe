@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,24 +21,27 @@
 import { ApiSemiProduct } from './apiSemiProduct';
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiPaginatedListApiSemiProduct { 
-    /**
-     * Count of all items satisfying 'paginatable' request.
-     */
-    count?: number;
     /**
      * Response items.
      */
     items?: Array<ApiSemiProduct>;
     /**
-     * Limit got from request
+     * Count of all items satisfying 'paginatable' request.
      */
-    limit?: number;
+    count?: number;
     /**
      * Offset got from request
      */
     offset?: number;
+    /**
+     * Limit got from request
+     */
+    limit?: number;
 }
 
 /**
@@ -50,21 +53,21 @@ export namespace ApiPaginatedListApiSemiProduct {
      */
     export enum Properties {
         /**
-         * Count of all items satisfying 'paginatable' request.
-         */
-        count = 'count',
-        /**
          * Response items.
          */
         items = 'items',
         /**
-         * Limit got from request
+         * Count of all items satisfying 'paginatable' request.
          */
-        limit = 'limit',
+        count = 'count',
         /**
          * Offset got from request
          */
-        offset = 'offset'
+        offset = 'offset',
+        /**
+         * Limit got from request
+         */
+        limit = 'limit'
     }
 
 
@@ -73,17 +76,6 @@ export namespace ApiPaginatedListApiSemiProduct {
             metadata: formMetadata,
             classname: 'ApiPaginatedListApiSemiProduct',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'count',
-                    classname: 'ApiPaginatedListApiSemiProduct',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     metadata: ApiSemiProduct.formMetadata,
                     isReadOnly: false,
@@ -100,7 +92,7 @@ export namespace ApiPaginatedListApiSemiProduct {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'limit',
+                    name: 'count',
                     classname: 'ApiPaginatedListApiSemiProduct',
                     dataType: 'number',
                     isPrimitiveType: true,
@@ -118,15 +110,26 @@ export namespace ApiPaginatedListApiSemiProduct {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'limit',
+                    classname: 'ApiPaginatedListApiSemiProduct',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
             ],
             validators: {
-                count: [
-                ],
                 items: [
                 ],
-                limit: [
+                count: [
                 ],
                 offset: [
+                ],
+                limit: [
                 ],
             }
         }
@@ -135,16 +138,16 @@ export namespace ApiPaginatedListApiSemiProduct {
   // export const ApiPaginatedListApiSemiProductValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               count: {
-  //                   validators: []
-  //               },
   //               items: {
   //                   validators: []
   //               },
-  //               limit: {
+  //               count: {
   //                   validators: []
   //               },
   //               offset: {
+  //                   validators: []
+  //               },
+  //               limit: {
   //                   validators: []
   //               },
   //     }

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
 import { map } from 'rxjs/operators';
 import {
-  GetStockOrderListByCompanyIdUsingGET,
+  GetStockOrderListByCompanyId,
   StockOrderControllerService
 } from '../../api/api/stockOrderController.service';
 import { ApiPaginatedResponseApiStockOrder } from '../../api/model/apiPaginatedResponseApiStockOrder';
@@ -37,7 +37,7 @@ export class StockOrdersForCompanyService extends GeneralSifrantService<ApiStock
   requestParams = {
     limit: 1000,
     offset: 0,
-  } as GetStockOrderListByCompanyIdUsingGET.PartialParamMap;
+  } as GetStockOrderListByCompanyId.PartialParamMap;
 
   public setWomenShare(isWomenShare: boolean) {
     this.isWomenShare = isWomenShare;
@@ -70,7 +70,7 @@ export class StockOrdersForCompanyService extends GeneralSifrantService<ApiStock
       query: this.producerUserCustomerName
     };
 
-    return this.stockOrderControllerService.getStockOrderListByCompanyIdUsingGETByMap(reqParams).pipe(
+    return this.stockOrderControllerService.getStockOrderListByCompanyIdByMap(reqParams).pipe(
         map((res: ApiPaginatedResponseApiStockOrder) => {
           return {
             results: res.data.items,

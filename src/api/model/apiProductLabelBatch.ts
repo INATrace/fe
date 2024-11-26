@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -25,14 +25,6 @@ import { ApiLocation } from './apiLocation';
 
 export interface ApiProductLabelBatch { 
     /**
-     * enable authenticity check
-     */
-    checkAuthenticity?: boolean;
-    /**
-     * Expiry date
-     */
-    expiryDate?: string;
-    /**
      * Entity id
      */
     id?: number;
@@ -41,18 +33,26 @@ export interface ApiProductLabelBatch {
      */
     labelId?: number;
     /**
-     * batch farming location
-     */
-    locations?: Array<ApiLocation>;
-    /**
      * Batch number
      */
     number?: string;
-    photo?: ApiDocument;
     /**
      * Production date
      */
     productionDate?: string;
+    /**
+     * Expiry date
+     */
+    expiryDate?: string;
+    /**
+     * batch farming location
+     */
+    locations?: Array<ApiLocation>;
+    photo?: ApiDocument;
+    /**
+     * enable authenticity check
+     */
+    checkAuthenticity?: boolean;
     /**
      * enable tracing origin
      */
@@ -68,14 +68,6 @@ export namespace ApiProductLabelBatch {
      */
     export enum Properties {
         /**
-         * enable authenticity check
-         */
-        checkAuthenticity = 'checkAuthenticity',
-        /**
-         * Expiry date
-         */
-        expiryDate = 'expiryDate',
-        /**
          * Entity id
          */
         id = 'id',
@@ -84,18 +76,26 @@ export namespace ApiProductLabelBatch {
          */
         labelId = 'labelId',
         /**
-         * batch farming location
-         */
-        locations = 'locations',
-        /**
          * Batch number
          */
         number = 'number',
-        photo = 'photo',
         /**
          * Production date
          */
         productionDate = 'productionDate',
+        /**
+         * Expiry date
+         */
+        expiryDate = 'expiryDate',
+        /**
+         * batch farming location
+         */
+        locations = 'locations',
+        photo = 'photo',
+        /**
+         * enable authenticity check
+         */
+        checkAuthenticity = 'checkAuthenticity',
         /**
          * enable tracing origin
          */
@@ -108,28 +108,6 @@ export namespace ApiProductLabelBatch {
             metadata: formMetadata,
             classname: 'ApiProductLabelBatch',
             vars: [
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'checkAuthenticity',
-                    classname: 'ApiProductLabelBatch',
-                    dataType: 'boolean',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'expiryDate',
-                    classname: 'ApiProductLabelBatch',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
                 {
                     isReadOnly: false,
                     isEnum: false,
@@ -153,6 +131,39 @@ export namespace ApiProductLabelBatch {
                     complexType: ''
                 },
                 {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'number',
+                    classname: 'ApiProductLabelBatch',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'productionDate',
+                    classname: 'ApiProductLabelBatch',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'expiryDate',
+                    classname: 'ApiProductLabelBatch',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
                     metadata: ApiLocation.formMetadata,
                     isReadOnly: false,
                     isEnum: false,
@@ -163,17 +174,6 @@ export namespace ApiProductLabelBatch {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiLocation'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'number',
-                    classname: 'ApiProductLabelBatch',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
                 },
                 {
                     metadata: ApiDocument.formMetadata,
@@ -191,9 +191,9 @@ export namespace ApiProductLabelBatch {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'productionDate',
+                    name: 'checkAuthenticity',
                     classname: 'ApiProductLabelBatch',
-                    dataType: 'string',
+                    dataType: 'boolean',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -211,21 +211,22 @@ export namespace ApiProductLabelBatch {
                 },
             ],
             validators: {
-                checkAuthenticity: [
-                ],
-                expiryDate: [
-                ],
                 id: [
                 ],
                 labelId: [
                 ],
-                locations: [
-                ],
                 number: [
+                        ['pattern', '/^\\p{Alnum}*$/'],
+                ],
+                productionDate: [
+                ],
+                expiryDate: [
+                ],
+                locations: [
                 ],
                 photo: [
                 ],
-                productionDate: [
+                checkAuthenticity: [
                 ],
                 traceOrigin: [
                 ],
@@ -236,28 +237,28 @@ export namespace ApiProductLabelBatch {
   // export const ApiProductLabelBatchValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               checkAuthenticity: {
-  //                   validators: []
-  //               },
-  //               expiryDate: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
   //               labelId: {
   //                   validators: []
   //               },
-  //               locations: {
+  //               number: {
   //                   validators: []
   //               },
-  //               number: {
+  //               productionDate: {
+  //                   validators: []
+  //               },
+  //               expiryDate: {
+  //                   validators: []
+  //               },
+  //               locations: {
   //                   validators: []
   //               },
   //               photo: {
   //                   validators: []
   //               },
-  //               productionDate: {
+  //               checkAuthenticity: {
   //                   validators: []
   //               },
   //               traceOrigin: {

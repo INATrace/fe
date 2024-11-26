@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GeneralSifrantService } from './general-sifrant.service';
-import { GetValueChainListUsingGET, ValueChainControllerService } from '../../api/api/valueChainController.service';
+import { GetValueChainList, ValueChainControllerService } from '../../api/api/valueChainController.service';
 import { ApiCompanyListResponse } from '../../api/model/apiCompanyListResponse';
 import { Observable } from 'rxjs';
 import { PagedSearchResults } from '../../interfaces/CodebookHelperService';
@@ -16,7 +16,7 @@ export class ActiveValueChainService extends GeneralSifrantService<any> {
     limit: 1000,
     requestType: 'FETCH',
     valueChainStatus: 'ENABLED'
-  } as  GetValueChainListUsingGET.PartialParamMap;
+  } as  GetValueChainList.PartialParamMap;
 
   constructor(
       private valueChainController: ValueChainControllerService,
@@ -41,7 +41,7 @@ export class ActiveValueChainService extends GeneralSifrantService<any> {
       name: key
     };
 
-    return this.valueChainController.getValueChainListUsingGETByMap(reqPars).pipe(
+    return this.valueChainController.getValueChainListByMap(reqPars).pipe(
       map((res: ApiPaginatedResponseApiValueChain) => {
         return {
           results: res.data.items,

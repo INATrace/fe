@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -23,21 +23,21 @@
 
 export interface ApiProductTypeTranslation { 
     /**
-     * Product type description
-     */
-    description?: string;
-    /**
      * Entity id
      */
     id?: number;
     /**
-     * Product type language
-     */
-    language?: ApiProductTypeTranslation.LanguageEnum;
-    /**
      * Product type name
      */
     name?: string;
+    /**
+     * Product type description
+     */
+    description?: string;
+    /**
+     * Product type language
+     */
+    language?: ApiProductTypeTranslation.LanguageEnum;
 }
 
 /**
@@ -49,21 +49,21 @@ export namespace ApiProductTypeTranslation {
      */
     export enum Properties {
         /**
-         * Product type description
-         */
-        description = 'description',
-        /**
          * Entity id
          */
         id = 'id',
         /**
-         * Product type language
-         */
-        language = 'language',
-        /**
          * Product type name
          */
-        name = 'name'
+        name = 'name',
+        /**
+         * Product type description
+         */
+        description = 'description',
+        /**
+         * Product type language
+         */
+        language = 'language'
     }
 
     /**
@@ -86,7 +86,18 @@ export namespace ApiProductTypeTranslation {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'description',
+                    name: 'id',
+                    classname: 'ApiProductTypeTranslation',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'name',
                     classname: 'ApiProductTypeTranslation',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -97,9 +108,9 @@ export namespace ApiProductTypeTranslation {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'description',
                     classname: 'ApiProductTypeTranslation',
-                    dataType: 'number',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -116,26 +127,15 @@ export namespace ApiProductTypeTranslation {
                     isListContainer: false,
                     complexType: ''
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'name',
-                    classname: 'ApiProductTypeTranslation',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
-                description: [
-                ],
                 id: [
                 ],
-                language: [
-                ],
                 name: [
+                ],
+                description: [
+                ],
+                language: [
                 ],
             }
         }
@@ -144,16 +144,16 @@ export namespace ApiProductTypeTranslation {
   // export const ApiProductTypeTranslationValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               description: {
-  //                   validators: []
-  //               },
   //               id: {
   //                   validators: []
   //               },
-  //               language: {
+  //               name: {
   //                   validators: []
   //               },
-  //               name: {
+  //               description: {
+  //                   validators: []
+  //               },
+  //               language: {
   //                   validators: []
   //               },
   //     }

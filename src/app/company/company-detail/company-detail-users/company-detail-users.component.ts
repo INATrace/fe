@@ -58,7 +58,7 @@ export class CompanyDetailUsersComponent extends CompanyDetailTabManagerComponen
     super.ngOnInit();
     this.globalEventsManager.showLoading(true);
     const id = this.route.snapshot.paramMap.get('id');
-    this.companyController.getCompanyUsersUsingGET(Number(id))
+    this.companyController.getCompanyUsers(Number(id))
       .pipe(
         finalize(() => this.globalEventsManager.showLoading(false))
       )

@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -21,16 +21,19 @@
 import { ApiProcessingEvidenceFieldTranslation } from './apiProcessingEvidenceFieldTranslation';
 
 
+/**
+ * list of supported processing evidence fields
+ */
 
 export interface ApiProcessingEvidenceField { 
-    /**
-     * Processing evidence field name
-     */
-    fieldName?: string;
     /**
      * Entity id
      */
     id?: number;
+    /**
+     * Processing evidence field name
+     */
+    fieldName?: string;
     /**
      * Processing evidence field label
      */
@@ -44,13 +47,13 @@ export interface ApiProcessingEvidenceField {
      */
     requiredOnQuote?: boolean;
     /**
-     * Processing evidence field translations
-     */
-    translations?: Array<ApiProcessingEvidenceFieldTranslation>;
-    /**
      * Processing evidence field type
      */
     type?: ApiProcessingEvidenceField.TypeEnum;
+    /**
+     * Processing evidence field translations
+     */
+    translations?: Array<ApiProcessingEvidenceFieldTranslation>;
 }
 
 /**
@@ -62,13 +65,13 @@ export namespace ApiProcessingEvidenceField {
      */
     export enum Properties {
         /**
-         * Processing evidence field name
-         */
-        fieldName = 'fieldName',
-        /**
          * Entity id
          */
         id = 'id',
+        /**
+         * Processing evidence field name
+         */
+        fieldName = 'fieldName',
         /**
          * Processing evidence field label
          */
@@ -82,13 +85,13 @@ export namespace ApiProcessingEvidenceField {
          */
         requiredOnQuote = 'requiredOnQuote',
         /**
-         * Processing evidence field translations
-         */
-        translations = 'translations',
-        /**
          * Processing evidence field type
          */
-        type = 'type'
+        type = 'type',
+        /**
+         * Processing evidence field translations
+         */
+        translations = 'translations'
     }
 
     /**
@@ -116,9 +119,9 @@ export namespace ApiProcessingEvidenceField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'fieldName',
+                    name: 'id',
                     classname: 'ApiProcessingEvidenceField',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -127,9 +130,9 @@ export namespace ApiProcessingEvidenceField {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'id',
+                    name: 'fieldName',
                     classname: 'ApiProcessingEvidenceField',
-                    dataType: 'number',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -168,18 +171,6 @@ export namespace ApiProcessingEvidenceField {
                     complexType: ''
                 },
                 {
-                    metadata: ApiProcessingEvidenceFieldTranslation.formMetadata,
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'translations',
-                    classname: 'ApiProcessingEvidenceField',
-                    dataType: 'Array&lt;ApiProcessingEvidenceFieldTranslation&gt;',
-                    isPrimitiveType: false,
-                    isListContainer: true,
-                    complexType: 'ApiProcessingEvidenceFieldTranslation'
-                },
-                {
                     isReadOnly: false,
                     isEnum: true,
                     datatypeWithEnum: 'ApiProcessingEvidenceField.TypeEnum',
@@ -191,11 +182,23 @@ export namespace ApiProcessingEvidenceField {
                     isListContainer: false,
                     complexType: ''
                 },
+                {
+                    metadata: ApiProcessingEvidenceFieldTranslation.formMetadata,
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'translations',
+                    classname: 'ApiProcessingEvidenceField',
+                    dataType: 'Array&lt;ApiProcessingEvidenceFieldTranslation&gt;',
+                    isPrimitiveType: false,
+                    isListContainer: true,
+                    complexType: 'ApiProcessingEvidenceFieldTranslation'
+                },
             ],
             validators: {
-                fieldName: [
-                ],
                 id: [
+                ],
+                fieldName: [
                 ],
                 label: [
                 ],
@@ -203,9 +206,9 @@ export namespace ApiProcessingEvidenceField {
                 ],
                 requiredOnQuote: [
                 ],
-                translations: [
-                ],
                 type: [
+                ],
+                translations: [
                 ],
             }
         }
@@ -214,10 +217,10 @@ export namespace ApiProcessingEvidenceField {
   // export const ApiProcessingEvidenceFieldValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               fieldName: {
+  //               id: {
   //                   validators: []
   //               },
-  //               id: {
+  //               fieldName: {
   //                   validators: []
   //               },
   //               label: {
@@ -229,10 +232,10 @@ export namespace ApiProcessingEvidenceField {
   //               requiredOnQuote: {
   //                   validators: []
   //               },
-  //               translations: {
+  //               type: {
   //                   validators: []
   //               },
-  //               type: {
+  //               translations: {
   //                   validators: []
   //               },
   //     }

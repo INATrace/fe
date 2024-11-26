@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -20,17 +20,20 @@
 
 
 
+/**
+ * The items in the history timeline
+ */
 
 export interface ApiHistoryTimelineItem { 
+    type?: string;
+    name?: string;
     date?: string;
-    iconType?: ApiHistoryTimelineItem.IconTypeEnum;
-    latitude?: number;
     location?: string;
     longitude?: number;
-    name?: string;
+    latitude?: number;
     step?: number;
     steps?: number;
-    type?: string;
+    iconType?: ApiHistoryTimelineItem.IconTypeEnum;
 }
 
 /**
@@ -41,15 +44,15 @@ export namespace ApiHistoryTimelineItem {
      * All properties of ApiHistoryTimelineItem.
      */
     export enum Properties {
+        type = 'type',
+        name = 'name',
         date = 'date',
-        iconType = 'iconType',
-        latitude = 'latitude',
         location = 'location',
         longitude = 'longitude',
-        name = 'name',
+        latitude = 'latitude',
         step = 'step',
         steps = 'steps',
-        type = 'type'
+        iconType = 'iconType'
     }
 
     /**
@@ -73,19 +76,7 @@ export namespace ApiHistoryTimelineItem {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'date',
-                    classname: 'ApiHistoryTimelineItem',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiHistoryTimelineItem.IconTypeEnum',
-                    required: false,
-                    name: 'iconType',
+                    name: 'type',
                     classname: 'ApiHistoryTimelineItem',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -96,9 +87,20 @@ export namespace ApiHistoryTimelineItem {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'latitude',
+                    name: 'name',
                     classname: 'ApiHistoryTimelineItem',
-                    dataType: 'number',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'date',
+                    classname: 'ApiHistoryTimelineItem',
+                    dataType: 'string',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -129,9 +131,9 @@ export namespace ApiHistoryTimelineItem {
                     isReadOnly: false,
                     isEnum: false,
                     required: false,
-                    name: 'name',
+                    name: 'latitude',
                     classname: 'ApiHistoryTimelineItem',
-                    dataType: 'string',
+                    dataType: 'number',
                     isPrimitiveType: true,
                     isListContainer: false,
                     complexType: ''
@@ -160,9 +162,10 @@ export namespace ApiHistoryTimelineItem {
                 },
                 {
                     isReadOnly: false,
-                    isEnum: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiHistoryTimelineItem.IconTypeEnum',
                     required: false,
-                    name: 'type',
+                    name: 'iconType',
                     classname: 'ApiHistoryTimelineItem',
                     dataType: 'string',
                     isPrimitiveType: true,
@@ -171,23 +174,23 @@ export namespace ApiHistoryTimelineItem {
                 },
             ],
             validators: {
+                type: [
+                ],
+                name: [
+                ],
                 date: [
-                ],
-                iconType: [
-                ],
-                latitude: [
                 ],
                 location: [
                 ],
                 longitude: [
                 ],
-                name: [
+                latitude: [
                 ],
                 step: [
                 ],
                 steps: [
                 ],
-                type: [
+                iconType: [
                 ],
             }
         }
@@ -196,13 +199,13 @@ export namespace ApiHistoryTimelineItem {
   // export const ApiHistoryTimelineItemValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               type: {
+  //                   validators: []
+  //               },
+  //               name: {
+  //                   validators: []
+  //               },
   //               date: {
-  //                   validators: []
-  //               },
-  //               iconType: {
-  //                   validators: []
-  //               },
-  //               latitude: {
   //                   validators: []
   //               },
   //               location: {
@@ -211,7 +214,7 @@ export namespace ApiHistoryTimelineItem {
   //               longitude: {
   //                   validators: []
   //               },
-  //               name: {
+  //               latitude: {
   //                   validators: []
   //               },
   //               step: {
@@ -220,7 +223,7 @@ export namespace ApiHistoryTimelineItem {
   //               steps: {
   //                   validators: []
   //               },
-  //               type: {
+  //               iconType: {
   //                   validators: []
   //               },
   //     }

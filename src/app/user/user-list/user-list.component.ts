@@ -76,12 +76,12 @@ export class UserListComponent implements OnInit, OnDestroy {
         delete newParams.myUsers;
 
         if (this.isRegionalAdmin) {
-          return this.userController.regionalAdminListUsersUsingGETByMap(newParams);
+          return this.userController.regionalAdminListUsersByMap(newParams);
         } else {
           if (myUsers) {
-            return this.userController.listUsersUsingGETByMap(newParams);
+            return this.userController.listUsersByMap(newParams);
           } else {
-            return this.userController.adminListUsersUsingGETByMap(newParams);
+            return this.userController.adminListUsersByMap(newParams);
           }
         }
       }),
@@ -168,18 +168,18 @@ export class UserListComponent implements OnInit, OnDestroy {
   async setAllUsers() {
 
     if (this.isRegionalAdmin) {
-      const res = await this.userController.regionalAdminListUsersUsingGET('COUNT').pipe(take(1)).toPromise();
+      const res = await this.userController.regionalAdminListUsers(null, null, null, null, null, 'COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allUsers = res.data.count;
       }
     }
     else if (this.isSystemAdmin) {
-      const res = await this.userController.adminListUsersUsingGET('COUNT').pipe(take(1)).toPromise();
+      const res = await this.userController.adminListUsers(null, null, null, null, null, 'COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allUsers = res.data.count;
       }
     } else {
-      const res = await this.userController.listUsersUsingGET('COUNT').pipe(take(1)).toPromise();
+      const res = await this.userController.listUsers(null, null, null, null, null, 'COUNT').pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
         this.allUsers = res.data.count;
       }
@@ -203,7 +203,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   async activate(id) {
     try {
       this.globalEventsManager.showLoading(true);
-      await this.userController.activateUserUsingPOST('ACTIVATE_USER', { id }).pipe(take(1)).toPromise();
+      await this.userController.activateUser('ACTIVATE_USER', { id }).pipe(take(1)).toPromise();
       this.reloadPage();
     } catch (e) {
       this.globalEventsManager.push({
@@ -220,7 +220,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   async deactivate(id) {
     try {
       this.globalEventsManager.showLoading(true);
-      await this.userController.activateUserUsingPOST('DEACTIVATE_USER', { id }).pipe(take(1)).toPromise();
+      await this.userController.activateUser('DEACTIVATE_USER', { id }).pipe(take(1)).toPromise();
       this.reloadPage();
     } catch (e) {
       this.globalEventsManager.push({
@@ -249,7 +249,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   async setUserRole(id, action: 'SET_USER_SYSTEM_ADMIN' | 'UNSET_USER_SYSTEM_ADMIN' | 'SET_USER_REGIONAL_ADMIN' | 'UNSET_USER_REGIONAL_ADMIN') {
     try {
       this.globalEventsManager.showLoading(true);
-      await this.userController.activateUserUsingPOST(action, { id })
+      await this.userController.activateUser(action, { id })
         .pipe(take(1))
         .toPromise();
       this.reloadPage();

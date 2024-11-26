@@ -93,8 +93,8 @@ export class B2cPageComponent implements OnInit {
 
   ngOnInit(): void {
     forkJoin([
-      this.publicController.getPublicProductLabelValuesUsingGET(this.uuid).pipe(take(1)),
-      this.publicController.getQRTagPublicDataUsingGET(this.qrTag, true).pipe(take(1))
+      this.publicController.getPublicProductLabelValues(this.uuid).pipe(take(1)),
+      this.publicController.getQRTagPublicData(this.qrTag, true).pipe(take(1))
     ]).subscribe({
       next: ([label, qrTag]) => {
         this.processFields(label.data.fields);

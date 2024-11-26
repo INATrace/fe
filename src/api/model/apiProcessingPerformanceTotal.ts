@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -22,11 +22,14 @@ import { ApiMeasureUnitType } from './apiMeasureUnitType';
 import { ApiProcessingPerformanceTotalItem } from './apiProcessingPerformanceTotalItem';
 
 
+/**
+ * Response body for successful responses.
+ */
 
 export interface ApiProcessingPerformanceTotal { 
+    unitType?: ApiProcessingPerformanceTotal.UnitTypeEnum;
     measureUnitType?: ApiMeasureUnitType;
     totals?: Array<ApiProcessingPerformanceTotalItem>;
-    unitType?: ApiProcessingPerformanceTotal.UnitTypeEnum;
 }
 
 /**
@@ -37,9 +40,9 @@ export namespace ApiProcessingPerformanceTotal {
      * All properties of ApiProcessingPerformanceTotal.
      */
     export enum Properties {
+        unitType = 'unitType',
         measureUnitType = 'measureUnitType',
-        totals = 'totals',
-        unitType = 'unitType'
+        totals = 'totals'
     }
 
     /**
@@ -58,6 +61,18 @@ export namespace ApiProcessingPerformanceTotal {
             metadata: formMetadata,
             classname: 'ApiProcessingPerformanceTotal',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: true,
+                    datatypeWithEnum: 'ApiProcessingPerformanceTotal.UnitTypeEnum',
+                    required: false,
+                    name: 'unitType',
+                    classname: 'ApiProcessingPerformanceTotal',
+                    dataType: 'string',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     metadata: ApiMeasureUnitType.formMetadata,
                     isReadOnly: false,
@@ -82,25 +97,13 @@ export namespace ApiProcessingPerformanceTotal {
                     isListContainer: true,
                     complexType: 'ApiProcessingPerformanceTotalItem'
                 },
-                {
-                    isReadOnly: false,
-                    isEnum: true,
-                    datatypeWithEnum: 'ApiProcessingPerformanceTotal.UnitTypeEnum',
-                    required: false,
-                    name: 'unitType',
-                    classname: 'ApiProcessingPerformanceTotal',
-                    dataType: 'string',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
-                },
             ],
             validators: {
+                unitType: [
+                ],
                 measureUnitType: [
                 ],
                 totals: [
-                ],
-                unitType: [
                 ],
             }
         }
@@ -109,13 +112,13 @@ export namespace ApiProcessingPerformanceTotal {
   // export const ApiProcessingPerformanceTotalValidationScheme = {
   //     validators: [],
   //     fields: {
+  //               unitType: {
+  //                   validators: []
+  //               },
   //               measureUnitType: {
   //                   validators: []
   //               },
   //               totals: {
-  //                   validators: []
-  //               },
-  //               unitType: {
   //                   validators: []
   //               },
   //     }

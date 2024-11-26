@@ -36,7 +36,7 @@ export class UserHomeComponent implements OnInit, OnDestroy {
       };
     }),
     tap(() => this.globalEventManager.showLoading(true)),
-    switchMap(reqParams => this.productControllerService.listProductsUsingGETByMap(reqParams)),
+    switchMap(reqParams => this.productControllerService.listProductsByMap(reqParams)),
     map((response: ApiPaginatedResponseApiProductListResponse) => {
       if (response && response.status === StatusEnum.OK) {
         this.myProductsCount = response.data.count;

@@ -104,7 +104,7 @@ export class CompanyDocumentItemComponent extends GenericEditableItemComponent<A
   onDownload() {
     const apiDoc = this.form.get('document').value as ApiDocument;
     if (apiDoc && apiDoc.storageKey) {
-      const sub = this.commonController.getDocumentUsingGET(apiDoc.storageKey).subscribe(res => {
+      const sub = this.commonController.getDocument(apiDoc.storageKey).subscribe(res => {
         this.fileSaverService.save(res, apiDoc.name);
         sub.unsubscribe();
       });

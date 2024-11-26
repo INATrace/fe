@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -39,43 +39,37 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 /**
- * Namespace for createOrUpdateProcessingActionUsingPUT.
+ * Namespace for createOrUpdateProcessingAction.
  */
-export namespace CreateOrUpdateProcessingActionUsingPUT {
+export namespace CreateOrUpdateProcessingAction {
     /**
-     * Parameter map for createOrUpdateProcessingActionUsingPUT.
+     * Parameter map for createOrUpdateProcessingAction.
      */
     export interface PartialParamMap {
-      /**
-       * apiProcessingAction
-       */
       ApiProcessingAction: ApiProcessingAction;
     }
 
     /**
-     * Enumeration of all parameters for createOrUpdateProcessingActionUsingPUT.
+     * Enumeration of all parameters for createOrUpdateProcessingAction.
      */
     export enum Parameters {
-      /**
-       * apiProcessingAction
-       */
       ApiProcessingAction = 'ApiProcessingAction'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateProcessingActionUsingPUT
+     * A map of tuples with error name and `ValidatorFn` for each parameter of createOrUpdateProcessingAction
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof CreateOrUpdateProcessingActionUsingPUT.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof CreateOrUpdateProcessingAction.PartialParamMap]?: [string, ValidatorFn][]} = {
     };
 }
 
 /**
- * Namespace for deleteProcessingActionUsingDELETE.
+ * Namespace for deleteProcessingAction.
  */
-export namespace DeleteProcessingActionUsingDELETE {
+export namespace DeleteProcessingAction {
     /**
-     * Parameter map for deleteProcessingActionUsingDELETE.
+     * Parameter map for deleteProcessingAction.
      */
     export interface PartialParamMap {
       /**
@@ -85,7 +79,7 @@ export namespace DeleteProcessingActionUsingDELETE {
     }
 
     /**
-     * Enumeration of all parameters for deleteProcessingActionUsingDELETE.
+     * Enumeration of all parameters for deleteProcessingAction.
      */
     export enum Parameters {
       /**
@@ -95,10 +89,10 @@ export namespace DeleteProcessingActionUsingDELETE {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteProcessingActionUsingDELETE
+     * A map of tuples with error name and `ValidatorFn` for each parameter of deleteProcessingAction
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof DeleteProcessingActionUsingDELETE.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof DeleteProcessingAction.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -106,42 +100,36 @@ export namespace DeleteProcessingActionUsingDELETE {
 }
 
 /**
- * Namespace for getProcessingActionDetailUsingGET.
+ * Namespace for getProcessingAction.
  */
-export namespace GetProcessingActionDetailUsingGET {
+export namespace GetProcessingAction {
     /**
-     * Parameter map for getProcessingActionDetailUsingGET.
+     * Parameter map for getProcessingAction.
      */
     export interface PartialParamMap {
       /**
        * ProcessingAction ID
        */
       id: number;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getProcessingActionDetailUsingGET.
+     * Enumeration of all parameters for getProcessingAction.
      */
     export enum Parameters {
       /**
        * ProcessingAction ID
        */
       id = 'id',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingActionDetailUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingAction
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetProcessingActionDetailUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetProcessingAction.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -151,42 +139,36 @@ export namespace GetProcessingActionDetailUsingGET {
 }
 
 /**
- * Namespace for getProcessingActionUsingGET.
+ * Namespace for getProcessingActionDetail.
  */
-export namespace GetProcessingActionUsingGET {
+export namespace GetProcessingActionDetail {
     /**
-     * Parameter map for getProcessingActionUsingGET.
+     * Parameter map for getProcessingActionDetail.
      */
     export interface PartialParamMap {
       /**
        * ProcessingAction ID
        */
       id: number;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
     }
 
     /**
-     * Enumeration of all parameters for getProcessingActionUsingGET.
+     * Enumeration of all parameters for getProcessingActionDetail.
      */
     export enum Parameters {
       /**
        * ProcessingAction ID
        */
       id = 'id',
-      /**
-       * language
-       */
       language = 'language'
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingActionUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getProcessingActionDetail
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof GetProcessingActionUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof GetProcessingActionDetail.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -196,11 +178,11 @@ export namespace GetProcessingActionUsingGET {
 }
 
 /**
- * Namespace for listProcessingActionsByCompanyUsingGET.
+ * Namespace for listProcessingActionsByCompany.
  */
-export namespace ListProcessingActionsByCompanyUsingGET {
+export namespace ListProcessingActionsByCompany {
     /**
-     * Parameter map for listProcessingActionsByCompanyUsingGET.
+     * Parameter map for listProcessingActionsByCompany.
      */
     export interface PartialParamMap {
       /**
@@ -215,9 +197,6 @@ export namespace ListProcessingActionsByCompanyUsingGET {
        * Only final product actions
        */
       onlyFinalProducts?: boolean;
-      /**
-       * language
-       */
       language?: 'EN' | 'DE' | 'RW' | 'ES';
       /**
        * Only count, only fetch, or return both values (if null)
@@ -242,7 +221,7 @@ export namespace ListProcessingActionsByCompanyUsingGET {
     }
 
     /**
-     * Enumeration of all parameters for listProcessingActionsByCompanyUsingGET.
+     * Enumeration of all parameters for listProcessingActionsByCompany.
      */
     export enum Parameters {
       /**
@@ -257,9 +236,6 @@ export namespace ListProcessingActionsByCompanyUsingGET {
        * Only final product actions
        */
       onlyFinalProducts = 'onlyFinalProducts',
-      /**
-       * language
-       */
       language = 'language',
       /**
        * Only count, only fetch, or return both values (if null)
@@ -284,10 +260,10 @@ export namespace ListProcessingActionsByCompanyUsingGET {
     }
 
     /**
-     * A map of tuples with error name and `ValidatorFn` for each parameter of listProcessingActionsByCompanyUsingGET
+     * A map of tuples with error name and `ValidatorFn` for each parameter of listProcessingActionsByCompany
      * that does not have an own model.
      */
-    export const ParamValidators: {[K in keyof ListProcessingActionsByCompanyUsingGET.PartialParamMap]?: [string, ValidatorFn][]} = {
+    export const ParamValidators: {[K in keyof ListProcessingActionsByCompany.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -300,8 +276,10 @@ export namespace ListProcessingActionsByCompanyUsingGET {
       requestType: [
       ],
       limit: [
+              ['min', Validators.min(1)],
       ],
       offset: [
+              ['min', Validators.min(0)],
       ],
       sortBy: [
       ],
@@ -354,23 +332,23 @@ export class ProcessingActionControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public createOrUpdateProcessingActionUsingPUTByMap(
-    map: CreateOrUpdateProcessingActionUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingActionByMap(
+    map: CreateOrUpdateProcessingAction.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiBaseEntity>;
-  public createOrUpdateProcessingActionUsingPUTByMap(
-    map: CreateOrUpdateProcessingActionUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingActionByMap(
+    map: CreateOrUpdateProcessingAction.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-  public createOrUpdateProcessingActionUsingPUTByMap(
-    map: CreateOrUpdateProcessingActionUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingActionByMap(
+    map: CreateOrUpdateProcessingAction.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-  public createOrUpdateProcessingActionUsingPUTByMap(
-    map: CreateOrUpdateProcessingActionUsingPUT.PartialParamMap,
+  public createOrUpdateProcessingActionByMap(
+    map: CreateOrUpdateProcessingAction.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.createOrUpdateProcessingActionUsingPUT(
+    return this.createOrUpdateProcessingAction(
       map.ApiProcessingAction,
       observe,
       reportProgress
@@ -381,23 +359,23 @@ export class ProcessingActionControllerService {
     /**
      * Create or update processing action. If ID is provided, then the entity with the provided ID is updated.
      * 
-     * @param ApiProcessingAction apiProcessingAction
+     * @param ApiProcessingAction 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createOrUpdateProcessingActionUsingPUT(ApiProcessingAction: ApiProcessingAction, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
-    public createOrUpdateProcessingActionUsingPUT(ApiProcessingAction: ApiProcessingAction, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
-    public createOrUpdateProcessingActionUsingPUT(ApiProcessingAction: ApiProcessingAction, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
-    public createOrUpdateProcessingActionUsingPUT(ApiProcessingAction: ApiProcessingAction, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public createOrUpdateProcessingAction(ApiProcessingAction: ApiProcessingAction, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiBaseEntity>;
+    public createOrUpdateProcessingAction(ApiProcessingAction: ApiProcessingAction, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiBaseEntity>>;
+    public createOrUpdateProcessingAction(ApiProcessingAction: ApiProcessingAction, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiBaseEntity>>;
+    public createOrUpdateProcessingAction(ApiProcessingAction: ApiProcessingAction, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (ApiProcessingAction === null || ApiProcessingAction === undefined) {
-            throw new Error('Required parameter ApiProcessingAction was null or undefined when calling createOrUpdateProcessingActionUsingPUT.');
+            throw new Error('Required parameter ApiProcessingAction was null or undefined when calling createOrUpdateProcessingAction.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -429,7 +407,7 @@ export class ProcessingActionControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateProcessingActionUsingPUT')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'createOrUpdateProcessingAction')));
         }
         return handle;
     }
@@ -442,23 +420,23 @@ export class ProcessingActionControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public deleteProcessingActionUsingDELETEByMap(
-    map: DeleteProcessingActionUsingDELETE.PartialParamMap,
+  public deleteProcessingActionByMap(
+    map: DeleteProcessingAction.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiDefaultResponse>;
-  public deleteProcessingActionUsingDELETEByMap(
-    map: DeleteProcessingActionUsingDELETE.PartialParamMap,
+  public deleteProcessingActionByMap(
+    map: DeleteProcessingAction.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiDefaultResponse>>;
-  public deleteProcessingActionUsingDELETEByMap(
-    map: DeleteProcessingActionUsingDELETE.PartialParamMap,
+  public deleteProcessingActionByMap(
+    map: DeleteProcessingAction.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiDefaultResponse>>;
-  public deleteProcessingActionUsingDELETEByMap(
-    map: DeleteProcessingActionUsingDELETE.PartialParamMap,
+  public deleteProcessingActionByMap(
+    map: DeleteProcessingAction.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.deleteProcessingActionUsingDELETE(
+    return this.deleteProcessingAction(
       map.id,
       observe,
       reportProgress
@@ -473,19 +451,19 @@ export class ProcessingActionControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteProcessingActionUsingDELETE(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
-    public deleteProcessingActionUsingDELETE(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
-    public deleteProcessingActionUsingDELETE(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
-    public deleteProcessingActionUsingDELETE(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public deleteProcessingAction(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiDefaultResponse>;
+    public deleteProcessingAction(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiDefaultResponse>>;
+    public deleteProcessingAction(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiDefaultResponse>>;
+    public deleteProcessingAction(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling deleteProcessingActionUsingDELETE.');
+            throw new Error('Required parameter id was null or undefined when calling deleteProcessingAction.');
         }
 
         let headers = this.defaultHeaders;
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -511,94 +489,7 @@ export class ProcessingActionControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteProcessingActionUsingDELETE')));
-        }
-        return handle;
-    }
-
-
-  /**
-   * Get a single processing action by the provided ID with all translations. by map.
-   * 
-   * @param map parameters map to set partial amount of parameters easily
-   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-   * @param reportProgress flag to report request and response progress.
-   */
-  public getProcessingActionDetailUsingGETByMap(
-    map: GetProcessingActionDetailUsingGET.PartialParamMap,
-    observe?: 'body',
-    reportProgress?: boolean): Observable<ApiResponseApiProcessingAction>;
-  public getProcessingActionDetailUsingGETByMap(
-    map: GetProcessingActionDetailUsingGET.PartialParamMap,
-    observe?: 'response',
-    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
-  public getProcessingActionDetailUsingGETByMap(
-    map: GetProcessingActionDetailUsingGET.PartialParamMap,
-    observe?: 'events',
-    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
-  public getProcessingActionDetailUsingGETByMap(
-    map: GetProcessingActionDetailUsingGET.PartialParamMap,
-    observe: any = 'body',
-    reportProgress: boolean = false): Observable<any> {
-    return this.getProcessingActionDetailUsingGET(
-      map.id,
-      map.language,
-      observe,
-      reportProgress
-    );
-  }
-
-
-    /**
-     * Get a single processing action by the provided ID with all translations.
-     * 
-     * @param id ProcessingAction ID
-     * @param language language
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getProcessingActionDetailUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingAction>;
-    public getProcessingActionDetailUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
-    public getProcessingActionDetailUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
-    public getProcessingActionDetailUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
-        if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getProcessingActionDetailUsingGET.');
-        }
-
-        let headers = this.defaultHeaders;
-        if (language !== undefined && language !== null) {
-            headers = headers.set('language', String(language));
-        }
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-            if (additionalHeaders) {
-                for(let pair of additionalHeaders) {
-                    headers = headers.set(pair[0], pair[1]);
-                }
-            }
-
-        const handle = this.httpClient.get<ApiResponseApiProcessingAction>(`${this.configuration.basePath}/api/chain/processing-action/${encodeURIComponent(String(id))}/detail`,
-            {
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-        if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingActionDetailUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'deleteProcessingAction')));
         }
         return handle;
     }
@@ -611,23 +502,23 @@ export class ProcessingActionControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public getProcessingActionUsingGETByMap(
-    map: GetProcessingActionUsingGET.PartialParamMap,
+  public getProcessingActionByMap(
+    map: GetProcessingAction.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiResponseApiProcessingAction>;
-  public getProcessingActionUsingGETByMap(
-    map: GetProcessingActionUsingGET.PartialParamMap,
+  public getProcessingActionByMap(
+    map: GetProcessingAction.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
-  public getProcessingActionUsingGETByMap(
-    map: GetProcessingActionUsingGET.PartialParamMap,
+  public getProcessingActionByMap(
+    map: GetProcessingAction.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
-  public getProcessingActionUsingGETByMap(
-    map: GetProcessingActionUsingGET.PartialParamMap,
+  public getProcessingActionByMap(
+    map: GetProcessingAction.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.getProcessingActionUsingGET(
+    return this.getProcessingAction(
       map.id,
       map.language,
       observe,
@@ -640,16 +531,16 @@ export class ProcessingActionControllerService {
      * Get a single processing action with the provided ID.
      * 
      * @param id ProcessingAction ID
-     * @param language language
+     * @param language 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getProcessingActionUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingAction>;
-    public getProcessingActionUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
-    public getProcessingActionUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
-    public getProcessingActionUsingGET(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public getProcessingAction(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingAction>;
+    public getProcessingAction(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
+    public getProcessingAction(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
+    public getProcessingAction(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling getProcessingActionUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling getProcessingAction.');
         }
 
         let headers = this.defaultHeaders;
@@ -659,7 +550,7 @@ export class ProcessingActionControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -685,7 +576,94 @@ export class ProcessingActionControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingActionUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingAction')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get a single processing action by the provided ID with all translations. by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getProcessingActionDetailByMap(
+    map: GetProcessingActionDetail.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiProcessingAction>;
+  public getProcessingActionDetailByMap(
+    map: GetProcessingActionDetail.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
+  public getProcessingActionDetailByMap(
+    map: GetProcessingActionDetail.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
+  public getProcessingActionDetailByMap(
+    map: GetProcessingActionDetail.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getProcessingActionDetail(
+      map.id,
+      map.language,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get a single processing action by the provided ID with all translations.
+     * 
+     * @param id ProcessingAction ID
+     * @param language 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getProcessingActionDetail(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiProcessingAction>;
+    public getProcessingActionDetail(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiProcessingAction>>;
+    public getProcessingActionDetail(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiProcessingAction>>;
+    public getProcessingActionDetail(id: number, language?: 'EN' | 'DE' | 'RW' | 'ES', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getProcessingActionDetail.');
+        }
+
+        let headers = this.defaultHeaders;
+        if (language !== undefined && language !== null) {
+            headers = headers.set('language', String(language));
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiProcessingAction>(`${this.configuration.basePath}/api/chain/processing-action/${encodeURIComponent(String(id))}/detail`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getProcessingActionDetail')));
         }
         return handle;
     }
@@ -698,23 +676,23 @@ export class ProcessingActionControllerService {
    * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
    * @param reportProgress flag to report request and response progress.
    */
-  public listProcessingActionsByCompanyUsingGETByMap(
-    map: ListProcessingActionsByCompanyUsingGET.PartialParamMap,
+  public listProcessingActionsByCompanyByMap(
+    map: ListProcessingActionsByCompany.PartialParamMap,
     observe?: 'body',
     reportProgress?: boolean): Observable<ApiPaginatedResponseApiProcessingAction>;
-  public listProcessingActionsByCompanyUsingGETByMap(
-    map: ListProcessingActionsByCompanyUsingGET.PartialParamMap,
+  public listProcessingActionsByCompanyByMap(
+    map: ListProcessingActionsByCompany.PartialParamMap,
     observe?: 'response',
     reportProgress?: boolean): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
-  public listProcessingActionsByCompanyUsingGETByMap(
-    map: ListProcessingActionsByCompanyUsingGET.PartialParamMap,
+  public listProcessingActionsByCompanyByMap(
+    map: ListProcessingActionsByCompany.PartialParamMap,
     observe?: 'events',
     reportProgress?: boolean): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
-  public listProcessingActionsByCompanyUsingGETByMap(
-    map: ListProcessingActionsByCompanyUsingGET.PartialParamMap,
+  public listProcessingActionsByCompanyByMap(
+    map: ListProcessingActionsByCompany.PartialParamMap,
     observe: any = 'body',
     reportProgress: boolean = false): Observable<any> {
-    return this.listProcessingActionsByCompanyUsingGET(
+    return this.listProcessingActionsByCompany(
       map.id,
       map.actionType,
       map.onlyFinalProducts,
@@ -736,7 +714,7 @@ export class ProcessingActionControllerService {
      * @param id Company ID
      * @param actionType Processing action type
      * @param onlyFinalProducts Only final product actions
-     * @param language language
+     * @param language 
      * @param requestType Only count, only fetch, or return both values (if null)
      * @param limit Number of records to return. Min: 1, default: 100
      * @param offset Number of records to skip before returning. Default: 0, min: 0
@@ -745,12 +723,12 @@ export class ProcessingActionControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingAction>;
-    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
-    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
-    public listProcessingActionsByCompanyUsingGET(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+    public listProcessingActionsByCompany(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiPaginatedResponseApiProcessingAction>;
+    public listProcessingActionsByCompany(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiPaginatedResponseApiProcessingAction>>;
+    public listProcessingActionsByCompany(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiPaginatedResponseApiProcessingAction>>;
+    public listProcessingActionsByCompany(id: number, actionType?: 'PROCESSING' | 'FINAL_PROCESSING' | 'SHIPMENT' | 'TRANSFER' | 'GENERATE_QR_CODE', onlyFinalProducts?: boolean, language?: 'EN' | 'DE' | 'RW' | 'ES', requestType?: 'COUNT' | 'FETCH', limit?: number, offset?: number, sortBy?: string, sort?: 'ASC' | 'DESC', observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
         if (id === null || id === undefined) {
-            throw new Error('Required parameter id was null or undefined when calling listProcessingActionsByCompanyUsingGET.');
+            throw new Error('Required parameter id was null or undefined when calling listProcessingActionsByCompany.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -783,7 +761,7 @@ export class ProcessingActionControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -810,7 +788,7 @@ export class ProcessingActionControllerService {
             }
         );
         if(typeof this.configuration.errorHandler === 'function') {
-          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listProcessingActionsByCompanyUsingGET')));
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'listProcessingActionsByCompany')));
         }
         return handle;
     }

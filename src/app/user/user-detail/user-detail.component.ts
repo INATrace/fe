@@ -69,7 +69,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
   getUserProfile(): void {
     this.globalEventsManager.showLoading(true);
-    this.userController.getProfileForUserUsingGET().subscribe(user => {
+    this.userController.getProfileForUser().subscribe(user => {
       this.createUserProfileForm(user.data);
       this.prepareMyCompanies(user.data).then();
       this.userData = user.data;
@@ -80,7 +80,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   getUserProfileAsAdmin(): void {
     this.globalEventsManager.showLoading(true);
 
-    this.userController.getProfileForAdminUsingGET(this.userId)
+    this.userController.getProfileForAdmin(this.userId)
       .subscribe(user => {
         this.createUserProfileForm(user.data);
         this.prepareMyCompanies(user.data).then();
@@ -109,7 +109,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     this.loadingUserCompanies = true;
     try {
       for (const id of data.companyIds) {
-        const res = await this.companyController.getCompanyUsingGET(id).pipe(take(1)).toPromise();
+        const res = await this.companyController.getCompany(id).pipe(take(1)).toPromise();
         if (res && res.status === 'OK' && res.data) {
           tmp.push({
             companyId: id,
@@ -136,7 +136,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
       if (result !== 'ok') { return; }
 
-      const res = await this.companyController.getCompanyUsingGET(company.companyId).pipe(take(1)).toPromise();
+      const res = await this.companyController.getCompany(company.companyId).pipe(take(1)).toPromise();
       if (res && res.status === 'OK' && res.data) {
         this.selUserCompanyService.setSelectedCompany(res.data);
         this.changedCompany = true;
@@ -168,7 +168,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
     if (!this.userProfileForm.invalid) {
       try {
         this.globalEventsManager.showLoading(true);
-        const res = await this.userController.updateProfileUsingPUT({
+        const res = await this.userController.updateProfile({
           name: this.userProfileForm.get('name').value,
           surname: this.userProfileForm.get('surname').value,
           language: this.userProfileForm.get('language').value
@@ -191,7 +191,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
 
       try {
         this.globalEventsManager.showLoading(true);
-        const res = await this.userController.adminUpdateProfileUsingPUT({
+        const res = await this.userController.adminUpdateProfile({
           id: this.userId,
           name: this.userProfileForm.get('name').value,
           surname: this.userProfileForm.get('surname').value,
@@ -211,7 +211,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   resetPasswordRequest() {
 
     this.globalEventsManager.showLoading(true);
-    const sub = this.userController.requestResetPasswordUsingPOST({
+    const sub = this.userController.requestResetPassword({
       email: this.userProfileForm.get('email').value
     }).subscribe(() => {
       sub.unsubscribe();
@@ -237,7 +237,7 @@ export class UserDetailComponent extends ComponentCanDeactivate implements OnIni
   async confirmEmail() {
     try {
       this.globalEventsManager.showLoading(true);
-      const res = await this.userController.activateUserUsingPOST('CONFIRM_USER_EMAIL', { id: this.userId }).pipe(take(1)).toPromise();
+      const res = await this.userController.activateUser('CONFIRM_USER_EMAIL', { id: this.userId }).pipe(take(1)).toPromise();
       if (res.status !== 'OK') { throw Error(); }
 
       this.unconfirmedUser = false;

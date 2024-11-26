@@ -101,7 +101,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
   async initValueChainData() {
     const companyId = this.route.snapshot.params.id;
     // this code sets the default value-chain, when only 1 is available
-    const defaultValChainCheck = await this.companyController.getCompanyValueChainsUsingGET(companyId).pipe(take(1)).toPromise();
+    const defaultValChainCheck = await this.companyController.getCompanyValueChains(companyId).pipe(take(1)).toPromise();
     if (defaultValChainCheck && defaultValChainCheck.status === 'OK') {
       if (defaultValChainCheck.data.count === 1) {
         this.valueChains = defaultValChainCheck.data.items;
@@ -154,7 +154,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
 
     this.title = $localize`:@@productLabelStockFacilityModal.newFacility.editTitle:Edit facility`;
     const facilityId = this.route.snapshot.params.facilityId;
-    this.facilityControllerService.getFacilityDetailUsingGET(facilityId).pipe(first()).subscribe(res => {
+    this.facilityControllerService.getFacilityDetail(facilityId).pipe(first()).subscribe(res => {
 
       this.form = generateFormFromMetadata(ApiFacility.formMetadata(), res.data, ApiFacilityValidationScheme);
       (this.form as FormGroup).setControl('valueChains', this.selectedCompanyValueChainsControl);
@@ -202,7 +202,7 @@ export class CompanyDetailFacilityAddComponent implements OnInit, OnDestroy {
     facility.facilityValueChains = this.valueChains;
     facility.facilitySemiProductList = this.semiProducts;
     facility.facilityFinalProducts = this.finalProducts;
-    this.facilityControllerService.createOrUpdateFacilityUsingPUT(facility).pipe(first()).subscribe(() => {
+    this.facilityControllerService.createOrUpdateFacility(facility).pipe(first()).subscribe(() => {
       this.location.back();
     });
   }

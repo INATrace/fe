@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -25,7 +25,7 @@ export interface ApiEmail {
     /**
      * Email
      */
-    email?: string;
+    email: string;
 }
 
 /**
@@ -51,7 +51,7 @@ export namespace ApiEmail {
                 {
                     isReadOnly: false,
                     isEnum: false,
-                    required: false,
+                    required: true,
                     name: 'email',
                     classname: 'ApiEmail',
                     dataType: 'string',
@@ -62,6 +62,7 @@ export namespace ApiEmail {
             ],
             validators: {
                 email: [
+                        ['required'],
                 ],
             }
         }

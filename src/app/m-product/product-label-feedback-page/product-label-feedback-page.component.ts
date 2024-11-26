@@ -66,7 +66,7 @@ export class ProductLabelFeedbackPageComponent implements OnInit {
   }
 
   async setAllFeedbacks() {
-    const res = await this.publicController.listProductLabelFeedbacksUsingGET(this.labelId, 'COUNT').pipe(take(1)).toPromise();
+    const res = await this.publicController.listProductLabelFeedbacks(this.labelId, null, 'COUNT').pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data && res.data.count >= 0) {
       this.allFeedbacks = res.data.count;
     }
@@ -129,7 +129,7 @@ export class ProductLabelFeedbackPageComponent implements OnInit {
       switchMap(params => {
         const labelUid = this.labelId;
         const newParams = { labelUid, ...params };
-        return this.publicController.listProductLabelFeedbacksUsingGETByMap(newParams);
+        return this.publicController.listProductLabelFeedbacksByMap(newParams);
       }),
       map((resp: ApiPaginatedResponseApiProductLabelFeedback) => {
         if (resp) {
@@ -184,7 +184,7 @@ export class ProductLabelFeedbackPageComponent implements OnInit {
       options: { centered: true }
     });
     if (result != "ok") return
-    let res = await this.productController.deleteProductLabelFeedbackUsingDELETE(feedback.id).pipe(take(1)).toPromise();
+    let res = await this.productController.deleteProductLabelFeedback(feedback.id).pipe(take(1)).toPromise();
     if (res && res.status == 'OK') {
       this.reloadPage()
     }
@@ -216,7 +216,7 @@ export class ProductLabelFeedbackPageComponent implements OnInit {
 
   async downloadFeedbacks() {
 
-    let res = await this.publicController.listProductLabelFeedbacksUsingGET(this.labelId, null, null, null, null, "DESC").pipe(take(1)).toPromise();
+    let res = await this.publicController.listProductLabelFeedbacks(this.labelId, null, null, null, null, "DESC").pipe(take(1)).toPromise();
     if (res && res.status === 'OK' && res.data && res.data.items) {
 
       let csv = "Email" + ',' + '\n';

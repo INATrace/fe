@@ -118,7 +118,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
   }
 
   loadEntityList() {
-    return this.facilityControllerService.listAllFacilitiesByCompanyUsingGETByMap({ id: this.companyId });
+    return this.facilityControllerService.listAllFacilitiesByCompanyByMap({ id: this.companyId });
   }
 
   canDeactivate(): boolean {
@@ -247,7 +247,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
   }
 
   async activateFacility(facilityId) {
-    const resActivate = await this.facilityControllerService.activateFacilityUsingPUT(facilityId).pipe(take(1)).toPromise();
+    const resActivate = await this.facilityControllerService.activateFacility(facilityId).pipe(take(1)).toPromise();
     if (resActivate && resActivate.status === 'OK') {
       this.reloadPingList$.next(null);
     }
@@ -264,7 +264,7 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     if (result  !== 'ok') {
       return;
     }
-    const resDeactivate = await this.facilityControllerService.deactivateFacilityUsingPUT(facilityId).pipe(take(1)).toPromise();
+    const resDeactivate = await this.facilityControllerService.deactivateFacility(facilityId).pipe(take(1)).toPromise();
     if (resDeactivate && resDeactivate.status === 'OK') {
       this.reloadPingList$.next(null);
     }

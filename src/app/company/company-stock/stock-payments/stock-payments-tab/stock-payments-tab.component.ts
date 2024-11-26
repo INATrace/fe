@@ -93,7 +93,7 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
       payment.paymentStatus = ApiPayment.PaymentStatusEnum.CONFIRMED;
 
-      const res = await this.paymentControllerService.createOrUpdatePaymentUsingPUT(payment)
+      const res = await this.paymentControllerService.createOrUpdatePayment(payment)
           .pipe(take(1))
           .toPromise();
 
@@ -109,7 +109,7 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
     this.globalEventManager.showLoading(true);
     try {
-      const res = await this.paymentControllerService.exportPaymentsByCompanyUsingGET(this.companyId)
+      const res = await this.paymentControllerService.exportPaymentsByCompany(this.companyId)
           .pipe(take(1))
           .toPromise();
 
@@ -121,7 +121,7 @@ export class StockPaymentsTabComponent extends StockCoreTabComponent implements 
 
   async exportBulkPaymentsExcel(): Promise<void> {
 
-    const res = await this.paymentControllerService.exportBulkPaymentsByCompanyUsingGET(this.companyId)
+    const res = await this.paymentControllerService.exportBulkPaymentsByCompany(this.companyId)
         .pipe(take(1))
         .toPromise();
 

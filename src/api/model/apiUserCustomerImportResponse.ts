@@ -7,7 +7,7 @@
  * All rights reserved.
  *
  * INATrace Services API
- * Abelium INATrace Services API swagger documentation
+ * INATrace Services API OpenAPI documentation
  *
  * OpenAPI spec version: 1.0
  * 
@@ -24,8 +24,8 @@ import { ApiUserCustomerImportRowValidationError } from './apiUserCustomerImport
 
 
 export interface ApiUserCustomerImportResponse { 
-    duplicates?: Array<ApiUserCustomer>;
     successful?: number;
+    duplicates?: Array<ApiUserCustomer>;
     validationErrors?: Array<ApiUserCustomerImportRowValidationError>;
 }
 
@@ -37,8 +37,8 @@ export namespace ApiUserCustomerImportResponse {
      * All properties of ApiUserCustomerImportResponse.
      */
     export enum Properties {
-        duplicates = 'duplicates',
         successful = 'successful',
+        duplicates = 'duplicates',
         validationErrors = 'validationErrors'
     }
 
@@ -48,6 +48,17 @@ export namespace ApiUserCustomerImportResponse {
             metadata: formMetadata,
             classname: 'ApiUserCustomerImportResponse',
             vars: [
+                {
+                    isReadOnly: false,
+                    isEnum: false,
+                    required: false,
+                    name: 'successful',
+                    classname: 'ApiUserCustomerImportResponse',
+                    dataType: 'number',
+                    isPrimitiveType: true,
+                    isListContainer: false,
+                    complexType: ''
+                },
                 {
                     metadata: ApiUserCustomer.formMetadata,
                     isReadOnly: false,
@@ -59,17 +70,6 @@ export namespace ApiUserCustomerImportResponse {
                     isPrimitiveType: false,
                     isListContainer: true,
                     complexType: 'ApiUserCustomer'
-                },
-                {
-                    isReadOnly: false,
-                    isEnum: false,
-                    required: false,
-                    name: 'successful',
-                    classname: 'ApiUserCustomerImportResponse',
-                    dataType: 'number',
-                    isPrimitiveType: true,
-                    isListContainer: false,
-                    complexType: ''
                 },
                 {
                     metadata: ApiUserCustomerImportRowValidationError.formMetadata,
@@ -85,9 +85,9 @@ export namespace ApiUserCustomerImportResponse {
                 },
             ],
             validators: {
-                duplicates: [
-                ],
                 successful: [
+                ],
+                duplicates: [
                 ],
                 validationErrors: [
                 ],
@@ -98,10 +98,10 @@ export namespace ApiUserCustomerImportResponse {
   // export const ApiUserCustomerImportResponseValidationScheme = {
   //     validators: [],
   //     fields: {
-  //               duplicates: {
+  //               successful: {
   //                   validators: []
   //               },
-  //               successful: {
+  //               duplicates: {
   //                   validators: []
   //               },
   //               validationErrors: {
