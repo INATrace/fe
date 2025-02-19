@@ -4,12 +4,25 @@
     <div class="above-sidenav-title company-title-wrapper">
       <div>{{ companyTitle }}</div>
       <div *ngIf="isSystemOrRegionalAdmin || isCompanyAdmin"
+           [ngbTooltip]="companyProfileButtonTooltipTemplate"
+           [autoClose]="false"
+           placement="bottom"
+           triggers="manual"
+           tooltipClass="self-onboarding-tooltip-class"
+           container="body"
+           #companyProfileButtonTooltip="ngbTooltip"
            class="settings-icon"
            (click)="openCompanyProfile()"
            title="Company profile"
            i18n-title="@@userBox.dropdown.companyProfile">
         <fa-icon [icon]="faCog"></fa-icon>
       </div>
+        <ng-template #companyProfileButtonTooltipTemplate>
+            <div>
+                <h2 class="title" i18n="@@selfOnboarding.checklist.addFacilityOrProcAction.step2">Click here to access your company configurations</h2>
+                <div class="step-line"><span i18n="@@selfOnboarding.checklist.item.step">Step {{ '2/4' }}</span></div>
+            </div>
+        </ng-template>
     </div>
   </div>
 

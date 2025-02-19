@@ -5,7 +5,7 @@ import { LayoutModule } from '../../layout/layout.module';
 import { CompanyCommonModule } from '../company-common/company-common.module';
 import { CompanyFarmersRoutingModule } from './company-farmers-routing.module';
 import { SharedModule } from '../../shared/shared.module';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CompanyFarmersDetailsComponent } from './company-farmers-details/company-farmers-details.component';
 import { QRCodeModule } from 'angular2-qrcode';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -32,7 +32,8 @@ import {
         DragDropModule,
         ProductStakeholdersModule,
         FontAwesomeModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgbTooltipModule
     ]
 })
 export class CompanyFarmersModule { }

@@ -8,9 +8,23 @@
       <div class="d-flex justify-content-between content-element--row1">
         <div class="d-flex justify-content-start">
           <div class="title-page content-element--title"
-               i18n="@@productLabelStock.title.processingOrders">
+               i18n="@@productLabelStock.title.processingOrders"
+               [ngbTooltip]="procActionsTitleTooltipTemplate"
+               [autoClose]="false"
+               placement="bottom"
+               triggers="manual"
+               tooltipClass="self-onboarding-tooltip-class"
+               #procActionsTitleTooltip="ngbTooltip">
             Processing actions
           </div>
+            <ng-template #procActionsTitleTooltipTemplate>
+                <div>
+                    <div i18n="@@guidedTour.processingSection.title" class="section-title">PROCESSING</div>
+                    <div class="sub-title" i18n="@@guidedTour.processingSection.processingSubmenu">This is the submenu for all processing actions taking place within your company.</div>
+                    <button class="btn btn-white" (click)="this.selfOnboardingService.guidedTourNextStep(6)"
+                            i18n="@@guidedTour.tooltipStep.ok.button">OK</button>
+                </div>
+            </ng-template>
         </div>
         <button class="btn btn-solid round btn-table-new content-element--btn"
                 (click)="newProcessingOrder()"
@@ -35,7 +49,20 @@
           [reloadPingList$]="reloadProcessingFacilitiesListPing$"
           (countAll)="onCountAll($event)"
           [companyId]="companyId"
-          (showing)="onShow($event)">
+          (showing)="onShow($event)" [ngbTooltip]="facilityListTooltipTemplate"
+          [autoClose]="false"
+          placement="left"
+          triggers="manual"
+          tooltipClass="self-onboarding-tooltip-class"
+          #facilityListTooltip="ngbTooltip">
+          <ng-template #facilityListTooltipTemplate>
+              <div>
+                  <div i18n="@@guidedTour.processingSection.title" class="section-title">PROCESSING</div>
+                  <div class="sub-title" i18n="@@guidedTour.processingSection.listOfFacilities">To see the processing actions, you have to hover over a facility. If your facility does not show up, add it in your company configuration.</div>
+                  <button class="btn btn-white" (click)="continueGuidedTourToPayments()"
+                          i18n="@@guidedTour.tooltipStep.ok.button">OK</button>
+              </div>
+          </ng-template>
       </app-stock-processing-facility-list>
     </div>
 

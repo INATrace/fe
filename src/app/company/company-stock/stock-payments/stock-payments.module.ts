@@ -9,7 +9,7 @@ import { StockCoreModule } from '../stock-core/stock-core.module';
 import { StockPaymentsTabComponent } from './stock-payments-tab/stock-payments-tab.component';
 import { StockPaymentsRoutingModule } from './stock-payments-routing.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbDropdownModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { StockPaymentsSelectorForNewPaymentModalComponent } from './stock-payments-selector-for-new-payment-modal/stock-payments-selector-for-new-payment-modal.component';
 import { StockPaymentsDetailComponent } from './stock-payments-detail/stock-payments-detail.component';
 import { StockPaymentsFormComponent } from './stock-payments-form/stock-payments-form.component';
@@ -43,7 +43,8 @@ import { StockPaymentsItemComponent } from './stock-payments-item/stock-payments
         NgbPaginationModule,
         NgbDropdownModule,
         ReactiveFormsModule,
-        DragDropModule
+        DragDropModule,
+        NgbTooltipModule
     ]
 })
 export class StockPaymentsModule { }

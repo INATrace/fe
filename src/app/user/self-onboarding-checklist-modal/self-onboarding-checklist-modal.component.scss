@@ -1,0 +1,75 @@
+@import "src/variables";
+
+.self-onboarding-checklist-modal {
+  .modal-header {
+    background-color: $theme-secondary;
+    color: $white;
+    align-items: center;
+    font-size: 1.3rem;
+    justify-content: flex-start;
+
+    div img {
+      height: 32px;
+      margin-left: 1rem;
+    }
+  }
+
+  .modal-body {
+    height: 350px;
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+
+      .checklist-item-checkbox {
+        height: 1.5rem;
+      }
+
+      .checklist-item-label {
+        height: 1.5rem;
+        cursor: pointer;
+        color: $gray;
+
+        &:not(.disabled) {
+          font-weight: bold;
+          color: $theme-secondary;
+        }
+
+        &.disabled {
+          cursor: default;
+        }
+      }
+    }
+  }
+}
+
+.self-onboarding-checklist-step-success-modal {
+  .modal-body {
+    display: flex;
+    justify-content: flex-start;
+
+    .left-content-container {
+      display: flex;
+      img {
+        width: 180px;
+      }
+    }
+
+    .right-content-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding-left: 3rem;
+      padding-right: 3rem;
+      text-align: center;
+      h2 {
+        color: $theme-secondary;
+        padding-left: 3rem;
+        padding-right: 3rem;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}

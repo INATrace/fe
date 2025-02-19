@@ -6,7 +6,14 @@
     <div class="main-inside-top content-element">
 
       <div class="d-flex justify-content-between content-element--row1">
-        <div class="title-page content-element--title" i18n="@@productLabelStock.title.allStockOrders">All stock</div>
+        <div class="title-page content-element--title"
+             i18n="@@productLabelStock.title.allStockOrders"
+             [ngbTooltip]="allStockTitleTooltipTemplate"
+             [autoClose]="false"
+             placement="bottom"
+             triggers="manual"
+             tooltipClass="self-onboarding-tooltip-class"
+             #allStockTitleTooltip="ngbTooltip">All stock</div>
         <div *ngIf="isAuthRoleToExportToBeyco && !isBeycoAuthorized">
           <button class="btn" type="button" (click)="getAuthBeyco()">
             <span i18n="@@productLabelStock.beyco.button.login">Login to Beyco</span>
@@ -17,6 +24,14 @@
             <span i18n="@@productLabelStock.beyco.button.logout">Logout from Beyco</span>
           </button>
         </div>
+          <ng-template #allStockTitleTooltipTemplate>
+              <div>
+                  <div i18n="@@guidedTour.allStockSection.title" class="section-title">ALL STOCK</div>
+                  <div class="sub-title" i18n="@@guidedTour.allStockSection.allStockSubmenu">In the 'all stock' submenu you find all products available in your facilities and can access the batch history, Geo data and generated QR Codes.</div>
+                  <button class="btn btn-white" (click)="this.selfOnboardingService.guidedTourNextStep(11)"
+                          i18n="@@guidedTour.tooltipStep.ok.button">OK</button>
+              </div>
+          </ng-template>
       </div>
 
       <!-- FACILITY SELECTION DROPDOWN -->
@@ -31,8 +46,22 @@
                                [formControlInput]="facilityForStockOrderForm"
                                [codebookService]="facilityCodebook"
                                (onChange)="facilityForStockOrderChanged($event)"
-                               style="min-width: 150px;">
+                               style="min-width: 150px;"
+                               [ngbTooltip]="allStockSelectFacilityTooltipTemplate"
+                               [autoClose]="false"
+                               placement="bottom"
+                               triggers="manual"
+                               tooltipClass="self-onboarding-tooltip-class"
+                               #allStockSelectFacilityTooltip="ngbTooltip">
                 </single-choice>
+                  <ng-template #allStockSelectFacilityTooltipTemplate>
+                      <div>
+                          <div i18n="@@guidedTour.allStockSection.title" class="section-title">ALL STOCK</div>
+                          <div class="sub-title" i18n="@@guidedTour.allStockSection.selectFacility">Here you select the facility your (semi-) product is currently located in.</div>
+                          <button class="btn btn-white" (click)="openUserHome()"
+                                  i18n="@@guidedTour.tooltipStep.ok.button">OK</button>
+                      </div>
+                  </ng-template>
               </div>
             </div>
           </div>

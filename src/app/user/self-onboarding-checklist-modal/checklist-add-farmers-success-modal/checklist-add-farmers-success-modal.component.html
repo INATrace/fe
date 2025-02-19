@@ -1,0 +1,23 @@
+<div class="modal-container self-onboarding-checklist-step-success-modal">
+    <div class="modal-body">
+        <div class="left-content-container">
+            <img src="/assets/icons/icon-self-onboarding-assistant.svg" alt="Image representing pineapple">
+        </div>
+        <div class="right-content-container">
+            <h2 i18n="@@selfOnboarding.checklist.addFarmers.success.message1">GREAT! You have successfully added your farmers. You are now ready to document deliveries, processes, payments, orders and more.</h2>
+            <h2 i18n="@@selfOnboarding.checklist.addFarmers.success.message2">Please select if you wish a guided tour for those functionalities or if you prefer to explore the platform yourself.</h2>
+            <div class="d-flex justify-content-center w-100">
+                <button type="button"
+                        class="btn btn-secondary mr-3"
+                        (click)="showMeAround()">
+                    <span i18n="@@selfOnboarding.checklist.addFarmers.successModal.showMeAround.button">Show me around!</span>
+                </button>
+                <button type="button"
+                        class="btn btn-secondary"
+                        (click)="iAmGood()">
+                    <span i18n="@@selfOnboarding.checklist.addFarmers.successModal.iAmGood.button">I'm good</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

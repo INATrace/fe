@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import _ from 'lodash-es';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -37,6 +37,8 @@ import { SelectedUserCompanyService } from '../../../core/selected-user-company.
 import { FileSaverService } from "ngx-filesaver";
 import { HttpClient } from "@angular/common/http";
 import { PlotsFormComponent } from "../../company-common/plots-form/plots-form.component";
+import { SelfOnboardingService } from "../../../shared-services/self-onboarding.service";
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-company-farmers-details',
@@ -158,6 +160,9 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   @ViewChild('plotsForm', { static: false })
   plotsForm: PlotsFormComponent;
 
+  @ViewChild('newFarmerTitleTooltip')
+  newFarmerTitleTooltip: NgbTooltip;
+
   public areaTranslations = {
     totalCultivatedLabel: $localize`:@@collectorDetail.textinput.totalCultivatedArea.label:Total cultivated area`,
     totalCultivatedPlaceholder: $localize`:@@collectorDetail.textinput.totalCultivatedArea.placeholder:Enter total cultivated area`,
@@ -177,7 +182,9 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       private selUserCompanyService: SelectedUserCompanyService,
       public theme: ThemeService,
       private fileSaverService: FileSaverService,
-      private httpClient: HttpClient
+      private httpClient: HttpClient,
+      private selfOnboardingService: SelfOnboardingService,
+      private router: Router
   ) { }
 
   static ApiUserCustomerCooperativeCreateEmptyObject(): ApiUserCustomerCooperative {
@@ -230,6 +237,10 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       this.updateAreaUnitValidators();
       this.initValueChangeListeners();
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   async initData() {
@@ -395,6 +406,7 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
   }
 
   newFarmer() {
+
     this.farmerForm = generateFormFromMetadata(ApiUserCustomer.formMetadata(), this.emptyFarmer(), ApiUserCustomerValidationScheme);
 
     // in case of 1 product (auto selection), also add empty fields in form
@@ -406,6 +418,16 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
         this.addNewFarmPlantInformation(this.productTypes[0]);
       });
     }
+
+    this.subscriptions.push(
+        this.selfOnboardingService.addFarmersCurrentStep$.subscribe(currentStep => {
+          if (currentStep === 3) {
+            setTimeout(() => this.newFarmerTitleTooltip.open());
+          } else {
+            setTimeout(() => this.newFarmerTitleTooltip.close());
+          }
+        })
+    );
   }
 
   editFarmer() {
@@ -561,15 +583,26 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
       this.globalEventsManager.showLoading(true);
       let res;
       if (!this.update) {
+
         res = await this.companyService.addUserCustomer(this.companyId, data).toPromise();
+
       } else {
         res = await this.companyService.updateUserCustomer(data).toPromise();
       }
+
       if (res && res.status === 'OK') {
-        if (!stayOnPage) {
-          this.dismiss();
+
+        const currentAddFarmerStep = await this.selfOnboardingService.addFarmersCurrentStep$.pipe(take(1)).toPromise();
+        if (currentAddFarmerStep === 3) {
+          this.selfOnboardingService.setAddFarmersCurrentStep('success');
+          this.router.navigate(['/home']).then();
         } else {
-          this.plotsForm.updatePlots();
+
+          if (!stayOnPage) {
+            this.dismiss();
+          } else {
+            this.plotsForm.updatePlots();
+          }
         }
       }
     } finally {
@@ -740,10 +773,6 @@ export class CompanyFarmersDetailsComponent implements OnInit, OnDestroy {
 
   onCountAllPayments(event) {
     this.allPaymentOrders = event;
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
 }

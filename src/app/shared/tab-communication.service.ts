@@ -12,9 +12,9 @@ export class TabCommunicationService {
   private tabTitles = new Subject<string[]>();
   private activeTab = new Subject<number>();
   private _rootTab: number;
-  private _lockedTabs: string[]
-  private _tabTitles: string[]
-  private _tabNames: string[]
+  private _lockedTabs: string[];
+  private _tabTitles: string[];
+  private _tabNames: string[];
 
   announceTabTitles$ = this.tabTitles.asObservable();
   confirmActiveTab$ = this.activeTab.asObservable();
@@ -33,11 +33,11 @@ export class TabCommunicationService {
   }
 
   setTabNames(tabNames: string[]) {
-    this._tabNames = tabNames
+    this._tabNames = tabNames;
   }
 
   setLockedTabs(lockedTabs: string[]) {
-    this._lockedTabs = lockedTabs || []
+    this._lockedTabs = lockedTabs || [];
   }
 
   public get rootTab() {
@@ -45,28 +45,28 @@ export class TabCommunicationService {
   }
 
   getTabNameForId(id: number) {
-    if (id >= this._tabNames.length || id < 0) return null;
-    return this._tabNames[id]
+    if (id >= this._tabNames.length || id < 0) { return null; }
+    return this._tabNames[id];
   }
 
   subscribe(tabs: string[], tabNames: string[], rootTab: number, targetRoute: (segment: string) => null, lockedTabs?: string[]): Subscription {
     this.announceTabTitles(tabs);
-    this.setTabNames(tabNames)
-    this.setRootTab(rootTab)
-    this.setLockedTabs(lockedTabs)
+    this.setTabNames(tabNames);
+    this.setRootTab(rootTab);
+    this.setLockedTabs(lockedTabs);
     return this.confirmActiveTab$.subscribe(
       tab => {
-        if (tab === this.rootTab) return;
-        targetRoute(this.getTabNameForId(tab))
-      })
+        if (tab === this.rootTab) { return; }
+        targetRoute(this.getTabNameForId(tab));
+      });
   }
 
   isLocked(tab: string) {
-    return this._lockedTabs.indexOf(tab) >= 0
+    return this._lockedTabs.indexOf(tab) >= 0;
   }
 
   isLockedIndex(index: number) {
-    return this._lockedTabs.indexOf(this._tabNames[index]) >= 0
+    return this._lockedTabs.indexOf(this._tabNames[index]) >= 0;
   }
 
 }

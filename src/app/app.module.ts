@@ -10,7 +10,12 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbDropdownModule, NgbPaginationModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+    NgbDropdownModule,
+    NgbPaginationModule,
+    NgbTimepickerModule,
+    NgbTooltipModule
+} from '@ng-bootstrap/ng-bootstrap';
 import { QRCodeModule } from 'angular2-qrcode';
 import { Angulartics2Module } from 'angulartics2';
 import { EllipsisModule } from 'ngx-ellipsis';
@@ -72,6 +77,16 @@ import { LanguageInterceptor } from './core/language.interceptor';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CompanyDashboardComponent } from './company/company-dashboard/company-dashboard.component';
 import { CompanyCommonModule } from './company/company-common/company-common.module';
+import { SelfOnboardingWelcomeModalComponent } from './user/self-onboarding-welcome-modal/self-onboarding-welcome-modal.component';
+import { SelfOnboardingChecklistModalComponent } from './user/self-onboarding-checklist-modal/self-onboarding-checklist-modal.component';
+import { SelfOnboardingAssistantModalComponent } from './user/self-onboarding-assistant-modal/self-onboarding-assistant-modal.component';
+import { ChecklistAddProductSuccessModalComponent } from './user/self-onboarding-checklist-modal/checklist-add-product-success-modal/checklist-add-product-success-modal.component';
+import { CompanyDetailFacilityAddWizardComponent } from './company/company-detail/company-detail-facility-add-wizard/company-detail-facility-add-wizard.component';
+import { CompanyDetailProcessingActionsAddWizardComponent } from './company/company-detail/company-processing-actions/company-detail-processing-actions-add-wizard/company-detail-processing-actions-add-wizard.component';
+import { ChecklistAddFacilitySuccessModalComponent } from './user/self-onboarding-checklist-modal/checklist-add-facility-success-modal/checklist-add-facility-success-modal.component';
+import { ChecklistAddProcessingActionSuccessModalComponent } from './user/self-onboarding-checklist-modal/checklist-add-processing-action-success-modal/checklist-add-processing-action-success-modal.component';
+import { ChecklistAddFarmersSuccessModalComponent } from './user/self-onboarding-checklist-modal/checklist-add-farmers-success-modal/checklist-add-farmers-success-modal.component';
+import { GuidedTourSuccessModalComponent } from './user/self-onboarding-checklist-modal/guided-tour-success-modal/guided-tour-success-modal.component';
 
 export class HammerConfig extends HammerGestureConfig {
   buildHammer(element: HTMLElement) {
@@ -132,47 +147,58 @@ export function getConfiguration(): Configuration {
     CompanyDetailProcessingActionsDetailComponent,
     CompanyProcessingActionsComponent,
     CompanyDetailProcessingActionsListComponent,
-    CurrencyListComponent
+    CurrencyListComponent,
+    SelfOnboardingWelcomeModalComponent,
+    SelfOnboardingChecklistModalComponent,
+    SelfOnboardingAssistantModalComponent,
+    ChecklistAddProductSuccessModalComponent,
+    CompanyDetailFacilityAddWizardComponent,
+    CompanyDetailProcessingActionsAddWizardComponent,
+    ChecklistAddFacilitySuccessModalComponent,
+    ChecklistAddProcessingActionSuccessModalComponent,
+    ChecklistAddFarmersSuccessModalComponent,
+    GuidedTourSuccessModalComponent
   ],
-  imports: [
-    ApiModule.forRoot(getConfiguration),
-    BrowserModule,
-    AppRoutingModule,
-    ToastrModule.forRoot({
-      maxOpened: 1,
-      autoDismiss: true
-    }),
-    HttpClientModule,
-    Angulartics2Module.forRoot({
-      gst: {
-        trackingIds: [environment.googleAnalyticsId]
-      }
-    }),
-    //////////
-    CoreModule,
-    ComponentsModule,
-    LayoutModule,
-    FontAwesomeModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxPageScrollModule,
-    ContentsModule,
-    EllipsisModule,
-    QRCodeModule,
-    BrowserAnimationsModule,
-    NgbTimepickerModule,
-    NgbDropdownModule,
-    NgbPaginationModule,
-    GoogleMapsModule,
-    DragDropModule,
-    HammerModule,
-    ChartsModule,
-    NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
-    }),
-    CompanyCommonModule
-  ],
+    imports: [
+        ApiModule.forRoot(getConfiguration),
+        BrowserModule,
+        AppRoutingModule,
+        ToastrModule.forRoot({
+            maxOpened: 1,
+            autoDismiss: true
+        }),
+        HttpClientModule,
+        Angulartics2Module.forRoot({
+            gst: {
+                trackingIds: [environment.googleAnalyticsId]
+            }
+        }),
+        //////////
+        CoreModule,
+        ComponentsModule,
+        LayoutModule,
+        FontAwesomeModule,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxPageScrollModule,
+        ContentsModule,
+        EllipsisModule,
+        QRCodeModule,
+        BrowserAnimationsModule,
+        NgbTimepickerModule,
+        NgbDropdownModule,
+        NgbPaginationModule,
+        GoogleMapsModule,
+        DragDropModule,
+        HammerModule,
+        ChartsModule,
+        NgxEchartsModule.forRoot({
+            echarts: () => import('echarts')
+        }),
+        CompanyCommonModule,
+        NgbTooltipModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

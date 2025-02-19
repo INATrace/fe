@@ -5,7 +5,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbDropdownModule, NgbPaginationModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+    NgbDropdownModule,
+    NgbPaginationModule,
+    NgbTimepickerModule,
+    NgbTooltipModule
+} from '@ng-bootstrap/ng-bootstrap';
 import { QRCodeModule } from 'angular2-qrcode';
 import { EllipsisModule } from 'ngx-ellipsis';
 import { NgxPageScrollModule } from 'ngx-page-scroll';
@@ -45,26 +50,27 @@ import { UserBoxComponent } from './user-box/user-box.component';
     ProductLabelFrontTopNavComponent,
     UserBoxComponent
   ],
-  imports: [
-    CommonModule,
-    // Clean up unnecessary
-    RouterModule,
-    CoreModule,
-    ComponentsModule,
-    FontAwesomeModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxPageScrollModule,
-    ContentsModule,
-    EllipsisModule,
-    QRCodeModule,
-    NgbTimepickerModule,
-    NgbDropdownModule,
-    NgbPaginationModule,
-    GoogleMapsModule,
-    DragDropModule
-  ],
+    imports: [
+        CommonModule,
+        // Clean up unnecessary
+        RouterModule,
+        CoreModule,
+        ComponentsModule,
+        FontAwesomeModule,
+        SharedModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxPageScrollModule,
+        ContentsModule,
+        EllipsisModule,
+        QRCodeModule,
+        NgbTimepickerModule,
+        NgbDropdownModule,
+        NgbPaginationModule,
+        GoogleMapsModule,
+        DragDropModule,
+        NgbTooltipModule
+    ],
   exports: [
     AuthorisedLayoutComponent,
     AuthorisedSideNavComponent,

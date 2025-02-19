@@ -13,9 +13,23 @@
                         <div class="mr-1" i18n="@@companyDetailProcessingActions.title">Processing actions</div>
                         <div>(<em>{{ companyName?.name }}</em>)</div>
                     </div>
-                    <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newProcessingAction()" i18n="@@productLabelStock.button.newProcessingActions">
+                    <button class="btn btn-solid round btn-table-new content-element--btn"
+                            [ngbTooltip]="addProcActionButtonTooltipTemplate"
+                            [autoClose]="false"
+                            placement="left"
+                            triggers="manual"
+                            tooltipClass="self-onboarding-tooltip-class"
+                            #addProcActionButtonTooltip="ngbTooltip"
+                            (click)="newProcessingAction()"
+                            i18n="@@productLabelStock.button.newProcessingActions">
                         <span>+ Add processing action</span>
                     </button>
+                    <ng-template #addProcActionButtonTooltipTemplate>
+                        <div>
+                            <h2 class="title" i18n="@@selfOnboarding.checklist.addProcAction.step3">Click here to add a processing action</h2>
+                            <div class="step-line"><span i18n="@@selfOnboarding.checklist.item.step">Step {{ '3/4' }}</span></div>
+                        </div>
+                    </ng-template>
                 </div>
                 <div class="d-flex align-items-start content-element--row2">
                     <div>

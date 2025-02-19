@@ -1,15 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import {ActiveCompaniesService} from '../../../shared-services/active-companies.service';
 import {ActiveValueChainService} from '../../../shared-services/active-value-chain.service';
+import { SelfOnboardingService } from "../../../shared-services/self-onboarding.service";
+import { Subscription } from "rxjs";
+import { take } from "rxjs/operators";
 
 @Component({
   selector: 'app-new-product-modal',
   templateUrl: './new-product-modal.component.html',
   styleUrls: ['./new-product-modal.component.scss']
 })
-export class NewProductModalComponent implements OnInit {
+export class NewProductModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input()
   dismissable = true;
@@ -26,27 +29,54 @@ export class NewProductModalComponent implements OnInit {
   @Input()
   onSelectedCompany: (company: any) => {};
 
+  @ViewChild('selectProductCompanyTooltip')
+  selectProductCompanyTooltip: NgbTooltip;
+
   companyForm = new FormControl(null);
   valueChainForm = new FormControl(null);
 
+  private subs: Subscription;
 
   constructor(
       public activeModal: NgbActiveModal,
       public sifrantCompany: ActiveCompaniesService,
-      public sifrantValueChains: ActiveValueChainService
-  ) {
-
-  }
+      public sifrantValueChains: ActiveValueChainService,
+      private selfOnboardingService: SelfOnboardingService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit() {
+
+    this.subs = this.selfOnboardingService.addProductCurrentStep$.subscribe(step => {
+      if (step == 3) {
+        this.selectProductCompanyTooltip.open();
+      } else {
+        this.selectProductCompanyTooltip.close();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subs) {
+      this.subs.unsubscribe();
+    }
   }
 
   cancel() {
     this.activeModal.close();
   }
 
-  onConfirm() {
+  async onConfirm() {
+
     if (this.companyForm.value && this.valueChainForm.value) {
+
+      const currentStep = await this.selfOnboardingService.addProductCurrentStep$.pipe(take(1)).toPromise();
+      if (currentStep == 3) {
+        this.selfOnboardingService.setAddProductCurrentStep(4);
+      }
+
       this.activeModal.close({company: this.companyForm.value, valueChain: this.valueChainForm.value});
     }
   }

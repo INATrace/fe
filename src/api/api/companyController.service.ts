@@ -44,6 +44,7 @@ import { ApiResponseApiBaseEntity } from '../model/apiResponseApiBaseEntity';
 import { ApiResponseApiCompanyCustomer } from '../model/apiResponseApiCompanyCustomer';
 import { ApiResponseApiCompanyGet } from '../model/apiResponseApiCompanyGet';
 import { ApiResponseApiCompanyName } from '../model/apiResponseApiCompanyName';
+import { ApiResponseApiCompanyOnboardingState } from '../model/apiResponseApiCompanyOnboardingState';
 import { ApiResponseApiPlot } from '../model/apiResponseApiPlot';
 import { ApiResponseApiUserCustomer } from '../model/apiResponseApiUserCustomer';
 import { ApiResponseListApiCompanyUser } from '../model/apiResponseListApiCompanyUser';
@@ -667,6 +668,35 @@ export namespace GetCompanyName {
      * that does not have an own model.
      */
     export const ParamValidators: {[K in keyof GetCompanyName.PartialParamMap]?: [string, ValidatorFn][]} = {
+      id: [
+              ['required', Validators.required],
+      ],
+    };
+}
+
+/**
+ * Namespace for getCompanyOnboardingState.
+ */
+export namespace GetCompanyOnboardingState {
+    /**
+     * Parameter map for getCompanyOnboardingState.
+     */
+    export interface PartialParamMap {
+      id: number;
+    }
+
+    /**
+     * Enumeration of all parameters for getCompanyOnboardingState.
+     */
+    export enum Parameters {
+      id = 'id'
+    }
+
+    /**
+     * A map of tuples with error name and `ValidatorFn` for each parameter of getCompanyOnboardingState
+     * that does not have an own model.
+     */
+    export const ParamValidators: {[K in keyof GetCompanyOnboardingState.PartialParamMap]?: [string, ValidatorFn][]} = {
       id: [
               ['required', Validators.required],
       ],
@@ -2920,6 +2950,88 @@ export class CompanyControllerService {
         );
         if(typeof this.configuration.errorHandler === 'function') {
           return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCompanyName')));
+        }
+        return handle;
+    }
+
+
+  /**
+   * Get the company onboarding state by map.
+   * 
+   * @param map parameters map to set partial amount of parameters easily
+   * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+   * @param reportProgress flag to report request and response progress.
+   */
+  public getCompanyOnboardingStateByMap(
+    map: GetCompanyOnboardingState.PartialParamMap,
+    observe?: 'body',
+    reportProgress?: boolean): Observable<ApiResponseApiCompanyOnboardingState>;
+  public getCompanyOnboardingStateByMap(
+    map: GetCompanyOnboardingState.PartialParamMap,
+    observe?: 'response',
+    reportProgress?: boolean): Observable<HttpResponse<ApiResponseApiCompanyOnboardingState>>;
+  public getCompanyOnboardingStateByMap(
+    map: GetCompanyOnboardingState.PartialParamMap,
+    observe?: 'events',
+    reportProgress?: boolean): Observable<HttpEvent<ApiResponseApiCompanyOnboardingState>>;
+  public getCompanyOnboardingStateByMap(
+    map: GetCompanyOnboardingState.PartialParamMap,
+    observe: any = 'body',
+    reportProgress: boolean = false): Observable<any> {
+    return this.getCompanyOnboardingState(
+      map.id,
+      observe,
+      reportProgress
+    );
+  }
+
+
+    /**
+     * Get the company onboarding state
+     * 
+     * @param id 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getCompanyOnboardingState(id: number, observe?: 'body', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<ApiResponseApiCompanyOnboardingState>;
+    public getCompanyOnboardingState(id: number, observe?: 'response', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpResponse<ApiResponseApiCompanyOnboardingState>>;
+    public getCompanyOnboardingState(id: number, observe?: 'events', reportProgress?: boolean, additionalHeaders?: Array<Array<string>>): Observable<HttpEvent<ApiResponseApiCompanyOnboardingState>>;
+    public getCompanyOnboardingState(id: number, observe: any = 'body', reportProgress: boolean = false, additionalHeaders?: Array<Array<string>>): Observable<any> {
+        if (id === null || id === undefined) {
+            throw new Error('Required parameter id was null or undefined when calling getCompanyOnboardingState.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+            if (additionalHeaders) {
+                for(let pair of additionalHeaders) {
+                    headers = headers.set(pair[0], pair[1]);
+                }
+            }
+
+        const handle = this.httpClient.get<ApiResponseApiCompanyOnboardingState>(`${this.configuration.basePath}/api/company/profile/${encodeURIComponent(String(id))}/onboardingState`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+        if(typeof this.configuration.errorHandler === 'function') {
+          return handle.pipe(catchError(err => this.configuration.errorHandler(err, 'getCompanyOnboardingState')));
         }
         return handle;
     }

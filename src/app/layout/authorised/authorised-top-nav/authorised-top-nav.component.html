@@ -15,31 +15,20 @@
       </div>
     </ng-container>
 
-
-
     <!-- work in progress - update via service -->
     <ul class="topnav-tabs af-nav--tabs" *ngIf="tabs$ | async as tabs">
       <ng-container *ngFor="let tab of tabs; let i= index">
         <li [class.active]="rootTab === i"
           [class.locked]="isLockedIndex(i)"
           (click)="setIndex(i)">
-          <a>{{tab}}
+          <a>{{ tab }}
             <!-- <div [class.active]="selectedIndex === i" class="topnav-tabs-bottom"></div> -->
             <div [class.active]="rootTab === i" class="topnav-tabs-bottom"></div>
           </a>
         </li>
       </ng-container>
 
-      <!-- IF more then we can fit in, then show them trough this element -->
-      <!-- <li>
-        <a>
-          <div class="af-topnav-more">More</div>
-        </a>
-      </li> -->
-
     </ul>
-
-
 
   </nav>
 </div>

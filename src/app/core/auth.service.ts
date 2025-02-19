@@ -81,6 +81,8 @@ export class AuthService {
 
   async logout() {
 
+    sessionStorage.clear();
+
     await this.userController.logout().pipe(take(1)).toPromise();
     this.router.navigate(['login']).then(() => this.userProfileSubject.next(null));
   }

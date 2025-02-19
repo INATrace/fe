@@ -9,9 +9,23 @@
           <div class="title-page content-element--title">
             {{ title }} (<em>{{ companyName?.name }}</em>)
           </div>
-          <button class="btn btn-solid round btn-table-new content-element--btn" (click)="newFacility()" i18n="@@productLabelStock.button.newFacility">
+          <button class="btn btn-solid round btn-table-new content-element--btn"
+                  [ngbTooltip]="addFacilityButtonTooltipTemplate"
+                  [autoClose]="false"
+                  placement="left"
+                  triggers="manual"
+                  tooltipClass="self-onboarding-tooltip-class"
+                  #addFacilityButtonTooltip="ngbTooltip"
+                  (click)="newFacility()"
+                  i18n="@@productLabelStock.button.newFacility">
             <span>+ Add facility</span>
           </button>
+            <ng-template #addFacilityButtonTooltipTemplate>
+                <div>
+                    <h2 class="title" i18n="@@selfOnboarding.checklist.addFacility.step3">Click here to add a facility</h2>
+                    <div class="step-line"><span i18n="@@selfOnboarding.checklist.item.step">Step {{ '3/4' }}</span></div>
+                </div>
+            </ng-template>
         </div>
         <div class="d-flex align-items-start content-element--row2">
           <div>

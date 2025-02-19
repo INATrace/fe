@@ -10,7 +10,7 @@ import { CompanyCommonModule } from '../../company-common/company-common.module'
 import { StockCoreModule } from '../stock-core/stock-core.module';
 import { StockProcessingFacilityListComponent } from './stock-processing-facility-list/stock-processing-facility-list.component';
 import { FacilityCardComponent } from './stock-processing-facility-list/facility-card/facility-card.component';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StockProcessingOrderFieldsComponent } from './stock-processing-order-details/stock-processing-order-fields/stock-processing-order-fields.component';
 import { ClipInputTransactionModalComponent } from './stock-processing-order-details/processing-order-input/clip-input-transaction-modal/clip-input-transaction-modal.component';
@@ -29,17 +29,18 @@ import { ProcessingOrderOutputComponent } from './stock-processing-order-details
     ProcessingOrderInputComponent,
     ProcessingOrderOutputComponent
   ],
-  imports: [
-    CommonModule,
-    StockProcessingRoutingModule,
-    CoreModule,
-    ComponentsModule,
-    LayoutModule,
-    SharedModule,
-    CompanyCommonModule,
-    StockCoreModule,
-    NgbDropdownModule,
-    FontAwesomeModule
-  ]
+    imports: [
+        CommonModule,
+        StockProcessingRoutingModule,
+        CoreModule,
+        ComponentsModule,
+        LayoutModule,
+        SharedModule,
+        CompanyCommonModule,
+        StockCoreModule,
+        NgbDropdownModule,
+        FontAwesomeModule,
+        NgbTooltipModule
+    ]
 })
 export class StockProcessingModule { }

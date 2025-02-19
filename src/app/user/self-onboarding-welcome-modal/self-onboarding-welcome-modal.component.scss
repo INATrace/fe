@@ -1,0 +1,47 @@
+@import "src/variables";
+
+.self-onboarding-welcome-modal {
+  .body-space {
+    background-color: $theme-primary;
+    height: 250px;
+  }
+
+  .body-message {
+    color: $theme-primary;
+    text-align: center;
+    font-size: 1.2rem;
+    padding-left: 6rem;
+    padding-right: 6rem;
+    padding-top: 2rem;
+  }
+
+  .logo {
+    position: absolute;
+    background-color: $white;
+    padding: 1rem;
+    top: 40px;
+    right: 0;
+
+    img {
+      height: 100px;
+    }
+  }
+
+  .icon-footsteps {
+    position: absolute;
+    top: 70px;
+    left: 110px;
+
+    img {
+      height: 220px;
+    }
+  }
+
+  .modal-header {
+    border-bottom: none;
+  }
+
+  .modal-footer {
+    border-top: none;
+  }
+}

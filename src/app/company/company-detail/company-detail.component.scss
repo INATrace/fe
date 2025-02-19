@@ -19,3 +19,41 @@
   background-color: white;
   max-width: 1140px;
 }
+
+.company-detail-facility-add-wizard, .company-detail-processing-action-add-wizard {
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-bottom: 2.5rem;
+
+    &.checkbox-group {
+      align-items: flex-start;
+    }
+  }
+
+  .facility-type-button, .proc-action-type-button {
+    width: 350px;
+    margin-bottom: 1rem;
+  }
+
+  .is-collection-facility-button {
+    width: 150px;
+  }
+
+  .search-field, .selected-values-list {
+    width: 350px;
+  }
+
+  .search-field {
+    margin-bottom: .5rem;
+  }
+
+  .selected-values-list {
+    padding-right: .6rem;
+  }
+
+}

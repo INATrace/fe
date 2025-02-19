@@ -326,6 +326,53 @@ button.no-shadow {
     box-shadow: none !important;
 }
 
+// /////////////////////////////////////////
+// //// Secondary button style override
+// /////////////////////////////////////////
+button.btn-secondary {
+  background-color: $theme-secondary;
+  border: 1px solid $theme-secondary;
+
+  &:focus {
+    background-color: $theme-secondary;
+    border-color: $theme-secondary;
+    box-shadow: 0 0 0 0.2rem $theme-secondary-light;
+  }
+
+  &:active {
+    background-color: $theme-primary-lighter !important;
+    border-color: $theme-primary !important;
+    box-shadow: 0 0 0 0.2rem $theme-primary-light;
+    color: $theme-primary !important;
+  }
+
+  &:active:focus {
+    box-shadow: 0 0 0 0.2rem $theme-primary-light !important;
+  }
+}
+
+button.btn-white {
+  background-color: $white;
+  border: 1px solid $white;
+  color: $theme-secondary;
+
+  &:focus {
+    background-color: $white;
+    border-color: $white;
+  }
+
+  &:active {
+    background-color: $white !important;
+    border-color: $white !important;
+    box-shadow: 0 0 0 0.2rem $theme-primary-light;
+    color: $theme-secondary !important;
+  }
+
+  &:active:focus {
+    box-shadow: 0 0 0 0.2rem $theme-primary-light !important;
+  }
+}
+
 .tagitem {
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
@@ -2426,6 +2473,148 @@ $ustwo-colour-delux: #666;
 .modal-xxl {
   width: 90vw;
   max-width: 90vw;
+}
+
+.self-onboarding-checklist-modal-class {
+
+  .modal-dialog {
+    margin-bottom: 0;
+    margin-right: 2rem;
+    min-height: calc(99% - 1rem);
+
+    .modal-content {
+      border-top-left-radius: 1.5rem;
+      border-top-right-radius: 1.5rem;
+
+      .modal-header {
+        border-top-left-radius: calc(1.5rem - 1px);
+        border-top-right-radius: calc(1.5rem - 1px);
+      }
+    }
+  }
+
+  .modal-dialog-centered {
+    align-items: end;
+  }
+}
+
+.self-onboarding-checklist-checkbox {
+  display: inline-block;
+
+  .form-group {
+    margin-bottom: 0;
+    .text-input-label {
+      display: none;
+    }
+  }
+
+  .checkbox {
+    border-radius: 50% !important;
+
+    &::after {
+      bottom: 0.3rem !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem $theme-secondary-light !important;
+    }
+
+    &:checked {
+      background-color: $theme-secondary !important;
+      border-color: $theme-secondary !important;
+    }
+
+    &:checked:disabled {
+      background-color: #ABABAB !important;
+      border-color: #ABABAB !important;
+    }
+  }
+}
+
+.checkbox-no-bottom-margin {
+  .form-group {
+    margin-bottom: 0 !important;
+  }
+}
+
+.self-onboarding-tooltip-class {
+  &.tooltip.show {
+    opacity: 0.95;
+  }
+
+  &.bs-tooltip-left {
+    padding: 0 0.8rem;
+    .arrow {
+      top: calc(50% - .8rem);
+      width: .8rem;
+      &:before {
+        border-width: 0.8rem 0 0.8rem 0.8rem;
+        border-left-color: $theme-secondary;
+      }
+    }
+  }
+
+  &.bs-tooltip-right {
+    padding: 0 0.8rem;
+    .arrow {
+      top: calc(50% - .8rem);
+      width: 0.8rem;
+      &:before {
+        border-width: 0.8rem 0.8rem 0.8rem 0;
+        border-right-color: $theme-secondary;
+      }
+    }
+  }
+
+  &.bs-tooltip-right-top {
+    .arrow {
+      top: 1.3rem;
+    }
+  }
+
+  &.bs-tooltip-bottom {
+    padding: 0.8rem 0;
+    .arrow {
+      left: calc(50% - .8rem);
+      top: 0.4rem;
+      &:before {
+        border-width: 0 0.8rem 0.8rem;
+        border-bottom-color: $theme-secondary;
+      }
+    }
+  }
+
+  .tooltip-inner {
+    background-color: $theme-secondary;
+    color: $white;
+    max-width: 250px;
+    width: 250px;
+    padding: 2rem;
+    text-align: left;
+    border-radius: 1.5rem;
+
+    .title {
+      color: $white;
+      margin-bottom: 2rem;
+    }
+
+    .sub-title {
+      color: #ffffff;
+      font-size: 1.2rem;
+      line-height: 1.5rem;
+      margin-bottom: 1rem;
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+
+    .step-line {
+      font-size: 1.1rem;
+    }
+  }
+
+  .section-title {
+    font-weight: bold;
+  }
 }
 
 .af-bottom-buttons {

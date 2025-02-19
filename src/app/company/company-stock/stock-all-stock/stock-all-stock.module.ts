@@ -8,7 +8,7 @@ import { LayoutModule } from '../../../layout/layout.module';
 import { CompanyCommonModule } from '../../company-common/company-common.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
@@ -23,7 +23,8 @@ import {ReactiveFormsModule} from '@angular/forms';
         FontAwesomeModule,
         NgbDropdownModule,
         StockCoreModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NgbTooltipModule
     ]
 })
 export class StockAllStockModule { }
