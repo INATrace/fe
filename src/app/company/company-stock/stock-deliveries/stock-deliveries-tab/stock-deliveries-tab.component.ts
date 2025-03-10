@@ -66,9 +66,6 @@ export class StockDeliveriesTabComponent extends StockCoreTabComponent implement
   @ViewChild('addDeliveryButtonTooltip')
   addDeliveryButtonTooltip: NgbTooltip;
 
-  @ViewChild('deliveriesListTooltip')
-  deliveriesListTooltip: NgbTooltip;
-
   constructor(
       protected router: Router,
       protected route: ActivatedRoute,
@@ -100,15 +97,12 @@ export class StockDeliveriesTabComponent extends StockCoreTabComponent implement
       setTimeout(() => {
         this.deliveriesTitleTooltip.close();
         this.addDeliveryButtonTooltip.close();
-        this.deliveriesListTooltip.close();
       }, 50);
 
       if (step === 2) {
         setTimeout(() => this.deliveriesTitleTooltip.open(), 50);
       } else if (step === 3) {
         setTimeout(() => this.addDeliveryButtonTooltip.open(), 50);
-      } else if (step === 4) {
-        setTimeout(() => this.deliveriesListTooltip.open(), 50);
       }
     });
   }
@@ -191,11 +185,6 @@ export class StockDeliveriesTabComponent extends StockCoreTabComponent implement
       this.semiProductFrom.setValue(null);
     }
     this.facilityForStockOrderChanged(event);
-  }
-
-  continueGuidedTourToProcessing() {
-    this.selfOnboardingService.guidedTourNextStep(5);
-    this.router.navigate(['my-stock', 'processing']).then();
   }
 
 }

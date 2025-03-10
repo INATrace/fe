@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of, Subscription } from 'rxjs';
 import { DeliveryDates, StockOrderListingPageMode } from '../stock-core-tab/stock-core-tab.component';
 import { SortOption } from '../../../../shared/result-sorter/result-sorter-types';
 import { FormControl } from '@angular/forms';
-import {finalize, map, switchMap, take, tap} from 'rxjs/operators';
+import { finalize, map, switchMap, take, tap } from 'rxjs/operators';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { StockOrderControllerService } from '../../../../../api/api/stockOrderController.service';
 import { ApiPaginatedResponseApiStockOrder } from '../../../../../api/model/apiPaginatedResponseApiStockOrder';
@@ -20,14 +20,16 @@ import { GenerateQRCodeModalComponent } from '../../../../components/generate-qr
 import { NgbModalImproved } from '../../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { ProcessingOrderControllerService } from '../../../../../api/api/processingOrderController.service';
 import { ToastrService } from 'ngx-toastr';
-import {FileSaverService} from 'ngx-filesaver';
+import { FileSaverService } from 'ngx-filesaver';
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { SelfOnboardingService } from "../../../../shared-services/self-onboarding.service";
 
 @Component({
   selector: 'app-stock-unit-list',
   templateUrl: './stock-unit-list.component.html',
   styleUrls: ['./stock-unit-list.component.scss']
 })
-export class StockUnitListComponent implements OnInit, OnDestroy {
+export class StockUnitListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input()
   reloadPingList$ = new BehaviorSubject<boolean>(false);
@@ -92,6 +94,9 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
   @Output()
   selectedIdsChanged = new EventEmitter<ApiStockOrder[]>();
 
+  @ViewChild('deliveriesListTooltip')
+  deliveriesListTooltip: NgbTooltip;
+
   sortOptions: SortOption[];
   private sortingParams$ = new BehaviorSubject(null);
 
@@ -108,7 +113,7 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
   orders$: Observable<ApiPaginatedListApiStockOrder>;
   aggregatedOrders: AggregatedStockItem[];
 
-  addPaymentsSubscription: Subscription;
+  subs: Subscription;
 
   private addPricePerUnitMessage: string = $localize`:@@productLabelStockPayments.addPricePerUnit.message:Add price per unit`;
 
@@ -120,12 +125,13 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
     private stockOrderControllerService: StockOrderControllerService,
     private processingOrderController: ProcessingOrderControllerService,
     private modalService: NgbModalImproved,
-    private toasterService: ToastrService
+    private toasterService: ToastrService,
+    private selfOnboardingService: SelfOnboardingService
   ) { }
 
   ngOnInit(): void {
 
-    this.addPaymentsSubscription = this.clickAddPaymentsPing$.subscribe(val => {
+    this.subs = this.clickAddPaymentsPing$.subscribe(val => {
       if (val) {
         this.addPayments();
       }
@@ -206,8 +212,23 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
     );
   }
 
+  ngAfterViewInit(): void {
+
+    this.subs.add(this.selfOnboardingService.guidedTourStep$.subscribe(step => {
+
+          setTimeout(() => {
+            this.deliveriesListTooltip?.close();
+          }, 50);
+
+          if (step === 4) {
+            setTimeout(() => this.deliveriesListTooltip.open(), 50);
+          }
+        })
+    )
+  }
+
   ngOnDestroy(): void {
-    if (this.addPaymentsSubscription) { this.addPaymentsSubscription.unsubscribe(); }
+    if (this.subs) { this.subs.unsubscribe(); }
   }
 
   private initSortOptions() {
@@ -703,6 +724,11 @@ export class StockUnitListComponent implements OnInit, OnDestroy {
       this.toasterService.info($localize`:@@orderList.export.geojson.noDataAvailable:There is no Geo data available for this order`);
       return;
     }
+  }
+
+  continueGuidedTourToProcessing() {
+    this.selfOnboardingService.guidedTourNextStep(5);
+    this.router.navigate(['my-stock', 'processing']).then();
   }
 
 }

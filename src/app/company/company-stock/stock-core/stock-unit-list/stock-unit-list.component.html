@@ -1,5 +1,19 @@
 <ng-container *ngIf="orders$ | async as orders">
-  <div class="main-inside-main">
+  <div class="main-inside-main"
+       [ngbTooltip]="deliveriesListTooltipTemplate"
+       [autoClose]="false"
+       placement="left"
+       triggers="manual"
+       tooltipClass="self-onboarding-tooltip-class"
+       #deliveriesListTooltip="ngbTooltip">
+      <ng-template #deliveriesListTooltipTemplate>
+          <div>
+              <div i18n="@@guidedTour.deliveriesSection.title" class="section-title">DELIVERIES</div>
+              <div class="sub-title" i18n="@@guidedTour.deliveriesSection.deliveriesList">Your recorded delivery will appear here in the list of deliveries.</div>
+              <button class="btn btn-white" (click)="continueGuidedTourToProcessing()"
+                      i18n="@@guidedTour.tooltipStep.ok.button">OK</button>
+          </div>
+      </ng-template>
     <table *ngIf="orders && orders.items && orders.items.length> 0" class="af-table af-checkbox--small">
       <thead>
         <tr result-sorter
