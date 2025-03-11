@@ -329,7 +329,7 @@ button.no-shadow {
 // /////////////////////////////////////////
 // //// Secondary button style override
 // /////////////////////////////////////////
-button.btn-secondary {
+button.btn-secondary, a.btn-secondary {
   background-color: $theme-secondary;
   border: 1px solid $theme-secondary;
 

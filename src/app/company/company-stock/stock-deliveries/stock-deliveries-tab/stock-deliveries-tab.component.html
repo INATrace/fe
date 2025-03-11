@@ -199,21 +199,7 @@
           [womenOnlyPing$]="womenOnlyPing$"
           [deliveryDatesPing$]="deliveryDatesPing$"
           [semiProductId$]="$any(semiProductId$)"
-          [searchFarmerNameSurnamePing$]="searchFarmerNameSurnamePing$"
-          [ngbTooltip]="deliveriesListTooltipTemplate"
-          [autoClose]="false"
-          placement="left-bottom"
-          triggers="manual"
-          tooltipClass="self-onboarding-tooltip-class"
-          #deliveriesListTooltip="ngbTooltip">
-          <ng-template #deliveriesListTooltipTemplate>
-              <div>
-                  <div i18n="@@guidedTour.deliveriesSection.title" class="section-title">DELIVERIES</div>
-                  <div class="sub-title" i18n="@@guidedTour.deliveriesSection.deliveriesList">Your recorded delivery will appear here in the list of deliveries.</div>
-                  <button class="btn btn-white" (click)="continueGuidedTourToProcessing()"
-                          i18n="@@guidedTour.tooltipStep.ok.button">OK</button>
-              </div>
-          </ng-template>
+          [searchFarmerNameSurnamePing$]="searchFarmerNameSurnamePing$">
       </app-stock-unit-list>
 
     </div>
