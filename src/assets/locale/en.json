@@ -3191,7 +3191,7 @@
     "selfOnboarding.assistantModal.header.line2": "How can I assist you?",
     "selfOnboarding.assistantModal.configureSystem.button": "I want to configure the system for my company",
     "selfOnboarding.assistantModal.guidedTour.button": "I want a guided tour to get familiar with the system",
-    "selfOnboarding.assistantModal.downloadDocs.button": "I want to download and read through the user guide",
+    "selfOnboarding.assistantModal.downloadDocs.button": "I want to access the INATrace Toolbox with further resources",
     "selfOnboarding.getStartedChecklist.header": "Get started checklist",
     "selfOnboarding.getStartedChecklist.item.createAccount": "Create an account",
     "selfOnboarding.getStartedChecklist.item.addAProduct": "Add a product",
