@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { SortOption, SortOrder } from '../../../shared/result-sorter/result-sorter-types';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
 import { CompanyControllerService, GetUserCustomersForCompanyAndType } from '../../../../api/api/companyController.service';
@@ -17,13 +17,15 @@ import {
 } from '../open-plot-details-externally-modal/open-plot-details-externally-modal.component';
 import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
 import { ApiCompany } from "../../../../api/model/apiCompany";
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { SelfOnboardingService } from "../../../shared-services/self-onboarding.service";
 
 @Component({
   selector: 'app-company-farmers-list',
   templateUrl: './company-farmers-list.component.html',
   styleUrls: ['./company-farmers-list.component.scss']
 })
-export class CompanyFarmersListComponent implements OnInit {
+export class CompanyFarmersListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   organizationId;
   selectedCompany: ApiCompany;
@@ -169,6 +171,11 @@ export class CompanyFarmersListComponent implements OnInit {
 
   isSystemOrRegionalAdmin = false;
 
+  subs: Subscription;
+
+  @ViewChild('addFarmerButtonTooltip')
+  addFarmerButtonTooltip: NgbTooltip;
+
   constructor(
       private globalEventsManager: GlobalEventManagerService,
       private companyController: CompanyControllerService,
@@ -176,7 +183,8 @@ export class CompanyFarmersListComponent implements OnInit {
       private authService: AuthService,
       private selUserCompanyService: SelectedUserCompanyService,
       private fileSaverService: FileSaverService,
-      private modalService: NgbModalImproved
+      private modalService: NgbModalImproved,
+      private selfOnboardingService: SelfOnboardingService
   ) { }
 
   ngOnInit(): void {
@@ -204,6 +212,23 @@ export class CompanyFarmersListComponent implements OnInit {
         this.loadFarmers().then();
       }
     });
+  }
+
+  ngAfterViewInit() {
+
+    this.subs = this.selfOnboardingService.addFarmersCurrentStep$.subscribe(currentStep => {
+      if (currentStep === 2) {
+        this.addFarmerButtonTooltip.open();
+      } else {
+        this.addFarmerButtonTooltip.close();
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subs) {
+      this.subs.unsubscribe();
+    }
   }
 
   private async loadFarmers() {
@@ -243,7 +268,13 @@ export class CompanyFarmersListComponent implements OnInit {
         );
   }
 
-  addFarmer() {
+  async addFarmer() {
+
+    const addFarmerCurrentStep = await this.selfOnboardingService.addFarmersCurrentStep$.pipe(take(1)).toPromise();
+    if (addFarmerCurrentStep === 2) {
+      this.selfOnboardingService.setAddFarmersCurrentStep(3);
+    }
+
     this.router.navigate(['my-farmers', 'add']).then();
   }
 

@@ -130,7 +130,7 @@ export class BeycoTokenService {
       this.tokenAvailable$.next(false);
   }
 
-  private  getErrorMessage(errorField: string): string {
+  private getErrorMessage(errorField: string): string {
     switch (errorField) {
       case 'AccessDenied':
         return  $localize`:@@beycoToken.notification.login.error.AccessDenied.message:Access to Beyco was denied! Please, try again later!`;

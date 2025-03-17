@@ -8,22 +8,23 @@ import { LayoutModule } from '../../../layout/layout.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { CompanyCommonModule } from '../../company-common/company-common.module';
 import { StockCoreModule } from '../stock-core/stock-core.module';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [StockDeliveriesTabComponent],
-  imports: [
-    CommonModule,
-    StockDeliveriesRoutingModule,
-    CoreModule,
-    ComponentsModule,
-    LayoutModule,
-    SharedModule,
-    CompanyCommonModule,
-    StockCoreModule,
-    NgbDropdownModule,
-    FontAwesomeModule
-  ]
+    imports: [
+        CommonModule,
+        StockDeliveriesRoutingModule,
+        CoreModule,
+        ComponentsModule,
+        LayoutModule,
+        SharedModule,
+        CompanyCommonModule,
+        StockCoreModule,
+        NgbDropdownModule,
+        FontAwesomeModule,
+        NgbTooltipModule
+    ]
 })
 export class StockDeliveriesModule { }

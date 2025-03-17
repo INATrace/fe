@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
-import { Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { combineLatest, Subscription } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
@@ -10,6 +9,8 @@ import RoleEnum = ApiUserGet.RoleEnum;
 import { SelectedUserCompanyService } from '../../../core/selected-user-company.service';
 import { ApiCompanyGet } from '../../../../api/model/apiCompanyGet';
 import CompanyRolesEnum = ApiCompanyGet.CompanyRolesEnum;
+import { SelfOnboardingService } from '../../../shared-services/self-onboarding.service';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-company-left-panel',
@@ -32,11 +33,14 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
   showCollectorsLink = false;
   showMyCustomersLink = false;
 
+  @ViewChild('companyProfileButtonTooltip')
+  companyProfileButtonTooltip: NgbTooltip;
+
   constructor(
     private router: Router,
-    private globalEventManager: GlobalEventManagerService,
     private authService: AuthService,
-    private selUserCompanyService: SelectedUserCompanyService
+    private selUserCompanyService: SelectedUserCompanyService,
+    private selfOnboardingService: SelfOnboardingService
   ) { }
 
   ngOnInit() {
@@ -71,6 +75,19 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
                 this.showMyCustomersLink = true;
               }
             });
+
+            this.subscriptions.push(
+                combineLatest([
+                  this.selfOnboardingService.addFacilityCurrentStep$,
+                  this.selfOnboardingService.addProcessingActionCurrentStep$
+                ]).subscribe(([addFacilityStep, addProcActionStep]) => {
+                  if (addFacilityStep === 2 || addProcActionStep === 2) {
+                    setTimeout(() => this.companyProfileButtonTooltip.open());
+                  } else {
+                    setTimeout(() => this.companyProfileButtonTooltip.close());
+                  }
+                })
+            );
           }
         })
     );
@@ -80,8 +97,23 @@ export class CompanyLeftPanelComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subs => subs.unsubscribe());
   }
 
-  openCompanyProfile() {
+  async openCompanyProfile() {
+
     if (!this.companyId) {
+      return;
+    }
+
+    const currentAddFacilityStep = await this.selfOnboardingService.addFacilityCurrentStep$.pipe(take(1)).toPromise();
+    if (currentAddFacilityStep === 2) {
+      this.selfOnboardingService.setAddFacilityCurrentStep(3);
+      this.router.navigate(['companies', this.companyId, 'facilities']).then();
+      return;
+    }
+
+    const currentAddProcActionStep = await this.selfOnboardingService.addProcessingActionCurrentStep$.pipe(take(1)).toPromise();
+    if (currentAddProcActionStep === 2) {
+      this.selfOnboardingService.setAddProcessingActionCurrentStep(3);
+      this.router.navigate(['companies', this.companyId, 'processingActions']).then();
       return;
     }
 

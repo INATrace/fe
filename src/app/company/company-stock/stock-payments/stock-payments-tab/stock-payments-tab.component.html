@@ -9,12 +9,42 @@
             <!-- PAYMENTS -->
             <div class="d-flex justify-content-between content-element--row1">
                 <div class="title-page content-element--title"
-                     i18n="@@productLabelStock.title.payments">Payments</div>
-                <button *ngIf="isAuthRoleToEditPayments" class="btn btn-solid round btn-table-new content-element--btn"
+                     i18n="@@productLabelStock.title.payments"
+                     [ngbTooltip]="paymentsTitleTooltipTemplate"
+                     [autoClose]="false"
+                     placement="bottom"
+                     triggers="manual"
+                     tooltipClass="self-onboarding-tooltip-class"
+                     #paymentsTitleTooltip="ngbTooltip">Payments</div>
+                <button *ngIf="isAuthRoleToEditPayments"
+                        class="btn btn-solid round btn-table-new content-element--btn"
                         (click)="newPayment()"
-                        i18n="@@productLabelStock.button.newPayment">
+                        i18n="@@productLabelStock.button.newPayment"
+                        [ngbTooltip]="addPaymentButtonTooltipTemplate"
+                        [autoClose]="false"
+                        placement="bottom-right"
+                        triggers="manual"
+                        tooltipClass="self-onboarding-tooltip-class"
+                        #addPaymentButtonTooltip="ngbTooltip">
                     <span>+ Add payment</span>
                 </button>
+                <ng-template #paymentsTitleTooltipTemplate>
+                    <div>
+                        <div i18n="@@guidedTour.paymentsSection.title" class="section-title">PAYMENTS</div>
+                        <div class="sub-title" i18n="@@guidedTour.paymentsSection.paymentsSubmenu">This is the submenu for payments made to farmers.</div>
+                        <button class="btn btn-white" (click)="this.selfOnboardingService.guidedTourNextStep(9)"
+                                i18n="@@guidedTour.tooltipStep.ok.button">OK</button>
+                    </div>
+                </ng-template>
+                <ng-template #addPaymentButtonTooltipTemplate>
+                    <div>
+                        <div i18n="@@guidedTour.paymentsSection.title" class="section-title">PAYMENTS</div>
+                        <div class="sub-title" i18n="@@guidedTour.paymentsSection.addPaymentButton">Here you add a new payment.
+                            Alternatively, you can go to the delivery menu and select 'Add balance payment' from the Action menu.</div>
+                        <button class="btn btn-white" (click)="continueGuidedTourToAllStock()"
+                                i18n="@@guidedTour.tooltipStep.ok.button">OK</button>
+                    </div>
+                </ng-template>
             </div>
 
             <div class="d-flex justify-content-between main-inside-top--row2">

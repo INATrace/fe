@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
 import { StockCoreTabComponent } from '../../stock-core/stock-core-tab/stock-core-tab.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,13 +15,15 @@ import { ApiFacility } from '../../../../../api/model/apiFacility';
 import { FileSaverService } from 'ngx-filesaver';
 import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
 import { StockOrderControllerService } from "../../../../../api/api/stockOrderController.service";
+import { SelfOnboardingService } from "../../../../shared-services/self-onboarding.service";
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-stock-deliveries-tab',
   templateUrl: './stock-deliveries-tab.component.html',
   styleUrls: ['./stock-deliveries-tab.component.scss']
 })
-export class StockDeliveriesTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
+export class StockDeliveriesTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy, AfterViewInit {
 
   rootTab = 0;
 
@@ -48,6 +50,7 @@ export class StockDeliveriesTabComponent extends StockCoreTabComponent implement
   );
 
   private facilityIdChangeSub: Subscription;
+  private subs: Subscription;
 
   get womenOnlyStatusValue() {
     if (this.filterWomenOnly.value != null) {
@@ -57,17 +60,24 @@ export class StockDeliveriesTabComponent extends StockCoreTabComponent implement
     return null;
   }
 
+  @ViewChild('deliveriesTitleTooltip')
+  deliveriesTitleTooltip: NgbTooltip;
+
+  @ViewChild('addDeliveryButtonTooltip')
+  addDeliveryButtonTooltip: NgbTooltip;
+
   constructor(
-    protected router: Router,
-    protected route: ActivatedRoute,
-    protected globalEventManager: GlobalEventManagerService,
-    protected facilityControllerService: FacilityControllerService,
-    protected authService: AuthService,
-    protected companyController: CompanyControllerService,
-    private stockOrderControllerService: StockOrderControllerService,
-    private codebookTranslations: CodebookTranslations,
-    private fileSaverService: FileSaverService,
-    protected selUserCompanyService: SelectedUserCompanyService
+      protected router: Router,
+      protected route: ActivatedRoute,
+      protected globalEventManager: GlobalEventManagerService,
+      protected facilityControllerService: FacilityControllerService,
+      protected authService: AuthService,
+      protected companyController: CompanyControllerService,
+      private stockOrderControllerService: StockOrderControllerService,
+      private codebookTranslations: CodebookTranslations,
+      private fileSaverService: FileSaverService,
+      protected selUserCompanyService: SelectedUserCompanyService,
+      protected selfOnboardingService: SelfOnboardingService
   ) {
     super(router, route, globalEventManager, facilityControllerService, authService, companyController, selUserCompanyService);
   }
@@ -79,9 +89,31 @@ export class StockDeliveriesTabComponent extends StockCoreTabComponent implement
     this.facilityIdChangeSub = this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId));
   }
 
+  ngAfterViewInit() {
+    super.ngAfterViewInit();
+
+    this.subs = this.selfOnboardingService.guidedTourStep$.subscribe(step => {
+
+      setTimeout(() => {
+        this.deliveriesTitleTooltip.close();
+        this.addDeliveryButtonTooltip.close();
+      }, 50);
+
+      if (step === 2) {
+        setTimeout(() => this.deliveriesTitleTooltip.open(), 50);
+      } else if (step === 3) {
+        setTimeout(() => this.addDeliveryButtonTooltip.open(), 50);
+      }
+    });
+  }
+
   ngOnDestroy() {
     if (this.facilityIdChangeSub) {
       this.facilityIdChangeSub.unsubscribe();
+    }
+
+    if (this.subs) {
+      this.subs.unsubscribe();
     }
   }
 
@@ -154,5 +186,5 @@ export class StockDeliveriesTabComponent extends StockCoreTabComponent implement
     }
     this.facilityForStockOrderChanged(event);
   }
-  
+
 }

@@ -1,0 +1,39 @@
+@import "src/variables";
+
+.self-onboarding-assistant-modal {
+  .modal-body {
+    display: flex;
+    justify-content: flex-start;
+    .assistant-icon-container {
+      margin-right: 2rem;
+      img {
+        width: 230px;
+      }
+    }
+
+    .content-container {
+      padding-top: 2rem;
+      width: 100%;
+      h2 {
+        color: $theme-secondary;
+        margin-bottom: 2rem;
+      }
+
+      button, a.btn {
+        width: 145px;
+        height: 185px;
+      }
+    }
+  }
+
+  .close-modal-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+
+    img {
+      width: 48px;
+    }
+  }
+}

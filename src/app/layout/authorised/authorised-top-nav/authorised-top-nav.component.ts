@@ -1,4 +1,4 @@
-import { Component, Host, OnInit, Input } from '@angular/core';
+import { Component, Host, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { TabCommunicationService } from 'src/app/shared/tab-communication.service';
 import { delay } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
   templateUrl: './authorised-top-nav.component.html',
   styleUrls: ['./authorised-top-nav.component.scss']
 })
-export class AuthorisedTopNavComponent implements OnInit {
+export class AuthorisedTopNavComponent implements OnInit, OnDestroy {
 
   @Input()
   returnUrl: string = null;
@@ -19,27 +19,25 @@ export class AuthorisedTopNavComponent implements OnInit {
   subTabs: Subscription;
 
   tabs: string[] = [];
-  selectedIndex: number = 0;
-  tabs$: Observable<string[]>
+  selectedIndex = 0;
+  tabs$: Observable<string[]>;
   drobtinice;
   productName;
   drobtiniceTitle;
 
   constructor(
-    // public tabCommunicationService: TabCommunicationService,
     @Host() public authorizedLayout: AuthorisedLayoutComponent,
     private location: Location,
     private route: ActivatedRoute,
     private router: Router
-  ) {
-  }
+  ) { }
 
   get tabCommunicationService(): TabCommunicationService {
-    return this.authorizedLayout.tabCommunicationService
+    return this.authorizedLayout.tabCommunicationService;
   }
 
   get rootTab() {
-    return this.tabCommunicationService.rootTab
+    return this.tabCommunicationService.rootTab;
   }
 
   setIndex(index: number) {
@@ -49,12 +47,17 @@ export class AuthorisedTopNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.tabs$ = this.tabCommunicationService.announceTabTitles$.pipe(delay(0));
     this.tabCommunicationService.confirmActiveTab$.subscribe(val => {
-      this.selectedIndex = val
-    })
+      this.selectedIndex = val;
+    });
 
-    this.prepareDrobtinice();
+    this.prepareDrobtinice().then();
+  }
+
+  ngOnDestroy() {
+    if (this.subTabs) { this.subTabs.unsubscribe(); }
   }
 
   async prepareDrobtinice() {
@@ -68,32 +71,32 @@ export class AuthorisedTopNavComponent implements OnInit {
         // }
       }
       if (this.route.snapshot.data.drobtinice.collectorFarmerType) {
-        let type = this.route.snapshot.params.type;
-        if (type === 'farmers') this.drobtiniceTitle = this.drobtiniceTitle + $localize`:@@breadCrumb.collectors.farmer:Farmer`
-        if (type === 'collectors') this.drobtiniceTitle = this.drobtiniceTitle + $localize`:@@breadCrumb.collectors.collector:Collector`
+        const type = this.route.snapshot.params.type;
+        if (type === 'farmers') { this.drobtiniceTitle = this.drobtiniceTitle + $localize`:@@breadCrumb.collectors.farmer:Farmer`; }
+        if (type === 'collectors') { this.drobtiniceTitle = this.drobtiniceTitle + $localize`:@@breadCrumb.collectors.collector:Collector`; }
       }
     }
   }
 
   goUp() {
-    if (this.returnUrl) this.router.navigateByUrl(this.returnUrl);
+    if (this.returnUrl) { this.router.navigateByUrl(this.returnUrl).then(); }
     else if (this.drobtinice && this.drobtinice.goBack) {
       this.goBack();
     } else {
-      this.router.navigate(this.buildRoute().split("/"));
+      this.router.navigate(this.buildRoute().split('/')).then();
     }
   }
 
   buildRoute() {
-    let route = this.drobtinice.route
-    let params = this.route.snapshot.params;
+    let route = this.drobtinice.route;
+    const params = this.route.snapshot.params;
     if (Object.keys(params).length > 0 && route != null) {
       let tmpRoute = route;
       Object.entries(params).forEach(
         ([key, value]) => {
-          tmpRoute = tmpRoute.replace(':' + key, value)
+          tmpRoute = tmpRoute.replace(':' + key, value);
         }
-      )
+      );
       route = tmpRoute;
     }
     return route;
@@ -104,12 +107,7 @@ export class AuthorisedTopNavComponent implements OnInit {
   }
 
   isLockedIndex(tab: number) {
-    return this.tabCommunicationService.isLockedIndex(tab)
+    return this.tabCommunicationService.isLockedIndex(tab);
   }
-
-  ngOnDestroy() {
-    if (this.subTabs) this.subTabs.unsubscribe();
-  }
-
 
 }

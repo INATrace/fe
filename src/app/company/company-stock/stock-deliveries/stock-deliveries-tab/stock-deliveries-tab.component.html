@@ -9,7 +9,21 @@
 
       <div class="d-flex justify-content-between content-element--row1">
         <div class="title-page content-element--title"
-             i18n="@@productLabelStock.title.purchaseOrders">Deliveries</div>
+             i18n="@@productLabelStock.title.purchaseOrders"
+             [ngbTooltip]="deliveriesTitleTooltipTemplate"
+             [autoClose]="false"
+             placement="bottom"
+             triggers="manual"
+             tooltipClass="self-onboarding-tooltip-class"
+             #deliveriesTitleTooltip="ngbTooltip">Deliveries</div>
+          <ng-template #deliveriesTitleTooltipTemplate>
+              <div>
+                  <div i18n="@@guidedTour.deliveriesSection.title" class="section-title">DELIVERIES</div>
+                  <div class="sub-title" i18n="@@guidedTour.deliveriesSection.deliveriesSubmenu">This is the submenu for deliveries received from farmers or collectors.</div>
+                  <button class="btn btn-white" (click)="this.selfOnboardingService.guidedTourNextStep(3)"
+                          i18n="@@guidedTour.tooltipStep.ok.button">OK</button>
+              </div>
+          </ng-template>
       </div>
 
       <div class="af-form-row af-form-row--nomargin">
@@ -32,9 +46,23 @@
                 <button class="btn btn-solid round btn-table-new content-element--btn w-100"
                         i18n="@@productLabelStock.button.newPurchaseOrders"
                         (click)="newPurchaseOrder()"
-                        [disabled]="selectedFacilityId == null">
+                        [disabled]="selectedFacilityId == null"
+                        [ngbTooltip]="addDeliveryButtonTooltipTemplate"
+                        [autoClose]="false"
+                        placement="bottom"
+                        triggers="manual"
+                        tooltipClass="self-onboarding-tooltip-class"
+                        #addDeliveryButtonTooltip="ngbTooltip">
                   <span>+ Add purchase</span>
                 </button>
+                  <ng-template #addDeliveryButtonTooltipTemplate>
+                      <div>
+                          <div i18n="@@guidedTour.deliveriesSection.title" class="section-title">DELIVERIES</div>
+                          <div class="sub-title" i18n="@@guidedTour.deliveriesSection.addDeliveryButton">To document a delivery, you select a facility and click '+Add delivery.</div>
+                          <button class="btn btn-white" (click)="this.selfOnboardingService.guidedTourNextStep(4)"
+                                  i18n="@@guidedTour.tooltipStep.ok.button">OK</button>
+                      </div>
+                  </ng-template>
               </div>
               <div class="col-12 col-xl-6">
                 <button class="btn btn-solid round btn-table-new content-element--btn w-100"

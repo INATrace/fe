@@ -10,6 +10,7 @@ $theme-primary:   #999933;
 $theme-primary-light: #E7E8BA;
 $theme-primary-lighter: lighten($theme-primary-light, 15%);
 $theme-secondary: #C87711;
+$theme-secondary-light: lighten($theme-secondary, 40%);
 $theme-primary-text: rgb(51, 51, 51);
 $theme-secondary-text: #8F92A1;
 $body-background: #F7F7F7;

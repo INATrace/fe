@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router, NavigationEnd } from '@angular/router';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
@@ -13,13 +13,15 @@ import { NgbModalImproved } from 'src/app/core/ngb-modal-improved/ngb-modal-impr
 import {
   NewProductModalComponent
 } from './new-product-modal/new-product-modal.component';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { SelfOnboardingService } from '../../shared-services/self-onboarding.service';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']
 })
-export class ProductListComponent implements OnInit, OnDestroy {
+export class ProductListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   faTimes = faTimes;
 
@@ -37,7 +39,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   allProducts = 0;
   showedProducts = 0;
 
-  routerSub: Subscription;
+  subs: Subscription;
 
   codebookStatus = EnumSifrant.fromObject(this.statusList);
 
@@ -94,17 +96,21 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   isSystemAdmin = false;
 
+  @ViewChild('newProductButtonTooltip')
+  newProductButtonTooltip: NgbTooltip;
+
   constructor(
     private productController: ProductControllerService,
     protected globalEventsManager: GlobalEventManagerService,
     private modalService: NgbModalImproved,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private selfOnboardingService: SelfOnboardingService
   ) { }
 
   ngOnInit(): void {
 
-    this.routerSub = this.router.events.subscribe(event => {
+    this.subs = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd && event.url === '/product-labels') {
         this.reloadPage();
       }
@@ -116,8 +122,21 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+
+    this.subs.add(
+        this.selfOnboardingService.addProductCurrentStep$.subscribe(step => {
+          if (step === 2) {
+            this.newProductButtonTooltip.open();
+          } else {
+            this.newProductButtonTooltip.close();
+          }
+        })
+    );
+  }
+
   ngOnDestroy() {
-    if (this.routerSub) { this.routerSub.unsubscribe(); }
+    if (this.subs) { this.subs.unsubscribe(); }
   }
 
   async setAllProducts() {
@@ -151,6 +170,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   async createProductForCompany() {
+
+    const currentStep =  await this.selfOnboardingService.addProductCurrentStep$.pipe(take(1)).toPromise();
+    if (currentStep === 2) {
+      this.selfOnboardingService.setAddProductCurrentStep(3);
+    }
 
     const modalRef = this.modalService.open(NewProductModalComponent, { centered: true });
     Object.assign(modalRef.componentInstance, {

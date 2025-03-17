@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { CompanyDetailTabManagerComponent } from '../company-detail-tab-manager/company-detail-tab-manager.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FacilityControllerService } from '../../../../api/api/facilityController.service';
 import { shareReplay, switchMap, take, tap } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { ApiFacilityLocation } from '../../../../api/model/apiFacilityLocation';
 import { GoogleMap, MapInfoWindow, MapMarker } from '@angular/google-maps';
 import { GlobalEventManagerService } from '../../../core/global-event-manager.service';
@@ -12,16 +12,19 @@ import { ApiPaginatedListApiFacility } from '../../../../api/model/apiPaginatedL
 import { AuthService } from '../../../core/auth.service';
 import { SortOption } from '../../../shared/result-sorter/result-sorter-types';
 import { CompanyControllerService } from '../../../../api/api/companyController.service';
+import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
+import { SelfOnboardingService } from '../../../shared-services/self-onboarding.service';
+import { NgbModalImproved } from '../../../core/ngb-modal-improved/ngb-modal-improved.service';
+import {
+  CompanyDetailFacilityAddWizardComponent
+} from '../company-detail-facility-add-wizard/company-detail-facility-add-wizard.component';
 
 @Component({
   selector: 'app-company-detail-facilities',
   templateUrl: './company-detail-facilities.component.html',
   styleUrls: ['./company-detail-facilities.component.scss']
 })
-export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerComponent implements OnInit, OnDestroy {
-
-  @Input()
-  reloadPingList$ = new BehaviorSubject<boolean>(false);
+export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   rootTab = 2;
 
@@ -49,18 +52,6 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
 
   sortingParams$ = new BehaviorSubject({ sortBy: 'name', sort: 'ASC' });
   paging$ = new BehaviorSubject<number>(1);
-
-  @Output()
-  showing = new EventEmitter<number>();
-
-  @Output()
-  countAll = new EventEmitter<number>();
-
-  @ViewChild(GoogleMap) set map(map: GoogleMap) {
-    if (map) { this.gMap = map; this.fitBounds(); }
-  }
-
-  @ViewChild(MapInfoWindow, { static: false }) gInfoWindow: MapInfoWindow;
 
   sortOptions: SortOption[] = [
     {
@@ -90,6 +81,27 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     }
   ];
 
+  private subscriptions: Subscription;
+
+  @Input()
+  reloadPingList$ = new BehaviorSubject<boolean>(false);
+
+  @Output()
+  showing = new EventEmitter<number>();
+
+  @Output()
+  countAll = new EventEmitter<number>();
+
+  @ViewChild(GoogleMap) set map(map: GoogleMap) {
+    if (map) { this.gMap = map; this.fitBounds(); }
+  }
+
+  @ViewChild(MapInfoWindow, { static: false })
+  gInfoWindow: MapInfoWindow;
+
+  @ViewChild('addFacilityButtonTooltip')
+  addFacilityButtonTooltip: NgbTooltip;
+
   constructor(
     protected router: Router,
     protected route: ActivatedRoute,
@@ -97,11 +109,14 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     protected globalEventsManager: GlobalEventManagerService,
     protected authService: AuthService,
     protected companyController: CompanyControllerService,
+    private selfOnboardingService: SelfOnboardingService,
+    private modalService: NgbModalImproved
   ) {
     super(router, route, authService, companyController);
   }
 
   ngOnInit(): void {
+
     super.ngOnInit();
     this.companyId = this.route.snapshot.params.id;
     this.initializeFacilitiesObservable();
@@ -113,8 +128,23 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     });
   }
 
+  ngAfterViewInit() {
+    super.ngAfterViewInit();
+
+    this.subscriptions = this.selfOnboardingService.addFacilityCurrentStep$.subscribe(step => {
+      if (step === 3) {
+        this.addFacilityButtonTooltip.open();
+      } else {
+        this.addFacilityButtonTooltip.close();
+      }
+    });
+  }
+
   ngOnDestroy() {
     super.ngOnDestroy();
+    if (this.subscriptions) {
+      this.subscriptions.unsubscribe();
+    }
   }
 
   loadEntityList() {
@@ -125,8 +155,25 @@ export class CompanyDetailFacilitiesComponent extends CompanyDetailTabManagerCom
     return true;
   }
 
-  newFacility() {
-    this.router.navigate(['companies', this.cId, 'facilities', 'add']).then();
+  async newFacility() {
+
+    const addFacilityStep = await this.selfOnboardingService.addFacilityCurrentStep$.pipe(take(1)).toPromise();
+
+    // In this case open the add facility wizard
+    if (addFacilityStep === 3) {
+      this.selfOnboardingService.setAddFacilityCurrentStep(4);
+      const modalRef = this.modalService.open(CompanyDetailFacilityAddWizardComponent, {
+        centered: true,
+        backdrop: 'static',
+        keyboard: false,
+        size: 'lg'
+      });
+      Object.assign(modalRef.componentInstance, {
+        companyId: this.companyId
+      });
+    } else {
+      this.router.navigate(['companies', this.cId, 'facilities', 'add']).then();
+    }
   }
 
   changeSort(event) {

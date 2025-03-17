@@ -24,8 +24,23 @@
         <button type="button" class="btn btn-outlined" (click)="cancel()" i18n="@@companySelect.modal.button.cancel">
             <span>Cancel</span>
         </button>
-        <button type="button" class="btn" [class.disabled]="!companyForm.value || !valueChainForm.value" (click)="onConfirm()" i18n="@@companySelect.modal.button.confirm">
+        <button type="button"
+                class="btn" [class.disabled]="!companyForm.value || !valueChainForm.value"
+                (click)="onConfirm()"
+                i18n="@@companySelect.modal.button.confirm"
+                [ngbTooltip]="selectProductCompanyTooltipTemplate"
+                [autoClose]="false"
+                placement="bottom"
+                triggers="manual"
+                tooltipClass="self-onboarding-tooltip-class"
+                #selectProductCompanyTooltip="ngbTooltip">
             <span>Confirm</span>
         </button>
+        <ng-template #selectProductCompanyTooltipTemplate>
+            <div>
+                <h2 class="title" i18n="@@selfOnboarding.checklist.addProduct.step3">After selecting company and value chain click here</h2>
+                <div class="step-line"><span i18n="@@selfOnboarding.checklist.item.step">Step {{ '3/4' }}</span></div>
+            </div>
+        </ng-template>
     </div>
 </div>

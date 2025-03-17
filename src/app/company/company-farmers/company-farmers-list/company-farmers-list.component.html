@@ -18,10 +18,22 @@
                         <span>+ Import farmers</span>
                     </button>
                     <button class="btn btn-solid round btn-table-new content-element--btn"
+                            [ngbTooltip]="addFarmerButtonTooltipTemplate"
+                            [autoClose]="false"
+                            placement="bottom-right"
+                            triggers="manual"
+                            tooltipClass="self-onboarding-tooltip-class"
+                            #addFarmerButtonTooltip="ngbTooltip"
                             (click)="addFarmer()"
                             i18n="@@productLabelStakeholders.button.newFarmer">
                         <span>+ Add farmer</span>
                     </button>
+                    <ng-template #addFarmerButtonTooltipTemplate>
+                        <div>
+                            <h2 class="title" i18n="@@selfOnboarding.checklist.addFarmers.step2">Click '+Add farmer' to add farmer profiles individually.</h2>
+                            <div class="step-line"><span i18n="@@selfOnboarding.checklist.item.step">Step {{ '2/3' }}</span></div>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
 

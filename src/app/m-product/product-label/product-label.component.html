@@ -17,8 +17,25 @@
 
       <div class="af-form-row">
         <div class="af-form-block--c12">
-          <div *ngIf="this.action === 'labels'" class="title-page content-element--title" i18n="@@productLabel.title.qrLabels">QR labels</div>
-          <div *ngIf="this.action != 'labels'" class="title-page content-element--title" i18n="@@productLabel.title.productSettings">Product settings</div>
+            <div *ngIf="this.action === 'labels'" class="title-page content-element--title"
+                 i18n="@@productLabel.title.qrLabels">QR labels
+            </div>
+            <div *ngIf="this.action != 'labels'"
+                 class="title-page content-element--title">
+                <span i18n="@@productLabel.title.productSettings"
+                      [ngbTooltip]="createProductTooltipTemplate"
+                      [autoClose]="false"
+                      placement="right"
+                      triggers="manual"
+                      tooltipClass="self-onboarding-tooltip-class"
+                      #createProductTooltip="ngbTooltip">Product settings</span>
+                <ng-template #createProductTooltipTemplate>
+                    <div>
+                        <h2 class="title" i18n="@@selfOnboarding.checklist.addProduct.step4">Click 'Create' button on the bottom after adding all product details</h2>
+                        <div class="step-line"><span i18n="@@selfOnboarding.checklist.item.step">Step {{ '4/4' }}</span></div>
+                    </div>
+                </ng-template>
+            </div>
         </div>
       </div>
 

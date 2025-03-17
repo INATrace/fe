@@ -52,6 +52,8 @@ import { ApiProductLabelCompanyDocument } from '../../../api/model/apiProductLab
 import { ImageViewerComponent } from '../../shared/image-viewer/image-viewer.component';
 import { maxActiveArrayControls } from '../../../shared/validation';
 import { SelectedUserCompanyService } from '../../core/selected-user-company.service';
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
+import { SelfOnboardingService } from "../../shared-services/self-onboarding.service";
 
 @Component({
   selector: 'app-product-label',
@@ -92,6 +94,9 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
   @ViewChild(MapInfoWindow) set infoWindow(infoWindow: MapInfoWindow) {
     if (infoWindow) { this.gInfoWindow = infoWindow; }
   }
+
+  @ViewChild('createProductTooltip')
+  createProductTooltip: NgbTooltip;
 
   get currentLabelName() {
     // if(this.currentLabel && this.currentLabel.title) return this.currentLabel.title
@@ -526,7 +531,8 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
     private modalService: NgbModalImproved,
     private authService: AuthService,
     private commonController: CommonControllerService,
-    private selUserCompanyService: SelectedUserCompanyService
+    private selUserCompanyService: SelectedUserCompanyService,
+    private selfOnboardingService: SelfOnboardingService
   ) {
     super();
     this.generateLabelMaps();
@@ -564,7 +570,18 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
             );
             this.reload();
           } else {
-            this.newProduct().then();
+            this.newProduct().then(() => {
+
+              this.unsubscribeList.add(
+                  this.selfOnboardingService.addProductCurrentStep$.subscribe(step => {
+                    if (step == 4) {
+                      this.createProductTooltip.open();
+                    } else {
+                      this.createProductTooltip.close();
+                    }
+                  })
+              );
+            });
           }
         })
     );
@@ -851,7 +868,14 @@ export class ProductLabelComponent extends ComponentCanDeactivate implements OnI
       const res: ApiResponseApiBaseEntity = await this.productController.createProduct(data).pipe(take(1)).toPromise();
       if (res && res.status === 'OK') {
         this.productForm.markAsPristine();
-        this.goBack();
+
+        const currentStep = await this.selfOnboardingService.addProductCurrentStep$.pipe(take(1)).toPromise();
+        if (currentStep == 4) {
+          this.selfOnboardingService.setAddProductCurrentStep('success');
+          this.router.navigate(['/home']).then();
+        } else {
+          this.goBack();
+        }
       }
     } catch (e) {
 

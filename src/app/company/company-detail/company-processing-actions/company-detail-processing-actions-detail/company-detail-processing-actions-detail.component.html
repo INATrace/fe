@@ -95,22 +95,23 @@
                         </single-choice>
 
                         <!-- If we have Generate QR code proc. action, we have Final product selection for which the QR code will be generated -->
-                        <ng-container *ngIf="form.get('type').value === 'GENERATE_QR_CODE'">
-                            <single-choice
-                                    label="QR code for final product"
-                                    i18n-label="@@companyDetailProcessingActions.singleChoice.qrCodeForFinalProduct.label"
-                                    [formControlInput]="$any(form.get('qrCodeForFinalProduct'))"
-                                    [codebookService]="finalProductsForCompanyCodebook"
-                                    [isInvalidChoice]="submitted && form.get('qrCodeForFinalProduct').invalid">
-                                <ng-container *ngIf="submitted">
-                                    <div *ngIf="form.get('qrCodeForFinalProduct').errors as errors" class="sc-invalid-feedback">
-                                        <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.qrCodeForFinalProduct.error.required">
-                                            QR code for final product is required
-                                        </div>
-                                    </div>
-                                </ng-container>
-                            </single-choice>
-                        </ng-container>
+                        <!-- TODO: check this if needed -->
+<!--                        <ng-container *ngIf="form.get('type').value === 'GENERATE_QR_CODE'">-->
+<!--                            <single-choice-->
+<!--                                    label="QR code for final product"-->
+<!--                                    i18n-label="@@companyDetailProcessingActions.singleChoice.qrCodeForFinalProduct.label"-->
+<!--                                    [formControlInput]="$any(form.get('qrCodeForFinalProduct'))"-->
+<!--                                    [codebookService]="finalProductsForCompanyCodebook"-->
+<!--                                    [isInvalidChoice]="submitted && form.get('qrCodeForFinalProduct').invalid">-->
+<!--                                <ng-container *ngIf="submitted">-->
+<!--                                    <div *ngIf="form.get('qrCodeForFinalProduct').errors as errors" class="sc-invalid-feedback">-->
+<!--                                        <div *ngIf="errors.required" i18n="@@companyDetailProcessingActions.singleChoice.qrCodeForFinalProduct.error.required">-->
+<!--                                            QR code for final product is required-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </ng-container>-->
+<!--                            </single-choice>-->
+<!--                        </ng-container>-->
 
                         <!-- If we have Shipment, Transfer or Generate QR code proc. action of semi-products (both input and output are the same) -->
                         <ng-container

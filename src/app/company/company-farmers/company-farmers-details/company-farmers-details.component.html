@@ -1,10 +1,22 @@
 <app-authorised-layout>
     <div *ngIf="farmerForm" class="af-layout--authorised">
         <div class="af-form-wrapper">
-            <div class="af-form-row">
+            <div class="af-form-row"
+                 [ngbTooltip]="newFarmerTitleTooltipTemplate"
+                 [autoClose]="false"
+                 placement="bottom-right"
+                 triggers="manual"
+                 tooltipClass="self-onboarding-tooltip-class"
+                 #newFarmerTitleTooltip="ngbTooltip">
                 <div class="af-form-block--c12">
-                    <div class="title-page content-element--title">{{title}}</div>
+                    <div class="title-page content-element--title">{{ title }}</div>
                 </div>
+                <ng-template #newFarmerTitleTooltipTemplate>
+                    <div>
+                        <h2 class="title" i18n="@@selfOnboarding.checklist.addFarmers.step3">After entering all the required data click 'Save' on the bottom.</h2>
+                        <div class="step-line"><span i18n="@@selfOnboarding.checklist.item.step">Step {{ '3/3' }}</span></div>
+                    </div>
+                </ng-template>
             </div>
 
             <div class="af-form-row">

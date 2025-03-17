@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { StockCoreTabComponent } from '../../stock-core/stock-core-tab/stock-core-tab.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalEventManagerService } from '../../../../core/global-event-manager.service';
@@ -12,13 +12,15 @@ import { CodebookTranslations } from '../../../../shared-services/codebook-trans
 import { map, startWith, take } from 'rxjs/operators';
 import { BeycoTokenService } from '../../../../shared-services/beyco-token.service';
 import { SelectedUserCompanyService } from '../../../../core/selected-user-company.service';
+import { SelfOnboardingService } from "../../../../shared-services/self-onboarding.service";
+import { NgbTooltip } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-stock-all-stock-tab',
   templateUrl: './stock-all-stock-tab.component.html',
   styleUrls: ['./stock-all-stock-tab.component.scss']
 })
-export class StockAllStockTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy {
+export class StockAllStockTabComponent extends StockCoreTabComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private subscriptions: Subscription[] = [];
 
@@ -51,6 +53,12 @@ export class StockAllStockTabComponent extends StockCoreTabComponent implements 
     })
   );
 
+  @ViewChild('allStockTitleTooltip')
+  allStockTitleTooltip: NgbTooltip;
+
+  @ViewChild('allStockSelectFacilityTooltip')
+  allStockSelectFacilityTooltip: NgbTooltip;
+
   constructor(
     protected router: Router,
     protected route: ActivatedRoute,
@@ -60,7 +68,8 @@ export class StockAllStockTabComponent extends StockCoreTabComponent implements 
     protected companyController: CompanyControllerService,
     private codebookTranslations: CodebookTranslations,
     private beycoTokenService: BeycoTokenService,
-    protected selUserCompanyService: SelectedUserCompanyService
+    protected selUserCompanyService: SelectedUserCompanyService,
+    protected selfOnboardingService: SelfOnboardingService
   ) {
     super(router, route, globalEventManager, facilityControllerService, authService, companyController, selUserCompanyService);
   }
@@ -83,6 +92,26 @@ export class StockAllStockTabComponent extends StockCoreTabComponent implements 
         }),
 
         this.facilityIdPing$.subscribe(facilityId => this.setFacilitySemiProducts(facilityId)),
+    );
+  }
+
+  ngAfterViewInit(): void {
+    super.ngAfterViewInit();
+
+    this.subscriptions.push(
+        this.selfOnboardingService.guidedTourStep$.subscribe(step => {
+
+          setTimeout(() => {
+            this.allStockTitleTooltip.close();
+            this.allStockSelectFacilityTooltip.close();
+          }, 50);
+
+          if (step === 10) {
+            setTimeout(() => this.allStockTitleTooltip.open(), 50);
+          } else if (step === 11) {
+            setTimeout(() => this.allStockSelectFacilityTooltip.open(), 50);
+          }
+        })
     );
   }
 
@@ -134,7 +163,7 @@ export class StockAllStockTabComponent extends StockCoreTabComponent implements 
 
   openBeycoOrderFieldList() {
     const stockOrderIds = (this.showGroupView ? this.selectedGroupOrders.map(o => o.groupedIds[0]) : this.selectedOrders.map(o => o.id));
-    this.router.navigate(['my-stock', 'beyco', 'list'], { queryParams: { id: stockOrderIds } });
+    this.router.navigate(['my-stock', 'beyco', 'list'], {queryParams: {id: stockOrderIds}}).then();
   }
 
   changeShowGroupView(doShow: boolean) {
@@ -146,6 +175,11 @@ export class StockAllStockTabComponent extends StockCoreTabComponent implements 
     if (this.companyProfile) {
       this.isAuthRoleToExportToBeyco = !!this.companyProfile.allowBeycoIntegration;
     }
+  }
+
+  openUserHome() {
+    this.selfOnboardingService.guidedTourNextStep('success');
+    this.router.navigate(['/home']).then();
   }
 
 }

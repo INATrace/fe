@@ -1,0 +1,33 @@
+<div class="modal-container self-onboarding-assistant-modal position-relative">
+    <div class="modal-body">
+        <div class="assistant-icon-container">
+            <img src="/assets/icons/icon-self-onboarding-assistant.svg" alt="Image representing pineapple">
+        </div>
+        <div class="content-container">
+            <h2><span i18n="@@selfOnboarding.assistantModal.header.line1">Hi {{ userProfile.name }}! Glad you are here.</span><br>
+                <span i18n="@@selfOnboarding.assistantModal.header.line2">How can I assist you?</span>
+            </h2>
+
+            <div class="d-flex justify-content-between pr-4">
+                <button type="button" class="btn btn-secondary btn-register"
+                        (click)="openChecklistModal()">
+                    <span i18n="@@selfOnboarding.assistantModal.configureSystem.button">I want to configure the system for my company</span>
+                </button>
+
+                <button type="button" class="btn btn-secondary btn-register"
+                        (click)="openGuidedTour()">
+                    <span i18n="@@selfOnboarding.assistantModal.guidedTour.button">I want a guided tour to get familiar with the system</span>
+                </button>
+
+                <a class="btn btn-secondary btn-register"
+                   href="https://www.sustainable-supply-chains.org/toolbox#c10159"
+                   target="_blank"
+                   rel="nofollow"
+                   i18n="@@selfOnboarding.assistantModal.downloadDocs.button">I want to access the INATrace Toolbox with further resources</a>
+            </div>
+        </div>
+    </div>
+    <div class="close-modal-icon" (click)="closeAssistantModal()">
+        <img src="/assets/icons/icon-remove.svg" alt="Image representing X button">
+    </div>
+</div>

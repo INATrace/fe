@@ -5,7 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StockUnitListComponent } from '../company-stock/stock-core/stock-unit-list/stock-unit-list.component';
-import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { StockPaymentsListComponent } from '../company-stock/stock-payments/stock-payments-list/stock-payments-list.component';
 import { ComponentsModule } from '../../components/components.module';
 import { ProducersItemComponent } from './producers-item/producers-item.component';
@@ -25,14 +25,15 @@ import { FormatFarmerImportValidationErrorPipe } from "./pipes/format-farmer-imp
     PlotsFormComponent,
     FormatFarmerImportValidationErrorPipe
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    ComponentsModule,
-    FontAwesomeModule,
-    NgbPaginationModule
-  ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        RouterModule,
+        ComponentsModule,
+        FontAwesomeModule,
+        NgbPaginationModule,
+        NgbTooltipModule
+    ],
   exports: [
     CompanyLeftPanelComponent,
     CompanySelectModalComponent,
